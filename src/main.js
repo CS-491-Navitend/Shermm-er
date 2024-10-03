@@ -1,5 +1,5 @@
-import { Game as MainGame } from './scenes/Game';
-import { AUTO, Scale,Game } from 'phaser';
+import Game from './scenes/Game';
+import Phaser from 'phaser';
 
 const config = {
     type: AUTO,
