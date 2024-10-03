@@ -3,10 +3,16 @@ import { AUTO, Scale,Game } from 'phaser';
 
 const config = {
     type: AUTO,
-    width: 1024,
-    height: 768,
+    width: 850,
+    height: 780,
     parent: 'game-container',
-    backgroundColor: '#028af8',
+    backgroundColor: '#000000',
+    physics: {
+        default: 'arcade',
+        arcade: {
+            debug: false, //handy to show collision
+        },
+    },
     scale: {
         mode: Scale.FIT,
         autoCenter: Scale.CENTER_BOTH
@@ -16,4 +22,4 @@ const config = {
     ]
 };
 
-export default new Game(config);
+export default new Game(config, config);
