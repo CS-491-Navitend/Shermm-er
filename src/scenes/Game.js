@@ -1,10 +1,13 @@
 import { Scene } from "phaser";
 
+var lives;
+var livesText;
+var gameOverMessage;
+var isOver = false;
 export class Game extends Scene {
   constructor() {
     super("Game");
   }
-
   preload() {
     let canMove = true;
     globalThis.canMove = canMove;
@@ -23,20 +26,23 @@ export class Game extends Scene {
     graphics.generateTexture('car2', 80, 30);
     graphics.destroy();
 
-
+    //Load images
     this.load.image("shermie", "/assets/shermie.png");
     this.load.image("background", "/assets/background.jpeg");
+    this.load.image("life", "/assets/heart.png")
   }
 
   create() {
-    this.add.image(425, 390, "background").setScale(1);
+    this.add.image(425, 390, "background").setScale(1);//Make background
 
-    let shermie = this.physics.add.sprite(425, 10, "shermie");
+    //Defining sprite
+    let shermie = this.physics.add.sprite(415, 775, "shermie");
     globalThis.shermie = shermie;
     shermie.setCollideWorldBounds(true);
 
-    this.cursors = this.input.keyboard.createCursorKeys();
+    this.cursors = this.input.keyboard.createCursorKeys();//Keyboard input
 
+    //Make roads
     const roadLines = this.add.graphics({lineStyle:{ width: 4, color: 0xffffff }});
     roadLines.strokeLineShape(new Phaser.Geom.Line(10, 420, 840, 420));
     drawDashedLine(roadLines, 10, 485, 840, 485, 20, 10);
@@ -45,6 +51,7 @@ export class Game extends Scene {
     drawDashedLine(roadLines, 10, 665, 840, 665, 20, 10);
     roadLines.strokeLineShape(new Phaser.Geom.Line(10, 722, 840, 722));
 
+    //Define world objects
     let goalZone = this.physics.add.staticGroup();
     let goal = this.add.rectangle(400, 50, 800, 50);
     this.physics.add.existing(goal, true);
@@ -52,16 +59,26 @@ export class Game extends Scene {
 
     let vehicles = this.physics.add.group();
     globalThis.vehicles = vehicles;
-
+   
+    //Generate obstacles
     spawnVehicle(100, 635, 'car1', 100);
     spawnVehicle(700, 695, 'car2', -150);
 
-    this.physics.add.overlap(shermie, goalZone, win, null, this);
-    this.physics.add.overlap(shermie, vehicles, gameOver, null, this);
-  }
-  
+    //Define Collision
 
+    this.physics.add.overlap(shermie, goalZone, win, null, this);//Win with goal zone
+    this.physics.add.overlap(shermie, vehicles, loseLife, null, this);//Trigger lose life with obstacle
 
+    lives = 3;
+    livesText = this.add.text(50, 50, "Lives: " + lives, {fontSize :'32px', fill:'#fff'});
+    
+    //Defining game over message
+    gameOverMessage = this.add.text(425, 150, "\tGame over.\n Press space to try again.", {fontSize: '42px', fill:'#fff'});
+    gameOverMessage.setOrigin(0.5);
+    gameOverMessage.setVisible(false);
+
+    this.input.keyboard.on('keydown-SPACE', reset, this);
+}
 update() {
     //shermie move fluidly:
     /* if (this.cursors.left.isDown){
@@ -76,6 +93,9 @@ update() {
     if (this.cursors.down.isDown){
         shermie.y += 5;
     }*/
+
+    if(isOver)
+        return;
 
     //shermie arcade move
     if (canMove){
@@ -114,7 +134,6 @@ update() {
         else if (vehicle.x < -vehicle.width / 2)vehicle.x = 800 + vehicle.width / 2; 
     });
 }
-
 }
 
 function drawDashedLine(graphics, x1, y1, x2, y2, dashLength, gapLength){
@@ -135,7 +154,6 @@ function spawnVehicle(x, y, texture, speed){
 
     //console.log(`Created vehicle: ${texture}, at (${x}, ${y}), Speed: ${speed}`);//line to show velocity
 }
-
 //temp win condition
 
 //TODO: Implement logic into a menu
@@ -146,12 +164,36 @@ function win(){
 
 //TODO: Implement logic into a menu
 function gameOver(){
-    console.log('Game Over!');
-    reset();
+    isOver = true;
+    gameOverMessage.setVisible(true);
+    console.log('Game over.');
 }
 
 //TODO: Implement logic into a menu
 function reset(){
+    if(isOver){//Restart the game when space is pressed
+        lives = 3;
+        livesText.setText("Lives: " + lives);
+        isOver = false;
+        gameOverMessage.setVisible(false);
+    }
+}
+
+function loseLife(){//Decrement life on collision with obstacle
+
+    if(lives == 1){
+        lives--;
+        livesText.setText("Lives: " + lives);
+        moveToStart();
+        gameOver();
+    }
+    else{
+        lives--;
+        livesText.setText("Lives: " + lives);
+        moveToStart();
+    }
+}
+function moveToStart(){
     shermie.x = 415;
     shermie.y = 775;
 }
