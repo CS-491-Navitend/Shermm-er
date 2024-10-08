@@ -23,4 +23,4 @@ const config = {
     ]
 };
 
-export default new Game(config, config);
+export default new Game(config);
