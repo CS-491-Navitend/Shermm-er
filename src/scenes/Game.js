@@ -74,7 +74,7 @@ export class Game extends Scene {
     this.physics.add.overlap(
       this.shermie,
       this.vehicles,
-      this.reset,
+      this.loseLife,
       null,
       this
     );
@@ -93,8 +93,8 @@ export class Game extends Scene {
 
     this.startTimer();
 
-    lives = 3;
-    livesText = this.add.text(50, 50, "Lives: " + lives, {
+    this.lives = 3;
+    this.livesText = this.add.text(50, 50, "Lives: " + this.lives, {
       fontSize: "32px",
       fill: "#fff",
     });
@@ -210,6 +210,17 @@ export class Game extends Scene {
     console.log(`Total Resets: ${this.resetCount - 1}`);
     this.shermie.x = 415;
     this.shermie.y = 775;
+  }
+  loseLife() {
+    
+    console.log("Lose life triggered.");
+    console.log(this.lives);
+    if (this.lives > 1) {
+      this.lives--;
+      this.reset();
+    }
+    else this.gameOver();
+    this.livesText.setText(`Lives: ${this.lives}`);
   }
   //Update the timer to be counted down
   updateTimer() {
