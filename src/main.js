@@ -1,5 +1,6 @@
 import { Game as MainGame } from './scenes/Game';
-import { AUTO, Scale,Game } from 'phaser';
+import { AUTO, Scale, Game } from 'phaser';
+import { GameOver } from './scenes/GameOver';
 
 const config = {
     type: AUTO,
@@ -18,7 +19,7 @@ const config = {
         autoCenter: Scale.CENTER_BOTH
     },
     scene: [
-        MainGame
+        MainGame, GameOver
     ]
 };
 
