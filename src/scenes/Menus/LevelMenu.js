@@ -49,7 +49,14 @@ export class LevelMenu extends Scene {
             backgroundColor: "#3388FF",
           })
           .setOrigin(1 / 2)
-          .setInteractive({ useHandCursor: true });
+          .setInteractive({ useHandCursor: true })
+          .addListener("pointerdown", () => {
+            if (levelNumber === 1) {
+              this.scene.start("Game");
+            } else {
+              alert(`Level ${levelNumber}`);
+            }
+          });
       }
     }
   }
