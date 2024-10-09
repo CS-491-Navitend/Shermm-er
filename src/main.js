@@ -1,6 +1,11 @@
-import { Game as MainGame } from './scenes/Game';
-import { AUTO, Scale, Game } from 'phaser';
-import { GameOver } from './scenes/GameOver';
+import { Boot } from "./scenes/Boot";
+// menus
+import { MainMenu } from "./scenes/Menus/MainMenu";
+import { LevelMenu } from "./scenes/Menus/LevelMenu";
+// game
+import { Game as MainGame } from "./scenes/Game";
+import { AUTO, Scale, Game } from "phaser";
+import { GameOver } from "./scenes/GameOver";
 
 const config = {
     type: AUTO,
