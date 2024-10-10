@@ -1,26 +1,29 @@
-import { Game as MainGame } from './scenes/Game';
-import { AUTO, Scale, Game } from 'phaser';
-import { GameOver } from './scenes/GameOver';
+import { Boot } from "./scenes/Boot";
+// menus
+import { MainMenu } from "./scenes/Menus/MainMenu";
+import { LevelMenu } from "./scenes/Menus/LevelMenu";
+// game
+import { Game as MainGame } from "./scenes/Game";
+import { AUTO, Scale, Game } from "phaser";
+import { GameOver } from "./scenes/GameOver";
 
 const config = {
-    type: AUTO,
-    width: 850,
-    height: 780,
-    parent: 'game-container',
-    backgroundColor: '#000000',
-    physics: {
-        default: 'arcade',
-        arcade: {
-            debug: false, //handy to show collision
-        },
+  type: AUTO,
+  //   width: 3840,
+  //   height: 2160,
+  parent: "game-container",
+  backgroundColor: "#000000",
+  physics: {
+    default: "arcade",
+    arcade: {
+      debug: false, //handy to show collision
     },
-    scale: {
-        mode: Scale.FIT,
-        autoCenter: Scale.CENTER_BOTH
-    },
-    scene: [
-        MainGame, GameOver
-    ]
+  },
+  scale: {
+    mode: Scale.HEIGHT_CONTROLS_WIDTH,
+    autoCenter: Scale.CENTER_HORIZONTALLY,
+  },
+  scene: [Boot, MainMenu, LevelMenu, MainGame, GameOver],
 };
 
 export default new Game(config);
