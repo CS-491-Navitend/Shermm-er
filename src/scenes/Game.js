@@ -37,12 +37,15 @@ export class Game extends Scene {
     this.load.image("background", "/assets/background.jpeg");
     this.load.image("life", "/assets/heart.png");
   }
+  
 
   create() {
+    
     this.add.image(425, 390, "background").setScale(1);
 
     //add Physics to the shermie sprite
-    this.shermie = this.physics.add.sprite(425, 10, "shermie");
+    this.shermie = this.physics.add.sprite(435, 10, "shermie");
+    this.shermie.setScale(0.81);
     this.shermie.setCollideWorldBounds(true);
 
     //User input for movements
@@ -323,6 +326,6 @@ function loseLife() {
   }
 }
 function moveToStart() {
-  shermie.x = 415;
+  shermie.x = 425;
   shermie.y = 775;
 }
