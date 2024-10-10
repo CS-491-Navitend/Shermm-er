@@ -1,6 +1,7 @@
 import { Scene } from "phaser";
 
 import { GameLogic } from "/src/lib/GameLogic";
+import { Drawing } from "/src/lib/Drawing";
 
 export class Game extends Scene {
   constructor() {
@@ -16,27 +17,7 @@ export class Game extends Scene {
     this.timeRemaining = this.timerDuration;
 
     this.gameLogic = new GameLogic(this);
-  }
-
-  preload() {
-    console.log("loaded");
-
-    //Load vehicle images
-    this.load.image("car1", "/assets/car1.png");
-    this.load.image("car1forward", "/assets/car1forward.png");
-
-    this.load.image("car2", "/assets/car2.png");
-    this.load.image("car2forward", "/assets/car2forward.png");
-
-    this.load.image("car3", "/assets/car3.png");
-    this.load.image("car3forward", "/assets/car3forward.png");
-
-    this.load.image("tractor", "/assets/TractorTrailerForward.png");
-
-    //Load images
-    this.load.image("shermie", "/assets/shermie.png");
-    this.load.image("background", "/assets/background.jpeg");
-    this.load.image("life", "/assets/heart.png");
+    this.drawing = new Drawing(this);
   }
 
   create() {
@@ -54,11 +35,12 @@ export class Game extends Scene {
     const roadLines = this.add.graphics({
       lineStyle: { width: 4, color: 0xffffff },
     });
+
     roadLines.strokeLineShape(new Phaser.Geom.Line(10, 420, 840, 420));
-    drawDashedLine(roadLines, 10, 485, 840, 485, 20, 10);
-    drawDashedLine(roadLines, 10, 545, 840, 545, 20, 10);
-    drawDashedLine(roadLines, 10, 605, 840, 605, 20, 10);
-    drawDashedLine(roadLines, 10, 665, 840, 665, 20, 10);
+    this.drawing.drawDashedLine(roadLines, 10, 485, 840, 485, 20, 10);
+    this.drawing.drawDashedLine(roadLines, 10, 545, 840, 545, 20, 10);
+    this.drawing.drawDashedLine(roadLines, 10, 605, 840, 605, 20, 10);
+    this.drawing.drawDashedLine(roadLines, 10, 665, 840, 665, 20, 10);
     roadLines.strokeLineShape(new Phaser.Geom.Line(10, 722, 840, 722));
 
     const goalZone = this.physics.add.staticGroup();
@@ -78,9 +60,13 @@ export class Game extends Scene {
     this.spawnVehicle(300, 635, "car3forward", 150);
     this.spawnVehicle(700, 635, "car1forward", 150);
 
+    for (let i = 0; i < 5; i++) {
+      this.spawnVehicle(100 + i * 100, 575, "car2", -200);
+    }
+
     //Third row of vehicles
-    this.spawnVehicle(100, 575, "car3", -200);
-    this.spawnVehicle(700, 575, "car1", -200);
+    // this.spawnVehicle(100, 575, "car3", -200);
+    // this.spawnVehicle(700, 575, "car1", -200);
 
     //Fourth row of vehicles
     this.spawnVehicle(100, 515, "tractor", 300);
@@ -92,7 +78,7 @@ export class Game extends Scene {
     this.physics.add.overlap(
       this.shermie,
       goalZone,
-      this.gameLogic.win(),
+      this.winCollision,
       null,
       this
     );
@@ -132,8 +118,6 @@ export class Game extends Scene {
     );
     gameOverMessage.setOrigin(0.5);
     gameOverMessage.setVisible(false);
-
-    // this.input.keyboard.on("keydown-SPACE", this.gameLogic.gameReset, this);
   }
   update() {
     if (this.canMove) {
@@ -185,46 +169,31 @@ export class Game extends Scene {
     vehicle.body.immovable = true;
 
     //set the scale for each vehicle
+    var scale = 0.75;
     if (texture == "car1" || texture == "car1forward") {
-      vehicle.setScale(0.25);
+      vehicle.setScale(scale);
     } else if (texture == "car2" || texture == "car2forward") {
-      vehicle.setScale(0.15);
+      vehicle.setScale(scale);
     } else if (texture == "car3" || texture == "car3forward") {
-      vehicle.setScale(0.45);
+      vehicle.setScale(scale);
     } else if (texture == "tractor") {
       vehicle.setScale(0.5);
     }
-
-    //console.log(`Created vehicle: ${texture}, at (${x}, ${y}), Speed: ${speed}`);//line to show velocity
-  }
-
-  //Plays the GamerOver screen
-  gameOver() {
-    console.log("Game Over!");
-    this.scene.start("GameOver", {
-      winCount: this.winCount,
-      resetCount: this.resetCount,
-    });
   }
 
   loseLife() {
-    if (this.lives > 1) {
-      this.lives--;
-      this.gameLogic.gameReset();
-    } else {
-      this.resetCount++;
-      this.gameOver();
-      this.lives = 3;
-    }
-    console.log("Lose life triggered. -> " + this.lives);
-    this.livesText.setText(`Lives: ${this.lives}`);
+    this.gameLogic.loseLife();
+  }
+
+  winCollision() {
+    this.gameLogic.win();
   }
   //Update the timer to be counted down
   updateTimer() {
     this.timeRemaining--;
     if (this.timeRemaining <= 0) {
       this.timerEvent.remove();
-      this.gameOver();
+      this.gameLogic.gameOver();
     }
     this.timerText.setText(`Time: ${this.timeRemaining}`);
   }
@@ -239,16 +208,3 @@ export class Game extends Scene {
     });
   }
 }
-
-function drawDashedLine(graphics, x1, y1, x2, y2, dashLength, gapLength) {
-  let x = x1;
-  const step = dashLength + gapLength;
-
-  while (x < x2) {
-    graphics.strokeLineShape(new Phaser.Geom.Line(x, y1, x + dashLength, y2));
-    x += step;
-  }
-}
-
-//console.log(`Created vehicle: ${texture}, at (${x}, ${y}), Speed: ${speed}`);//line to show velocity
-//temp win condition

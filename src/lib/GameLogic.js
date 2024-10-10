@@ -10,6 +10,27 @@ export class GameLogic {
     this.gameReset();
   }
 
+  loseLife() {
+    if (this.game.lives > 1) {
+      this.game.lives--;
+      this.gameReset();
+    } else {
+      this.game.resetCount++;
+      this.gameOver();
+      this.game.lives = 3;
+    }
+    console.log("Lose life triggered. -> " + this.game.lives);
+    this.game.livesText.setText(`Lives: ${this.game.lives}`);
+  }
+
+  gameOver() {
+    console.log("Game Over!");
+    this.game.scene.start("GameOver", {
+      winCount: this.game.winCount,
+      resetCount: this.game.resetCount,
+    });
+  }
+
   gameReset() {
     this.game.resetCount++;
     console.log(`Total Resets: ${this.game.resetCount}`);
