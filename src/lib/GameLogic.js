@@ -8,7 +8,7 @@ export class GameLogic {
     console.log("Win triggered.");
     this.winCount++;
     console.log(`Total Wins: ${this.winCount - 1}`);
-    this.reset();
+    this.reset;
   }
 
   reset() {
