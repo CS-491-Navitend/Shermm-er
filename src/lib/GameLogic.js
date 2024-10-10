@@ -1,21 +1,20 @@
 export class GameLogic {
-  constructor(shermie) {
-    this.shermie = shermie;
-    this.winCount = 0;
+  constructor(game) {
+    this.game = game;
   }
 
   win() {
     console.log("Win triggered.");
-    this.winCount++;
-    console.log(`Total Wins: ${this.winCount - 1}`);
-    this.reset;
+    this.game.winCount++;
+    console.log(`Total Wins: ${this.game.winCount - 1}`);
+    this.gameReset;
   }
 
-  reset() {
-    this.resetCount++;
-    console.log(`Total Resets: ${this.resetCount - 1}`);
-    // this.shermie.x = 415;
-    // this.shermie.y = 775;
+  gameReset() {
+    this.game.resetCount++;
+    console.log(`Total Resets: ${this.game.resetCount - 1}`);
+    this.game.shermie.x = 415;
+    this.game.shermie.y = 775;
   }
 }
 

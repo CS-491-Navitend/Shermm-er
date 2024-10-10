@@ -14,11 +14,12 @@ export class Game extends Scene {
     this.shermie = null;
     this.vehicles = null;
     this.winCount = 0;
+    this.lives = 3;
     this.resetCount = 0;
     this.timerDuration = 1_000_000_000;
     this.timeRemaining = this.timerDuration;
 
-    this.gameLogic = new GameLogic(this.shermie);
+    this.gameLogic = new GameLogic(this);
   }
 
   preload() {
@@ -92,7 +93,13 @@ export class Game extends Scene {
     this.spawnVehicle(100, 455, "car2", -500);
 
     //When shermie overlap
-    this.physics.add.overlap(this.shermie, goalZone, this.gameLogic.win, null, this);
+    this.physics.add.overlap(
+      this.shermie,
+      goalZone,
+      this.gameLogic.win,
+      null,
+      this
+    );
     this.physics.add.overlap(
       this.shermie,
       this.vehicles,
@@ -115,7 +122,6 @@ export class Game extends Scene {
 
     this.startTimer();
 
-    this.lives = 3;
     this.livesText = this.add.text(50, 50, "Lives: " + this.lives, {
       fontSize: "32px",
       fill: "#fff",
@@ -131,7 +137,7 @@ export class Game extends Scene {
     gameOverMessage.setOrigin(0.5);
     gameOverMessage.setVisible(false);
 
-    this.input.keyboard.on("keydown-SPACE", reset, this);
+    // this.input.keyboard.on("keydown-SPACE", this.gameLogic.gameReset, this);
   }
   update() {
     //shermie move fluidly:
@@ -220,14 +226,6 @@ export class Game extends Scene {
     //console.log(`Created vehicle: ${texture}, at (${x}, ${y}), Speed: ${speed}`);//line to show velocity
   }
 
-  //when goal is reached
-  // win() {
-  //   console.log("Win triggered.");
-  //   this.winCount++;
-  //   console.log(`Total Wins: ${this.winCount - 1}`);
-  //   this.reset();
-  // }
-
   //Plays the GamerOver screen
   gameOver() {
     console.log("Game Over!");
@@ -237,22 +235,14 @@ export class Game extends Scene {
     });
   }
 
-  //Reset the sheep everytime the sheep overlap an obstacle
-  // reset() {
-  //   this.resetCount++;
-  //   console.log(`Total Resets: ${this.resetCount - 1}`);
-  //   this.shermie.x = 415;
-  //   this.shermie.y = 775;
-  // }
   loseLife() {
-
-    console.log("Lose life triggered.");
-    console.log(this.lives);
-    if (this.lives > 1) {
+    if (this.lives == 0) {
+      this.gameOver();
+    } else {
       this.lives--;
-      this.gameLogic.reset();
+      this.gameLogic.gameReset();
     }
-    else this.gameOver();
+    console.log("Lose life triggered. -> " + this.lives);
     this.livesText.setText(`Lives: ${this.lives}`);
   }
   //Update the timer to be counted down
@@ -288,14 +278,3 @@ function drawDashedLine(graphics, x1, y1, x2, y2, dashLength, gapLength) {
 
 //console.log(`Created vehicle: ${texture}, at (${x}, ${y}), Speed: ${speed}`);//line to show velocity
 //temp win condition
-
-//TODO: Implement logic into a menu
-function reset() {
-  if (isOver) {
-    //Restart the game when space is pressed
-    lives = 3;
-    livesText.setText("Lives: " + lives);
-    isOver = false;
-    gameOverMessage.setVisible(false);
-  }
-}
