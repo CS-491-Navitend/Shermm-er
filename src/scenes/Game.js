@@ -2,10 +2,6 @@ import { Scene } from "phaser";
 
 import { GameLogic } from "/src/lib/GameLogic";
 
-var lives;
-var livesText;
-var gameOverMessage;
-var isOver = false;
 export class Game extends Scene {
   constructor() {
     super("Game");
@@ -96,7 +92,7 @@ export class Game extends Scene {
     this.physics.add.overlap(
       this.shermie,
       goalZone,
-      this.gameLogic.win,
+      this.gameLogic.win(),
       null,
       this
     );
@@ -128,7 +124,7 @@ export class Game extends Scene {
     });
 
     //Defining game over message
-    gameOverMessage = this.add.text(
+    let gameOverMessage = this.add.text(
       425,
       150,
       "\tGame over.\n Press space to try again.",
@@ -140,23 +136,6 @@ export class Game extends Scene {
     // this.input.keyboard.on("keydown-SPACE", this.gameLogic.gameReset, this);
   }
   update() {
-    //shermie move fluidly:
-    /* if (this.cursors.left.isDown){
-        shermie.x -= 5;
-    }
-    if (this.cursors.right.isDown){
-        shermie.x += 5;
-    }
-    if (this.cursors.up.isDown){
-        shermie.y -= 5;
-    }
-    if (this.cursors.down.isDown){
-        shermie.y += 5;
-    }*/
-
-    if (isOver) return;
-
-    //shermie arcade move
     if (this.canMove) {
       if (this.cursors.left.isDown && this.shermie.x > 10) {
         //console.log('moved left')
@@ -190,13 +169,6 @@ export class Game extends Scene {
 
     this.shermie.x = Phaser.Math.Clamp(this.shermie.x, 10, 850);
     this.shermie.y = Phaser.Math.Clamp(this.shermie.y, 10, 780);
-
-    /*
-    if (shermie.x < 10) shermie.x = 10;
-    if (shermie.x > 790) shermie.x = 790;
-    if (shermie.y < 50) shermie.y = 50;
-    if (shermie.y > 550) shermie.y = 550;
-    */
 
     this.vehicles.getChildren().forEach((vehicle) => {
       //console.log(`Vehicle Position: x=${vehicle.x}, y=${vehicle.y}, VelocityX=${vehicle.body.velocity.x}`); //used to test movement
@@ -236,11 +208,13 @@ export class Game extends Scene {
   }
 
   loseLife() {
-    if (this.lives == 0) {
-      this.gameOver();
-    } else {
+    if (this.lives > 1) {
       this.lives--;
       this.gameLogic.gameReset();
+    } else {
+      this.resetCount++;
+      this.gameOver();
+      this.lives = 3;
     }
     console.log("Lose life triggered. -> " + this.lives);
     this.livesText.setText(`Lives: ${this.lives}`);
