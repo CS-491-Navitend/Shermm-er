@@ -20,17 +20,17 @@ export class Game extends Scene {
   preload() {
     console.log("loaded");
 
-    let graphics = this.make.graphics({ x: 0, y: 0, add: false });
-    graphics.fillStyle(0xff0000, 1);
-    graphics.fillRect(0, 0, 60, 30);
-    graphics.generateTexture("car1", 60, 30);
-    graphics.destroy();
+    //Load vehicle images
+    this.load.image("car1", "/assets/car1.png");
+    this.load.image("car1forward", "/assets/car1forward.png");
 
-    graphics = this.make.graphics({ x: 0, y: 0, add: false });
-    graphics.fillStyle(0x00ff00, 1);
-    graphics.fillRect(0, 0, 80, 30);
-    graphics.generateTexture("car2", 80, 30);
-    graphics.destroy();
+    this.load.image("car2", "/assets/car2.png");
+    this.load.image("car2forward", "/assets/car2forward.png");
+
+    this.load.image("car3", "/assets/car3.png");
+    this.load.image("car3forward", "/assets/car3forward.png");
+
+    this.load.image("tractor", "/assets/TractorTrailerForward.png");
 
     //Load images
     this.load.image("shermie", "/assets/shermie.png");
@@ -66,8 +66,25 @@ export class Game extends Scene {
 
     this.vehicles = this.physics.add.group();
 
-    this.spawnVehicle(100, 635, "car1", 100);
-    this.spawnVehicle(700, 695, "car2", -150);
+    //First row of vehicles
+    this.spawnVehicle(100, 695, "car1", -175);
+    this.spawnVehicle(600, 695, "car3", -175);
+    this.spawnVehicle(850, 695, "car1", -175);
+
+    //Second row of vehicles
+    this.spawnVehicle(100, 635, "car2forward", 150);
+    this.spawnVehicle(300, 635, "car3forward", 150);
+    this.spawnVehicle(700, 635, "car1forward", 150);
+
+    //Third row of vehicles
+    this.spawnVehicle(100, 575, "car3", -200);
+    this.spawnVehicle(700, 575, "car1", -200);
+
+    //Fourth row of vehicles
+    this.spawnVehicle(100, 515, "tractor", 300);
+
+    //Fifth row of vehicles
+    this.spawnVehicle(100, 455, "car2", -500);
 
     //When shermie overlap
     this.physics.add.overlap(this.shermie, goalZone, this.win, null, this);
@@ -184,6 +201,17 @@ export class Game extends Scene {
     vehicle.body.allowGravity = false;
     vehicle.body.immovable = true;
 
+    //set the scale for each vehicle
+    if (texture == "car1" || texture == "car1forward") {
+      vehicle.setScale(0.25);
+    } else if (texture == "car2" || texture == "car2forward") {
+      vehicle.setScale(0.15);
+    } else if (texture == "car3" || texture == "car3forward") {
+      vehicle.setScale(0.45);
+    } else if (texture == "tractor") {
+      vehicle.setScale(0.5);
+    }
+
     //console.log(`Created vehicle: ${texture}, at (${x}, ${y}), Speed: ${speed}`);//line to show velocity
   }
 
@@ -212,7 +240,7 @@ export class Game extends Scene {
     this.shermie.y = 775;
   }
   loseLife() {
-    
+
     console.log("Lose life triggered.");
     console.log(this.lives);
     if (this.lives > 1) {
