@@ -1,5 +1,7 @@
 import { Scene } from "phaser";
 
+import { GameLogic } from "/src/lib/GameLogic";
+
 var lives;
 var livesText;
 var gameOverMessage;
@@ -15,6 +17,8 @@ export class Game extends Scene {
     this.resetCount = 0;
     this.timerDuration = 1_000_000_000;
     this.timeRemaining = this.timerDuration;
+
+    this.gameLogic = new GameLogic(this.shermie);
   }
 
   preload() {
@@ -42,7 +46,8 @@ export class Game extends Scene {
     this.add.image(425, 390, "background").setScale(1);
 
     //add Physics to the shermie sprite
-    this.shermie = this.physics.add.sprite(425, 10, "shermie");
+    this.shermie = this.physics.add.sprite(415, 775, "shermie");
+    this.shermie.setScale(0.81);
     this.shermie.setCollideWorldBounds(true);
 
     //User input for movements
@@ -87,7 +92,7 @@ export class Game extends Scene {
     this.spawnVehicle(100, 455, "car2", -500);
 
     //When shermie overlap
-    this.physics.add.overlap(this.shermie, goalZone, this.win, null, this);
+    this.physics.add.overlap(this.shermie, goalZone, this.gameLogic.win, null, this);
     this.physics.add.overlap(
       this.shermie,
       this.vehicles,
@@ -216,12 +221,12 @@ export class Game extends Scene {
   }
 
   //when goal is reached
-  win() {
-    console.log("Win triggered.");
-    this.winCount++;
-    console.log(`Total Wins: ${this.winCount - 1}`);
-    this.reset();
-  }
+  // win() {
+  //   console.log("Win triggered.");
+  //   this.winCount++;
+  //   console.log(`Total Wins: ${this.winCount - 1}`);
+  //   this.reset();
+  // }
 
   //Plays the GamerOver screen
   gameOver() {
@@ -233,19 +238,19 @@ export class Game extends Scene {
   }
 
   //Reset the sheep everytime the sheep overlap an obstacle
-  reset() {
-    this.resetCount++;
-    console.log(`Total Resets: ${this.resetCount - 1}`);
-    this.shermie.x = 415;
-    this.shermie.y = 775;
-  }
+  // reset() {
+  //   this.resetCount++;
+  //   console.log(`Total Resets: ${this.resetCount - 1}`);
+  //   this.shermie.x = 415;
+  //   this.shermie.y = 775;
+  // }
   loseLife() {
 
     console.log("Lose life triggered.");
     console.log(this.lives);
     if (this.lives > 1) {
       this.lives--;
-      this.reset();
+      this.gameLogic.reset();
     }
     else this.gameOver();
     this.livesText.setText(`Lives: ${this.lives}`);
@@ -285,19 +290,6 @@ function drawDashedLine(graphics, x1, y1, x2, y2, dashLength, gapLength) {
 //temp win condition
 
 //TODO: Implement logic into a menu
-function win() {
-  console.log("Win triggered.");
-  reset();
-}
-
-//TODO: Implement logic into a menu
-function gameOver() {
-  isOver = true;
-  gameOverMessage.setVisible(true);
-  console.log("Game over.");
-}
-
-//TODO: Implement logic into a menu
 function reset() {
   if (isOver) {
     //Restart the game when space is pressed
@@ -306,23 +298,4 @@ function reset() {
     isOver = false;
     gameOverMessage.setVisible(false);
   }
-}
-
-function loseLife() {
-  //Decrement life on collision with obstacle
-
-  if (lives == 1) {
-    lives--;
-    livesText.setText("Lives: " + lives);
-    moveToStart();
-    gameOver();
-  } else {
-    lives--;
-    livesText.setText("Lives: " + lives);
-    moveToStart();
-  }
-}
-function moveToStart() {
-  shermie.x = 415;
-  shermie.y = 775;
 }
