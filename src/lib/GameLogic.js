@@ -10,17 +10,19 @@ export class GameLogic {
   }
 
   loseLife() {
-    console.log("Lose life condition met. Lives:", this.game.lives);
-    // this.game.livesText.changeText(`Lives: ${this.game.lives}`);
-
     if (this.game.lives > 1) {
       this.game.lives -= 1;
+      console.log("Lose life condition met. Lives:", this.game.lives);
       this.gameReset();
     } else {
+      this.game.lives -= 1;
+      console.log("Lose life condition met. Lives:", this.game.lives);
       this.game.resetCount += 1;
       this.gameOver();
       this.game.lives = 3;
     }
+
+    this.game.livesText.setText(`Lives: ${this.game.lives}`);
   }
 
   gameOver() {
