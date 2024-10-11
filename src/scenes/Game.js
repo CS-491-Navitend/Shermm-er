@@ -107,11 +107,10 @@ export class Game extends Scene {
 
     const cars = ["car1", "car2", "car3", "tractor"];
     const spacing = [250, 350, 100];
-    const numberOfCars = Math.floor(Math.random() * 2) + 1;
 
     // create vehicles
     for (let road = 0; road < this.numberOfRoads; road++) {
-      for (let i = 0; i < numberOfCars; i++) {
+      for (let i = 0; i < this.numberOfCars; i++) {
         const randomCar = cars[Math.floor(Math.random() * cars.length)];
         const randomSpacing = spacing[Math.floor(Math.random() * spacing.length)];
         this.spawnVehicle(randomSpacing + i * randomSpacing, roadStart - roadWidth * road - roadWidth / 2, randomCar, -200 * this.carSpeedMultiplier);
