@@ -6,17 +6,17 @@ export class GameLogic {
   win() {
     console.log(`Win condition met. Wins: ${this.game.winCount}`);
     this.game.winCount++;
-    this.gameReset();
+    this.resetPlayer();
   }
 
   loseLife() {
     if (this.game.lives > 1) {
       this.game.lives -= 1;
-      console.log("Lose life condition met. Lives:", this.game.lives);
-      this.gameReset();
+      console.log("Lose life. Lives:", this.game.lives);
+      this.resetPlayer();
     } else {
       this.game.lives -= 1;
-      console.log("Lose life condition met. Lives:", this.game.lives);
+      console.log("Lose life. Lives:", this.game.lives);
       this.game.resetCount += 1;
       this.gameOver();
       this.game.lives = 3;
@@ -27,13 +27,14 @@ export class GameLogic {
 
   gameOver() {
     console.log("Starting game over scene");
+    this.game.playing = false;
     this.game.scene.start("GameOver", {
       game: this.game,
     });
   }
 
-  gameReset() {
-    console.log("Resetting game");
+  resetPlayer() {
+    console.log("Resetting player");
     this.game.resetCount++;
     this.game.shermie.x = this.game.width / 2;
     this.game.shermie.y = this.game.height - this.game.safeZoneSize + this.game.moveDistance / 2;
