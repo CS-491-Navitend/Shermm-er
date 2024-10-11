@@ -26,6 +26,7 @@ export class Boot extends Scene {
   }
 
   create() {
+    // this.scene.start("Game", { level: 0 }); //dev level on start
     this.scene.start("MainMenu");
   }
 }
