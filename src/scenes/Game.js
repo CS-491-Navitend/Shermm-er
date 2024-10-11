@@ -109,7 +109,15 @@ export class Game extends Scene {
     this.spawnVehicle(100, 515, "tractor", 300 * this.carSpeedMultiplier);
 
     //Fifth row of vehicles
-    this.spawnVehicle(100, 455, "car4", -500 * this.carSpeedMultiplier);
+    this.spawnVehicle(100, 455, "car3", -500 * this.carSpeedMultiplier);
+
+    //Log Spawn
+    this.spawnVehicle(0, 200, "LongLog", 100 * this.logSpeedMultiplier);
+    this.spawnVehicle(100, 250, "ShortLog", 100 * this.logSpeedMultiplier);
+
+    //Turtle Spawn
+    this.spawnVehicle(100, 300, "turtle", 0 * this.frogSinkMultiplier);
+    this.spawnVehicle(300, 300, "turtleforward", 0 * this.frogSinkMultiplier);
 
     //When shermie overlap
     this.physics.add.overlap(
