@@ -123,7 +123,13 @@ export class Game extends Scene {
     this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
 
     // this.timerText
-    this.timerText = this.add.text(16, 64, `Time: ${this.timeRemaining}`, {
+    this.timerText = this.add.text(16, 32, `Time: ${this.timeRemaining}`, {
+      fontSize: "32px",
+      fill: "#ffffff",
+    });
+
+    // this.livesText
+    this.livesText = this.add.text(16, 32 + 32, `Lives: ${this.lives}`, {
       fontSize: "32px",
       fill: "#ffffff",
     });
