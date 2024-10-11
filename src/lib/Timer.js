@@ -10,6 +10,7 @@ export class Timer {
     }
     this.game.timerText.setText(`Time: ${this.game.timeRemaining}`);
   }
+
   startTimer() {
     let timer = setInterval(() => {
       if (this.game.timeRemaining <= 0) {
@@ -17,7 +18,10 @@ export class Timer {
         return;
       }
 
-      this.updateTimer();
+      if (this.game.playing) {
+        console.log(123);
+        this.updateTimer();
+      }
     }, 1000);
   }
 }
