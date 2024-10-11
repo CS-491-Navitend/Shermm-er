@@ -22,6 +22,20 @@ export class LevelMenu extends Scene {
       })
       .setOrigin(1 / 2);
 
+    const devButton = this.add
+      .text(512, 100, "Dev", {
+        fontFamily: this.fontFamily,
+        fontStyle: "bold",
+        fontSize: this.rem * 2 + "px",
+        padding: { x: 100, y: 20 },
+      })
+      .setOrigin(1 / 2)
+      .setInteractive({ useHandCursor: true });
+    devButton.on("pointerdown", () => {
+      // pass the level to the game scene constructor
+      this.scene.start("Game", { level: 0 });
+    });
+
     // create level buttons (max of 3 cols)
     for (let col = 0; col < this.maxCols; col++) {
       //
@@ -51,11 +65,10 @@ export class LevelMenu extends Scene {
           .setOrigin(1 / 2)
           .setInteractive({ useHandCursor: true })
           .addListener("pointerdown", () => {
-            if (levelNumber === 1) {
-              this.scene.start("Game");
-            } else {
-              alert(`Level ${levelNumber}`);
-            }
+            // pass the level to the game scene constructor
+            this.scene.start("Game", {
+              level: levelNumber,
+            });
           });
       }
     }

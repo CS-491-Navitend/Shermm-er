@@ -2,6 +2,9 @@ import { Scene } from "phaser";
 
 import { GameLogic } from "/src/lib/GameLogic";
 import { Drawing } from "/src/lib/Drawing";
+import { Timer } from "/src/lib/Timer";
+
+import { levels } from "/src/lib/levels";
 
 export class Game extends Scene {
   constructor() {
@@ -12,15 +15,29 @@ export class Game extends Scene {
     this.vehicles = null;
     this.winCount = 0;
     this.lives = 3;
+    this.roadLanes = 5;
     this.resetCount = 0;
-    this.timerDuration = 1_000_000_000;
+
+    // dynamic values
+    this.timerDuration = 0;
     this.timeRemaining = this.timerDuration;
+    this.numberOfCars = 0;
+    this.numberOfLogs = 0;
+    this.numberOfFrogs = 0;
+    this.carSpeedMultiplier = 1;
+    this.logSpeedMultiplier = 1;
+    this.frogSinkMultiplier = 1;
 
     this.gameLogic = new GameLogic(this);
     this.drawing = new Drawing(this);
+    this.timer = new Timer(this);
   }
 
-  create() {
+  create(data) {
+    this.timerDuration = levels[data["level"]]["time"];
+
+    this.carSpeedMultiplier = levels[data["level"]]["car_speed_multiplier"];
+
     this.add.image(425, 390, "background").setScale(1);
 
     //add Physics to the shermie sprite
@@ -36,12 +53,29 @@ export class Game extends Scene {
       lineStyle: { width: 4, color: 0xffffff },
     });
 
-    roadLines.strokeLineShape(new Phaser.Geom.Line(10, 420, 840, 420));
-    this.drawing.drawDashedLine(roadLines, 10, 485, 840, 485, 20, 10);
-    this.drawing.drawDashedLine(roadLines, 10, 545, 840, 545, 20, 10);
-    this.drawing.drawDashedLine(roadLines, 10, 605, 840, 605, 20, 10);
-    this.drawing.drawDashedLine(roadLines, 10, 665, 840, 665, 20, 10);
-    roadLines.strokeLineShape(new Phaser.Geom.Line(10, 722, 840, 722));
+    // solid road lines (top and bottom)
+    roadLines.strokeLineShape(new Phaser.Geom.Line(0, 420, 840, 420));
+    roadLines.strokeLineShape(
+      new Phaser.Geom.Line(
+        0,
+        420 + this.roadLanes * 60,
+        840,
+        420 + this.roadLanes * 60
+      )
+    );
+
+    // dashed road lines
+    for (let i = 0; i < this.roadLanes - 1; i++) {
+      this.drawing.drawDashedLine(
+        roadLines,
+        0,
+        485 + i * 60,
+        840,
+        485 + i * 60,
+        20,
+        10
+      );
+    }
 
     const goalZone = this.physics.add.staticGroup();
     const goal = this.add.rectangle(400, 50, 800, 50);
@@ -51,28 +85,30 @@ export class Game extends Scene {
     this.vehicles = this.physics.add.group();
 
     //First row of vehicles
-    this.spawnVehicle(100, 695, "car1", -175);
-    this.spawnVehicle(600, 695, "car3", -175);
-    this.spawnVehicle(850, 695, "car1", -175);
+    this.spawnVehicle(100, 695, "car1", -175 * this.carSpeedMultiplier);
+    this.spawnVehicle(600, 695, "car3", -175 * this.carSpeedMultiplier);
+    this.spawnVehicle(850, 695, "car1", -175 * this.carSpeedMultiplier);
 
     //Second row of vehicles
-    this.spawnVehicle(100, 635, "car2forward", 150);
-    this.spawnVehicle(300, 635, "car3forward", 150);
-    this.spawnVehicle(700, 635, "car1forward", 150);
-
-    for (let i = 0; i < 5; i++) {
-      this.spawnVehicle(100 + i * 100, 575, "car2", -200);
-    }
+    this.spawnVehicle(100, 635, "car2forward", 150 * this.carSpeedMultiplier);
+    this.spawnVehicle(300, 635, "car3forward", 150 * this.carSpeedMultiplier);
+    this.spawnVehicle(700, 635, "car1forward", 150 * this.carSpeedMultiplier);
 
     //Third row of vehicles
-    // this.spawnVehicle(100, 575, "car3", -200);
-    // this.spawnVehicle(700, 575, "car1", -200);
+    for (let i = 0; i < 3; i++) {
+      this.spawnVehicle(
+        100 + i * 150,
+        575,
+        "car2",
+        -200 * this.carSpeedMultiplier
+      );
+    }
 
     //Fourth row of vehicles
-    this.spawnVehicle(100, 515, "tractor", 300);
+    this.spawnVehicle(100, 515, "tractor", 300 * this.carSpeedMultiplier);
 
     //Fifth row of vehicles
-    this.spawnVehicle(100, 455, "car2", -500);
+    this.spawnVehicle(100, 455, "car2", -500 * this.carSpeedMultiplier);
 
     //When shermie overlap
     this.physics.add.overlap(
@@ -97,27 +133,19 @@ export class Game extends Scene {
       callbackScope: this,
       loop: true,
     });
+
     this.timerText = this.add.text(16, 16, `Time: ${this.timeRemaining}`, {
       fontSize: "32px",
       fill: "#fff",
     });
 
-    this.startTimer();
+    this.timer.startTimer();
 
+    // lives
     this.livesText = this.add.text(50, 50, "Lives: " + this.lives, {
       fontSize: "32px",
       fill: "#fff",
     });
-
-    //Defining game over message
-    let gameOverMessage = this.add.text(
-      425,
-      150,
-      "\tGame over.\n Press space to try again.",
-      { fontSize: "42px", fill: "#fff" }
-    );
-    gameOverMessage.setOrigin(0.5);
-    gameOverMessage.setVisible(false);
   }
   update() {
     if (this.canMove) {
@@ -188,23 +216,8 @@ export class Game extends Scene {
   winCollision() {
     this.gameLogic.win();
   }
-  //Update the timer to be counted down
+
   updateTimer() {
-    this.timeRemaining--;
-    if (this.timeRemaining <= 0) {
-      this.timerEvent.remove();
-      this.gameLogic.gameOver();
-    }
-    this.timerText.setText(`Time: ${this.timeRemaining}`);
-  }
-  startTimer() {
-    this.timeRemaining = this.timerDuration; // Reset the timer
-    this.timerText.setText(`Time: ${this.timeRemaining}`); // Display initial time
-    this.timerEvent = this.time.addEvent({
-      delay: 1000,
-      callback: this.updateTimer(),
-      callbackScope: this,
-      loop: true,
-    });
+    this.timer.updateTimer();
   }
 }
