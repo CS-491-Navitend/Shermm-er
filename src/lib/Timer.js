@@ -1,6 +1,7 @@
 export class Timer {
   constructor(game) {
     this.game = game;
+    this.timer = null;
   }
 
   updateTimer() {
@@ -12,9 +13,10 @@ export class Timer {
   }
 
   startTimer() {
-    let timer = setInterval(() => {
-      if (this.game.timeRemaining <= 0) {
-        timer = clearInterval(timer);
+    this.timer = setInterval(() => {
+      if (this.game.timeRemaining <= 0 || !this.game.playing) {
+        // stop timer
+        clearInterval(this.timer);
         return;
       }
 
