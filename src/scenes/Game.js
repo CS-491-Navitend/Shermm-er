@@ -109,7 +109,7 @@ export class Game extends Scene {
     this.spawnVehicle(100, 515, "tractor", 300 * this.carSpeedMultiplier);
 
     //Fifth row of vehicles
-    this.spawnVehicle(100, 455, "car2", -500 * this.carSpeedMultiplier);
+    this.spawnVehicle(100, 455, "car4", -500 * this.carSpeedMultiplier);
 
     //When shermie overlap
     this.physics.add.overlap(
@@ -205,7 +205,30 @@ export class Game extends Scene {
       vehicle.setScale(scale);
     } else if (texture == "car3" || texture == "car3forward") {
       vehicle.setScale(scale);
-    } else if (texture == "tractor") {
+    } else if (texture == "car4" || texture == "car4forward") {
+      vehicle.setScale(scale);
+    } else if (texture == "car5" || texture == "car5forward") {
+      vehicle.setScale(scale);
+    } else if (texture == "car6" || texture == "car6forward") {
+      vehicle.setScale(scale);
+    } else if (texture == "car7" || texture == "car7forward") {
+      vehicle.setScale(scale);  
+    } else if (texture == "car8" || texture == "car8forward") {
+      vehicle.setScale(scale);
+    } else if (texture == "car9" || texture == "car9forward") {
+      vehicle.setScale(scale);
+    } else if (texture == "car10" || texture == "car10forward") {
+      vehicle.setScale(scale);
+    } else if (texture == "car11" || texture == "car11forward") {
+      vehicle.setScale(scale);
+    } else if (texture == "car12" || texture == "car12forward") {
+      vehicle.setScale(scale);
+    } else if (texture == "car13" || texture == "car13forward") {
+      vehicle.setScale(scale);
+    } else if (texture == "f1car" || texture == "f1carforward") {
+      vehicle.setScale(scale);
+    }
+     else if (texture == "tractor") {
       vehicle.setScale(0.5);
     }
   }
