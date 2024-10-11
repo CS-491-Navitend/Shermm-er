@@ -19,7 +19,6 @@ export class Timer {
       }
 
       if (this.game.playing) {
-        console.log(123);
         this.updateTimer();
       }
     }, 1000);
