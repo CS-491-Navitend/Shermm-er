@@ -62,6 +62,7 @@ export class Boot extends Scene {
     //Load images
     this.load.image("shermie", "/assets/shermie.png");
     this.load.image("background", "/assets/background.jpeg");
+    this.load.image("background2", "/assets/background2.jpeg");
     this.load.image("life", "/assets/heart.png");
   }
 

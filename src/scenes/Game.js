@@ -38,7 +38,7 @@ export class Game extends Scene {
 
     this.carSpeedMultiplier = levels[data["level"]]["car_speed_multiplier"];
 
-    this.add.image(425, 390, "background").setScale(1);
+    this.add.image(425, 390, "background2").setScale(1);
 
     //add Physics to the shermie sprite
     this.shermie = this.physics.add.sprite(415, 775, "shermie");
