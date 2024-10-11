@@ -10,10 +10,14 @@ export class Game extends Scene {
   constructor() {
     super("Game");
 
+    // level
+    this.level = 0;
+
     // game screen size
     this.width = 1000;
     this.height = 1000;
 
+    this.playing = true;
     this.canMove = true;
     this.shermie = null;
     this.vehicles = null;
@@ -42,6 +46,7 @@ export class Game extends Scene {
   }
 
   create(data) {
+    this.level = data["level"];
     this.timerDuration = levels[data["level"]]["time"];
     this.timeRemaining = this.timerDuration;
 
@@ -133,6 +138,7 @@ export class Game extends Scene {
       fill: "#ffffff",
     });
 
+    this.playing = true;
     this.timer.startTimer();
   }
   update() {
