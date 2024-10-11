@@ -5,11 +5,6 @@ export class GameOver extends Scene {
     super("GameOver");
   }
 
-  init(data) {
-    this.winCount = data.winCount || 0;
-    this.resetCount = data.resetCount || 0;
-  }
-
   create(data) {
     this.add.text(data["game"].width / 2, 250, "Game Over!", { fontSize: "32px", fill: "#fff" }).setOrigin(0.5);
 
@@ -20,7 +15,7 @@ export class GameOver extends Scene {
     this.add.text(data["game"].width / 2, 400, "Press R to restart", { fontSize: "32px", fill: "#fff" }).setOrigin(0.5);
 
     this.input.keyboard.on("keydown-R", () => {
-      this.scene.start("Game");
+      this.scene.start("Game", { level: data["game"].level });
     });
   }
 }
