@@ -9,8 +9,8 @@ import { GameOver } from "./scenes/GameOver";
 
 const config = {
   type: AUTO,
-  //   width: 3840,
-  //   height: 2160,
+  // width: 1000,
+  // height: 1000,
   parent: "game-container",
   backgroundColor: "#000000",
   physics: {
@@ -20,7 +20,7 @@ const config = {
     },
   },
   scale: {
-    mode: Scale.HEIGHT_CONTROLS_WIDTH,
+    mode: Scale.FIT,
     autoCenter: Scale.CENTER_HORIZONTALLY,
   },
   scene: [Boot, MainMenu, LevelMenu, MainGame, GameOver],

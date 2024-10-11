@@ -1,9 +1,11 @@
 import { Scene } from "phaser";
 
-var lives;
-var livesText;
-var gameOverMessage;
-var isOver = false;
+import { GameLogic } from "/src/lib/GameLogic";
+import { Drawing } from "/src/lib/Drawing";
+import { Timer } from "/src/lib/Timer";
+
+import { levels } from "/src/lib/levels";
+
 export class Game extends Scene {
   constructor() {
     super("Game");
@@ -12,39 +14,35 @@ export class Game extends Scene {
     this.shermie = null;
     this.vehicles = null;
     this.winCount = 0;
+    this.lives = 3;
+    this.roadLanes = 5;
     this.resetCount = 0;
-    this.timerDuration = 1_000_000_000;
+
+    // dynamic values
+    this.timerDuration = 0;
     this.timeRemaining = this.timerDuration;
+    this.numberOfCars = 0;
+    this.numberOfLogs = 0;
+    this.numberOfFrogs = 0;
+    this.carSpeedMultiplier = 1;
+    this.logSpeedMultiplier = 1;
+    this.frogSinkMultiplier = 1;
+
+    this.gameLogic = new GameLogic(this);
+    this.drawing = new Drawing(this);
+    this.timer = new Timer(this);
   }
 
-  preload() {
-    console.log("loaded");
+  create(data) {
+    this.timerDuration = levels[data["level"]]["time"];
 
-    //Load vehicle images
-    this.load.image("car1", "/assets/car1.png");
-    this.load.image("car1forward", "/assets/car1forward.png");
+    this.carSpeedMultiplier = levels[data["level"]]["car_speed_multiplier"];
 
-    this.load.image("car2", "/assets/car2.png");
-    this.load.image("car2forward", "/assets/car2forward.png");
-
-    this.load.image("car3", "/assets/car3.png");
-    this.load.image("car3forward", "/assets/car3forward.png");
-
-    this.load.image("tractor", "/assets/TractorTrailerForward.png");
-
-    //Load images
-    this.load.image("shermie", "/assets/shermie.png");
-    this.load.image("background", "/assets/background.jpeg");
-    this.load.image("life", "/assets/heart.png");
-  }
-  
-
-  create() {
-    
     this.add.image(425, 390, "background").setScale(1);
 
     //add Physics to the shermie sprite
-    this.shermie = this.physics.add.sprite(435, 10, "shermie");
+    this.shermie = this.physics.add.sprite(415, 775, "shermie");
+
     this.shermie.setScale(0.81);
     this.shermie.setCollideWorldBounds(true);
 
@@ -55,12 +53,30 @@ export class Game extends Scene {
     const roadLines = this.add.graphics({
       lineStyle: { width: 4, color: 0xffffff },
     });
-    roadLines.strokeLineShape(new Phaser.Geom.Line(10, 420, 840, 420));
-    drawDashedLine(roadLines, 10, 485, 840, 485, 20, 10);
-    drawDashedLine(roadLines, 10, 545, 840, 545, 20, 10);
-    drawDashedLine(roadLines, 10, 605, 840, 605, 20, 10);
-    drawDashedLine(roadLines, 10, 665, 840, 665, 20, 10);
-    roadLines.strokeLineShape(new Phaser.Geom.Line(10, 722, 840, 722));
+
+    // solid road lines (top and bottom)
+    roadLines.strokeLineShape(new Phaser.Geom.Line(0, 420, 840, 420));
+    roadLines.strokeLineShape(
+      new Phaser.Geom.Line(
+        0,
+        420 + this.roadLanes * 60,
+        840,
+        420 + this.roadLanes * 60
+      )
+    );
+
+    // dashed road lines
+    for (let i = 0; i < this.roadLanes - 1; i++) {
+      this.drawing.drawDashedLine(
+        roadLines,
+        0,
+        485 + i * 60,
+        840,
+        485 + i * 60,
+        20,
+        10
+      );
+    }
 
     const goalZone = this.physics.add.staticGroup();
     const goal = this.add.rectangle(400, 50, 800, 50);
@@ -70,27 +86,39 @@ export class Game extends Scene {
     this.vehicles = this.physics.add.group();
 
     //First row of vehicles
-    this.spawnVehicle(100, 695, "car1", -175);
-    this.spawnVehicle(600, 695, "car3", -175);
-    this.spawnVehicle(850, 695, "car1", -175);
+    this.spawnVehicle(100, 695, "car1", -175 * this.carSpeedMultiplier);
+    this.spawnVehicle(600, 695, "car3", -175 * this.carSpeedMultiplier);
+    this.spawnVehicle(850, 695, "car1", -175 * this.carSpeedMultiplier);
 
     //Second row of vehicles
-    this.spawnVehicle(100, 635, "car2forward", 150);
-    this.spawnVehicle(300, 635, "car3forward", 150);
-    this.spawnVehicle(700, 635, "car1forward", 150);
+    this.spawnVehicle(100, 635, "car2forward", 150 * this.carSpeedMultiplier);
+    this.spawnVehicle(300, 635, "car3forward", 150 * this.carSpeedMultiplier);
+    this.spawnVehicle(700, 635, "car1forward", 150 * this.carSpeedMultiplier);
 
     //Third row of vehicles
-    this.spawnVehicle(100, 575, "car3", -200);
-    this.spawnVehicle(700, 575, "car1", -200);
+    for (let i = 0; i < 3; i++) {
+      this.spawnVehicle(
+        100 + i * 150,
+        575,
+        "car2",
+        -200 * this.carSpeedMultiplier
+      );
+    }
 
     //Fourth row of vehicles
-    this.spawnVehicle(100, 515, "tractor", 300);
+    this.spawnVehicle(100, 515, "tractor", 300 * this.carSpeedMultiplier);
 
     //Fifth row of vehicles
-    this.spawnVehicle(100, 455, "car2", -500);
+    this.spawnVehicle(100, 455, "car2", -500 * this.carSpeedMultiplier);
 
     //When shermie overlap
-    this.physics.add.overlap(this.shermie, goalZone, this.win, null, this);
+    this.physics.add.overlap(
+      this.shermie,
+      goalZone,
+      this.winCollision,
+      null,
+      this
+    );
     this.physics.add.overlap(
       this.shermie,
       this.vehicles,
@@ -106,49 +134,21 @@ export class Game extends Scene {
       callbackScope: this,
       loop: true,
     });
+
     this.timerText = this.add.text(16, 16, `Time: ${this.timeRemaining}`, {
       fontSize: "32px",
       fill: "#fff",
     });
 
-    this.startTimer();
+    this.timer.startTimer();
 
-    this.lives = 3;
+    // lives
     this.livesText = this.add.text(50, 50, "Lives: " + this.lives, {
       fontSize: "32px",
       fill: "#fff",
     });
-
-    //Defining game over message
-    gameOverMessage = this.add.text(
-      425,
-      150,
-      "\tGame over.\n Press space to try again.",
-      { fontSize: "42px", fill: "#fff" }
-    );
-    gameOverMessage.setOrigin(0.5);
-    gameOverMessage.setVisible(false);
-
-    this.input.keyboard.on("keydown-SPACE", reset, this);
   }
   update() {
-    //shermie move fluidly:
-    /* if (this.cursors.left.isDown){
-        shermie.x -= 5;
-    }
-    if (this.cursors.right.isDown){
-        shermie.x += 5;
-    }
-    if (this.cursors.up.isDown){
-        shermie.y -= 5;
-    }
-    if (this.cursors.down.isDown){
-        shermie.y += 5;
-    }*/
-
-    if (isOver) return;
-
-    //shermie arcade move
     if (this.canMove) {
       if (this.cursors.left.isDown && this.shermie.x > 10) {
         //console.log('moved left')
@@ -183,13 +183,6 @@ export class Game extends Scene {
     this.shermie.x = Phaser.Math.Clamp(this.shermie.x, 10, 850);
     this.shermie.y = Phaser.Math.Clamp(this.shermie.y, 10, 780);
 
-    /*
-    if (shermie.x < 10) shermie.x = 10;
-    if (shermie.x > 790) shermie.x = 790;
-    if (shermie.y < 50) shermie.y = 50;
-    if (shermie.y > 550) shermie.y = 550;
-    */
-
     this.vehicles.getChildren().forEach((vehicle) => {
       //console.log(`Vehicle Position: x=${vehicle.x}, y=${vehicle.y}, VelocityX=${vehicle.body.velocity.x}`); //used to test movement
       if (vehicle.x > 800 + vehicle.width / 2) vehicle.x = -vehicle.width / 2;
@@ -205,127 +198,27 @@ export class Game extends Scene {
     vehicle.body.immovable = true;
 
     //set the scale for each vehicle
+    var scale = 0.75;
     if (texture == "car1" || texture == "car1forward") {
-      vehicle.setScale(0.25);
+      vehicle.setScale(scale);
     } else if (texture == "car2" || texture == "car2forward") {
-      vehicle.setScale(0.15);
+      vehicle.setScale(scale);
     } else if (texture == "car3" || texture == "car3forward") {
-      vehicle.setScale(0.45);
+      vehicle.setScale(scale);
     } else if (texture == "tractor") {
       vehicle.setScale(0.5);
     }
-
-    //console.log(`Created vehicle: ${texture}, at (${x}, ${y}), Speed: ${speed}`);//line to show velocity
   }
 
-  //when goal is reached
-  win() {
-    console.log("Win triggered.");
-    this.winCount++;
-    console.log(`Total Wins: ${this.winCount - 1}`);
-    this.reset();
-  }
-
-  //Plays the GamerOver screen
-  gameOver() {
-    console.log("Game Over!");
-    this.scene.start("GameOver", {
-      winCount: this.winCount,
-      resetCount: this.resetCount,
-    });
-  }
-
-  //Reset the sheep everytime the sheep overlap an obstacle
-  reset() {
-    this.resetCount++;
-    console.log(`Total Resets: ${this.resetCount - 1}`);
-    this.shermie.x = 415;
-    this.shermie.y = 775;
-  }
   loseLife() {
-
-    console.log("Lose life triggered.");
-    console.log(this.lives);
-    if (this.lives > 1) {
-      this.lives--;
-      this.reset();
-    }
-    else this.gameOver();
-    this.livesText.setText(`Lives: ${this.lives}`);
+    this.gameLogic.loseLife();
   }
-  //Update the timer to be counted down
+
+  winCollision() {
+    this.gameLogic.win();
+  }
+
   updateTimer() {
-    this.timeRemaining--;
-    if (this.timeRemaining <= 0) {
-      this.timerEvent.remove();
-      this.gameOver();
-    }
-    this.timerText.setText(`Time: ${this.timeRemaining}`);
+    this.timer.updateTimer();
   }
-  startTimer() {
-    this.timeRemaining = this.timerDuration; // Reset the timer
-    this.timerText.setText(`Time: ${this.timeRemaining}`); // Display initial time
-    this.timerEvent = this.time.addEvent({
-      delay: 1000,
-      callback: this.updateTimer(),
-      callbackScope: this,
-      loop: true,
-    });
-  }
-}
-
-function drawDashedLine(graphics, x1, y1, x2, y2, dashLength, gapLength) {
-  let x = x1;
-  const step = dashLength + gapLength;
-
-  while (x < x2) {
-    graphics.strokeLineShape(new Phaser.Geom.Line(x, y1, x + dashLength, y2));
-    x += step;
-  }
-}
-
-//console.log(`Created vehicle: ${texture}, at (${x}, ${y}), Speed: ${speed}`);//line to show velocity
-//temp win condition
-
-//TODO: Implement logic into a menu
-function win() {
-  console.log("Win triggered.");
-  reset();
-}
-
-//TODO: Implement logic into a menu
-function gameOver() {
-  isOver = true;
-  gameOverMessage.setVisible(true);
-  console.log("Game over.");
-}
-
-//TODO: Implement logic into a menu
-function reset() {
-  if (isOver) {
-    //Restart the game when space is pressed
-    lives = 3;
-    livesText.setText("Lives: " + lives);
-    isOver = false;
-    gameOverMessage.setVisible(false);
-  }
-}
-
-function loseLife() {
-  //Decrement life on collision with obstacle
-
-  if (lives == 1) {
-    lives--;
-    livesText.setText("Lives: " + lives);
-    moveToStart();
-    gameOver();
-  } else {
-    lives--;
-    livesText.setText("Lives: " + lives);
-    moveToStart();
-  }
-}
-function moveToStart() {
-  shermie.x = 425;
-  shermie.y = 775;
 }
