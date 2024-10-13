@@ -23,6 +23,9 @@ export class Boot extends Scene {
     this.load.image("shermie", "/assets/shermie.png");
     this.load.image("background", "/assets/background.jpeg");
     this.load.image("life", "/assets/heart.png");
+
+    //TODO - Load water assets (Turtles and Logs)
+    
   }
 
   create() {

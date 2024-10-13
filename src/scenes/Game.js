@@ -46,6 +46,7 @@ export class Game extends Scene {
   }
 
   create(data) {
+    //Read in JSON for current level
     this.level = data["level"];
     this.timerDuration = levels[data["level"]]["time"];
     this.timeRemaining = this.timerDuration;
