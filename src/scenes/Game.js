@@ -249,7 +249,7 @@ export class Game extends Scene {
   //PLACEHOLDER LOGS AND TURTLES
   //Create a log - Actual Textures
   spawnLog(x, y, speed){ 
-    let log = this.add.rectangle(x, y, 120, 80, 0x964B00);
+    let log = this.add.rectangle(x, y, 120, 85, 0x964B00);
     this.physics.add.existing(log);
     this.logs.add(log);
     log.body.setVelocityX(speed);
@@ -274,7 +274,8 @@ export class Game extends Scene {
     frog.body.immovable = true;
   }*/
 
-  loseLife() {
+  loseLife(shermie) {
+    shermie.setVelocityX(0);
     this.gameLogic.loseLife();
   }
 
@@ -286,8 +287,7 @@ export class Game extends Scene {
     this.timer.updateTimer();
   }
 
-  rideLog(log){
-    this.shermie.y = log.y - this.shermie.height / 2 - log.height / 2;
-    this.shermie.setVelocityX(log.body.velocity.x);
+  rideLog(shermie, log){
+    shermie.setVelocityX(log.body.velocity.x);
   }
 }
