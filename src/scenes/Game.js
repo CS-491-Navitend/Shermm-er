@@ -155,14 +155,16 @@ export class Game extends Scene {
 
     //const logs = ["longLog", "shortLog",];
     const logSpacing = [250, 350, 100];
+    const logs = ["longLog", "shortLog"];
     
     console.log("Lanes: ", this.numberOfLanes);
     console.log("Logs: ", this.numberOfLogs);
 
     for(let lane = 0; lane < this.numberOfLanes; lane++){
       for(let i = 0; i < this.numberOfLogs; i++){
+        const randomLog = logs[Math.floor(Math.random() * logs.length)];
         const randomSpacing = logSpacing[Math.floor(Math.random() * logSpacing.length)];
-        this.spawnLog(randomSpacing + i * randomSpacing, laneStart - laneWidth * lane - laneWidth / 2, 100, -200 * this.logSpeedMultiplier);
+        this.spawnLog(randomSpacing + i * randomSpacing, laneStart - laneWidth * lane - laneWidth / 2, randomLog, 100, -200 * this.logSpeedMultiplier);
       }
     }
 
@@ -246,25 +248,13 @@ export class Game extends Scene {
     vehicle.body.immovable = true;
   }
 
-  //PLACEHOLDER LOGS AND TURTLES
-  //Create a log - Actual Textures
-  spawnLog(x, y, speed){ 
-    let log = this.add.rectangle(x, y, 120, 85, 0x964B00);
-    this.physics.add.existing(log);
-    this.logs.add(log);
-    log.body.setVelocityX(speed);
-    log.body.allowGravity = false;
-    log.body.immovable = true;
-  }
-
-
-  //Create a log - Actual Textures
-  /*spawnLog(x, y, texture, speed){ 
+  //Create a log 
+  spawnLog(x, y, texture, speed){ 
     let log = this.logs.create(x, y, texture);
     log.body.setVelocityX(speed);
     log.body.allowGravity = false;
     log.body.immovalbe = true;
-  }*/
+  }
 
   //Create a Turtle - Actual Textures
   /*spawnTurtle(x, y, texture, speed) {
@@ -274,8 +264,7 @@ export class Game extends Scene {
     frog.body.immovable = true;
   }*/
 
-  loseLife(shermie) {
-    shermie.setVelocityX(0);
+  loseLife() {
     this.gameLogic.loseLife();
   }
 
