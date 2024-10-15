@@ -65,7 +65,8 @@ export class Game extends Scene {
     //add Physics to the shermie sprite
     this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, "shermie");
 
-    this.shermie.setScale(1);
+    this.shermie.setSize(50,50,true);//this manipulates hitbox of shermie
+    this.shermie.setScale(1);//this manipulates scale of shermie
     this.shermie.setCollideWorldBounds(true);
 
     //User input for movements
@@ -98,16 +99,21 @@ export class Game extends Scene {
 
     // create goal
     const goalZone = this.physics.add.staticGroup();
-    const goal = this.add.rectangle(this.width / 2, 0, this.width, this.safeZoneSize, 0x1de100);
+    const goal = this.add.rectangle(this.width / 2, roadEnd - this.safeZoneSize - this.safeZoneSize / 2 - roadWidth * this.numberOfRoads, this.width, this.safeZoneSize, 0x1de100);
     this.physics.add.existing(goal, true);
     goalZone.add(goal);
 
     // create safe zones
     // bottom of screen
-    this.add.rectangle(this.width / 2, this.height - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).depth = -1;
+    this.add.rectangle(this.width / 2, this.height - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).setDepth(-1);
 
     // middle
-    this.add.rectangle(this.width / 2, roadEnd - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).depth = -1;
+    this.add.rectangle(this.width / 2, roadEnd - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).setDepth(-1);
+
+    const waterZone = this.physics.add.staticGroup();
+    const water = (this.add.rectangle(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads, this.width, roadWidth * this.numberOfRoads, 0x1a31ac)).setDepth(-2);
+    this.physics.add.existing(water, true);
+    waterZone.add(water);
 
     this.vehicles = this.physics.add.group();
 
@@ -127,6 +133,7 @@ export class Game extends Scene {
     //When shermie overlap
     this.physics.add.overlap(this.shermie, goalZone, this.winCollision, null, this);
     this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
+    this.physics.add.overlap(this.shermie, waterZone, this.loseLife, null, this);
 
     // this.timerText
     this.timerText = this.add.text(16, 32, `Time: ${this.timeRemaining}`, {
