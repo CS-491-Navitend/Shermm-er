@@ -65,7 +65,8 @@ export class Game extends Scene {
     //add Physics to the shermie sprite
     this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, "shermie");
 
-    this.shermie.setScale(1);
+    this.shermie.setSize(50,50,true);//this manipulates hitbox of shermie
+    this.shermie.setScale(1);//this manipulates scale of shermie
     this.shermie.setCollideWorldBounds(true);
 
     //User input for movements
