@@ -131,7 +131,7 @@ export class Game extends Scene {
     //When shermie overlap
     this.physics.add.overlap(this.shermie, goalZone, this.winCollision, null, this);
     this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
-    this.physics.add.overlap(this.shermie, waterZone, this.loseLife, null, this);
+    // this.physics.add.overlap(this.shermie, waterZone, this.loseLife, null, this);
 
     // this.timerText
     this.timerText = this.add.text(16, 32, `Time: ${this.timeRemaining}`, {
