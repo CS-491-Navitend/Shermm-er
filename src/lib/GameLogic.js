@@ -4,38 +4,40 @@ export class GameLogic {
   }
 
   win() {
-    console.log("Win triggered.");
+    console.log(`Win condition met. Wins: ${this.game.winCount}`);
     this.game.winCount++;
-    console.log(`Total Wins: ${this.game.winCount}`);
-    this.gameReset();
+    this.resetPlayer();
   }
 
   loseLife() {
     if (this.game.lives > 1) {
-      this.game.lives--;
-      this.gameReset();
+      this.game.lives -= 1;
+      console.log("Lose life. Lives:", this.game.lives);
+      this.resetPlayer();
     } else {
-      this.game.resetCount++;
+      this.game.lives -= 1;
+      console.log("Lose life. Lives:", this.game.lives);
+      this.game.resetCount += 1;
       this.gameOver();
       this.game.lives = 3;
     }
-    console.log("Lose life triggered. -> " + this.game.lives);
+
     this.game.livesText.setText(`Lives: ${this.game.lives}`);
   }
 
   gameOver() {
-    console.log("Game Over!");
+    console.log("Starting game over scene");
+    this.game.playing = false;
     this.game.scene.start("GameOver", {
-      winCount: this.game.winCount,
-      resetCount: this.game.resetCount,
+      game: this.game,
     });
   }
 
-  gameReset() {
+  resetPlayer() {
+    console.log("Resetting player");
     this.game.resetCount++;
-    console.log(`Total Resets: ${this.game.resetCount}`);
-    this.game.shermie.x = 415;
-    this.game.shermie.y = 775;
+    this.game.shermie.x = this.game.width / 2;
+    this.game.shermie.y = this.game.height - this.game.safeZoneSize + this.game.moveDistance / 2;
   }
 }
 
