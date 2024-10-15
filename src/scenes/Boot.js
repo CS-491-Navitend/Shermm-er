@@ -15,13 +15,20 @@ export class Boot extends Scene {
 
     this.load.image("car3", "/assets/car3.png");
     this.load.image("car3forward", "/assets/car3forward.png");
-
+    
     this.load.image("tractor", "/assets/TractorTrailer.png");
     this.load.image("tractorforward", "/assets/TractorTrailerforward.png");
+
+    //Load Logs and turtles
+    this.load.image("ShortLog", "/assets/ShortLog.png");
+    this.load.image("LongLog", "/assets/LongLog.png");
+    this.load.image("turtle", "/assets/turtle.png");
+    this.load.image("turtleforward", "/assets/turtleforward.png");
 
     //Load images
     this.load.image("shermie", "/assets/shermie.png");
     this.load.image("background", "/assets/background.jpeg");
+    this.load.image("background2", "/assets/background2.jpeg");
     this.load.image("life", "/assets/heart.png");
   }
 

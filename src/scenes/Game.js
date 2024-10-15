@@ -54,6 +54,7 @@ export class Game extends Scene {
     this.logSpeedMultiplier = levels[data["level"]]["log_speed_multiplier"];
     this.frogSinkMultiplier = levels[data["level"]]["turtle_sink_multiplier"];
 
+
     this.numberOfCars = levels[data["level"]]["number_of_cars"];
     this.numberOfLogs = levels[data["level"]]["number_of_logs"];
     this.numberOfFrogs = levels[data["level"]]["number_of_turtles"];
@@ -112,6 +113,7 @@ export class Game extends Scene {
 
     const cars = ["car1", "car2", "car3", "tractor"];
     const spacing = [250, 350, 100];
+
 
     // create vehicles
     for (let road = 0; road < this.numberOfRoads; road++) {
@@ -178,6 +180,7 @@ export class Game extends Scene {
     vehicle.body.setVelocityX(speed);
     vehicle.body.allowGravity = false;
     vehicle.body.immovable = true;
+
   }
 
   loseLife() {
