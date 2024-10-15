@@ -2,7 +2,7 @@ export class Drawing {
   constructor(game) {
     this.game = game;
   }
-  //Draw dashed lines for road
+
   drawDashedLine(graphics, x1, y1, x2, y2, dashLength, gapLength) {
     let x = x1;
     const step = dashLength + gapLength;

@@ -3,14 +3,14 @@
     {
       "time": 10000,
 
-      "car_speed_multiplier": 0.5,
+      "car_speed_multiplier": 0.01,
       "number_of_cars": 1,
 
       "log_speed_multiplier": 1,
       "number_of_logs": 0,
 
-      "turtle_sink_multiplier": 1,
-      "number_of_turtles": 0,
+      "frog_sink_multiplier": 1,
+      "number_of_frogs": 0,
 
       "powerups": [0, 0, 0, 0]
     },
@@ -24,8 +24,8 @@
       "log_speed_multiplier": 1,
       "number_of_logs": 0,
 
-      "turtle_sink_multiplier": 1,
-      "number_of_turtles": 0,
+      "frog_sink_multiplier": 1,
+      "number_of_frogs": 0,
 
       "powerups": [0, 0, 0, 0]
     }
