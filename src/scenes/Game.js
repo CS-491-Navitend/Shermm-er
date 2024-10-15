@@ -9,16 +9,28 @@ import { levels } from "/src/lib/levels";
 export class Game extends Scene {
   constructor() {
     super("Game");
+
+    // level
+    this.level = 0;
+
+    // game screen size
+    this.width = 1000;
+    this.height = 1000;
+
+    this.playing = true;
     this.canMove = true;
-    this.moveDistance = 60;
     this.shermie = null;
     this.vehicles = null;
     this.winCount = 0;
     this.lives = 3;
-    this.roadLanes = 5;
     this.resetCount = 0;
 
-    // dynamic values
+    // road values
+    this.moveDistance = 80;
+    this.numberOfRoads = 4;
+    this.safeZoneSize = 80;
+
+    // dynamic values (from levels.json)
     this.timerDuration = 0;
     this.timeRemaining = this.timerDuration;
     this.numberOfCars = 0;
@@ -34,16 +46,25 @@ export class Game extends Scene {
   }
 
   create(data) {
+    this.level = data["level"];
     this.timerDuration = levels[data["level"]]["time"];
+    this.timeRemaining = this.timerDuration;
 
     this.carSpeedMultiplier = levels[data["level"]]["car_speed_multiplier"];
+    this.logSpeedMultiplier = levels[data["level"]]["log_speed_multiplier"];
+    this.frogSinkMultiplier = levels[data["level"]]["turtle_sink_multiplier"];
 
-    this.add.image(425, 390, "background").setScale(1);
+    this.numberOfCars = levels[data["level"]]["number_of_cars"];
+    this.numberOfLogs = levels[data["level"]]["number_of_logs"];
+    this.numberOfFrogs = levels[data["level"]]["number_of_turtles"];
+
+    // set background
+    // this.add.image(this.width / 2, this.height / 2, "background").setScale(1.3);
 
     //add Physics to the shermie sprite
-    this.shermie = this.physics.add.sprite(415, 775, "shermie");
+    this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, "shermie");
 
-    this.shermie.setScale(0.81);
+    this.shermie.setScale(1);
     this.shermie.setCollideWorldBounds(true);
 
     //User input for movements
@@ -51,143 +72,104 @@ export class Game extends Scene {
 
     //Make roads
     const roadLines = this.add.graphics({
-      lineStyle: { width: 4, color: 0xffffff },
+      lineStyle: { width: 5, color: 0xffffff },
     });
+    const roadWidth = this.moveDistance;
+    const roadStart = this.height - this.safeZoneSize;
+    const roadEnd = roadStart - this.numberOfRoads * roadWidth;
 
     // solid road lines (top and bottom)
-    roadLines.strokeLineShape(new Phaser.Geom.Line(0, 420, 840, 420));
-    roadLines.strokeLineShape(
-      new Phaser.Geom.Line(
-        0,
-        420 + this.roadLanes * 60,
-        840,
-        420 + this.roadLanes * 60
-      )
-    );
+    roadLines.strokeLineShape(new Phaser.Geom.Line(0, roadStart, this.width, roadStart));
+    roadLines.strokeLineShape(new Phaser.Geom.Line(0, roadEnd, this.width, roadEnd));
 
     // dashed road lines
-    for (let i = 0; i < this.roadLanes - 1; i++) {
+    for (let i = 0; i < this.numberOfRoads - 1; i++) {
       this.drawing.drawDashedLine(
         roadLines,
-        0,
-        485 + i * 60,
-        840,
-        485 + i * 60,
-        20,
-        10
+        10, // half of the gap between the dashes
+        roadStart - i * roadWidth - roadWidth,
+        this.width,
+        roadStart - i * roadWidth - roadWidth,
+        30, // the length of the dash
+        20 // the length of the gap between the dashes
       );
     }
 
+    // create goal
     const goalZone = this.physics.add.staticGroup();
-    const goal = this.add.rectangle(400, 50, 800, 50);
+    const goal = this.add.rectangle(this.width / 2, 0, this.width, this.safeZoneSize, 0x1de100);
     this.physics.add.existing(goal, true);
     goalZone.add(goal);
 
+    // create safe zones
+    // bottom of screen
+    this.add.rectangle(this.width / 2, this.height - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).depth = -1;
+
+    // middle
+    this.add.rectangle(this.width / 2, roadEnd - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).depth = -1;
+
     this.vehicles = this.physics.add.group();
 
-    //First row of vehicles
-    this.spawnVehicle(100, 695, "car1", -175 * this.carSpeedMultiplier);
-    this.spawnVehicle(600, 695, "car3", -175 * this.carSpeedMultiplier);
-    this.spawnVehicle(850, 695, "car1", -175 * this.carSpeedMultiplier);
+    const cars = ["car1", "car2", "car3", "tractor"];
+    const spacing = [250, 350, 100];
 
-    //Second row of vehicles
-    this.spawnVehicle(100, 635, "car2forward", 150 * this.carSpeedMultiplier);
-    this.spawnVehicle(300, 635, "car3forward", 150 * this.carSpeedMultiplier);
-    this.spawnVehicle(700, 635, "car1forward", 150 * this.carSpeedMultiplier);
-
-    //Third row of vehicles
-    for (let i = 0; i < 3; i++) {
-      this.spawnVehicle(
-        100 + i * 150,
-        575,
-        "car2",
-        -200 * this.carSpeedMultiplier
-      );
+    // create vehicles
+    for (let road = 0; road < this.numberOfRoads; road++) {
+      for (let i = 0; i < this.numberOfCars; i++) {
+        const randomCar = cars[Math.floor(Math.random() * cars.length)];
+        const randomSpacing = spacing[Math.floor(Math.random() * spacing.length)];
+        this.spawnVehicle(randomSpacing + i * randomSpacing, roadStart - roadWidth * road - roadWidth / 2, randomCar, -200 * this.carSpeedMultiplier);
+      }
     }
 
-    //Fourth row of vehicles
-    this.spawnVehicle(100, 515, "tractor", 300 * this.carSpeedMultiplier);
-
-    //Fifth row of vehicles
-    this.spawnVehicle(100, 455, "car2", -500 * this.carSpeedMultiplier);
-
     //When shermie overlap
-    this.physics.add.overlap(
-      this.shermie,
-      goalZone,
-      this.winCollision,
-      null,
-      this
-    );
-    this.physics.add.overlap(
-      this.shermie,
-      this.vehicles,
-      this.loseLife,
-      null,
-      this
-    );
+    this.physics.add.overlap(this.shermie, goalZone, this.winCollision, null, this);
+    this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
 
-    //Timer event
-    this.timerEvent = this.time.addEvent({
-      delay: 1000,
-      callback: this.updateTimer,
-      callbackScope: this,
-      loop: true,
-    });
-
-    this.timerText = this.add.text(16, 16, `Time: ${this.timeRemaining}`, {
+    // this.timerText
+    this.timerText = this.add.text(16, 32, `Time: ${this.timeRemaining}`, {
       fontSize: "32px",
-      fill: "#fff",
+      fill: "#ffffff",
     });
 
+    // this.livesText
+    this.livesText = this.add.text(16, 32 + 32, `Lives: ${this.lives}`, {
+      fontSize: "32px",
+      fill: "#ffffff",
+    });
+
+    this.playing = true;
     this.timer.startTimer();
-
-    // lives
-    this.livesText = this.add.text(50, 50, "Lives: " + this.lives, {
-      fontSize: "32px",
-      fill: "#fff",
-    });
   }
   update() {
     if (this.canMove) {
-      if (this.cursors.left.isDown && this.shermie.x > 10) {
-        //console.log('moved left')
+      if (this.cursors.left.isDown && this.shermie.x > 0) {
         this.shermie.x -= this.moveDistance;
         this.canMove = false;
       }
-      if (this.cursors.right.isDown && this.shermie.x < 850) {
-        // console.log('moved right')
+      if (this.cursors.right.isDown && this.shermie.x < this.width) {
         this.shermie.x += this.moveDistance;
         this.canMove = false;
       }
-      if (this.cursors.up.isDown && this.shermie.y > 10) {
-        //console.log('move up')
+      if (this.cursors.up.isDown && this.shermie.y > 0) {
         this.shermie.y -= this.moveDistance;
         this.canMove = false;
       }
-      if (this.cursors.down.isDown && this.shermie.y < 780) {
-        //console.log('move down')
+      if (this.cursors.down.isDown && this.shermie.y < this.height) {
         this.shermie.y += this.moveDistance;
         this.canMove = false;
       }
     }
-    if (
-      !this.cursors.left.isDown &&
-      !this.cursors.right.isDown &&
-      !this.cursors.up.isDown &&
-      !this.cursors.down.isDown
-    ) {
+    if (!this.cursors.left.isDown && !this.cursors.right.isDown && !this.cursors.up.isDown && !this.cursors.down.isDown) {
       this.canMove = true;
     }
 
-    this.shermie.x = Phaser.Math.Clamp(this.shermie.x, 10, 850);
-    this.shermie.y = Phaser.Math.Clamp(this.shermie.y, 10, 780);
+    this.shermie.x = Phaser.Math.Clamp(this.shermie.x, 0, this.width);
+    this.shermie.y = Phaser.Math.Clamp(this.shermie.y, 0, this.height - this.safeZoneSize + this.moveDistance / 2);
 
     this.vehicles.getChildren().forEach((vehicle) => {
-      //console.log(`Vehicle Position: x=${vehicle.x}, y=${vehicle.y}, VelocityX=${vehicle.body.velocity.x}`); //used to test movement
-      if (vehicle.x > 800 + vehicle.width / 2) vehicle.x = -vehicle.width / 2;
-      else if (vehicle.x < -vehicle.width / 2)
-        vehicle.x = 800 + vehicle.width / 2;
+      if (vehicle.x > this.width + vehicle.width / 2) vehicle.x = -vehicle.width / 2;
+      else if (vehicle.x < -vehicle.width / 2) vehicle.x = this.width + vehicle.width / 2;
     });
   }
   //Create a vehicle
@@ -196,18 +178,6 @@ export class Game extends Scene {
     vehicle.body.setVelocityX(speed);
     vehicle.body.allowGravity = false;
     vehicle.body.immovable = true;
-
-    //set the scale for each vehicle
-    var scale = 0.75;
-    if (texture == "car1" || texture == "car1forward") {
-      vehicle.setScale(scale);
-    } else if (texture == "car2" || texture == "car2forward") {
-      vehicle.setScale(scale);
-    } else if (texture == "car3" || texture == "car3forward") {
-      vehicle.setScale(scale);
-    } else if (texture == "tractor") {
-      vehicle.setScale(0.5);
-    }
   }
 
   loseLife() {
