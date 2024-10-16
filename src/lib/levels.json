@@ -7,10 +7,12 @@
       "number_of_cars": 1,
 
       "log_speed_multiplier": 1,
-      "number_of_logs": 1,
+      "number_of_logs": 2,
 
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 1,
+
+      "number_of_lives": 99,
 
       "powerups": [0, 0, 0, 0]
     },
@@ -26,6 +28,8 @@
 
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 0,
+      
+      "number_of_lives": 3,
 
       "powerups": [0, 0, 0, 0]
     }

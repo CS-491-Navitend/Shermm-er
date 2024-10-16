@@ -35,6 +35,7 @@ export class GameLogic {
 
   resetPlayer() {
     console.log("Resetting player");
+    this.game.shermie.setVelocity(0, 0);
     this.game.resetCount++;
     this.game.shermie.x = this.game.width / 2;
     this.game.shermie.y = this.game.height - this.game.safeZoneSize + this.game.moveDistance / 2;
