@@ -17,7 +17,7 @@ export class Boot extends Scene {
     this.load.image("tractor", "/assets/vehiclesBackward/tractor.png");
     this.load.image("tractorforward", "/assets/vehicleForward/tractorForward.png");
     
-    this.load.image("ShortLog", "/assets/shortLog.png");
+    this.load.image("ShortLog", "/assets/ShortLog.png");
     this.load.image("LongLog", "/assets/LongLog.png");
     this.load.image("turtle", "/assets/turtle.png");
     this.load.image("turtleforward", "/assets/turtleforward.png");
