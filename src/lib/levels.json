@@ -3,8 +3,8 @@
     {
       "time": 10000,
 
-      "car_speed_multiplier": 0.5,
-      "number_of_cars": 1,
+      "car_speed_multiplier": 2,
+      "number_of_cars": 2,
 
       "log_speed_multiplier": 1,
       "number_of_logs": 2,

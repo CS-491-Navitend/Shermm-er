@@ -3,6 +3,7 @@ import { Scene } from "phaser";
 import { GameLogic } from "/src/lib/GameLogic";
 import { Drawing } from "/src/lib/Drawing";
 import { Timer } from "/src/lib/Timer";
+import { createVehicles, createLogs } from '/src/lib/Spawner.js';
 
 import { levels } from "/src/lib/levels";
 
@@ -146,17 +147,10 @@ export class Game extends Scene {
     this.vehicles = this.physics.add.group();
 
     const cars = ["car1", "car2", "car3", "tractor"];
+    const carsForward = ["car1forward", "car2forward", "car3forward", "TractorTrailerForward"];
     const carSpacing = [250, 350, 100];//Spacing on X axis
 
-
-    // create vehicles
-    for (let road = 0; road < this.numberOfRoads; road++) {
-      for (let i = 0; i < this.numberOfCars; i++) {
-        const randomCar = cars[Math.floor(Math.random() * cars.length)];
-        const randomSpacing = carSpacing[Math.floor(Math.random() * carSpacing.length)];
-        this.spawnVehicle(randomSpacing + i * randomSpacing, roadStart - roadWidth * road - roadWidth / 2, randomCar, -200 * this.carSpeedMultiplier);
-      }
-    }
+    createVehicles(this, roadStart, roadWidth, cars, carsForward, carSpacing);
 
     //TODO - Create logs and turtles
 
@@ -169,13 +163,19 @@ export class Game extends Scene {
     console.log("Lanes: ", this.numberOfLanes);
     console.log("Logs: ", this.numberOfLogs);
 
-    for(let lane = 0; lane < this.numberOfLanes; lane++){
-      for(let i = 0; i < this.numberOfLogs; i++){
-        const randomLog = logs[Math.floor(Math.random() * logs.length)];
-        const randomSpacing = logSpacing[Math.floor(Math.random() * logSpacing.length)];
-        this.spawnLog(randomSpacing + i * randomSpacing, laneStart - laneWidth * lane - laneWidth / 2, randomLog, 100, -200 * this.logSpeedMultiplier);
-      }
-    }
+    createLogs(this, laneStart, laneWidth, logs, logSpacing);
+
+    // for(let lane = 0; lane < this.numberOfLanes; lane++){
+    //   let direction = -200 * this.logSpeedMultiplier;
+    //   if(lane%2 ==0){
+    //     direction = direction * -1
+    //   }
+    //   for(let i = 0; i < this.numberOfLogs; i++){
+    //     const randomLog = logs[Math.floor(Math.random() * logs.length)];
+    //     const randomSpacing = logSpacing[Math.floor(Math.random() * logSpacing.length)];
+    //     this.spawnLog(randomSpacing + i * randomSpacing, laneStart - laneWidth * lane - laneWidth / 2, randomLog, direction);
+    //   }
+    // }
 
     //When shermie overlap
     this.physics.add.overlap(this.shermie, goalZone, this.winCollision, null, this);
