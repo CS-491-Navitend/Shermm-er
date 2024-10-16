@@ -70,7 +70,7 @@ export class Game extends Scene {
     this.numberOfTurtles = levels[data["level"]]["number_of_turtles"];
 
     // set background
-    // this.add.image(this.width / 2, this.height / 2, "background").setScale(1.3);
+    //this.add.image(this.width / 2, this.height / 2, "background").setScale(1.3);
 
     //add Physics to the shermie sprite
     this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, "shermie");
@@ -182,7 +182,7 @@ export class Game extends Scene {
     this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
     this.physics.add.overlap(this.shermie, waterZone, () => {
         if (!this.physics.overlap(this.shermie, this.logs)) {
-          this.loseLife();  // Only lose a life if not on a log
+          this.loseLife(); 
         }
       }, null, this);
     this.physics.add.overlap(this.shermie, this.logs, this.rideLog, null, this);
