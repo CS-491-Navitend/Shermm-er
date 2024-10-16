@@ -147,7 +147,7 @@ export class Game extends Scene {
     this.vehicles = this.physics.add.group();
 
     const cars = ["car1", "car2", "car3", "tractor"];
-    const carsForward = ["car1forward", "car2forward", "car3forward", "TractorTrailerForward"];
+    const carsForward = ["car1forward", "car2forward", "car3forward"];
     const carSpacing = [250, 350, 100];//Spacing on X axis
 
     createVehicles(this, roadStart, roadWidth, cars, carsForward, carSpacing);
@@ -156,7 +156,6 @@ export class Game extends Scene {
 
     this.logs = this.physics.add.group();
 
-    //const logs = ["longLog", "shortLog",];
     const logSpacing = [250, 350, 100];
     const logs = ["LongLog", "ShortLog"];
     
