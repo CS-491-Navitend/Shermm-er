@@ -4,7 +4,6 @@ import { GameLogic } from "/src/lib/GameLogic";
 import { Drawing } from "/src/lib/Drawing";
 import { Timer } from "/src/lib/Timer";
 import { createVehicles, createLogs } from '/src/lib/Spawner.js';
-
 import { levels } from "/src/lib/levels";
 
 export class Game extends Scene {
@@ -145,36 +144,19 @@ export class Game extends Scene {
     console.log("Lane End: ", laneEnd);
 
     this.vehicles = this.physics.add.group();
+    this.logs = this.physics.add.group();
 
     const cars = ["car1", "car2", "car3", "tractor"];
     const carsForward = ["car1forward", "car2forward", "car3forward"];
     const carSpacing = [250, 350, 100];//Spacing on X axis
 
-    createVehicles(this, roadStart, roadWidth, cars, carsForward, carSpacing);
-
-    //TODO - Create logs and turtles
-
-    this.logs = this.physics.add.group();
-
-    const logSpacing = [250, 350, 100];
     const logs = ["LongLog", "ShortLog"];
-    
-    console.log("Lanes: ", this.numberOfLanes);
-    console.log("Logs: ", this.numberOfLogs);
+    const logSpacing = [250, 350, 100];
 
+    createVehicles(this, roadStart, roadWidth, cars, carsForward, carSpacing);
     createLogs(this, laneStart, laneWidth, logs, logSpacing);
 
-    // for(let lane = 0; lane < this.numberOfLanes; lane++){
-    //   let direction = -200 * this.logSpeedMultiplier;
-    //   if(lane%2 ==0){
-    //     direction = direction * -1
-    //   }
-    //   for(let i = 0; i < this.numberOfLogs; i++){
-    //     const randomLog = logs[Math.floor(Math.random() * logs.length)];
-    //     const randomSpacing = logSpacing[Math.floor(Math.random() * logSpacing.length)];
-    //     this.spawnLog(randomSpacing + i * randomSpacing, laneStart - laneWidth * lane - laneWidth / 2, randomLog, direction);
-    //   }
-    // }
+    //TODO - Create turtles
 
     //When shermie overlap
     this.physics.add.overlap(this.shermie, goalZone, this.winCollision, null, this);
@@ -201,6 +183,8 @@ export class Game extends Scene {
     this.playing = true;
     this.timer.startTimer();
   }
+
+  
   update() {
     if (this.canMove) {
       if (this.cursors.left.isDown && this.shermie.x > 0) {
@@ -228,10 +212,6 @@ export class Game extends Scene {
         console.log("Y position: ", this.shermie.y);
       }
     }
-    // midsafeZoneLocation = roadEnd - this.safeZoneSize - this.safeZoneSize / 2 - roadWidth * this.numberOfRoads
-    // if (this.shermie.y === midsafeZoneLocation) {
-    //   this.shermie.setVelocity(0, 0);  // Reset velocity at the exact location
-    // }
 
     if (!this.cursors.left.isDown && !this.cursors.right.isDown && !this.cursors.up.isDown && !this.cursors.down.isDown) {
       this.canMove = true;
@@ -244,8 +224,7 @@ export class Game extends Scene {
       if (vehicle.x > this.width + vehicle.width / 2) vehicle.x = -vehicle.width / 2;
       else if (vehicle.x < -vehicle.width / 2) vehicle.x = this.width + vehicle.width / 2;
     });
-    
-    
+
     this.logs.getChildren().forEach((log) => {
       if (log.x > this.width + log.width / 2) log.x = -log.width / 2;
       else if (log.x < -log.width / 2) log.x = this.width + log.width / 2;
@@ -263,6 +242,7 @@ export class Game extends Scene {
     vehicle.body.setVelocityX(speed);
     vehicle.body.allowGravity = false;
     vehicle.body.immovable = true;
+    return vehicle;
   }
 
   //Create a log 
@@ -273,6 +253,7 @@ export class Game extends Scene {
     log.body.immovalbe = true;
     log.body.setSize(log.width, 50);
     log.setDepth(1);
+    return log;
   }
 
   //Create a Turtle - Actual Textures
