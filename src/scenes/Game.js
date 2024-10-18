@@ -252,7 +252,7 @@ export class Game extends Scene {
     log.body.allowGravity = false;
     log.body.immovalbe = true;
     log.body.setSize(log.width, 50);
-    log.setDepth(1);
+    log.setDepth(-1);
     return log;
   }
 
