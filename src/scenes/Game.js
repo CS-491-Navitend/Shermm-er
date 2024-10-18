@@ -164,18 +164,23 @@ export class Game extends Scene {
 
     //TODO - Create turtles
     //createTurtles(this, laneStart, laneWidth, turtleSpacing);
-
     //When shermie overlap
-    this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
+    this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);//Vehicle Collisions
+    
+    //Start Water Logic
     this.physics.add.overlap(this.shermie, waterZone, () => {
-        if(this.physics.overlap(this.shermie, goalZone)){
-          this.winCollision()
-        }
-        else if (!this.physics.overlap(this.shermie, this.logs)) {
+        goalZone.getChildren().forEach((goal) => {
+          if (this.physics.overlap(this.shermie, goal)) {
+            goal.setAlpha(0.5);
+            this.goalCollision();
+          }
+        });
+        if (!this.physics.overlap(this.shermie, this.logs)) {
           this.loseLife(); 
         }
       }, null, this);
     this.physics.add.overlap(this.shermie, this.logs, this.rideLog, null, this);
+    //End Water Logic
 
     // this.timerText
     this.timerText = this.add.text(16, 32, `Time: ${this.timeRemaining}`, {
@@ -279,6 +284,10 @@ export class Game extends Scene {
 
   winCollision() {
     this.gameLogic.win();
+  }
+
+  goalCollision(){
+    this.gameLogic.goal();
   }
 
   updateTimer() {
