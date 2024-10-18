@@ -3,7 +3,7 @@ import { Scene } from "phaser";
 import { GameLogic } from "/src/lib/GameLogic";
 import { Drawing } from "/src/lib/Drawing";
 import { Timer } from "/src/lib/Timer";
-
+import { createVehicles, createLogs } from '/src/lib/Spawner.js';
 import { levels } from "/src/lib/levels";
 
 export class Game extends Scene {
@@ -26,17 +26,17 @@ export class Game extends Scene {
     this.logs = null;
     this.turtles = null;
     this.winCount = 0;
-    this.lives = 3;
+    this.lives = 0;
     this.resetCount = 0;
 
     // road values
     this.moveDistance = 80;
-    this.numberOfRoads = 4;
+    this.numberOfRoads = 5;
     this.safeZoneSize = 80;
 
     //water values
     this.moveDistance = 80;
-    this.numberOfLanes = 4;
+    this.numberOfLanes = 5;
 
     // dynamic values (from levels.json)
     this.timerDuration = 0;
@@ -58,6 +58,8 @@ export class Game extends Scene {
     this.timerDuration = levels[data["level"]]["time"];
     this.timeRemaining = this.timerDuration;
 
+    this.lives=levels[data["level"]]["number_of_lives"];
+
     this.carSpeedMultiplier = levels[data["level"]]["car_speed_multiplier"];
     this.logSpeedMultiplier = levels[data["level"]]["log_speed_multiplier"];
     this.frogSinkMultiplier = levels[data["level"]]["turtle_sink_multiplier"];
@@ -68,7 +70,7 @@ export class Game extends Scene {
     this.numberOfTurtles = levels[data["level"]]["number_of_turtles"];
 
     // set background
-    // this.add.image(this.width / 2, this.height / 2, "background").setScale(1.3);
+    //this.add.image(this.width / 2, this.height / 2, "background").setScale(1.3);
 
     //add Physics to the shermie sprite
     this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, "shermie");
@@ -117,8 +119,13 @@ export class Game extends Scene {
     this.add.rectangle(this.width / 2, this.height - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).setDepth(-1);
 
     // middle
-    this.add.rectangle(this.width / 2, roadEnd - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).setDepth(-1);
-    
+    let safeZone = this.add.rectangle(this.width / 2, roadEnd - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).setDepth(-1);
+    this.physics.add.existing(safeZone, true);
+    //resets velocity of Shermie
+    this.physics.add.overlap(this.shermie, safeZone, () => {
+      this.shermie.setVelocity(0, 0);  
+    }, null, this);
+        
     // create water zone
     const waterZone = this.physics.add.staticGroup();
     const water = (this.add.rectangle(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads, this.width, roadWidth * this.numberOfRoads, 0x1a31ac)).setDepth(-2);
@@ -137,43 +144,28 @@ export class Game extends Scene {
     console.log("Lane End: ", laneEnd);
 
     this.vehicles = this.physics.add.group();
-
-    const cars = ["car1", "car2", "car3", "tractor"];
-    const carSpacing = [250, 350, 100];//Spacing on X axis
-
-
-    // create vehicles
-    for (let road = 0; road < this.numberOfRoads; road++) {
-      for (let i = 0; i < this.numberOfCars; i++) {
-        const randomCar = cars[Math.floor(Math.random() * cars.length)];
-        const randomSpacing = carSpacing[Math.floor(Math.random() * carSpacing.length)];
-        this.spawnVehicle(randomSpacing + i * randomSpacing, roadStart - roadWidth * road - roadWidth / 2, randomCar, -200 * this.carSpeedMultiplier);
-      }
-    }
-
-    //TODO - Create logs and turtles
-
     this.logs = this.physics.add.group();
 
-    //const logs = ["longLog", "shortLog",];
-    const logSpacing = [250, 350, 100];
-    const logs = ["longLog", "shortLog"];
-    
-    console.log("Lanes: ", this.numberOfLanes);
-    console.log("Logs: ", this.numberOfLogs);
+    const cars = ["car1", "car2", "car3", "tractor"];
+    const carsForward = ["car1forward", "car2forward", "car3forward"];
+    const carSpacing = [250, 350, 100];//Spacing on X axis
 
-    for(let lane = 0; lane < this.numberOfLanes; lane++){
-      for(let i = 0; i < this.numberOfLogs; i++){
-        const randomLog = logs[Math.floor(Math.random() * logs.length)];
-        const randomSpacing = logSpacing[Math.floor(Math.random() * logSpacing.length)];
-        this.spawnLog(randomSpacing + i * randomSpacing, laneStart - laneWidth * lane - laneWidth / 2, randomLog, 100, -200 * this.logSpeedMultiplier);
-      }
-    }
+    const logs = ["LongLog", "ShortLog"];
+    const logSpacing = [250, 350, 100];
+
+    createVehicles(this, roadStart, roadWidth, cars, carsForward, carSpacing);
+    createLogs(this, laneStart, laneWidth, logs, logSpacing);
+
+    //TODO - Create turtles
 
     //When shermie overlap
     this.physics.add.overlap(this.shermie, goalZone, this.winCollision, null, this);
     this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
-    this.physics.add.overlap(this.shermie, waterZone, this.loseLife, null, this);
+    this.physics.add.overlap(this.shermie, waterZone, () => {
+        if (!this.physics.overlap(this.shermie, this.logs)) {
+          this.loseLife(); 
+        }
+      }, null, this);
     this.physics.add.overlap(this.shermie, this.logs, this.rideLog, null, this);
 
     // this.timerText
@@ -191,6 +183,8 @@ export class Game extends Scene {
     this.playing = true;
     this.timer.startTimer();
   }
+
+  
   update() {
     if (this.canMove) {
       if (this.cursors.left.isDown && this.shermie.x > 0) {
@@ -218,6 +212,7 @@ export class Game extends Scene {
         console.log("Y position: ", this.shermie.y);
       }
     }
+
     if (!this.cursors.left.isDown && !this.cursors.right.isDown && !this.cursors.up.isDown && !this.cursors.down.isDown) {
       this.canMove = true;
     }
@@ -229,8 +224,7 @@ export class Game extends Scene {
       if (vehicle.x > this.width + vehicle.width / 2) vehicle.x = -vehicle.width / 2;
       else if (vehicle.x < -vehicle.width / 2) vehicle.x = this.width + vehicle.width / 2;
     });
-    
-    
+
     this.logs.getChildren().forEach((log) => {
       if (log.x > this.width + log.width / 2) log.x = -log.width / 2;
       else if (log.x < -log.width / 2) log.x = this.width + log.width / 2;
@@ -248,7 +242,7 @@ export class Game extends Scene {
     vehicle.body.setVelocityX(speed);
     vehicle.body.allowGravity = false;
     vehicle.body.immovable = true;
-
+    return vehicle;
   }
 
   //Create a log 
@@ -257,6 +251,9 @@ export class Game extends Scene {
     log.body.setVelocityX(speed);
     log.body.allowGravity = false;
     log.body.immovalbe = true;
+    log.body.setSize(log.width, 50);
+    log.setDepth(1);
+    return log;
   }
 
   //Create a Turtle - Actual Textures
@@ -280,6 +277,6 @@ export class Game extends Scene {
   }
 
   rideLog(shermie, log){
-    shermie.setVelocityX(log.body.velocity.x);
+      shermie.setVelocityX(log.body.velocity.x);
   }
 }

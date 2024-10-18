@@ -6,34 +6,26 @@ export class Boot extends Scene {
   }
 
   preload() {
-    //Load vehicle images
-    this.load.image("car1", "/assets/car1.png");
-    this.load.image("car1forward", "/assets/car1forward.png");
-
-    this.load.image("car2", "/assets/car2.png");
-    this.load.image("car2forward", "/assets/car2forward.png");
-
-    this.load.image("car3", "/assets/car3.png");
-    this.load.image("car3forward", "/assets/car3forward.png");
+    const totalCars = 13;  // Define how many cars you have (adjust this number based on your assets)
     
-    this.load.image("tractor", "/assets/TractorTrailer.png");
-    this.load.image("tractorforward", "/assets/TractorTrailerforward.png");
+    for (let i = 1; i <= totalCars; i++) {
+      this.load.image(`car${i}`, `/assets/vehiclesBackward/car${i}.png`);
+      this.load.image(`car${i}forward`, `/assets/vehicleForward/car${i}forward.png`);
+    }
 
-    //Load Logs and turtles
+    // Load other assets (static)
+    this.load.image("tractor", "/assets/vehiclesBackward/tractor.png");
+    this.load.image("tractorforward", "/assets/vehicleForward/tractorForward.png");
+    
     this.load.image("ShortLog", "/assets/ShortLog.png");
     this.load.image("LongLog", "/assets/LongLog.png");
     this.load.image("turtle", "/assets/turtle.png");
     this.load.image("turtleforward", "/assets/turtleforward.png");
 
-    //Load images
     this.load.image("shermie", "/assets/shermie.png");
-    this.load.image("background", "/assets/background.jpeg");
-    this.load.image("background2", "/assets/background2.jpeg");
+    this.load.image("background", "/assets/backgrounds/background.jpeg");
+    this.load.image("background2", "/assets/backgrounds/background2.jpeg");
     this.load.image("life", "/assets/heart.png");
-
-    this.load.image("longLog", "assets/longLog.png");
-    this.load.image("shortLog", "assets/shortLog.png");
-    this.load.image("turtle", "assets/turtle.png");
   }
 
   create() {

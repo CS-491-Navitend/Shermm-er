@@ -47,7 +47,8 @@ export class MainMenu extends Scene {
 
     // play button on click
     playButton.on("pointerdown", () => {
-      alert("play the highest available level");
+      // alert("play the highest available level");
+      this.scene.start("Game", { level: 1 });
     });
 
     // level select button on click
