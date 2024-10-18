@@ -4,8 +4,8 @@ export class GameLogic {
   }
 
   win() {
-    console.log(`Win condition met. Wins: ${this.game.winCount}`);
     this.game.winCount++;
+    console.log(`Win condition met. Wins: ${this.game.winCount}`);
     this.resetPlayer();
   }
 
