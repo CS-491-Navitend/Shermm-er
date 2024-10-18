@@ -3,7 +3,7 @@ import { Scene } from "phaser";
 import { GameLogic } from "/src/lib/GameLogic";
 import { Drawing } from "/src/lib/Drawing";
 import { Timer } from "/src/lib/Timer";
-
+import  PauseMenu from "./Menus/PauseMenu";
 import { levels } from "/src/lib/levels";
 
 export class Game extends Scene {
@@ -70,6 +70,10 @@ export class Game extends Scene {
 
     //User input for movements
     this.cursors = this.input.keyboard.createCursorKeys();
+
+      //User input for PauseMenu
+    this.input.keyboard.on('keydown-P', this.togglePause, this); 
+
 
     //Make roads
     const roadLines = this.add.graphics({
@@ -178,6 +182,10 @@ export class Game extends Scene {
       if (vehicle.x > this.width + vehicle.width / 2) vehicle.x = -vehicle.width / 2;
       else if (vehicle.x < -vehicle.width / 2) vehicle.x = this.width + vehicle.width / 2;
     });
+
+        if (!this.playing || this.scene.isActive("PauseScene")) {
+          return;
+         }
   }
   //Create a vehicle
   spawnVehicle(x, y, texture, speed) {
@@ -197,5 +205,15 @@ export class Game extends Scene {
 
   updateTimer() {
     this.timer.updateTimer();
-  }
+    }
+
+  togglePause() {
+        if (this.scene.isActive("PauseMenu")) {
+            this.scene.resume("PauseMenu");
+            this.scene.pause(); // Pause the game
+        } else {
+            this.scene.launch("PauseMenu");
+            this.scene.pause(); // Pause the game
+        }
+    }
 }
