@@ -9,14 +9,14 @@ import { GameOver } from "./scenes/GameOver";
 
 const config = {
   type: AUTO,
-  width: 1000,
-  height: 1000,
+  // width: 1000,
+  // height: 1000,
   parent: "game-container",
   backgroundColor: "#000000",
   physics: {
     default: "arcade",
     arcade: {
-      debug: true, //handy to show collision
+      debug: false, //handy to show collision
     },
   },
   scale: {
