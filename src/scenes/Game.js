@@ -17,6 +17,8 @@ export class Game extends Scene {
     this.width = 1000;
     this.height = 1000;
 
+    //check to see if the game is paused
+    this.paused = false;
 
     //Physics objects and other game information
     this.playing = true;
@@ -192,7 +194,10 @@ export class Game extends Scene {
   }
 
   
-  update() {
+    update() {
+
+    if(this.paused) return;
+
     if (this.canMove) {
       if (this.cursors.left.isDown && this.shermie.x > 0) {
         this.shermie.x -= this.moveDistance;

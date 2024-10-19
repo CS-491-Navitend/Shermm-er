@@ -13,7 +13,10 @@ export class Timer {
     this.game.timerText.setText(`Time: ${this.game.timeRemaining}`);
   }
 
+
   startTimer() {
+
+    this.stop(); 
     this.timer = setInterval(() => {
       if (this.isPaused|| this.game.timeRemaining <= 0 || !this.game.playing) {
         // stop timer
@@ -32,6 +35,7 @@ export class Timer {
 
     resume() {
         this.isPaused = false;
+        this.startTimer();
     }
     stop() {
         clearInterval(this.timer);

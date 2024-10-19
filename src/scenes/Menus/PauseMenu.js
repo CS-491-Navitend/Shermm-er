@@ -23,49 +23,56 @@ export class PauseMenu {
         }).setOrigin(0.5);
         this.pauseMenu.add(text);
 
-        // Resume button
+        //resume button
         const resumeButton = this.scene.add.text(0, 50, 'Resume', {
             fontSize: '32px',
             fill: '#ffffff'
         }).setOrigin(0.5).setInteractive();
 
+        // Call the toggle pause function in the Game class
         resumeButton.on('pointerdown', () => {
-            this.hide(); 
+            this.hide();
         });
+        //adds pauseMenu button
+        this.pauseMenu.add(resumeButton);
 
-        // Main menu button
+        //main menu button
         const mainMenuButton = this.scene.add.text(0, 100, 'Main Menu', {
             fontSize: '32px',
             fill: '#ffffff'
         }).setOrigin(0.5).setInteractive();
 
+        //starts main menu scene
         mainMenuButton.on('pointerdown', () => {
-            this.scene.scene.start("MainMenu"); // Use this.scene
+            this.scene.scene.start("MainMenu");
         });
 
-        // Add buttons to the pause menu
-        this.pauseMenu.add(resumeButton);
+        //adds main menu button
         this.pauseMenu.add(mainMenuButton);
-
+        //adds pauseMenu button
+        this.pauseMenu.add(resumeButton);
         // Hide menu initially
-        this.pauseMenu.setVisible(false); 
-    }
+        this.pauseMenu.setVisible(false);
 
+    }
     show() {
         // Pause the Game
         this.pauseMenu.setVisible(true);
-        this.scene.physics.pause();
-        this.scene.timer.pause(); // Ensure this is defined
+        this.scene.physics.pause()
+        this.scene.timer.pause();
+        this.scene.paused = true;
     }
 
     hide() {
         // Resume the Game
         this.pauseMenu.setVisible(false);
         this.scene.physics.resume(); // Resume the physics
-        this.scene.timer.resume(); // Ensure this is defined
+        this.scene.timer.resume();
+        this.scene.paused = false;
     }
 
     destroy() {
         this.pauseMenu.destroy();
     }
+
 }
