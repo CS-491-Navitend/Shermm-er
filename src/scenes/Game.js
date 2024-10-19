@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-
+import { PauseMenu } from "./Menus/PauseMenu"
 import { GameLogic } from "/src/lib/GameLogic";
 import { Drawing } from "/src/lib/Drawing";
 import { Timer } from "/src/lib/Timer";
@@ -81,6 +81,13 @@ export class Game extends Scene {
 
     //User input for movements
     this.cursors = this.input.keyboard.createCursorKeys();
+
+    this.pauseMenu = new PauseMenu(this);
+    this.pauseMenu.create();
+
+    this.input.keyboard.on('keydown-ENTER', () => {
+        this.togglePause();
+    });
 
     //Make roads
     const roadLines = this.add.graphics({
@@ -289,5 +296,14 @@ export class Game extends Scene {
 
   rideLog(shermie, log){
       shermie.setVelocityX(log.body.velocity.x);
+    }
+  togglePause() {
+    if (this.pauseMenu.pauseMenu.visible) {
+        this.pauseMenu.hide();
+        this.timer.resume(); // Resume the timer
+    } else {
+        this.pauseMenu.show();
+        this.timer.pause(); // Pause the timer
+    }
   }
 }

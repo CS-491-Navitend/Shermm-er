@@ -1,5 +1,7 @@
 import { Scene } from "phaser";
-
+import { Timer } from "/src/lib/Timer";
+import { Game } from "/src/scenes/Game";
+import { MainMenu } from "./MainMenu";
 export class PauseMenu {
     constructor(scene) {
         this.scene = scene;
@@ -28,7 +30,7 @@ export class PauseMenu {
         }).setOrigin(0.5).setInteractive();
 
         resumeButton.on('pointerdown', () => {
-            this.hide();
+            this.hide(); 
         });
 
         // Main menu button
@@ -46,7 +48,7 @@ export class PauseMenu {
         this.pauseMenu.add(mainMenuButton);
 
         // Hide menu initially
-        this.pauseMenu.setVisible(false);
+        this.pauseMenu.setVisible(false); 
     }
 
     show() {
