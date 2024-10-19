@@ -55,5 +55,37 @@ export class MainMenu extends Scene {
     levelSelectButton.on("pointerdown", () => {
       this.scene.start("LevelMenu");
     });
+    //hover effects for playButton
+    playButton.on("pointerover", () => {
+          playButton.setStyle({ backgroundColor: "#44AAFF" });
+     });
+    playButton.on("pointerout", () => {
+          playButton.setStyle({ backgroundColor: "#3388FF" });
+     });
+    playButton.on("pointerdown", () => {
+          playButton.setScale(0.9); // Scale down on click
+     });
+    playButton.on("pointerup", () => {
+          playButton.setScale(1); // Scale back up
+          this.scene.start("Game", { level: 1 }); // Start game scene
+    });
+
+    //hover effects for levelselectionButton
+    levelSelectButton.on("pointerover", () => {
+          levelSelectButton.setStyle({ backgroundColor: "#44AAFF" });
+     });
+
+    levelSelectButton.on("pointerout", () => {
+          levelSelectButton.setStyle({ backgroundColor: "#3388FF" });
+     });
+
+    levelSelectButton.on("pointerdown", () => {
+          levelSelectButton.setScale(0.9); // Scale down on click
+     });
+
+    levelSelectButton.on("pointerup", () => {
+          levelSelectButton.setScale(1); // Scale back up
+          this.scene.start("LevelMenu"); // Start level select scene
+     });
   }
 }
