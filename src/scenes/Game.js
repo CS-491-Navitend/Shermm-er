@@ -92,7 +92,7 @@ export class Game extends Scene {
 
     this.input.keyboard.on('keydown-ENTER', () => {
         this.togglePause();
-        console.log('toggle Pause');
+        //console.log('toggle Pause');
     });
 
     //Make roads

@@ -7,12 +7,15 @@ export class PauseMenu {
         this.scene = scene;
         this.pauseMenu = null;
         this.isActive = false;
+        
     }
 
     create() {
+        //create the menu
         this.pauseMenu = this.scene.add.container(this.scene.width / 2, this.scene.height / 2);
         this.pauseMenu.setDepth(10);
 
+        //create the background color
         const background = this.scene.add.graphics();
         background.fillStyle(0x000000, 0.8); // Semi-transparent background
         background.fillRect(-200, -150, 400, 300);
@@ -26,6 +29,7 @@ export class PauseMenu {
         border.strokeRect(-200, -150, 400, 300);
         this.pauseMenu.add(border);
 
+        //Paused text
         const text = this.scene.add.text(0, -100, 'Paused', {
             fontSize: '40px',
             fill: '#ffffff'
@@ -38,10 +42,19 @@ export class PauseMenu {
             fill: '#ffffff'
         }).setOrigin(0.5).setInteractive();
 
+        //border around resume button
         const resumeBorder = this.scene.add.graphics();
         resumeBorder.lineStyle(2, 0xffffff, 1); // Width, color, alpha
         resumeBorder.strokeRect(resumeButton.x - resumeButton.width / 2 - 10, resumeButton.y - resumeButton.height / 2 - 10, resumeButton.width + 20, resumeButton.height + 20); // x, y, width, height
         this.pauseMenu.add(resumeBorder);
+
+        //hover effect for resume button
+        resumeButton.on('pointerover', () => {
+            resumeButton.setStyle({ fill: '#ff0' }); // Change color on hover
+        });
+        resumeButton.on('pointerout', () => {
+            resumeButton.setStyle({ fill: '#ffffff' }); // Reset color
+        });
 
         // Call the toggle pause function in the Game class
         resumeButton.on('pointerdown', () => {
@@ -55,10 +68,19 @@ export class PauseMenu {
             fill: '#ffffff'
         }).setOrigin(0.5).setInteractive();
 
+        //border around main menu button
         const mainMenuBorder = this.scene.add.graphics();
         mainMenuBorder.lineStyle(2, 0xffffff, 1); // Width, color, alpha
         mainMenuBorder.strokeRect(mainMenuButton.x - mainMenuButton.width / 2 - 10, mainMenuButton.y - mainMenuButton.height / 2 - 10, mainMenuButton.width + 20, mainMenuButton.height + 20); // x, y, width, height
         this.pauseMenu.add(mainMenuBorder);
+
+        //hover effect for main menu button
+        mainMenuButton.on('pointerover', () => {
+            mainMenuButton.setStyle({ fill: '#ff0' }); // Change color on hover
+        });
+        mainMenuButton.on('pointerout', () => {
+            mainMenuButton.setStyle({ fill: '#ffffff' }); // Reset color
+        });
 
         //starts main menu scene
         mainMenuButton.on('pointerdown', () => {
