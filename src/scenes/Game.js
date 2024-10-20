@@ -84,11 +84,15 @@ export class Game extends Scene {
     //User input for movements
     this.cursors = this.input.keyboard.createCursorKeys();
 
+    //PauseMenu
     this.pauseMenu = new PauseMenu(this);
     this.pauseMenu.create();
 
+    this.paused = false;
+
     this.input.keyboard.on('keydown-ENTER', () => {
         this.togglePause();
+        console.log('toggle Pause');
     });
 
     //Make roads
@@ -302,13 +306,18 @@ export class Game extends Scene {
   rideLog(shermie, log){
       shermie.setVelocityX(log.body.velocity.x);
     }
-  togglePause() {
-    if (this.pauseMenu.pauseMenu.visible) {
+    togglePause() {
+        
+    if (this.paused) {
         this.pauseMenu.hide();
+        this.paused = false;
         this.timer.resume(); // Resume the timer
+        console.log('Resume')
     } else {
         this.pauseMenu.show();
+        this.paused = true;
         this.timer.pause(); // Pause the timer
+        console.log('Paused');
     }
   }
 }

@@ -87,5 +87,7 @@ export class MainMenu extends Scene {
           levelSelectButton.setScale(1); // Scale back up
           this.scene.start("LevelMenu"); // Start level select scene
      });
-  }
+   }
+    
+
 }
