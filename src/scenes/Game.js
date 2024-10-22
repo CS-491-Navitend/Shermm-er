@@ -175,7 +175,7 @@ export class Game extends Scene {
             this.goalCollision();
           }
         });
-        if (!this.physics.overlap(this.shermie, this.logs)) {
+        if (!this.physics.overlap(this.shermie, this.logs) && !this.physics.overlap(this.shermie, goalZone)) {
           this.loseLife(); 
         }
       }, null, this);
