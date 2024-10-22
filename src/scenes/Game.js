@@ -28,6 +28,7 @@ export class Game extends Scene {
     this.winCount = 0;
     this.lives = 0;
     this.resetCount = 0;
+    this.goalCount = 0;
 
     // road values
     this.moveDistance = 80;
@@ -107,12 +108,17 @@ export class Game extends Scene {
       );
     }
 
-    // create goal
+    // Create goals -> Segmented into five zones
     const goalZone = this.physics.add.staticGroup();
-    const goal = this.add.rectangle(this.width / 2, roadEnd - this.safeZoneSize - this.safeZoneSize / 2 - roadWidth * this.numberOfRoads, this.width, this.safeZoneSize, 0x1de100);
-    this.physics.add.existing(goal, true);
-    goalZone.add(goal);
-    
+    const numOfGoals = 5
+    let x = 130;
+    for (let i = 0; i < numOfGoals; i++) {
+      const goal = this.add.rectangle(x, roadEnd - this.safeZoneSize - this.safeZoneSize / 2 - roadWidth * this.numberOfRoads, 130, this.safeZoneSize, 0x1de100);
+      this.physics.add.existing(goal, true);
+      goalZone.add(goal);
+      x += 180;
+    }
+
 
     // create safe zones
     // bottom of screen
@@ -157,16 +163,24 @@ export class Game extends Scene {
     createLogs(this, laneStart, laneWidth, logs, logSpacing);
 
     //TODO - Create turtles
-
+    //createTurtles(this, laneStart, laneWidth, turtleSpacing);
     //When shermie overlap
-    this.physics.add.overlap(this.shermie, goalZone, this.winCollision, null, this);
-    this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
+    this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);//Vehicle Collisions
+    
+    //Start Water Logic
     this.physics.add.overlap(this.shermie, waterZone, () => {
+        goalZone.getChildren().forEach((goal) => {
+          if (this.physics.overlap(this.shermie, goal)) {
+            goal.setAlpha(0.5);
+            this.goalCollision();
+          }
+        });
         if (!this.physics.overlap(this.shermie, this.logs)) {
           this.loseLife(); 
         }
       }, null, this);
     this.physics.add.overlap(this.shermie, this.logs, this.rideLog, null, this);
+    //End Water Logic
 
     // this.timerText
     this.timerText = this.add.text(16, 32, `Time: ${this.timeRemaining}`, {
@@ -270,6 +284,10 @@ export class Game extends Scene {
 
   winCollision() {
     this.gameLogic.win();
+  }
+
+  goalCollision(){
+    this.gameLogic.goal();
   }
 
   updateTimer() {

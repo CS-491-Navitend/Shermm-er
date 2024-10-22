@@ -3,9 +3,20 @@ export class GameLogic {
     this.game = game;
   }
 
+  goal() {
+    this.game.goalCount++;
+    if(this.game.goalCount != 5){
+      this.resetPlayer();
+    }
+    else{
+      console.log(`Goal condition met. Goals: ${this.game.goalCount}`);
+      this.resetPlayer();
+    }
+  }
+
   win() {
-    console.log(`Win condition met. Wins: ${this.game.winCount}`);
     this.game.winCount++;
+    console.log(`Win condition met. Wins: ${this.game.winCount}`);
     this.resetPlayer();
   }
 
