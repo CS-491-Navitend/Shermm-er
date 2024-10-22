@@ -2,8 +2,10 @@ import { Scene } from "phaser";
 import { Timer } from "/src/lib/Timer";
 import { Game } from "/src/scenes/Game";
 import { MainMenu } from "./MainMenu";
-export class PauseMenu {
+
+export class PauseMenu extends Scene {
     constructor(scene) {
+        super(scene);
         this.scene = scene;
         this.pauseMenu = null;
         this.isActive = false;
@@ -36,45 +38,47 @@ export class PauseMenu {
         }).setOrigin(0.5);
         this.pauseMenu.add(text);
         
-        //resume button
+        //Create resume button
+        this.createResumeButton();
+        
+        //create main menu button
+        this.createMainMenuButton();
+        
+        //Hide menu
+        this.pauseMenu.setVisible(false);
+    }
+
+
+    createResumeButton(){
         const resumeButton = this.scene.add.text(0, 70, 'Resume', {
             fontSize: '32px',
             fill: '#ffffff'
         }).setOrigin(0.5).setInteractive();
 
-        //border around resume button
-        const resumeBorder = this.scene.add.graphics();
-        resumeBorder.lineStyle(2, 0xffffff, 1); // Width, color, alpha
-        resumeBorder.strokeRect(resumeButton.x - resumeButton.width / 2 - 10, resumeButton.y - resumeButton.height / 2 - 10, resumeButton.width + 20, resumeButton.height + 20); // x, y, width, height
-        this.pauseMenu.add(resumeBorder);
-
-        //hover effect for resume button
         resumeButton.on('pointerover', () => {
             resumeButton.setStyle({ fill: '#ff0' }); // Change color on hover
         });
+
         resumeButton.on('pointerout', () => {
             resumeButton.setStyle({ fill: '#ffffff' }); // Reset color
         });
 
-        // Call the toggle pause function in the Game class
         resumeButton.on('pointerdown', () => {
             this.hide();
         });
-        
 
-        //main menu button
+        // Add border around the resume button
+        this.addButtonBorder(resumeButton);
+        this.pauseMenu.add(resumeButton);
+ 
+    }
+
+    createMainMenuButton(){
         const mainMenuButton = this.scene.add.text(0, -20, 'Main Menu', {
             fontSize: '32px',
             fill: '#ffffff'
         }).setOrigin(0.5).setInteractive();
 
-        //border around main menu button
-        const mainMenuBorder = this.scene.add.graphics();
-        mainMenuBorder.lineStyle(2, 0xffffff, 1); // Width, color, alpha
-        mainMenuBorder.strokeRect(mainMenuButton.x - mainMenuButton.width / 2 - 10, mainMenuButton.y - mainMenuButton.height / 2 - 10, mainMenuButton.width + 20, mainMenuButton.height + 20); // x, y, width, height
-        this.pauseMenu.add(mainMenuBorder);
-
-        //hover effect for main menu button
         mainMenuButton.on('pointerover', () => {
             mainMenuButton.setStyle({ fill: '#ff0' }); // Change color on hover
         });
@@ -82,21 +86,27 @@ export class PauseMenu {
             mainMenuButton.setStyle({ fill: '#ffffff' }); // Reset color
         });
 
-        //starts main menu scene
         mainMenuButton.on('pointerdown', () => {
+            //if(!this.scene.paused) return; //Prevent action if not paused
+            this.scene.scene.stop("Game");
             this.scene.scene.start("MainMenu");
-            console.log('starting MainMenu')
+            console.log('starting MainMenu');
+            
         });
 
-        //adds main menu button
+        this.addButtonBorder(mainMenuButton);
         this.pauseMenu.add(mainMenuButton);
-        //adds pauseMenu button
-        this.pauseMenu.add(resumeButton);
-        // Hide menu initially
-        this.pauseMenu.setVisible(false);
+    }
+    addButtonBorder(button){
+        const border = this.scene.add.graphics();
+        border.lineStyle(2, 0xffffff, 1);
+        border.strokeRect(button.x - button.width / 2 - 10, button.y - button.height / 2 - 10, button.width + 20, button.height + 20);
+        this.pauseMenu.add(border);
 
     }
-    show() {
+
+    
+    show(){
         // Pause the Game
         if (this.isActive) return;
         this.isActive = true;
@@ -104,9 +114,11 @@ export class PauseMenu {
         this.scene.physics.pause()
         this.scene.timer.pause();
         this.scene.paused = true;
+
+       // this.scene.input.enabled = false;
     }
 
-    hide() {
+    hide(){
         // Resume the Game
         if (!this.isActive) return;
         this.isActive = false;
@@ -114,16 +126,20 @@ export class PauseMenu {
         this.scene.physics.resume(); // Resume the physics
         this.scene.timer.resume();
         this.scene.paused = false;
+        //this.scene.input.enabled = true;
     }
 
     reset() {
-        this.isActive = false; // Reset the active state when starting a new game
-        this.pauseMenu.setVisible(false); // Ensure menu is hidden
+        this.isActive = false; 
+        this.pauseMenu.setVisible(false); 
     }
     
 
     destroy() {
-        this.pauseMenu.destroy();
+        if(this.pauseMenu){
+            this.pauseMenu.destroy();
+            this.pauseMenu = null;
+        }
+        
     }
-
 }

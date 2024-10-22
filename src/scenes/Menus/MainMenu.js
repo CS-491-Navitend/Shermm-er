@@ -9,85 +9,65 @@ export class MainMenu extends Scene {
   }
 
   create() {
-    // main menu text
+    // Main menu text
     this.add
       .text(512, 200, "Shermm-er", {
         fontFamily: this.fontFamily,
         fontStyle: "bold",
         fontSize: this.rem * 4 + "px",
       })
-      .setOrigin(1 / 2);
+      .setOrigin(0.5);
 
-    // create a play button
-    const playButton = this.add
-      .text(512, 400, "Play", {
+    // Create play button
+    const playButton = this.createButton(512, 400, "Play", () => {
+      this.scene.start("Game", { level: 1 });
+      console.log("Starting level 1");
+    });
+
+    // Create level select button
+    const levelSelectButton = this.createButton(512, 500, "Level Select", () => {
+      this.scene.start("LevelMenu");
+      console.log("Starting level select");
+    });
+
+    // Adding hover and click effects
+    this.addButtonListeners(playButton);
+    this.addButtonListeners(levelSelectButton);
+  }
+
+  createButton(x, y, text, onClick) {
+    return this.add
+      .text(x, y, text, {
         fontFamily: this.fontFamily,
         fontStyle: "bold",
         fontSize: this.rem * 2 + "px",
         padding: { x: 100, y: 20 },
-
         backgroundColor: "#3388FF",
       })
-      .setOrigin(1 / 2)
-      .setInteractive({ useHandCursor: true });
+      .setOrigin(0.5)
+      .setInteractive({ useHandCursor: true })
+      .on("pointerdown", onClick);
+  }
 
-    const levelSelectButton = this.add
-      .text(512, 500, "Level Select", {
-        fontFamily: this.fontFamily,
-        fontStyle: "bold",
-        fontSize: this.rem * 2 + "px",
-        padding: {x: 100, y: 20 },
-
-        backgroundColor: "#3388FF",
-      })
-      .setOrigin(1 / 2)
-      .setInteractive({ useHandCursor: true });
-
-    // listeners
-
-    // play button on click
-    playButton.on("pointerdown", () => {
-      // alert("play the highest available level");
-      this.scene.start("Game", { level: 1 });
+  addButtonListeners(button) {
+    button.on("pointerover", () => {
+      button.setStyle({ backgroundColor: "#44AAFF" });
+      //console.log(`Hovering over ${button.text}`);
     });
 
-    // level select button on click
-    levelSelectButton.on("pointerdown", () => {
-      this.scene.start("LevelMenu");
-    });
-    //hover effects for playButton
-    playButton.on("pointerover", () => {
-          playButton.setStyle({ backgroundColor: "#44AAFF" });
-     });
-    playButton.on("pointerout", () => {
-          playButton.setStyle({ backgroundColor: "#3388FF" });
-     });
-    playButton.on("pointerdown", () => {
-          playButton.setScale(0.9); // Scale down on click
-     });
-    playButton.on("pointerup", () => {
-          playButton.setScale(1); // Scale back up
-          this.scene.start("Game", { level: 1 }); // Start game scene
+    button.on("pointerout", () => {
+      button.setStyle({ backgroundColor: "#3388FF" });
+      //console.log(`Stopping over ${button.text}`);
     });
 
-    //hover effects for levelselectionButton
-    levelSelectButton.on("pointerover", () => {
-          levelSelectButton.setStyle({ backgroundColor: "#44AAFF" });
-     });
+    button.on("pointerdown", () => {
+      button.setScale(0.9); // Scale down on click
+      //console.log(`${button.text} button pressed down`);
+    });
 
-    levelSelectButton.on("pointerout", () => {
-          levelSelectButton.setStyle({ backgroundColor: "#3388FF" });
-     });
-
-    levelSelectButton.on("pointerdown", () => {
-          levelSelectButton.setScale(0.9); // Scale down on click
-     });
-
-    levelSelectButton.on("pointerup", () => {
-          levelSelectButton.setScale(1); // Scale back up
-          this.scene.start("LevelMenu"); // Start level select scene
-     });
-   }
-    
-
+    button.on("pointerup", () => {
+      button.setScale(1); // Scale back up
+      //console.log(`${button.text} button released`);
+    });
+  }
 }
