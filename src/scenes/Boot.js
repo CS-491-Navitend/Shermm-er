@@ -23,9 +23,16 @@ export class Boot extends Scene {
     this.load.image("turtleforward", "/assets/turtleforward.png");
 
     this.load.image("shermie", "/assets/shermie.png");
-    this.load.image("background", "/assets/backgrounds/background.jpeg");
-    this.load.image("background2", "/assets/backgrounds/background2.jpeg");
     this.load.image("life", "/assets/heart.png");
+
+    // Load textures for background
+    this.load.image("LavaBrick", "/assets/backgrounds/LavaBrick.png");
+    this.load.image("lava", "/assets/backgrounds/Lava.png");
+    this.load.image("goalZone", "/assets/backgrounds/GoalZone.png");
+    this.load.image("lavaGoal", "/assets/backgrounds/LavaGoal.png");
+    this.load.image("lavaSafeZone", "/assets/backgrounds/LavaSafeZone.png");
+    this.load.image("rock", "/assets/backgrounds/Rock.png");
+    this.load.image("road", "/assets/backgrounds/LavaRoad.png");
   }
 
   create() {
