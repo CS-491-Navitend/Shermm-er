@@ -17,7 +17,6 @@ export class Game extends Scene {
     this.width = 1000;
     this.height = 1000;
 
-
     //Physics objects and other game information
     this.playing = true;
     this.canMove = true;
@@ -58,12 +57,11 @@ export class Game extends Scene {
     this.timerDuration = levels[data["level"]]["time"];
     this.timeRemaining = this.timerDuration;
 
-    this.lives=levels[data["level"]]["number_of_lives"];
+    this.lives = levels[data["level"]]["number_of_lives"];
 
     this.carSpeedMultiplier = levels[data["level"]]["car_speed_multiplier"];
     this.logSpeedMultiplier = levels[data["level"]]["log_speed_multiplier"];
     this.frogSinkMultiplier = levels[data["level"]]["turtle_sink_multiplier"];
-
 
     this.numberOfCars = levels[data["level"]]["number_of_cars"];
     this.numberOfLogs = levels[data["level"]]["number_of_logs"];
@@ -75,14 +73,14 @@ export class Game extends Scene {
     //add Physics to the shermie sprite
     this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, "shermie");
 
-    this.shermie.setSize(50,50,true);//this manipulates hitbox of shermie
+    this.shermie.setSize(50, 50, true);//this manipulates hitbox of shermie
     this.shermie.setScale(1);//this manipulates scale of shermie
     this.shermie.setCollideWorldBounds(true);
 
     //User input for movements
     this.cursors = this.input.keyboard.createCursorKeys();
 
-    //Make roads
+    // //Make roads
     const roadLines = this.add.graphics({
       lineStyle: { width: 5, color: 0xffffff },
     });
@@ -90,8 +88,12 @@ export class Game extends Scene {
     const roadStart = this.height - this.safeZoneSize;
     const roadEnd = roadStart - this.numberOfRoads * roadWidth;
 
+    // Make lava road
+    // const road = this.add.image(this.width / 2, roadEnd - roadWidth, "road");
+    
+
     // solid road lines (top and bottom)
-    roadLines.strokeLineShape(new Phaser.Geom.Line(0, roadStart, this.width, roadStart));
+    roadLines.strokeLineShape(new Phaser.Geom.Line(0, roadStart - 10, this.width, roadStart));
     roadLines.strokeLineShape(new Phaser.Geom.Line(0, roadEnd, this.width, roadEnd));
 
     // dashed road lines
@@ -109,36 +111,51 @@ export class Game extends Scene {
 
     // create goal
     const goalZone = this.physics.add.staticGroup();
-    const goal = this.add.rectangle(this.width / 2, roadEnd - this.safeZoneSize - this.safeZoneSize / 2 - roadWidth * this.numberOfRoads, this.width, this.safeZoneSize, 0x1de100);
+    const goal = this.add.image(this.width / 2, roadEnd - this.safeZoneSize - this.safeZoneSize / 2 - roadWidth * this.numberOfRoads, "lavaGoal");
+    goal.setScale(1, 1);
     this.physics.add.existing(goal, true);
     goalZone.add(goal);
-    
 
     // create safe zones
     // bottom of screen
-    this.add.rectangle(this.width / 2, this.height - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).setDepth(-1);
+    // this.add.rectangle(this.width / 2, this.height - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).setDepth(-1);
+    this.add.image(this.width / 2, this.height - this.safeZoneSize / 2, "lavaSafeZone").setDepth(-1);
 
     // middle
-    let safeZone = this.add.rectangle(this.width / 2, roadEnd - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).setDepth(-1);
-    this.physics.add.existing(safeZone, true);
+    // let safeZone = this.add.rectangle(this.width / 2, roadEnd - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).setDepth(-1);
+    // this.physics.add.existing(safeZone, true);
+
+    // Middle Safe Zone lava brick
+    const safeZone = this.physics.add.staticGroup();
+    const safe = (this.add.image(this.width / 2, roadEnd - this.safeZoneSize / 2, "lavaSafeZone")).setDepth(-1);
+    this.physics.add.existing(safe, true);
+    safeZone.add(safe);
+
+
     //resets velocity of Shermie
     this.physics.add.overlap(this.shermie, safeZone, () => {
-      this.shermie.setVelocity(0, 0);  
+      this.shermie.setVelocity(0, 0);
     }, null, this);
-        
+
     // create water zone
-    const waterZone = this.physics.add.staticGroup();
-    const water = (this.add.rectangle(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads, this.width, roadWidth * this.numberOfRoads, 0x1a31ac)).setDepth(-2);
-    this.physics.add.existing(water, true);
-    waterZone.add(water);
+    // const waterZone = this.physics.add.staticGroup();
+    // const water = (this.add.rectangle(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads, this.width, roadWidth * this.numberOfRoads, 0x1a31ac)).setDepth(-2);
+    // this.physics.add.existing(water, true);
+    // waterZone.add(water);
+
+    // create lava zone will change to a animated lava texture
+    const lavaZone = this.physics.add.staticGroup();
+    const lava = (this.add.image(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads, "lava")).setDepth(-2);
+    this.physics.add.existing(lava, true);
+    lavaZone.add(lava);
 
     //create water lanes
     const laneWidth = this.moveDistance;
     const laneStart = roadEnd - this.safeZoneSize / 2 - this.moveDistance / 2;
     const laneEnd = laneStart - this.numberOfRoads * laneWidth;
 
-    console.log("Road Start: " , roadStart);
-    console.log("Road End: " , roadEnd);
+    console.log("Road Start: ", roadStart);
+    console.log("Road End: ", roadEnd);
 
     console.log("Lane Start: ", laneStart);
     console.log("Lane End: ", laneEnd);
@@ -150,7 +167,7 @@ export class Game extends Scene {
     const carsForward = ["car1forward", "car2forward", "car3forward"];
     const carSpacing = [250, 350, 100];//Spacing on X axis
 
-    const logs = ["LongLog", "ShortLog"];
+    const logs = ["rock", "rock"];
     const logSpacing = [250, 350, 100];
 
     createVehicles(this, roadStart, roadWidth, cars, carsForward, carSpacing);
@@ -161,11 +178,11 @@ export class Game extends Scene {
     //When shermie overlap
     this.physics.add.overlap(this.shermie, goalZone, this.winCollision, null, this);
     this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
-    this.physics.add.overlap(this.shermie, waterZone, () => {
-        if (!this.physics.overlap(this.shermie, this.logs)) {
-          this.loseLife(); 
-        }
-      }, null, this);
+    this.physics.add.overlap(this.shermie, lavaZone, () => {
+      if (!this.physics.overlap(this.shermie, this.logs)) {
+        this.loseLife();
+      }
+    }, null, this);
     this.physics.add.overlap(this.shermie, this.logs, this.rideLog, null, this);
 
     // this.timerText
@@ -184,7 +201,6 @@ export class Game extends Scene {
     this.timer.startTimer();
   }
 
-  
   update() {
     if (this.canMove) {
       if (this.cursors.left.isDown && this.shermie.x > 0) {
@@ -230,6 +246,7 @@ export class Game extends Scene {
       else if (log.x < -log.width / 2) log.x = this.width + log.width / 2;
     });
 
+
     //This code fixes overlap but creates pop in and pop out. 
     // this.vehicles.getChildren().forEach((vehicle) => {
     //   if (vehicle.x > this.width) vehicle.x = 0;
@@ -257,7 +274,7 @@ export class Game extends Scene {
   }
 
   //Create a log 
-  spawnLog(x, y, texture, speed){ 
+  spawnLog(x, y, texture, speed) {
     let log = this.logs.create(x, y, texture);
     log.body.setVelocityX(speed);
     log.body.allowGravity = false;
@@ -287,7 +304,7 @@ export class Game extends Scene {
     this.timer.updateTimer();
   }
 
-  rideLog(shermie, log){
-      shermie.setVelocityX(log.body.velocity.x);
+  rideLog(shermie, log) {
+    shermie.setVelocityX(log.body.velocity.x);
   }
 }
