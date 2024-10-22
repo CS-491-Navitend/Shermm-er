@@ -91,6 +91,7 @@ export class Game extends Scene {
     // Make lava road
     // const road = this.add.image(this.width / 2, roadEnd - roadWidth, "road");
     
+    
 
     // solid road lines (top and bottom)
     roadLines.strokeLineShape(new Phaser.Geom.Line(0, roadStart - 10, this.width, roadStart));
