@@ -246,6 +246,18 @@ export class Game extends Scene {
       else if (log.x < -log.width / 2) log.x = this.width + log.width / 2;
     });
 
+
+    //This code fixes overlap but creates pop in and pop out. 
+    // this.vehicles.getChildren().forEach((vehicle) => {
+    //   if (vehicle.x > this.width) vehicle.x = 0;
+    //   else if (vehicle.x < 0) vehicle.x = this.width;
+    // });
+    
+    // this.logs.getChildren().forEach((log) => {
+    //   if (log.x > this.width) log.x = 0;
+    //   else if (log.x < 0) log.x = this.width;
+    // });
+    
     /*this.turtles.getChildren().forEach((turtle) => {
       if (turtle.x > this.width + turtle.width / 2) turtle.x = -turtle.width / 2;
       else if (turtle.x < -turtle.width / 2) turtle.x = this.width + turtle.width / 2;
@@ -268,7 +280,7 @@ export class Game extends Scene {
     log.body.allowGravity = false;
     log.body.immovalbe = true;
     log.body.setSize(log.width, 50);
-    log.setDepth(1);
+    log.setDepth(-1);
     return log;
   }
 
