@@ -6,6 +6,8 @@
       "car_speed_multiplier": 1,
       "number_of_cars": 2,
 
+      "logTexture": ["LongLog", "ShortLog"],
+      "log_spacing": [250, 350, 400],
 
       "log_speed_multiplier": 1,
       "number_of_logs": 2,
@@ -24,145 +26,9 @@
       "car_speed_multiplier": 1,
       "number_of_cars": 1,
 
-      "zone_type": "lava",
-
-      "log_speed_multiplier": 1,
-      "number_of_logs": 1,
-
-      "turtle_sink_multiplier": 1,
-      "number_of_turtles": 0,
-      
-      "number_of_lives": 3,
-
-      "powerups": [0, 0, 0, 0]
-    },
-
-    {
-      "time": 60,
-
-      "car_speed_multiplier": 1,
-      "number_of_cars": 1,
-
-      "log_speed_multiplier": 1,
-      "number_of_logs": 1,
-
-      "zone_type": "lava",
-
-      "turtle_sink_multiplier": 1,
-      "number_of_turtles": 0,
-      
-      "number_of_lives": 3,
-
-      "powerups": [0, 0, 0, 0]
-    },
-
-    {
-      "time": 60,
-
-      "car_speed_multiplier": 1,
-      "number_of_cars": 1,
-
-      "log_speed_multiplier": 1,
-      "number_of_logs": 1,
-
-      "turtle_sink_multiplier": 1,
-      "number_of_turtles": 0,
-      
-      "number_of_lives": 3,
-
-      "powerups": [0, 0, 0, 0]
-    },
-
-    {
-      "time": 60,
-
-      "car_speed_multiplier": 1,
-      "number_of_cars": 1,
-
-      "log_speed_multiplier": 1,
-      "number_of_logs": 1,
-
-      "turtle_sink_multiplier": 1,
-      "number_of_turtles": 0,
-      
-      "number_of_lives": 3,
-
-      "powerups": [0, 0, 0, 0]
-    },
-
-    {
-      "time": 60,
-
-      "car_speed_multiplier": 1,
-      "number_of_cars": 1,
-
-      "log_speed_multiplier": 1,
-      "number_of_logs": 1,
-
-      "turtle_sink_multiplier": 1,
-      "number_of_turtles": 0,
-      
-      "number_of_lives": 3,
-
-      "powerups": [0, 0, 0, 0]
-    },
-
-    {
-      "time": 60,
-
-      "car_speed_multiplier": 1,
-      "number_of_cars": 1,
-
-      "log_speed_multiplier": 1,
-      "number_of_logs": 1,
-
-      "turtle_sink_multiplier": 1,
-      "number_of_turtles": 0,
-      
-      "number_of_lives": 3,
-
-      "powerups": [0, 0, 0, 0]
-    },
-
-    {
-      "time": 60,
-
-      "car_speed_multiplier": 1,
-      "number_of_cars": 1,
-
-      "log_speed_multiplier": 1,
-      "number_of_logs": 1,
-
-      "turtle_sink_multiplier": 1,
-      "number_of_turtles": 0,
-      
-      "number_of_lives": 3,
-
-      "powerups": [0, 0, 0, 0]
-    },
-
-    {
-      "time": 60,
-
-      "car_speed_multiplier": 1,
-      "number_of_cars": 1,
-
-      "log_speed_multiplier": 1,
-      "number_of_logs": 1,
-
-      "turtle_sink_multiplier": 1,
-      "number_of_turtles": 0,
-      
-      "number_of_lives": 3,
-
-      "powerups": [0, 0, 0, 0]
-    },
-
-    {
-      "time": 60,
-
-      "car_speed_multiplier": 1,
-      "number_of_cars": 1,
+      "water_zone_type": "lava",
+      "logTexture": ["rock"],
+      "log_spacing": [250, 350, 400],
 
       "log_speed_multiplier": 1,
       "number_of_logs": 1,

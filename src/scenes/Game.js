@@ -67,10 +67,11 @@ export class Game extends Scene {
 
     this.numberOfCars = levels[data["level"]]["number_of_cars"];
     this.numberOfLogs = levels[data["level"]]["number_of_logs"];
+    this.logTexture = levels[data["level"]]["log_texture"];
     this.numberOfTurtles = levels[data["level"]]["number_of_turtles"];
 
-    // set background
-    //this.add.image(this.width / 2, this.height / 2, "background").setScale(1.3);
+    this.logTexture = levels[data["level"]]["logTexture"];
+    this.logSpacing = levels[data["level"]]["log_spacing"];
 
     //add Physics to the shermie sprite
     this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, "shermie");
@@ -101,23 +102,18 @@ export class Game extends Scene {
     const roadStart = this.height - this.safeZoneSize;
     const roadEnd = roadStart - this.numberOfRoads * roadWidth;
 
-    const zoneType = levels[data["level"]]["zone_type"];
+    const zoneType = levels[data["level"]]["water_zone_type"];
     
     // solid road lines (top and bottom)
-    roadLines.strokeLineShape(new Phaser.Geom.Line(0, roadStart - 10, this.width, roadStart));
+    roadLines.strokeLineShape(new Phaser.Geom.Line(0, roadStart, this.width, roadStart));
     roadLines.strokeLineShape(new Phaser.Geom.Line(0, roadEnd, this.width, roadEnd));
 
     // dashed road lines
+     // half of the gap between the dashes - 10 in our case
+     // the length of the dash - 30 in our case
+     // the length of the gap between the dashes - 20 in our case
     for (let i = 0; i < this.numberOfRoads - 1; i++) {
-      this.drawing.drawDashedLine(
-        roadLines,
-        10, // half of the gap between the dashes
-        roadStart - i * roadWidth - roadWidth,
-        this.width,
-        roadStart - i * roadWidth - roadWidth,
-        30, // the length of the dash
-        20 // the length of the gap between the dashes
-      );
+      this.drawing.drawDashedLine(roadLines, 10, roadStart - i * roadWidth - roadWidth, this.width, roadStart - i * roadWidth - roadWidth, 30, 20);
     }
 
     // create goal
@@ -134,17 +130,12 @@ export class Game extends Scene {
         goal = this.add.rectangle(this.width / 2, 15, this.width, 50, 0x00ff00);
     }
     
-    console.log("Road end= " + roadEnd)
-    console.log("safeZoneSize= " + this.safeZoneSize)
-    console.log("roadWidth= " + roadWidth)
-    console.log("numberOfRoads= " + this.numberOfRoads)
-    
     // Add physics and add to goalZone
     this.physics.add.existing(goal, true);
     goalZone.add(goal);
-    
-
+  
     //This entire block dynamically generates zones based on variable given by the levels.json
+    //TODO add road logic, default == black
     const safeZoneTexture = zoneType + "SafeZone";
     const safeZone = this.physics.add.staticGroup();
     let safe;
@@ -156,7 +147,6 @@ export class Game extends Scene {
         safe = this.add.rectangle(this.width / 2, roadEnd - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).setDepth(-1);
     }
 
-  
     this.physics.add.existing(safe, true);
     safeZone.add(safe);
     
@@ -165,14 +155,14 @@ export class Game extends Scene {
     }, null, this);
 
     // create water zone dynamically
-    let zoneTexture;
+    let waterZoneTexture;
     if (this.textures.exists(zoneType)) {
-      zoneTexture = this.add.image(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads, zoneType).setDepth(-2);
+      waterZoneTexture = this.add.image(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads, zoneType).setDepth(-2);
     } else { 
-      zoneTexture = this.add.rectangle(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads + roadWidth/2 , this.width, roadWidth * this.numberOfRoads, 0x1a31ac).setDepth(-2);
+      waterZoneTexture = this.add.rectangle(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads + roadWidth/2 , this.width, roadWidth * this.numberOfRoads, 0x1a31ac).setDepth(-2);
     }
 
-    this.physics.add.existing(zoneTexture, true);
+    this.physics.add.existing(waterZoneTexture, true);
 
     //create water lanes
     const laneWidth = this.moveDistance;
@@ -187,17 +177,18 @@ export class Game extends Scene {
     const carsForward = ["car1forward", "car2forward", "car3forward"];
     const carSpacing = [250, 350, 100];//Spacing on X axis
 
-    const logs = ["rock", "rock"];
-    const logSpacing = [250, 350, 100];
+    // const logs = ["rock", "rock"];
+    // const logSpacing = [250, 350, 100];
 
+    console.log(this.logTexture, this.logSpacing)
     createVehicles(this, roadStart, roadWidth, cars, carsForward, carSpacing);
-    createLogs(this, laneStart, laneWidth, logs, logSpacing);
+    createLogs(this, laneStart, laneWidth, this.logTexture, this.logSpacing);
 
     //TODO - Create turtles
 
     this.physics.add.overlap(this.shermie, goalZone, this.winCollision, null, this);
     this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
-    this.physics.add.overlap(this.shermie, zoneTexture, () => {
+    this.physics.add.overlap(this.shermie, waterZoneTexture, () => {
       if (!this.physics.overlap(this.shermie, this.logs)) {
         this.loseLife();
       }
