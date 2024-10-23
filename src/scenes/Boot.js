@@ -96,6 +96,7 @@ export class Boot extends Scene {
     // Create a cobble stone road asset
     this.load.image("road", "/assets/backgrounds/LavaRoad.png");
 
+
   }
 
   create() {
