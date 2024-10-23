@@ -75,17 +75,28 @@ export class Boot extends Scene {
     this.load.image("car13forward", car13forward);
 
     // Load other assets (static)
-    this.load.image("tractor", tractor);
-    this.load.image("tractorforward", tractorforward);
-    this.load.image("ShortLog", ShortLog);
-    this.load.image("LongLog", LongLog);
-    this.load.image("turtle", turtle);
-    this.load.image("turtleforward", turtleforward);
+    this.load.image("tractor", "/assets/vehiclesBackward/tractor.png");
+    this.load.image("tractorforward", "/assets/vehicleForward/tractorForward.png");
+    
+    this.load.image("ShortLog", "/assets/ShortLog.png");
+    this.load.image("LongLog", "/assets/LongLog.png");
+    this.load.image("turtle", "/assets/turtle.png");
+    this.load.image("turtleforward", "/assets/turtleforward.png");
 
-    this.load.image("shermie", shermie);
-    this.load.image("background", background);
-    this.load.image("background2", background2);
-    this.load.image("life", life);
+    this.load.image("shermie", "/assets/shermie.png");
+    this.load.image("life", "/assets/heart.png");
+
+    // Load textures for background
+    this.load.image("LavaBrick", "/assets/backgrounds/LavaBrick.png");
+    this.load.image("lava", "/assets/backgrounds/Lava.png");
+    this.load.image("goalZone", "/assets/backgrounds/GoalZone.png");
+    this.load.image("lavaGoal", "/assets/backgrounds/LavaGoal.png");
+    this.load.image("lavaSafeZone", "/assets/backgrounds/LavaSafeZone.png");
+    this.load.image("rock", "/assets/backgrounds/Rock.png");
+    // Create a cobble stone road asset
+    this.load.image("road", "/assets/backgrounds/LavaRoad.png");
+
+
   }
 
   create() {
