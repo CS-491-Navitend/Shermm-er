@@ -27,7 +27,6 @@ export class Game extends Scene {
     this.winCount = 0;
     this.lives = 0;
     this.resetCount = 0;
-    this.goalCount = 0;
 
     // road values
     this.moveDistance = 80;
@@ -89,11 +88,8 @@ export class Game extends Scene {
     const roadStart = this.height - this.safeZoneSize;
     const roadEnd = roadStart - this.numberOfRoads * roadWidth;
 
-    // Make lava road
-    // const road = this.add.image(this.width / 2, roadEnd - roadWidth, "road");
+    const zoneType = levels[data["level"]]["zone_type"];
     
-    
-
     // solid road lines (top and bottom)
     roadLines.strokeLineShape(new Phaser.Geom.Line(0, roadStart - 10, this.width, roadStart));
     roadLines.strokeLineShape(new Phaser.Geom.Line(0, roadEnd, this.width, roadEnd));
@@ -111,63 +107,65 @@ export class Game extends Scene {
       );
     }
 
-    // Create goals -> Segmented into five zones
+    // create goal
     const goalZone = this.physics.add.staticGroup();
+    let goal;
+    
+    // Check if zoneType exists and generate goal zone dynamically, otherwise default to green bar
+    if (zoneType) {
+        const goalZoneTexture = zoneType + "Goal"; // Generate the texture name dynamically
+        goal = this.add.image(this.width / 2, roadEnd - this.safeZoneSize - this.safeZoneSize / 2 - roadWidth * this.numberOfRoads, goalZoneTexture);
+        goal.setScale(1, 1);
+    } else {
+        // Default to a green bar across the top if no zoneType is provided
+        goal = this.add.rectangle(this.width / 2, 15, this.width, 50, 0x00ff00);
+    }
+    
+    console.log("Road end= " + roadEnd)
+    console.log("safeZoneSize= " + this.safeZoneSize)
+    console.log("roadWidth= " + roadWidth)
+    console.log("numberOfRoads= " + this.numberOfRoads)
+    
+    // Add physics and add to goalZone
+    this.physics.add.existing(goal, true);
+    goalZone.add(goal);
+    
 
-    const numOfGoals = 5
-    let x = 130;
-    for (let i = 0; i < numOfGoals; i++) {
-      const goal = this.add.rectangle(x, roadEnd - this.safeZoneSize - this.safeZoneSize / 2 - roadWidth * this.numberOfRoads, 130, this.safeZoneSize, 0x1de100);
-      this.physics.add.existing(goal, true);
-      goalZone.add(goal);
-      x += 180;
+    //This entire block dynamically generates zones based on variable given by the levels.json
+    const safeZoneTexture = zoneType + "SafeZone";
+    const safeZone = this.physics.add.staticGroup();
+    let safe;
+    if (this.textures.exists(zoneType)) {
+        this.add.image(this.width / 2, this.height - this.safeZoneSize / 2, safeZoneTexture).setDepth(-1);
+        safe = this.add.image(this.width / 2, roadEnd - this.safeZoneSize / 2, safeZoneTexture).setDepth(-1);
+    } else {
+        this.add.rectangle(this.width / 2, this.height - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).setDepth(-1);
+        safe = this.add.rectangle(this.width / 2, roadEnd - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).setDepth(-1);
     }
 
-
-
-    // create safe zones
-    // bottom of screen
-    // this.add.rectangle(this.width / 2, this.height - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).setDepth(-1);
-    this.add.image(this.width / 2, this.height - this.safeZoneSize / 2, "lavaSafeZone").setDepth(-1);
-
-    // middle
-    // let safeZone = this.add.rectangle(this.width / 2, roadEnd - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).setDepth(-1);
-    // this.physics.add.existing(safeZone, true);
-
-    // Middle Safe Zone lava brick
-    const safeZone = this.physics.add.staticGroup();
-    const safe = (this.add.image(this.width / 2, roadEnd - this.safeZoneSize / 2, "lavaSafeZone")).setDepth(-1);
+  
     this.physics.add.existing(safe, true);
     safeZone.add(safe);
-
-
-    //resets velocity of Shermie
+    
     this.physics.add.overlap(this.shermie, safeZone, () => {
       this.shermie.setVelocity(0, 0);
     }, null, this);
 
-    // create water zone
-    // const waterZone = this.physics.add.staticGroup();
-    // const water = (this.add.rectangle(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads, this.width, roadWidth * this.numberOfRoads, 0x1a31ac)).setDepth(-2);
-    // this.physics.add.existing(water, true);
-    // waterZone.add(water);
+    // create water zone dynamically
+    let zoneTexture;
+    if (this.textures.exists(zoneType)) {
+      zoneTexture = this.add.image(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads, zoneType).setDepth(-2);
+    } else { 
+      zoneTexture = this.add.rectangle(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads + roadWidth/2 , this.width, roadWidth * this.numberOfRoads, 0x1a31ac).setDepth(-2);
+    }
 
-    // create lava zone will change to a animated lava texture
-    const lavaZone = this.physics.add.staticGroup();
-    const lava = (this.add.image(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads, "lava")).setDepth(-2);
-    this.physics.add.existing(lava, true);
-    lavaZone.add(lava);
+    this.physics.add.existing(zoneTexture, true);
 
     //create water lanes
     const laneWidth = this.moveDistance;
     const laneStart = roadEnd - this.safeZoneSize / 2 - this.moveDistance / 2;
     const laneEnd = laneStart - this.numberOfRoads * laneWidth;
 
-    console.log("Road Start: ", roadStart);
-    console.log("Road End: ", roadEnd);
-
-    console.log("Lane Start: ", laneStart);
-    console.log("Lane End: ", laneEnd);
 
     this.vehicles = this.physics.add.group();
     this.logs = this.physics.add.group();
@@ -183,26 +181,16 @@ export class Game extends Scene {
     createLogs(this, laneStart, laneWidth, logs, logSpacing);
 
     //TODO - Create turtles
-    //createTurtles(this, laneStart, laneWidth, turtleSpacing);
+
     //When shermie overlap
-
-    this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);//Vehicle Collisions
-    
-    //Start Water Logic
-    this.physics.add.overlap(this.shermie, waterZone, () => {
-        goalZone.getChildren().forEach((goal) => {
-          if (this.physics.overlap(this.shermie, goal)) {
-            goal.setAlpha(0.5);
-            this.goalCollision();
-          }
-        });
-        if (!this.physics.overlap(this.shermie, this.logs)) {
-          this.loseLife(); 
-        }
-      }, null, this);
-
+    this.physics.add.overlap(this.shermie, goalZone, this.winCollision, null, this);
+    this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
+    this.physics.add.overlap(this.shermie, zoneTexture, () => {
+      if (!this.physics.overlap(this.shermie, this.logs)) {
+        this.loseLife();
+      }
+    }, null, this);
     this.physics.add.overlap(this.shermie, this.logs, this.rideLog, null, this);
-    //End Water Logic
 
     // this.timerText
     this.timerText = this.add.text(16, 32, `Time: ${this.timeRemaining}`, {
@@ -317,10 +305,6 @@ export class Game extends Scene {
 
   winCollision() {
     this.gameLogic.win();
-  }
-
-  goalCollision(){
-    this.gameLogic.goal();
   }
 
   updateTimer() {
