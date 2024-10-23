@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-
+import { PauseMenu } from "./Menus/PauseMenu"
 import { GameLogic } from "/src/lib/GameLogic";
 import { Drawing } from "/src/lib/Drawing";
 import { Timer } from "/src/lib/Timer";
@@ -17,7 +17,8 @@ export class Game extends Scene {
     this.width = 1000;
     this.height = 1000;
 
-
+    //check to see if the game is paused
+    this.paused = false;
     //Physics objects and other game information
     this.playing = true;
     this.canMove = true;
@@ -28,7 +29,6 @@ export class Game extends Scene {
     this.winCount = 0;
     this.lives = 0;
     this.resetCount = 0;
-    this.goalCount = 0;
 
     // road values
     this.moveDistance = 80;
@@ -59,12 +59,11 @@ export class Game extends Scene {
     this.timerDuration = levels[data["level"]]["time"];
     this.timeRemaining = this.timerDuration;
 
-    this.lives=levels[data["level"]]["number_of_lives"];
+    this.lives = levels[data["level"]]["number_of_lives"];
 
     this.carSpeedMultiplier = levels[data["level"]]["car_speed_multiplier"];
     this.logSpeedMultiplier = levels[data["level"]]["log_speed_multiplier"];
     this.frogSinkMultiplier = levels[data["level"]]["turtle_sink_multiplier"];
-
 
     this.numberOfCars = levels[data["level"]]["number_of_cars"];
     this.numberOfLogs = levels[data["level"]]["number_of_logs"];
@@ -76,12 +75,23 @@ export class Game extends Scene {
     //add Physics to the shermie sprite
     this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, "shermie");
 
-    this.shermie.setSize(50,50,true);//this manipulates hitbox of shermie
+    this.shermie.setSize(50, 50, true);//this manipulates hitbox of shermie
     this.shermie.setScale(1);//this manipulates scale of shermie
     this.shermie.setCollideWorldBounds(true);
 
     //User input for movements
     this.cursors = this.input.keyboard.createCursorKeys();
+
+    //PauseMenu
+    this.pauseMenu = new PauseMenu(this);
+    this.pauseMenu.create();
+
+    this.paused = false;
+
+    this.input.keyboard.on('keydown-ENTER', () => {
+        this.togglePause();
+        //console.log('toggle Pause');
+    });
 
     //Make roads
     const roadLines = this.add.graphics({
@@ -91,8 +101,10 @@ export class Game extends Scene {
     const roadStart = this.height - this.safeZoneSize;
     const roadEnd = roadStart - this.numberOfRoads * roadWidth;
 
+    const zoneType = levels[data["level"]]["zone_type"];
+    
     // solid road lines (top and bottom)
-    roadLines.strokeLineShape(new Phaser.Geom.Line(0, roadStart, this.width, roadStart));
+    roadLines.strokeLineShape(new Phaser.Geom.Line(0, roadStart - 10, this.width, roadStart));
     roadLines.strokeLineShape(new Phaser.Geom.Line(0, roadEnd, this.width, roadEnd));
 
     // dashed road lines
@@ -108,46 +120,65 @@ export class Game extends Scene {
       );
     }
 
-    // Create goals -> Segmented into five zones
+    // create goal
     const goalZone = this.physics.add.staticGroup();
-    const numOfGoals = 5
-    let x = 130;
-    for (let i = 0; i < numOfGoals; i++) {
-      const goal = this.add.rectangle(x, roadEnd - this.safeZoneSize - this.safeZoneSize / 2 - roadWidth * this.numberOfRoads, 130, this.safeZoneSize, 0x1de100);
-      this.physics.add.existing(goal, true);
-      goalZone.add(goal);
-      x += 180;
+    let goal;
+    
+    // Check if zoneType exists and generate goal zone dynamically, otherwise default to green bar
+    if (zoneType) {
+        const goalZoneTexture = zoneType + "Goal"; // Generate the texture name dynamically
+        goal = this.add.image(this.width / 2, roadEnd - this.safeZoneSize - this.safeZoneSize / 2 - roadWidth * this.numberOfRoads, goalZoneTexture);
+        goal.setScale(1, 1);
+    } else {
+        // Default to a green bar across the top if no zoneType is provided
+        goal = this.add.rectangle(this.width / 2, 15, this.width, 50, 0x00ff00);
+    }
+    
+    console.log("Road end= " + roadEnd)
+    console.log("safeZoneSize= " + this.safeZoneSize)
+    console.log("roadWidth= " + roadWidth)
+    console.log("numberOfRoads= " + this.numberOfRoads)
+    
+    // Add physics and add to goalZone
+    this.physics.add.existing(goal, true);
+    goalZone.add(goal);
+    
+
+    //This entire block dynamically generates zones based on variable given by the levels.json
+    const safeZoneTexture = zoneType + "SafeZone";
+    const safeZone = this.physics.add.staticGroup();
+    let safe;
+    if (this.textures.exists(zoneType)) {
+        this.add.image(this.width / 2, this.height - this.safeZoneSize / 2, safeZoneTexture).setDepth(-1);
+        safe = this.add.image(this.width / 2, roadEnd - this.safeZoneSize / 2, safeZoneTexture).setDepth(-1);
+    } else {
+        this.add.rectangle(this.width / 2, this.height - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).setDepth(-1);
+        safe = this.add.rectangle(this.width / 2, roadEnd - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).setDepth(-1);
     }
 
-
-    // create safe zones
-    // bottom of screen
-    this.add.rectangle(this.width / 2, this.height - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).setDepth(-1);
-
-    // middle
-    let safeZone = this.add.rectangle(this.width / 2, roadEnd - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).setDepth(-1);
-    this.physics.add.existing(safeZone, true);
-    //resets velocity of Shermie
+  
+    this.physics.add.existing(safe, true);
+    safeZone.add(safe);
+    
     this.physics.add.overlap(this.shermie, safeZone, () => {
-      this.shermie.setVelocity(0, 0);  
+      this.shermie.setVelocity(0, 0);
     }, null, this);
-        
-    // create water zone
-    const waterZone = this.physics.add.staticGroup();
-    const water = (this.add.rectangle(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads, this.width, roadWidth * this.numberOfRoads, 0x1a31ac)).setDepth(-2);
-    this.physics.add.existing(water, true);
-    waterZone.add(water);
+
+    // create water zone dynamically
+    let zoneTexture;
+    if (this.textures.exists(zoneType)) {
+      zoneTexture = this.add.image(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads, zoneType).setDepth(-2);
+    } else { 
+      zoneTexture = this.add.rectangle(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads + roadWidth/2 , this.width, roadWidth * this.numberOfRoads, 0x1a31ac).setDepth(-2);
+    }
+
+    this.physics.add.existing(zoneTexture, true);
 
     //create water lanes
     const laneWidth = this.moveDistance;
     const laneStart = roadEnd - this.safeZoneSize / 2 - this.moveDistance / 2;
     const laneEnd = laneStart - this.numberOfRoads * laneWidth;
 
-    console.log("Road Start: " , roadStart);
-    console.log("Road End: " , roadEnd);
-
-    console.log("Lane Start: ", laneStart);
-    console.log("Lane End: ", laneEnd);
 
     this.vehicles = this.physics.add.group();
     this.logs = this.physics.add.group();
@@ -156,31 +187,23 @@ export class Game extends Scene {
     const carsForward = ["car1forward", "car2forward", "car3forward"];
     const carSpacing = [250, 350, 100];//Spacing on X axis
 
-    const logs = ["LongLog", "ShortLog"];
+    const logs = ["rock", "rock"];
     const logSpacing = [250, 350, 100];
 
     createVehicles(this, roadStart, roadWidth, cars, carsForward, carSpacing);
     createLogs(this, laneStart, laneWidth, logs, logSpacing);
 
     //TODO - Create turtles
-    //createTurtles(this, laneStart, laneWidth, turtleSpacing);
-    //When shermie overlap
-    this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);//Vehicle Collisions
+
+    this.physics.add.overlap(this.shermie, goalZone, this.winCollision, null, this);
+    this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
+    this.physics.add.overlap(this.shermie, zoneTexture, () => {
+      if (!this.physics.overlap(this.shermie, this.logs)) {
+        this.loseLife();
+      }
+    }, null, this);
     
-    //Start Water Logic
-    this.physics.add.overlap(this.shermie, waterZone, () => {
-        goalZone.getChildren().forEach((goal) => {
-          if (this.physics.overlap(this.shermie, goal)) {
-            goal.setAlpha(0.5);
-            this.goalCollision();
-          }
-        });
-        if (!this.physics.overlap(this.shermie, this.logs) && !this.physics.overlap(this.shermie, goalZone)) {
-          this.loseLife(); 
-        }
-      }, null, this);
     this.physics.add.overlap(this.shermie, this.logs, this.rideLog, null, this);
-    //End Water Logic
 
     // this.timerText
     this.timerText = this.add.text(16, 32, `Time: ${this.timeRemaining}`, {
@@ -198,8 +221,8 @@ export class Game extends Scene {
     this.timer.startTimer();
   }
 
-  
-  update() {
+    update() {
+    if(this.paused) return;
     if (this.canMove) {
       if (this.cursors.left.isDown && this.shermie.x > 0) {
         this.shermie.x -= this.moveDistance;
@@ -243,6 +266,18 @@ export class Game extends Scene {
       if (log.x > this.width + log.width / 2) log.x = -log.width / 2;
       else if (log.x < -log.width / 2) log.x = this.width + log.width / 2;
     });
+
+
+    //This code fixes overlap but creates pop in and pop out. 
+    // this.vehicles.getChildren().forEach((vehicle) => {
+    //   if (vehicle.x > this.width) vehicle.x = 0;
+    //   else if (vehicle.x < 0) vehicle.x = this.width;
+    // });
+    
+    // this.logs.getChildren().forEach((log) => {
+    //   if (log.x > this.width) log.x = 0;
+    //   else if (log.x < 0) log.x = this.width;
+    // });
     
     /*this.turtles.getChildren().forEach((turtle) => {
       if (turtle.x > this.width + turtle.width / 2) turtle.x = -turtle.width / 2;
@@ -260,7 +295,7 @@ export class Game extends Scene {
   }
 
   //Create a log 
-  spawnLog(x, y, texture, speed){ 
+  spawnLog(x, y, texture, speed) {
     let log = this.logs.create(x, y, texture);
     log.body.setVelocityX(speed);
     log.body.allowGravity = false;
@@ -286,15 +321,26 @@ export class Game extends Scene {
     this.gameLogic.win();
   }
 
-  goalCollision(){
-    this.gameLogic.goal();
-  }
-
   updateTimer() {
     this.timer.updateTimer();
   }
 
   rideLog(shermie, log){
       shermie.setVelocityX(log.body.velocity.x);
+    }
+    togglePause() {
+        
+    if (this.paused) {
+        this.pauseMenu.hide();
+        this.paused = false;
+        this.timer.resume(); // Resume the timer
+        console.log('Resume')
+    } else {
+        this.pauseMenu.show();
+        this.paused = true;
+        this.timer.pause(); // Pause the timer
+        console.log('Paused');
+    }
+
   }
 }
