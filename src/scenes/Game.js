@@ -70,8 +70,12 @@ export class Game extends Scene {
     this.logTexture = levels[data["level"]]["log_texture"];
     this.numberOfTurtles = levels[data["level"]]["number_of_turtles"];
 
-    this.logTexture = levels[data["level"]]["logTexture"];
+    this.logTexture = levels[data["level"]]["log_texture"];
     this.logSpacing = levels[data["level"]]["log_spacing"];
+
+    this.cars = levels[data["level"]]["car_texture"];
+    this.carsForward = levels[data["level"]]["cars_Forward_texture"];
+    this.carSpacing = levels[data["level"]]["car_spacing"];
 
     //add Physics to the shermie sprite
     this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, "shermie");
@@ -173,15 +177,11 @@ export class Game extends Scene {
     this.vehicles = this.physics.add.group();
     this.logs = this.physics.add.group();
 
-    const cars = ["car1", "car2", "car3", "tractor"];
-    const carsForward = ["car1forward", "car2forward", "car3forward"];
-    const carSpacing = [250, 350, 100];//Spacing on X axis
+    // const cars = ["car1", "car2", "car3", "tractor"];
+    // const carsForward = ["car1forward", "car2forward", "car3forward"];
+    // const carSpacing = [250, 350, 100];//Spacing on X axis
 
-    // const logs = ["rock", "rock"];
-    // const logSpacing = [250, 350, 100];
-
-    console.log(this.logTexture, this.logSpacing)
-    createVehicles(this, roadStart, roadWidth, cars, carsForward, carSpacing);
+    createVehicles(this, roadStart, roadWidth, this.cars, this.carsForward, this.carSpacing);
     createLogs(this, laneStart, laneWidth, this.logTexture, this.logSpacing);
 
     //TODO - Create turtles
