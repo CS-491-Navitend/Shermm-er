@@ -16,9 +16,9 @@ export class Game extends Scene {
     // game screen size
     this.width = 1000;
     this.height = 1000;
-
-    //check to see if the game is paused
+    
     this.paused = false;
+
     //Physics objects and other game information
     this.playing = true;
     this.canMove = true;
@@ -177,10 +177,6 @@ export class Game extends Scene {
     this.vehicles = this.physics.add.group();
     this.logs = this.physics.add.group();
 
-    // const cars = ["car1", "car2", "car3", "tractor"];
-    // const carsForward = ["car1forward", "car2forward", "car3forward"];
-    // const carSpacing = [250, 350, 100];//Spacing on X axis
-
     createVehicles(this, roadStart, roadWidth, this.cars, this.carsForward, this.carSpacing);
     createLogs(this, laneStart, laneWidth, this.logTexture, this.logSpacing);
 
@@ -212,32 +208,24 @@ export class Game extends Scene {
     this.timer.startTimer();
   }
 
-    update() {
+  update() {
     if(this.paused) return;
     if (this.canMove) {
       if (this.cursors.left.isDown && this.shermie.x > 0) {
         this.shermie.x -= this.moveDistance;
         this.canMove = false;
-        console.log("X position: ", this.shermie.x);
-        console.log("Y position: ", this.shermie.y);
       }
       if (this.cursors.right.isDown && this.shermie.x < this.width) {
         this.shermie.x += this.moveDistance;
         this.canMove = false;
-        console.log("X position: ", this.shermie.x);
-        console.log("Y position: ", this.shermie.y);
       }
       if (this.cursors.up.isDown && this.shermie.y > 0) {
         this.shermie.y -= this.moveDistance;
         this.canMove = false;
-        console.log("X position: ", this.shermie.x);
-        console.log("Y position: ", this.shermie.y);
       }
       if (this.cursors.down.isDown && this.shermie.y < this.height) {
         this.shermie.y += this.moveDistance;
         this.canMove = false;
-        console.log("X position: ", this.shermie.x);
-        console.log("Y position: ", this.shermie.y);
       }
     }
 
@@ -248,33 +236,28 @@ export class Game extends Scene {
     this.shermie.x = Phaser.Math.Clamp(this.shermie.x, 0, this.width);
     this.shermie.y = Phaser.Math.Clamp(this.shermie.y, 0, this.height - this.safeZoneSize + this.moveDistance / 2);
 
-    this.vehicles.getChildren().forEach((vehicle) => {
-      if (vehicle.x > this.width + vehicle.width / 2) vehicle.x = -vehicle.width / 2;
-      else if (vehicle.x < -vehicle.width / 2) vehicle.x = this.width + vehicle.width / 2;
-    });
+    // this.vehicles.getChildren().forEach((vehicle) => {
+    //   if (vehicle.x > this.width + vehicle.width / 2) vehicle.x = -vehicle.width / 2;
+    //   else if (vehicle.x < -vehicle.width / 2) vehicle.x = this.width + vehicle.width / 2;
+    // });
 
-    this.logs.getChildren().forEach((log) => {
-      if (log.x > this.width + log.width / 2) log.x = -log.width / 2;
-      else if (log.x < -log.width / 2) log.x = this.width + log.width / 2;
-    });
+    // this.logs.getChildren().forEach((log) => {
+    //   if (log.x > this.width + log.width / 2) log.x = -log.width / 2;
+    //   else if (log.x < -log.width / 2) log.x = this.width + log.width / 2;
+    // });
 
 
     //This code fixes overlap but creates pop in and pop out. 
-    // this.vehicles.getChildren().forEach((vehicle) => {
-    //   if (vehicle.x > this.width) vehicle.x = 0;
-    //   else if (vehicle.x < 0) vehicle.x = this.width;
-    // });
-    
-    // this.logs.getChildren().forEach((log) => {
-    //   if (log.x > this.width) log.x = 0;
-    //   else if (log.x < 0) log.x = this.width;
-    // });
-    
-    /*this.turtles.getChildren().forEach((turtle) => {
-      if (turtle.x > this.width + turtle.width / 2) turtle.x = -turtle.width / 2;
-      else if (turtle.x < -turtle.width / 2) turtle.x = this.width + turtle.width / 2;
+    this.vehicles.getChildren().forEach((vehicle) => {
+      if (vehicle.x > this.width) vehicle.x = 0;
+      else if (vehicle.x < 0) vehicle.x = this.width;
     });
-    */
+    
+    this.logs.getChildren().forEach((log) => {
+      if (log.x > this.width) log.x = 0;
+      else if (log.x < 0) log.x = this.width;
+    });
+    
   }
   //Create a vehicle
   spawnVehicle(x, y, texture, speed) {
@@ -296,14 +279,6 @@ export class Game extends Scene {
     return log;
   }
 
-  //Create a Turtle - Actual Textures
-  /*spawnTurtle(x, y, texture, speed) {
-    let turtle = this.turtles.create(x, y, texture);
-    frog.body.setVelocityX(speed);
-    frog.body.allowGravity = false;
-    frog.body.immovable = true;
-  }*/
-
   loseLife() {
     this.gameLogic.loseLife();
   }
@@ -319,17 +294,17 @@ export class Game extends Scene {
   rideLog(shermie, log){
       shermie.setVelocityX(log.body.velocity.x);
     }
-    togglePause() {
+  togglePause() {
         
     if (this.paused) {
         this.pauseMenu.hide();
         this.paused = false;
-        this.timer.resume(); // Resume the timer
+        this.timer.resume(); 
         console.log('Resume')
     } else {
         this.pauseMenu.show();
         this.paused = true;
-        this.timer.pause(); // Pause the timer
+        this.timer.pause();
         console.log('Paused');
     }
 
