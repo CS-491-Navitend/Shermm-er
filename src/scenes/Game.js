@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-
+import { PauseMenu } from "./Menus/PauseMenu"
 import { GameLogic } from "/src/lib/GameLogic";
 import { Drawing } from "/src/lib/Drawing";
 import { Timer } from "/src/lib/Timer";
@@ -17,6 +17,8 @@ export class Game extends Scene {
     this.width = 1000;
     this.height = 1000;
 
+    //check to see if the game is paused
+    this.paused = false;
     //Physics objects and other game information
     this.playing = true;
     this.canMove = true;
@@ -80,7 +82,18 @@ export class Game extends Scene {
     //User input for movements
     this.cursors = this.input.keyboard.createCursorKeys();
 
-    // //Make roads
+    //PauseMenu
+    this.pauseMenu = new PauseMenu(this);
+    this.pauseMenu.create();
+
+    this.paused = false;
+
+    this.input.keyboard.on('keydown-ENTER', () => {
+        this.togglePause();
+        //console.log('toggle Pause');
+    });
+
+    //Make roads
     const roadLines = this.add.graphics({
       lineStyle: { width: 5, color: 0xffffff },
     });
@@ -208,7 +221,8 @@ export class Game extends Scene {
     this.timer.startTimer();
   }
 
-  update() {
+    update() {
+    if(this.paused) return;
     if (this.canMove) {
       if (this.cursors.left.isDown && this.shermie.x > 0) {
         this.shermie.x -= this.moveDistance;
@@ -311,7 +325,22 @@ export class Game extends Scene {
     this.timer.updateTimer();
   }
 
-  rideLog(shermie, log) {
-    shermie.setVelocityX(log.body.velocity.x);
+  rideLog(shermie, log){
+      shermie.setVelocityX(log.body.velocity.x);
+    }
+    togglePause() {
+        
+    if (this.paused) {
+        this.pauseMenu.hide();
+        this.paused = false;
+        this.timer.resume(); // Resume the timer
+        console.log('Resume')
+    } else {
+        this.pauseMenu.show();
+        this.paused = true;
+        this.timer.pause(); // Pause the timer
+        console.log('Paused');
+    }
+
   }
 }
