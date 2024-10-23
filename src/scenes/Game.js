@@ -195,7 +195,6 @@ export class Game extends Scene {
 
     //TODO - Create turtles
 
-    //When shermie overlap
     this.physics.add.overlap(this.shermie, goalZone, this.winCollision, null, this);
     this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
     this.physics.add.overlap(this.shermie, zoneTexture, () => {
@@ -203,6 +202,7 @@ export class Game extends Scene {
         this.loseLife();
       }
     }, null, this);
+    
     this.physics.add.overlap(this.shermie, this.logs, this.rideLog, null, this);
 
     // this.timerText
