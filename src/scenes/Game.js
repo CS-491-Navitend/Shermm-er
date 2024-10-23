@@ -77,6 +77,8 @@ export class Game extends Scene {
     this.carsForward = levels[data["level"]]["cars_Forward_texture"];
     this.carSpacing = levels[data["level"]]["car_spacing"];
 
+    this.advanceNumber = levels[data["level"]]["goal_count"];
+
     //add Physics to the shermie sprite
     this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, "shermie");
 
@@ -95,7 +97,6 @@ export class Game extends Scene {
 
     this.input.keyboard.on('keydown-ENTER', () => {
         this.togglePause();
-        //console.log('toggle Pause');
     });
 
     //Make roads
@@ -185,7 +186,7 @@ export class Game extends Scene {
     this.physics.add.overlap(this.shermie, goalZone, this.winCollision, null, this);
     this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
     this.physics.add.overlap(this.shermie, waterZoneTexture, () => {
-      if (!this.physics.overlap(this.shermie, this.logs)) {
+      if (!this.physics.overlap(this.shermie, this.logs) && !this.physics.overlap(this.shermie, goalZone)) {
         this.loseLife();
       }
     }, null, this);
@@ -236,27 +237,27 @@ export class Game extends Scene {
     this.shermie.x = Phaser.Math.Clamp(this.shermie.x, 0, this.width);
     this.shermie.y = Phaser.Math.Clamp(this.shermie.y, 0, this.height - this.safeZoneSize + this.moveDistance / 2);
 
-    // this.vehicles.getChildren().forEach((vehicle) => {
-    //   if (vehicle.x > this.width + vehicle.width / 2) vehicle.x = -vehicle.width / 2;
-    //   else if (vehicle.x < -vehicle.width / 2) vehicle.x = this.width + vehicle.width / 2;
-    // });
+    this.vehicles.getChildren().forEach((vehicle) => {
+      if (vehicle.x > this.width + vehicle.width / 2) vehicle.x = -vehicle.width / 2;
+      else if (vehicle.x < -vehicle.width / 2) vehicle.x = this.width + vehicle.width / 2;
+    });
 
-    // this.logs.getChildren().forEach((log) => {
-    //   if (log.x > this.width + log.width / 2) log.x = -log.width / 2;
-    //   else if (log.x < -log.width / 2) log.x = this.width + log.width / 2;
-    // });
+    this.logs.getChildren().forEach((log) => {
+      if (log.x > this.width + log.width / 2) log.x = -log.width / 2;
+      else if (log.x < -log.width / 2) log.x = this.width + log.width / 2;
+    });
 
 
     //This code fixes overlap but creates pop in and pop out. 
-    this.vehicles.getChildren().forEach((vehicle) => {
-      if (vehicle.x > this.width) vehicle.x = 0;
-      else if (vehicle.x < 0) vehicle.x = this.width;
-    });
+    // this.vehicles.getChildren().forEach((vehicle) => {
+    //   if (vehicle.x > this.width) vehicle.x = 0;
+    //   else if (vehicle.x < 0) vehicle.x = this.width;
+    // });
     
-    this.logs.getChildren().forEach((log) => {
-      if (log.x > this.width) log.x = 0;
-      else if (log.x < 0) log.x = this.width;
-    });
+    // this.logs.getChildren().forEach((log) => {
+    //   if (log.x > this.width) log.x = 0;
+    //   else if (log.x < 0) log.x = this.width;
+    // });
     
   }
   //Create a vehicle
@@ -300,12 +301,10 @@ export class Game extends Scene {
         this.pauseMenu.hide();
         this.paused = false;
         this.timer.resume(); 
-        console.log('Resume')
     } else {
         this.pauseMenu.show();
         this.paused = true;
         this.timer.pause();
-        console.log('Paused');
     }
 
   }

@@ -18,6 +18,7 @@
       "number_of_turtles": 1,
 
       "number_of_lives": 99,
+      "goal_count": 3,
 
       "powerups": [0, 0, 0, 0]
     },
@@ -42,6 +43,7 @@
       "number_of_turtles": 0,
       
       "number_of_lives": 3,
+      "goal_count": 3,
 
       "powerups": [0, 0, 0, 0]
     }
