@@ -9,8 +9,13 @@
       "car_speed_multiplier": 1,
       "number_of_cars": 2,
 
+      "goal_zone_type": "grass",
+      "safe_zone_type": "grass",
+
+      "water_zone_type": "water",
       "log_texture": ["LongLog", "ShortLog"],
       "log_spacing": [250, 350, 400],
+
       "log_speed_multiplier": 1,
       "number_of_logs": 2,
 
@@ -26,8 +31,33 @@
     {
       "time": 60,
 
-      "car_texture": ["car1", "car2", "car3", "tractor"],
-      "cars_Forward_texture":  ["car1forward", "car2forward", "car3forward"],
+      "car_texture": ["car4", "car5", "car6", "tractor"],
+      "cars_Forward_texture":  ["car4forward", "car5forward", "car6forward"],
+      "car_spacing": [250, 350, 100],
+      "car_speed_multiplier": 1,
+      "number_of_cars": 2,
+
+      "water_zone_type": "ice",
+      "log_texture": ["LongLog", "ShortLog"],
+      "log_spacing": [250, 350, 400],
+      
+      "log_speed_multiplier": 1,
+      "number_of_logs": 2,
+
+      "turtle_sink_multiplier": 1,
+      "number_of_turtles": 2,
+
+      "number_of_lives": 3,
+      "goal_count": 3,
+
+      "powerups": [0, 0, 0, 0]
+    },
+
+    {
+      "time": 60,
+
+      "car_texture": ["car7", "car8", "car9", "tractor"],
+      "cars_Forward_texture":  ["car7forward", "car8forward", "car9forward"],
       "car_spacing": [250, 350, 100],
       "car_speed_multiplier": 1,
       "number_of_cars": 1,
@@ -37,7 +67,7 @@
       "log_spacing": [250, 350, 400],
 
       "log_speed_multiplier": 1,
-      "number_of_logs": 1,
+      "number_of_logs": 2,
 
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 0,
