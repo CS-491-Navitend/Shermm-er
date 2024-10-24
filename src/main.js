@@ -2,6 +2,7 @@ import { Boot } from "./scenes/Boot";
 // menus
 import { MainMenu } from "./scenes/Menus/MainMenu";
 import { LevelMenu } from "./scenes/Menus/LevelMenu";
+import { PauseMenu } from "./scenes/Menus/PauseMenu";
 // game
 import { Game as MainGame } from "./scenes/Game";
 import { AUTO, Scale, Game } from "phaser";
@@ -23,7 +24,7 @@ const config = {
     mode: Scale.FIT,
     autoCenter: Scale.CENTER_HORIZONTALLY,
   },
-  scene: [Boot, MainMenu, LevelMenu, MainGame, GameOver],
+  scene: [Boot, MainMenu, LevelMenu, MainGame, PauseMenu, GameOver],
 };
 
 export default new Game(config);

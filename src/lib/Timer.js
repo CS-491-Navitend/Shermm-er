@@ -1,6 +1,9 @@
 export class Timer {
   constructor(game) {
     this.game = game;
+
+    this.timer = null;
+    this.isPaused = false;
   }
 
   updateTimer() {
@@ -11,16 +14,34 @@ export class Timer {
     }
     this.game.timerText.setText(`Time: ${this.game.timeRemaining}`);
   }
+
   startTimer() {
-    this.game.timeRemaining = this.game.timerDuration; // Reset the timer
-    this.game.timerText.setText(`Time: ${this.game.timeRemaining}`); // Display initial time
-    this.game.timerEvent = this.game.time.addEvent({
-      delay: 1000,
-      callback: this.updateTimer(),
-      callbackScope: this,
-      loop: true,
-    });
-  }
+
+    this.stop(); 
+    this.timer = setInterval(() => {
+      if (this.isPaused|| this.game.timeRemaining <= 0 || !this.game.playing) {
+        // stop timer
+        clearInterval(this.timer);
+        return;
+      }
+
+      if (this.game.playing) {
+        this.updateTimer();
+      }
+    }, 1000);
+    }
+   pause() {
+        this.isPaused = true;
+    }
+
+    resume() {
+        this.isPaused = false;
+        this.startTimer();
+    }
+    stop() {
+        clearInterval(this.timer);
+        this.timer = null;
+    }
 }
 
 export default Timer;

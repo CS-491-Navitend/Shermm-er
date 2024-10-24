@@ -3,9 +3,20 @@ export class GameLogic {
     this.game = game;
   }
 
+  goal() {
+    this.game.goalCount++;
+    if(this.game.goalCount != 5){
+      this.resetPlayer();
+    }
+    else{
+      console.log(`Goal condition met. Goals: ${this.game.goalCount}`);
+      this.resetPlayer();
+    }
+  }
+
   win() {
-    console.log(`Win condition met. Wins: ${this.game.winCount}`);
     this.game.winCount++;
+    console.log(`Win condition met. Wins: ${this.game.winCount}`);
     this.resetPlayer();
   }
 
@@ -39,7 +50,7 @@ export class GameLogic {
     this.game.resetCount++;
     this.game.shermie.x = this.game.width / 2;
     this.game.shermie.y = this.game.height - this.game.safeZoneSize + this.game.moveDistance / 2;
-  }
+    }
 }
 
 export default GameLogic;
