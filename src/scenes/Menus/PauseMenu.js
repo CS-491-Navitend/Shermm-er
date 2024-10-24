@@ -88,6 +88,7 @@ export class PauseMenu extends Scene {
 
         mainMenuButton.on('pointerdown', () => {
             //if(!this.scene.paused) return; //Prevent action if not paused
+            this.scene.timer.stop();
             this.scene.scene.stop("Game");
             this.scene.scene.start("MainMenu");
             console.log('starting MainMenu');

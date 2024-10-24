@@ -67,7 +67,7 @@ export class MainMenu extends Scene {
 
     button.on("pointerup", () => {
       button.setScale(1); // Scale back up
-      //console.log(`${button.text} button released`);
+      //onsole.log(`${button.text} button released`);
     });
   }
 }
