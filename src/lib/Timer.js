@@ -38,8 +38,9 @@ export class Timer {
         this.startTimer();
     }
     stop() {
-        clearInterval(this.timer);
-        this.timer = null;
+      this.isPaused = false;  
+      clearInterval(this.timer);
+      this.timer = null;
     }
 }
 

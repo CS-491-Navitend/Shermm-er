@@ -30,6 +30,7 @@ export class Game extends Scene {
     this.lives = 0;
     this.resetCount = 0;
     this.goalCount = 0;
+    this.numOfGoals = 5;
 
     // road values
     this.moveDistance = 80;
@@ -132,15 +133,19 @@ export class Game extends Scene {
         const goalZoneTexture = zoneType + "Goal"; // Generate the texture name dynamically
         goal = this.add.image(this.width / 2, roadEnd - this.safeZoneSize - this.safeZoneSize / 2 - roadWidth * this.numberOfRoads, goalZoneTexture);
         goal.setScale(1, 1);
+        this.physics.add.existing(goal, true);
+        goalZone.add(goal);
     } else {
         // Default to a green bar across the top if no zoneType is provided
-        goal = this.add.rectangle(this.width / 2, 15, this.width, 50, 0x00ff00);
+        let x = 150;
+        for (let i = 0; i < this.numOfGoals; i++) {
+          // Add physics and add to goalZone
+          const goal = this.add.rectangle(x, roadEnd - this.safeZoneSize - this.safeZoneSize / 2 - roadWidth * this.numberOfRoads, 130, this.safeZoneSize, 0x1de100);
+          this.physics.add.existing(goal, true);
+          goalZone.add(goal);
+          x += 180;
+        };
     }
-    
-    // Add physics and add to goalZone
-    this.physics.add.existing(goal, true);
-    goalZone.add(goal);
-  
     //This entire block dynamically generates zones based on variable given by the levels.json
     //TODO add road logic, default == black
     const safeZoneTexture = zoneType + "SafeZone";
