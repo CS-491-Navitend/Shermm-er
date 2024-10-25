@@ -130,6 +130,7 @@ export class Game extends Scene {
     
     // Check if zoneType exists and generate goal zone dynamically, otherwise default to green bar
     if (zoneType) {
+        let x = 150;
         const goalZoneTexture = zoneType + "Goal"; // Generate the texture name dynamically
         goal = this.add.image(this.width / 2, roadEnd - this.safeZoneSize - this.safeZoneSize / 2 - roadWidth * this.numberOfRoads, goalZoneTexture);
         goal.setScale(1, 1);
@@ -171,7 +172,7 @@ export class Game extends Scene {
     if (this.textures.exists(zoneType)) {
       waterZoneTexture = this.add.image(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads, zoneType).setDepth(-2);
     } else { 
-      waterZoneTexture = this.add.rectangle(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads + roadWidth/2 , this.width, roadWidth * this.numberOfRoads, 0x1a31ac).setDepth(-2);
+      waterZoneTexture = this.add.rectangle(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads + roadWidth/2 - 100, this.width, roadWidth * this.numberOfRoads + 200, 0x1a31ac).setDepth(-2);
     }
 
     this.physics.add.existing(waterZoneTexture, true);

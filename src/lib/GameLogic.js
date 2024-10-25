@@ -53,6 +53,7 @@ export class GameLogic {
   }
 
   nextLevel(){
+    console.log("Starting next level");
     this.game.goalCount = 0;
     this.game.level += 1;
     if (this.game.level < this.game.getNumberOfLevels()) {
