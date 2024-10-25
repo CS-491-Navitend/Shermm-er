@@ -114,15 +114,11 @@ export class MainMenu extends Scene {
         if (this.buttons.length > 0) {
             console.log("Destorying Buttons...")
             this.buttons.forEach(button => {
-                button.destroy();
-                console.log("Button destroyed", button);
-            });
-            this.buttons.forEach(button => {
-                console.log("destoryed");
                 button.off("pointerdown");
                 button.off("pointerover");
                 button.off("pointerout");
                 button.destroy();
+                console.log("Button destroyed: ", button.text);
             });
             this.buttons = [];
             this.input.keyboard.removeAllListeners();
