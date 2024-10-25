@@ -29,6 +29,7 @@ export class Game extends Scene {
     this.winCount = 0;
     this.lives = 0;
     this.resetCount = 0;
+    this.goalCount = 0;
 
     // road values
     this.moveDistance = 80;
@@ -56,6 +57,7 @@ export class Game extends Scene {
 
   create(data) {
     this.level = data["level"];
+    console.log(this.level);
     this.timerDuration = levels[data["level"]]["time"];
     this.timeRemaining = this.timerDuration;
 
@@ -183,7 +185,7 @@ export class Game extends Scene {
 
     //TODO - Create turtles
 
-    this.physics.add.overlap(this.shermie, goalZone, this.winCollision, null, this);
+    this.physics.add.overlap(this.shermie, goalZone, this.goalCollision, null, this);
     this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
     this.physics.add.overlap(this.shermie, waterZoneTexture, () => {
       if (!this.physics.overlap(this.shermie, this.logs) && !this.physics.overlap(this.shermie, goalZone)) {
@@ -284,8 +286,8 @@ export class Game extends Scene {
     this.gameLogic.loseLife();
   }
 
-  winCollision() {
-    this.gameLogic.win();
+  goalCollision() {
+    this.gameLogic.goal();
   }
 
   updateTimer() {
@@ -307,5 +309,13 @@ export class Game extends Scene {
         this.timer.pause();
     }
 
+  }
+  
+  getAdvanceNumber(){//Get number of goals for level transition
+    return this.advanceNumber;
+  }
+  
+  getNumberOfLevels(){
+    return levels.length;
   }
 }
