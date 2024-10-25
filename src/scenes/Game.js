@@ -31,12 +31,12 @@ export class Game extends Scene {
     this.resetCount = 0;
 
     // road values
-    this.moveDistance = 80;
     this.numberOfRoads = 5;
+    this.moveDistance = (this.height / ((this.numberOfRoads*2)+3));//the height / number of roads + number of goals + number of safe
     this.safeZoneSize = 80;
 
     //water values
-    this.moveDistance = 80;
+    //this.moveDistance = 80;
     this.numberOfLanes = 5;
 
     // dynamic values (from levels.json)
@@ -132,7 +132,7 @@ export class Game extends Scene {
         goal.setScale(1, 1);
     } else {
         // Default to a green bar across the top if no zoneType is provided
-        goal = this.add.rectangle(this.width / 2, 15, this.width, 50, 0x00ff00);
+        goal = this.add.rectangle(this.width / 2, this.moveDistance / 2, this.width, this.moveDistance, 0x00ff00);
     }
     
     // Add physics and add to goalZone
@@ -164,8 +164,9 @@ export class Game extends Scene {
     if (this.textures.exists(zoneType)) {
       waterZoneTexture = this.add.image(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads, zoneType).setDepth(-2);
     } else { 
-      waterZoneTexture = this.add.rectangle(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads + roadWidth/2 , this.width, roadWidth * this.numberOfRoads, 0x1a31ac).setDepth(-2);
+      waterZoneTexture = this.add.rectangle(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads + roadWidth/2, this.width, this.moveDistance*this.numberOfRoads, 0x1a31ac).setDepth(-2);
     }
+
 
     this.physics.add.existing(waterZoneTexture, true);
 
@@ -173,8 +174,7 @@ export class Game extends Scene {
     const laneWidth = this.moveDistance;
     const laneStart = roadEnd - this.safeZoneSize / 2 - this.moveDistance / 2;
     const laneEnd = laneStart - this.numberOfRoads * laneWidth;
-
-
+    
     this.vehicles = this.physics.add.group();
     this.logs = this.physics.add.group();
 
