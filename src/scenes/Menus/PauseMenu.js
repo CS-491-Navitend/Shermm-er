@@ -137,6 +137,7 @@ export class PauseMenu extends Scene {
     
 
     destroy() {
+        console.log("Pause menu is being destroyed");
         if(this.pauseMenu){
             this.pauseMenu.destroy();
             this.pauseMenu = null;
