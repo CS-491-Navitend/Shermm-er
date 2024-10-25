@@ -39,11 +39,7 @@ export class LevelMenu extends Scene {
     // create level buttons (max of 3 cols)
     for (let col = 0; col < this.maxCols; col++) {
       //
-      for (
-        let row = 0;
-        row < Math.ceil(this.numberOfLevels / this.maxCols);
-        row++
-      ) {
+      for (let row = 0; row < Math.ceil(this.numberOfLevels / this.maxCols); row++) {
         // calculate level number
         const levelNumber = col * this.maxRows + row + 1;
 
