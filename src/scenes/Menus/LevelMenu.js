@@ -83,8 +83,30 @@ export class LevelMenu extends Scene {
       backgroundColor: "#3388FF",
     }).setOrigin(0.5).setInteractive({ useHandCursor: true });
 
-    levelButton.on("pointerdown", () => {
-      this.scene.start("Game", { level: levelNumber });
+    const levelButtonIndex = this.buttons.length;
+
+    //when mouse hover over
+    levelButton.on("pointerover", () => {
+        // Ensure correct index on hover
+    if (this.selectedButtonIndex !== levelButtonIndex) {
+      this.highlightButton(this.selectedButtonIndex, false); // Clear the old highlight
+      this.selectedButtonIndex = levelButtonIndex; // Update to the new index
+      this.highlightButton(levelButtonIndex); // Highlight the new button
+    }
+    });
+
+    //when mouse hover out
+    levelButton.on("pointerout", () => {
+      if (this.selectedButtonIndex !== levelButtonIndex) {
+            this.highlightButton(levelButtonIndex, false);
+      }
+    });
+
+    //when mouse select
+      levelButton.on("pointerdown", () => {
+        this.selectedButtonIndex = levelButtonIndex;
+        this.highlightButton(this.selectedButtonIndex);
+        this.scene.start("Game", { level: levelNumber });
     });
 
     // Add the button to the buttons array
@@ -124,7 +146,7 @@ export class LevelMenu extends Scene {
   }
 
   confirmSelection() {
-    const selectedButton = this.buttons[this.selectedButtonIndex];
+    //const selectedButton = this.buttons[this.selectedButtonIndex];
     const levelNumber = this.selectedButtonIndex + 1; // Adjust for level number
     this.scene.start("Game", { level: levelNumber });
   }

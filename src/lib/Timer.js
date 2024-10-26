@@ -7,7 +7,7 @@ export class Timer {
   }
 
   updateTimer() {
-    console.log("Updating Timer..")
+    //console.log("Updating Timer..")
     this.timeRemaining -= 1;
       if (this.timeRemaining <= 0) {
       this.stop();

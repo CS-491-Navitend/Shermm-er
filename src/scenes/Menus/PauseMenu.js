@@ -62,11 +62,12 @@ export class PauseMenu extends Scene {
         }).setOrigin(0.5).setInteractive();
 
         resumeButton.on('pointerover', () => {
-            resumeButton.setStyle({ fill: '#ff0' }); // Change color on hover
+            this.highlightButton(resumeButton, true); // Highlight on hover
+            this.selectedButtonIndex = 0; // Set selected index
         });
 
         resumeButton.on('pointerout', () => {
-            resumeButton.setStyle({ fill: '#ffffff' }); // Reset color
+            this.highlightButton(resumeButton, false); // Reset highlight
         });
 
         resumeButton.on('pointerdown', () => {
@@ -87,19 +88,18 @@ export class PauseMenu extends Scene {
         }).setOrigin(0.5).setInteractive();
 
         mainMenuButton.on('pointerover', () => {
-            mainMenuButton.setStyle({ fill: '#ff0' }); // Change color on hover
+            this.highlightButton(mainMenuButton, true); // Highlight on hover
+            this.selectedButtonIndex = 1; // Set selected index
         });
+
         mainMenuButton.on('pointerout', () => {
-            mainMenuButton.setStyle({ fill: '#ffffff' }); // Reset color
+            this.highlightButton(mainMenuButton, false); // Reset highlight
         });
 
         mainMenuButton.on('pointerdown', () => {
-            //if(!this.scene.paused) return; //Prevent action if not paused
             this.scene.timer.stop();
             this.scene.scene.stop("Game");
             this.scene.scene.start("MainMenu");
-            console.log('starting MainMenu');
-            
         });
 
         this.addButtonBorder(mainMenuButton);
@@ -115,7 +115,7 @@ export class PauseMenu extends Scene {
     }
     changeSelection(direction) {
         // Highlight the currently selected button
-        this.highlightButton(this.selectedButtonIndex, false);
+        this.highlightButton(this.buttons[this.selectedButtonIndex], false); // Remove highlight
 
         // Update the selected button index
         this.selectedButtonIndex += direction;
@@ -128,11 +128,10 @@ export class PauseMenu extends Scene {
         }
 
         // Highlight the new selection
-        this.highlightButton(this.selectedButtonIndex);
+        this.highlightButton(this.buttons[this.selectedButtonIndex]); // Highlight new selection
     }
 
-    highlightButton(index, highlight = true) {
-        const button = this.buttons[index];
+    highlightButton(button, highlight = true) {
         button.setStyle({ fill: highlight ? '#ff0' : '#ffffff' });
     }
 

@@ -28,8 +28,8 @@ export class MainMenu extends Scene {
       .setOrigin(0.5);
 
         // Create buttons
-        const playButton = this.createButton(512, 400, 'Play');
-        const levelSelectButton = this.createButton(512, 500, "Level Select");
+        const playButton = this.createButton(512, 400, 'Play', 0);
+        const levelSelectButton = this.createButton(512, 500, "Level Select", 1);
 
     
 
@@ -47,7 +47,7 @@ export class MainMenu extends Scene {
     this.highlightButton(this.selectedButtonIndex);
   }
 
-  createButton(x, y, text, onClick) {
+  createButton(x, y, text, mainButtonIndex) {
     const button = this.add
       .text(x, y, text, {
         fontFamily: this.fontFamily,
@@ -59,6 +59,22 @@ export class MainMenu extends Scene {
       .setOrigin(0.5)
       .setInteractive({ useHandCursor: true })
       //console.log("Creating Button: ", text);
+
+      //buttons length for main menu
+      
+
+      button.on('pointerover', () => {
+          this.selectedButtonIndex = mainButtonIndex; // Update the selected index on hover
+          this.highlightButton(this.selectedButtonIndex);
+      });
+
+      button.on('pointerout', () => {
+          this.highlightButton(this.selectedButtonIndex);
+      });
+
+      button.on('pointerdown', () => {
+          this.confirmSelection();
+      });
 
     return button;
   }
@@ -81,17 +97,12 @@ export class MainMenu extends Scene {
     this.highlightButton(this.selectedButtonIndex);
   }
 
-  highlightButton(index, highlight = true) {
-      if (index < 0 || index >= this.buttons.length) {
-          console.warn('index out of bounds for highlighting button:', index);
-      }
-    const button = this.buttons[index];
-    if (highlight) {
-      button.setStyle({ backgroundColor: "#44AAFF" });
-    } else {
-      button.setStyle({ backgroundColor: "#3388FF" });
+    highlightButton(index) {
+        this.buttons.forEach((button, i) => {
+            const highlight = i === index;
+            button.setStyle({ backgroundColor: highlight ? "#44AAFF" : "#3388FF" });
+        });
     }
-  }
 
   confirmSelection() {
       const selectedButton = this.buttons[this.selectedButtonIndex];
