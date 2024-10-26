@@ -136,8 +136,8 @@ export class Game extends Scene {
       const goalZoneTexture = "goalZone";
       goal = this.add.image(this.width / 2, roadEnd - this.safeZoneSize - this.safeZoneSize / 2 - roadWidth * this.numberOfRoads, goalZoneTexture);
       goal.setScale(1, 1);
-      this.physics.add.existing(end, true);
-      endZone.add(end);
+      this.physics.add.existing(goal, true);
+      goalZone.add(goal);
       
       /*TODO - Generate the goal sprites dynamically
       let x = 150;
@@ -152,13 +152,18 @@ export class Game extends Scene {
 
     } else {
         // Default to a green bar across the top if no zoneType is provided
-        let x = 150;
+        const endZoneTexture = "goalZone";
+        end = this.add.image(this.width / 2, roadEnd - this.safeZoneSize - this.safeZoneSize / 2 - roadWidth * this.numberOfRoads, endZoneTexture);
+        end.setScale(1, 1);
+        this.physics.add.existing(end, true);
+        endZone.add(end);
+        let x = 65;
         for (let i = 0; i < this.numOfGoals; i++) {
           // Add physics and add to goalZone
-          const goal = this.add.rectangle(x, roadEnd - this.safeZoneSize - this.safeZoneSize / 2 - roadWidth * this.numberOfRoads, 130, this.safeZoneSize, 0x1de100);
+          const goal = this.add.image(x, roadEnd - this.safeZoneSize - this.safeZoneSize / 2 - roadWidth * this.numberOfRoads + 20, "lilypad");
           this.physics.add.existing(goal, true);
           goalZone.add(goal);
-          x += 180;
+          x += 215;
         };
     }
     //This entire block dynamically generates zones based on variable given by the levels.json

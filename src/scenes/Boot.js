@@ -85,6 +85,7 @@ export class Boot extends Scene {
 
     this.load.image("shermie", "/assets/shermie.png");
     this.load.image("life", "/assets/heart.png");
+    this.load.image("lilypad", "/assets/backgrounds/lilypad.png");
 
     // Load textures for background
     this.load.image("LavaBrick", "/assets/backgrounds/LavaBrick.png");
