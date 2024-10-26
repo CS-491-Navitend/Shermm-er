@@ -288,6 +288,7 @@ export class Game extends Scene {
     return log;
   }
 
+
   loseLife() {
     this.gameLogic.loseLife();
   }
