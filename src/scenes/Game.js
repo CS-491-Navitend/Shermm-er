@@ -134,7 +134,7 @@ export class Game extends Scene {
     if (zoneType) {
       //const goalZoneTexture = zoneType + "Goal"; // Generate the texture name dynamically
       const goalZoneTexture = "goalZone";
-      goal = this.add.image(this.width / 2, roadEnd - this.safeZoneSize - this.safeZoneSize / 2 - roadWidth * this.numberOfRoads, endZoneTexture);
+      goal = this.add.image(this.width / 2, roadEnd - this.safeZoneSize - this.safeZoneSize / 2 - roadWidth * this.numberOfRoads, goalZoneTexture);
       goal.setScale(1, 1);
       this.physics.add.existing(end, true);
       endZone.add(end);
