@@ -126,16 +126,30 @@ export class Game extends Scene {
 
     // create goal
     const goalZone = this.physics.add.staticGroup();
+    const endZone = this.physics.add.staticGroup();
     let goal;
+    let end;
     
     // Check if zoneType exists and generate goal zone dynamically, otherwise default to green bar
     if (zoneType) {
-        let x = 150;
-        const goalZoneTexture = zoneType + "Goal"; // Generate the texture name dynamically
-        goal = this.add.image(this.width / 2, roadEnd - this.safeZoneSize - this.safeZoneSize / 2 - roadWidth * this.numberOfRoads, goalZoneTexture);
-        goal.setScale(1, 1);
+      //const goalZoneTexture = zoneType + "Goal"; // Generate the texture name dynamically
+      const goalZoneTexture = "goalZone";
+      goal = this.add.image(this.width / 2, roadEnd - this.safeZoneSize - this.safeZoneSize / 2 - roadWidth * this.numberOfRoads, endZoneTexture);
+      goal.setScale(1, 1);
+      this.physics.add.existing(end, true);
+      endZone.add(end);
+      
+      /*TODO - Generate the goal sprites dynamically
+      let x = 150;
+      for (let i = 0; i < this.numOfGoals; i++) {
+        // Add physics and add to goalZone
+        goal = this.add.image(x, roadEnd - this.safeZoneSize - this.safeZoneSize / 2 - roadWidth * this.numberOfRoads, 130, this.safeZoneSize, "LavaBrick");
         this.physics.add.existing(goal, true);
         goalZone.add(goal);
+        x += 180;
+      }
+      */
+
     } else {
         // Default to a green bar across the top if no zoneType is provided
         let x = 150;
