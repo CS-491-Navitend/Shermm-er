@@ -12,10 +12,10 @@ export class MainMenu extends Scene {
   }
 
     create(buttons) {
-      console.log("Data received: ", buttons); 
+      //console.log("Data received: ", buttons); 
       this.isActive = true;
       this.destroyButtons();
-      console.log("Data received: ", buttons);
+     // console.log("Data received: ", buttons);
 
     //console.log(this.buttons);
     // Main menu text
@@ -34,7 +34,7 @@ export class MainMenu extends Scene {
     
 
     this.buttons.push(playButton, levelSelectButton);
-        console.log("Current buttons array after creation: ", this.buttons);
+        //console.log("Current buttons array after creation: ", this.buttons);
     // Keyboard inputs
     
     this.input.keyboard.on('keydown-UP', () => this.changeSelection(-1));
@@ -58,7 +58,7 @@ export class MainMenu extends Scene {
       })
       .setOrigin(0.5)
       .setInteractive({ useHandCursor: true })
-      console.log("Creating Button: ", text);
+      //console.log("Creating Button: ", text);
 
     return button;
   }
@@ -95,13 +95,13 @@ export class MainMenu extends Scene {
 
   confirmSelection() {
       const selectedButton = this.buttons[this.selectedButtonIndex];
-      console.log('selected Button', this.selectedButtonIndex);
+      //console.log('selected Button', this.selectedButtonIndex);
       if (selectedButton === this.buttons[0]) {
           this.scene.start("Game", { level: 1 });
-          console.log("Starting level 1");
+          //console.log("Starting level 1");
       } else if (selectedButton === this.buttons[1]) {
           this.scene.start("LevelMenu");
-          console.log("Starting level menu");
+          //console.log("Starting level menu");
       }
 
           
@@ -112,13 +112,13 @@ export class MainMenu extends Scene {
     
     destroyButtons() {
         if (this.buttons.length > 0) {
-            console.log("Destorying Buttons...")
+            //console.log("Destorying Buttons...")
             this.buttons.forEach(button => {
                 button.off("pointerdown");
                 button.off("pointerover");
                 button.off("pointerout");
                 button.destroy();
-                console.log("Button destroyed: ", button.text);
+                //console.log("Button destroyed: ", button.text);
             });
             this.buttons = [];
             this.input.keyboard.removeAllListeners();

@@ -20,7 +20,7 @@ export class LevelMenu extends Scene {
  
     this.isActive = true;
     this.destroyButtons();
-    console.log("Data received: ", buttons);
+    //console.log("Data received: ", buttons);
     this.add
       .text(512, 200, "Level Select", {
         fontFamily: this.fontFamily,
@@ -44,7 +44,7 @@ export class LevelMenu extends Scene {
       this.input.keyboard.on('keydown-DOWN', () => this.changeSelection(1));
       this.input.keyboard.on('keydown-ENTER', () => this.confirmSelection());
 
-      console.log("Current buttons array after creation: ", this.buttons);
+      //console.log("Current buttons array after creation: ", this.buttons);
       this.highlightButton(this.selectedButtonIndex);
 }
   createDevButton(){
@@ -89,7 +89,7 @@ export class LevelMenu extends Scene {
 
     // Add the button to the buttons array
     this.buttons.push(levelButton);
-      console.log("Creating button: ", `Level ${levelNumber}`);
+      //console.log("Creating button: ", `Level ${levelNumber}`);
   }
 
 
@@ -130,13 +130,13 @@ export class LevelMenu extends Scene {
   }
   destroyButtons() {
         if (this.buttons.length > 0) {
-            console.log("Destorying Buttons...")
+            //console.log("Destorying Buttons...")
             this.buttons.forEach(button => {
                 button.off("pointerdown");
                 button.off("pointerover");
                 button.off("pointerout");
                 button.destroy();
-                console.log("Button destroyed: ", button.text);
+                //console.log("Button destroyed: ", button.text);
             });
             this.buttons = [];
             this.input.keyboard.removeAllListeners();

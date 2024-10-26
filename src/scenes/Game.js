@@ -16,7 +16,8 @@ export class Game extends Scene {
     // game screen size
     this.width = 1000;
     this.height = 1000;
-    
+
+    //Check to see if the game is paused
     this.paused = false;
 
     //Physics objects and other game information
@@ -52,12 +53,16 @@ export class Game extends Scene {
     this.gameLogic = new GameLogic(this);
     this.drawing = new Drawing(this);
     this.timer = new Timer(this);
+    this.pauseMenu = new PauseMenu(this);
   }
 
   create(data) {
     this.level = data["level"];
+
+    //Timer-------------------------------------------------
     this.timerDuration = levels[data["level"]]["time"];
     this.timeRemaining = this.timerDuration;
+    //------------------------------------------------------
 
     this.lives = levels[data["level"]]["number_of_lives"];
 
@@ -206,6 +211,7 @@ export class Game extends Scene {
     });
 
     this.playing = true;
+    //Timer startTimer method
     this.timer.startTimer();
   }
 
@@ -296,14 +302,19 @@ export class Game extends Scene {
       shermie.setVelocityX(log.body.velocity.x);
     }
   togglePause() {
-        
+      //console.log("Toggle Pause called. Current paused state:", this.paused);
     if (this.paused) {
+       // console.log("hiding the menu since this.paused state is true");
         this.pauseMenu.hide();
         this.paused = false;
         this.timer.resume(); 
+        this.input.keyboard.on('keydown-ENTER', () => {
+            this.togglePause();
+        });
     } else {
+       // console.log("showing the menu since this.paused state is false");
         this.pauseMenu.show();
-        this.paused = true;
+        //this.paused = true;
         this.timer.pause();
     }
 
