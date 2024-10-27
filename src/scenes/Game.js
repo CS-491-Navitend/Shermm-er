@@ -302,19 +302,16 @@ export class Game extends Scene {
       shermie.setVelocityX(log.body.velocity.x);
     }
   togglePause() {
-      //console.log("Toggle Pause called. Current paused state:", this.paused);
+      console.log("Toggle Pause called. Current paused state:", this.paused);
     if (this.paused) {
-       // console.log("hiding the menu since this.paused state is true");
-        this.pauseMenu.hide();
+        console.log("hiding the menu since this.paused state is true");
+        //this.pauseMenu.hide();
         this.paused = false;
         this.timer.resume(); 
-        this.input.keyboard.on('keydown-ENTER', () => {
-            this.togglePause();
-        });
     } else {
-       // console.log("showing the menu since this.paused state is false");
+       console.log("showing the menu since this.paused state is false");
         this.pauseMenu.show();
-        //this.paused = true;
+        this.paused = true;
         this.timer.pause();
     }
 
