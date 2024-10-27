@@ -207,7 +207,7 @@ export class Game extends Scene {
 
     this.physics.add.overlap(this.shermie, goalZone, (shermie, goal) => {
       this.goalCollision(goal);
-      const killerShermie = this.physics.add.image(goal.x, goal.y + 20, "shermie");
+      const killerShermie = this.add.image(goal.x, goal.y + 20, "shermie");
       this.physics.add.existing(killerShermie, true);
       filledGoals.add(killerShermie);
       goal.destroy();
@@ -219,9 +219,7 @@ export class Game extends Scene {
       }
     }, null, this);
     this.physics.add.overlap(this.shermie, this.logs, this.rideLog, null, this);
-    this.physics.add.overlap(this.shermie, filledGoals, (shermie, goal) => {
-  this.loseLife();
-}, true, this);
+    this.physics.add.overlap(this.shermie, filledGoals, this.loseLife, null, this);
 
     // this.timerText
     this.timerText = this.add.text(16, 32, `Time: ${this.timeRemaining}`, {
