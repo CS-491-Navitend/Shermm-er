@@ -115,6 +115,7 @@ export class Game extends Scene {
     const roadZoneTexture = zoneType + "Road";
     const safeZone = this.physics.add.staticGroup();
     const goalZone = this.physics.add.staticGroup();
+    const waterZone = this.physics.add.staticGroup();
 
     // Define lane boundaries for water lanes
     const laneWidth = this.moveDistance;
@@ -182,11 +183,13 @@ export class Game extends Scene {
         for (let j = 0; j < this.width; j += imageWidth) {
             waterZoneTexture = this.add.image(j + imageWidth / 2, waterY, zoneType).setDisplaySize(imageWidth, imageHeight).setDepth(-2);
             this.physics.add.existing(waterZoneTexture, true);
+            waterZone.add(waterZoneTexture);
         }
       }
     }else {
       waterZoneTexture = this.add.rectangle(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads + roadWidth / 2, this.width, this.moveDistance * this.numberOfRoads, 0x1a31ac).setDepth(-2);
       this.physics.add.existing(waterZoneTexture, true);
+      waterZone.add(waterZoneTexture);
     }
 
     //ROAD ZONE LOGIC
@@ -219,7 +222,7 @@ export class Game extends Scene {
     // Define overlap logic for goal, vehicles, and logs
     this.physics.add.overlap(this.shermie, goalZone, this.winCollision, null, this);
     this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
-    this.physics.add.overlap(this.shermie, waterZoneTexture, () => {
+    this.physics.add.overlap(this.shermie, waterZone, () => {
         if (!this.physics.overlap(this.shermie, this.logs) && !this.physics.overlap(this.shermie, goalZone)) {
             this.loseLife();
         }
