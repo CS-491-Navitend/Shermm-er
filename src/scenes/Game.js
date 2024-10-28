@@ -54,6 +54,10 @@ export class Game extends Scene {
     this.drawing = new Drawing(this);
     this.timer = new Timer(this);
     this.pauseMenu = new PauseMenu(this);
+
+    //to prevent multiple lives lost at once
+    this.isInvincible = false;
+    this.invincibilityDuration = 500;
   }
 
   create(data) {
@@ -312,7 +316,20 @@ export class Game extends Scene {
   }
 
   loseLife() {
+    // return if invinsible
+    if (this.isInvincible) {
+      console.log("Shermie is invincible")
+      return
+    };
+
+    // Only Lose if if false, and return invincible
+    this.isInvincible = true;
     this.gameLogic.loseLife();
+  
+    // Set a delayed call to reset invincibility after the cooldown
+    this.time.delayedCall(this.invincibilityDuration, () => {
+      this.isInvincible = false;
+    });
   }
 
   winCollision() {
@@ -326,6 +343,7 @@ export class Game extends Scene {
   rideLog(shermie, log){
       shermie.setVelocityX(log.body.velocity.x);
     }
+    
   togglePause() {
       console.log("Toggle Pause called. Current paused state:", this.paused);
     if (this.paused) {
