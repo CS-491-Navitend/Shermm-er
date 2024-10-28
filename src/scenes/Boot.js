@@ -88,13 +88,17 @@ export class Boot extends Scene {
 
     // Load textures for background
     this.load.image("LavaBrick", "/assets/backgrounds/LavaBrick.png");
-    this.load.image("lava", "/assets/backgrounds/Lava.png");
-    this.load.image("goalZone", "/assets/backgrounds/GoalZone.png");
+    this.load.image("lava","/assets/backgrounds/lava.png")
+    //this.load.image("goalZone", "/assets/backgrounds/GoalZone.png");
     this.load.image("lavaGoal", "/assets/backgrounds/LavaGoal.png");
     this.load.image("lavaSafeZone", "/assets/backgrounds/LavaSafeZone.png");
     this.load.image("rock", "/assets/backgrounds/Rock.png");
     // Create a cobble stone road asset
     this.load.image("road", "/assets/backgrounds/LavaRoad.png");
+
+    
+    this.load.image("waterRoad","/assets/backgrounds/lava.png")
+
 
 
   }
