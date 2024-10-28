@@ -186,6 +186,7 @@ export class Game extends Scene {
       }
     }else {
       waterZoneTexture = this.add.rectangle(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads + roadWidth / 2, this.width, this.moveDistance * this.numberOfRoads, 0x1a31ac).setDepth(-2);
+      this.physics.add.existing(waterZoneTexture, true);
     }
 
     //ROAD ZONE LOGIC
