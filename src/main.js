@@ -7,6 +7,7 @@ import { PauseMenu } from "./scenes/Menus/PauseMenu";
 import { Game as MainGame } from "./scenes/Game";
 import { AUTO, Scale, Game } from "phaser";
 import { GameOver } from "./scenes/GameOver";
+import { GameWin } from "./scenes/GameWin";
 
 const config = {
   type: AUTO,
@@ -24,7 +25,7 @@ const config = {
     mode: Scale.FIT,
     autoCenter: Scale.CENTER_HORIZONTALLY,
   },
-  scene: [Boot, MainMenu, LevelMenu, MainGame, PauseMenu, GameOver],
+  scene: [Boot, MainMenu, LevelMenu, MainGame, PauseMenu, GameOver, GameWin],
 };
 
 export default new Game(config);
