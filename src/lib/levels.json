@@ -9,6 +9,9 @@
       "car_speed_multiplier": 1,
       "number_of_cars": 2,
 
+      
+      "water_zone_type": "water",
+
       "log_texture": ["LongLog", "ShortLog"],
       "log_spacing": [250, 350, 400],
       "log_speed_multiplier": 1,
