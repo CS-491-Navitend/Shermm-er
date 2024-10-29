@@ -1,6 +1,6 @@
 import { Scene } from "phaser";
 
-// Import assets directly
+// Import car assets (backward and forward)
 import car1 from "/assets/vehiclesBackward/car1.png";
 import car2 from "/assets/vehiclesBackward/car2.png";
 import car3 from "/assets/vehiclesBackward/car3.png";
@@ -14,6 +14,7 @@ import car10 from "/assets/vehiclesBackward/car10.png";
 import car11 from "/assets/vehiclesBackward/car11.png";
 import car12 from "/assets/vehiclesBackward/car12.png";
 import car13 from "/assets/vehiclesBackward/car13.png";
+
 import car1forward from "/assets/vehicleForward/car1forward.png";
 import car2forward from "/assets/vehicleForward/car2forward.png";
 import car3forward from "/assets/vehicleForward/car3forward.png";
@@ -28,6 +29,7 @@ import car11forward from "/assets/vehicleForward/car11forward.png";
 import car12forward from "/assets/vehicleForward/car12forward.png";
 import car13forward from "/assets/vehicleForward/car13forward.png";
 
+// Import other assets
 import tractor from "/assets/vehiclesBackward/tractor.png";
 import tractorforward from "/assets/vehicleForward/tractorForward.png";
 import ShortLog from "/assets/ShortLog.png";
@@ -35,9 +37,17 @@ import LongLog from "/assets/LongLog.png";
 import turtle from "/assets/turtle.png";
 import turtleforward from "/assets/turtleforward.png";
 import shermie from "/assets/shermie.png";
+import life from "/assets/heart.png";
+
+// Import background assets
 import background from "/assets/backgrounds/background.jpeg";
 import background2 from "/assets/backgrounds/background2.jpeg";
-import life from "/assets/heart.png";
+import lavaSafeZone from "/assets/backgrounds/LavaBrick.png";
+import lava from "/assets/backgrounds/Lava.png";
+import lavaGoal from "/assets/backgrounds/LavaGoal.png";
+import rock from "/assets/backgrounds/Rock.png";
+import lavaRoad from "/assets/backgrounds/LavaRoad.png";
+import waterRoad from "/assets/backgrounds/Lava.png";
 
 export class Boot extends Scene {
   constructor() {
@@ -46,67 +56,36 @@ export class Boot extends Scene {
 
   preload() {
     // Load cars (backward and forward)
-    this.load.image("car1", car1);
-    this.load.image("car2", car2);
-    this.load.image("car3", car3);
-    this.load.image("car4", car4);
-    this.load.image("car5", car5);
-    this.load.image("car6", car6);
-    this.load.image("car7", car7);
-    this.load.image("car8", car8);
-    this.load.image("car9", car9);
-    this.load.image("car10", car10);
-    this.load.image("car11", car11);
-    this.load.image("car12", car12);
-    this.load.image("car13", car13);
+    const carsBackward = [car1, car2, car3, car4, car5, car6, car7, car8, car9, car10, car11, car12, car13];
+    const carsForward = [car1forward, car2forward, car3forward, car4forward, car5forward, car6forward, car7forward, car8forward, car9forward, car10forward, car11forward, car12forward, car13forward];
 
-    this.load.image("car1forward", car1forward);
-    this.load.image("car2forward", car2forward);
-    this.load.image("car3forward", car3forward);
-    this.load.image("car4forward", car4forward);
-    this.load.image("car5forward", car5forward);
-    this.load.image("car6forward", car6forward);
-    this.load.image("car7forward", car7forward);
-    this.load.image("car8forward", car8forward);
-    this.load.image("car9forward", car9forward);
-    this.load.image("car10forward", car10forward);
-    this.load.image("car11forward", car11forward);
-    this.load.image("car12forward", car12forward);
-    this.load.image("car13forward", car13forward);
+    carsBackward.forEach((car, index) => this.load.image(`car${index + 1}`, car));
+    carsForward.forEach((car, index) => this.load.image(`car${index + 1}forward`, car));
 
     // Load other assets (static)
-    this.load.image("tractor", "/assets/vehiclesBackward/tractor.png");
-    this.load.image("tractorforward", "/assets/vehicleForward/tractorForward.png");
-    
-    this.load.image("ShortLog", "/assets/ShortLog.png");
-    this.load.image("LongLog", "/assets/LongLog.png");
-    this.load.image("turtle", "/assets/turtle.png");
-    this.load.image("turtleforward", "/assets/turtleforward.png");
-
-    this.load.image("shermie", "/assets/shermie.png");
-    this.load.image("life", "/assets/heart.png");
+    this.load.image("tractor", tractor);
+    this.load.image("tractorforward", tractorforward);
+    this.load.image("ShortLog", ShortLog);
+    this.load.image("LongLog", LongLog);
+    this.load.image("turtle", turtle);
+    this.load.image("turtleforward", turtleforward);
+    this.load.image("shermie", shermie);
+    this.load.image("life", life);
 
     // Load textures for background
-    this.load.image("lavaSafeZone", "/assets/backgrounds/LavaBrick.png");
-    this.load.image("lava","/assets/backgrounds/Lava.png")
-    //this.load.image("goalZone", "/assets/backgrounds/GoalZone.png");
-    this.load.image("lavaGoal", "/assets/backgrounds/LavaGoal.png");
-    //this.load.image("lavaSafeZone", "/assets/backgrounds/LavaSafeZone.png");
-    this.load.image("rock", "/assets/backgrounds/Rock.png");
-    // Create a cobble stone road asset
-    this.load.image("lavaRoad", "/assets/backgrounds/LavaRoad.png");
-
-    
-    this.load.image("waterRoad","/assets/backgrounds/Lava.png")
-
-
-
+    this.load.image("lavaSafeZone", lavaSafeZone);
+    this.load.image("lava", lava);
+    this.load.image("lavaGoal", lavaGoal);
+    this.load.image("rock", rock);
+    this.load.image("lavaRoad", lavaRoad);
+    //this.load.image("waterRoad", waterRoad);
   }
 
   create() {
     this.scene.start("MainMenu");
   }
 }
+
 
 
 // import { Scene } from "phaser";
