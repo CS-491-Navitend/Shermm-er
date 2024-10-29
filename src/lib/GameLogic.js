@@ -1,11 +1,12 @@
 export class GameLogic {
   constructor(game) {
-    this.game = game;
+    this.game = game; // Get the game object from the scene
   }
 
   goal() {
     this.game.goalCount++;
     if (this.game.goalCount !== 5) {
+      console.log(`5 goals not met. Goals: ${this.game.goalCount}`);
       this.resetPlayer();
     } else {
       console.log(`Goal condition met. Goals: ${this.game.goalCount}`);
@@ -21,7 +22,7 @@ export class GameLogic {
 
   loseLife() {
     this.game.lives--;
-    console.log("Lose life. Lives:", this.game.lives);
+    console.log("Lost a life. Lives:", this.game.lives);
     if (this.game.lives < 1) {
       // this.game.resetCount++;
       this.gameOver();
@@ -44,7 +45,7 @@ export class GameLogic {
     this.game.shermie.x = this.game.width / 2;
     this.game.shermie.y = this.game.height - this.game.safeZoneSize + this.game.moveDistance / 2;
 
-    this.invinsible = false;
+    this.game.invinsible = false;
   }
 }
 
