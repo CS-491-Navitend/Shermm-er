@@ -4,12 +4,11 @@
       "time": 10000,
 
       "car_texture": ["car1", "car2", "car3", "tractor"],
-      "cars_Forward_texture":  ["car1forward", "car2forward", "car3forward"],
+      "cars_Forward_texture": ["car1forward", "car2forward", "car3forward"],
       "car_spacing": [250, 350, 100],
       "car_speed_multiplier": 1,
       "number_of_cars": 2,
 
-      
       "water_zone_type": "water",
 
       "log_texture": ["LongLog", "ShortLog"],
@@ -30,7 +29,7 @@
       "time": 60,
 
       "car_texture": ["car1", "car2", "car3", "tractor"],
-      "cars_Forward_texture":  ["car1forward", "car2forward", "car3forward"],
+      "cars_Forward_texture": ["car1forward", "car2forward", "car3forward"],
       "car_spacing": [250, 350, 100],
       "car_speed_multiplier": 1,
       "number_of_cars": 1,
@@ -44,7 +43,7 @@
 
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 0,
-      
+
       "number_of_lives": 3,
       "goal_count": 3,
 
