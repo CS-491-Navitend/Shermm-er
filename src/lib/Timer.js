@@ -6,53 +6,46 @@ export class Timer {
     this.timerEvent = null;
   }
 
-  updateTimer() {
-    //console.log("Updating Timer..")
+  update() {
+    //console.log("Updating Timer..") // for debugging
     this.timeRemaining -= 1;
-      if (this.timeRemaining <= 0) {
+    if (this.timeRemaining <= 0) {
       this.stop();
       this.game.gameLogic.gameOver();
     }
-    if(this.game.timerText){
-        this.game.timerText.setText(`Time: ${this.timeRemaining}`);
+    if (this.game.timerText) {
+      this.game.timerText.setText(`Time: ${this.timeRemaining}`); // Update the timer text on the screen
     }
   }
 
-
-  startTimer() {
-    //console.log(`isPaused: ${this.isPaused}, timeRemaining: ${this.game.timeRemaining}, playing: ${this.game.playing}`);
+  start() {
     this.stop();
     this.timeRemaining = this.game.timeRemaining;
-    //console.log(this.timeRemaining);
+
     this.timerEvent = this.game.time.addEvent({
-        delay: 1000,
-        callback: () => {
-            if (!this.isPaused && this.timeRemaining > 0) {
-                this.updateTimer();
-            } 
-            
-        },
-        loop: true
+      delay: 1000, // 1 second
+      callback: this.update.bind(this), // Update the timer
+      loop: true, // Loop indefinitely
     });
   }
 
-   pause() {
-       this.isPaused = true;
-       
-    }
+  pause() {
+    this.isPaused = true;
+  }
 
-    resume() {
-        if (this.isPaused) {
-            this.isPaused = false; // Reset the paused state
-        }
+  resume() {
+    if (this.isPaused) {
+      this.isPaused = false; // Reset the paused state
     }
-    stop() {
-        if (this.timerEvent) {
-            this.timerEvent.remove(); 
-            this.timerEvent = null; // Clear the reference
-        }
-        this.isPaused = false;
+    // else do nothing (the timer is already running)
+  }
+  stop() {
+    if (this.timerEvent) {
+      this.timerEvent.remove(); // Remove the timer event
+      this.timerEvent = null; // Clear the reference
     }
+    this.isPaused = false;
+  }
 }
 
 export default Timer;

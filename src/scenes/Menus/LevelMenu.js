@@ -1,4 +1,5 @@
 import { Scene } from "phaser";
+import { levels } from "/src/lib/levels";
 
 export class LevelMenu extends Scene {
   constructor() {
@@ -7,7 +8,7 @@ export class LevelMenu extends Scene {
     this.fontFamily = "sans-serif";
     this.rem = 16;
 
-    this.numberOfLevels = 6;
+    this.numberOfLevels = levels.length - 1; // -1 for dev level
     this.maxCols = 3;
     this.maxRows = Math.ceil(this.numberOfLevels / this.maxCols);
     this.buttons = [];
@@ -16,8 +17,8 @@ export class LevelMenu extends Scene {
   }
 
   create(buttons) {
-      // main menu text
- 
+    // main menu text
+
     this.isActive = true;
     this.destroyButtons();
     //console.log("Data received: ", buttons);
@@ -29,37 +30,41 @@ export class LevelMenu extends Scene {
       })
       .setOrigin(1 / 2);
 
-      //Developer Button
-      this.createDevButton();
-      
+    //Developer Button
+    this.createDevButton();
 
-      //Create level Buttons
-      this.createLevelButtons();
+    //Create level Buttons
+    this.createLevelButtons();
 
-      //Keyboard inputs for naviagtion
+    //Keyboard inputs for naviagtion
 
-      this.input.keyboard.on('keydown-UP', () => this.changeSelection(-1));
-      this.input.keyboard.on('keydown-RIGHT', () => this.changeSelection(2));
-      this.input.keyboard.on('keydown-LEFT', () => this.changeSelection(-2));
-      this.input.keyboard.on('keydown-DOWN', () => this.changeSelection(1));
-      this.input.keyboard.on('keydown-ENTER', () => this.confirmSelection());
+    this.input.keyboard.on("keydown-UP", () => this.changeSelection(-1));
+    this.input.keyboard.on("keydown-RIGHT", () => this.changeSelection(2));
+    this.input.keyboard.on("keydown-LEFT", () => this.changeSelection(-2));
+    this.input.keyboard.on("keydown-DOWN", () => this.changeSelection(1));
+    this.input.keyboard.on("keydown-ENTER", () => this.confirmSelection());
 
-      //console.log("Current buttons array after creation: ", this.buttons);
-      this.highlightButton(this.selectedButtonIndex);
-}
-  createDevButton(){
-    const developerButton = this.add.text(512, 100, "Dev", {
-           fontFamily: this.fontFamily,
-           fontStyle: "bold",
-           fontSize: this.rem * 2 + "px",
-           padding: { x: 100, y: 20 },
-    }).setOrigin(0.5).setInteractive({ useHandCursor: true });
-
-      developerButton.on("pointerdown", () => {
-        // pass the level to the game scene constructor
-        this.scene.start("Game", { level: 0 });
-     });
+    //console.log("Current buttons array after creation: ", this.buttons);
+    this.highlightButton(this.selectedButtonIndex);
   }
+
+  createDevButton() {
+    const developerButton = this.add
+      .text(512, 100, "Dev", {
+        fontFamily: this.fontFamily,
+        fontStyle: "bold",
+        fontSize: this.rem * 2 + "px",
+        padding: { x: 100, y: 20 },
+      })
+      .setOrigin(0.5)
+      .setInteractive({ useHandCursor: true });
+
+    developerButton.on("pointerdown", () => {
+      // pass the level to the game scene constructor
+      this.scene.start("Game", { level: 0 });
+    });
+  }
+
   createLevelButtons() {
     for (let col = 0; col < this.maxCols; col++) {
       for (let row = 0; row < this.maxRows; row++) {
@@ -76,46 +81,46 @@ export class LevelMenu extends Scene {
   }
 
   createLevelButton(col, row, levelNumber) {
-    const levelButton = this.add.text(300 + col * 200, 300 + (row + 1) * 50, `Level ${levelNumber}`, {
-      fontFamily: this.fontFamily,
-      fontStyle: "bold",
-      fontSize: this.rem * 2 + "px",
-      backgroundColor: "#3388FF",
-    }).setOrigin(0.5).setInteractive({ useHandCursor: true });
+    const levelButton = this.add
+      .text(300 + col * 200, 300 + (row + 1) * 50, `Level ${levelNumber}`, {
+        fontFamily: this.fontFamily,
+        fontStyle: "bold",
+        fontSize: this.rem * 2 + "px",
+        backgroundColor: "#3388FF",
+      })
+      .setOrigin(0.5)
+      .setInteractive({ useHandCursor: true });
 
     const levelButtonIndex = this.buttons.length;
 
     //when mouse hover over
     levelButton.on("pointerover", () => {
-        // Ensure correct index on hover
-    if (this.selectedButtonIndex !== levelButtonIndex) {
-      this.highlightButton(this.selectedButtonIndex, false); // Clear the old highlight
-      this.selectedButtonIndex = levelButtonIndex; // Update to the new index
-      this.highlightButton(levelButtonIndex); // Highlight the new button
-    }
+      // Ensure correct index on hover
+      if (this.selectedButtonIndex !== levelButtonIndex) {
+        this.highlightButton(this.selectedButtonIndex, false); // Clear the old highlight
+        this.selectedButtonIndex = levelButtonIndex; // Update to the new index
+        this.highlightButton(levelButtonIndex); // Highlight the new button
+      }
     });
 
     //when mouse hover out
     levelButton.on("pointerout", () => {
       if (this.selectedButtonIndex !== levelButtonIndex) {
-            this.highlightButton(levelButtonIndex, false);
+        this.highlightButton(levelButtonIndex, false);
       }
     });
 
     //when mouse select
-      levelButton.on("pointerdown", () => {
-        this.selectedButtonIndex = levelButtonIndex;
-        this.highlightButton(this.selectedButtonIndex);
-        this.scene.start("Game", { level: levelNumber });
+    levelButton.on("pointerdown", () => {
+      this.selectedButtonIndex = levelButtonIndex;
+      this.highlightButton(this.selectedButtonIndex);
+      this.scene.start("Game", { level: levelNumber });
     });
 
     // Add the button to the buttons array
     this.buttons.push(levelButton);
-      //console.log("Creating button: ", `Level ${levelNumber}`);
+    //console.log("Creating button: ", `Level ${levelNumber}`);
   }
-
-
-
 
   changeSelection(direction) {
     // Highlight the currently selected button
@@ -137,7 +142,7 @@ export class LevelMenu extends Scene {
 
   highlightButton(index, highlight = true) {
     if (index < 0 || index >= this.buttons.length) {
-      console.warn('Index out of bounds for highlighting button:', index);
+      console.warn("Index out of bounds for highlighting button:", index);
       return; // Exit if index is invalid
     }
 
@@ -151,21 +156,17 @@ export class LevelMenu extends Scene {
     this.scene.start("Game", { level: levelNumber });
   }
   destroyButtons() {
-        if (this.buttons.length > 0) {
-            //console.log("Destorying Buttons...")
-            this.buttons.forEach(button => {
-                button.off("pointerdown");
-                button.off("pointerover");
-                button.off("pointerout");
-                button.destroy();
-                //console.log("Button destroyed: ", button.text);
-            });
-            this.buttons = [];
-            this.input.keyboard.removeAllListeners();
-            
-           
-        }
-
+    if (this.buttons.length > 0) {
+      //console.log("Destorying Buttons...")
+      this.buttons.forEach((button) => {
+        button.off("pointerdown");
+        button.off("pointerover");
+        button.off("pointerout");
+        button.destroy();
+        //console.log("Button destroyed: ", button.text);
+      });
+      this.buttons = [];
+      this.input.keyboard.removeAllListeners();
+    }
   }
 }
-
