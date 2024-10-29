@@ -224,23 +224,21 @@ export class Game extends Scene {
 
   update() {
     if (this.paused) return;
+
     if (this.canMove) {
-      if (this.cursors.left.isDown && this.shermie.x > 0) {
-        this.shermie.x -= this.moveDistance;
-        this.canMove = false;
-      }
-      if (this.cursors.right.isDown && this.shermie.x < this.width) {
-        this.shermie.x += this.moveDistance;
-        this.canMove = false;
-      }
-      if (this.cursors.up.isDown && this.shermie.y > 0) {
-        this.shermie.y -= this.moveDistance;
-        this.canMove = false;
-      }
-      if (this.cursors.down.isDown && this.shermie.y < this.height) {
-        this.shermie.y += this.moveDistance;
-        this.canMove = false;
-      }
+      const { left, right, up, down } = this.cursors;
+      const { x, y } = this.shermie;
+      // move left
+      if (left.isDown && x > 0) this.shermie.x -= this.moveDistance;
+      // move right
+      else if (right.isDown && x < this.width) this.shermie.x += this.moveDistance;
+      // move up
+      else if (up.isDown && y > 0) this.shermie.y -= this.moveDistance;
+      // move down
+      else if (down.isDown && y < this.height) this.shermie.y += this.moveDistance;
+
+      // arcade movement
+      if (left.isDown || right.isDown || up.isDown || down.isDown) this.canMove = false;
     }
 
     if (!this.cursors.left.isDown && !this.cursors.right.isDown && !this.cursors.up.isDown && !this.cursors.down.isDown) {
@@ -251,41 +249,27 @@ export class Game extends Scene {
     this.shermie.y = Phaser.Math.Clamp(this.shermie.y, 0, this.height - this.safeZoneSize + this.moveDistance / 2);
 
     this.vehicles.getChildren().forEach((vehicle) => {
-      if (vehicle.x > this.width + vehicle.width / 2) vehicle.x = -vehicle.width / 2;
-      else if (vehicle.x < -vehicle.width / 2) vehicle.x = this.width + vehicle.width / 2;
+      vehicle.x = vehicle.x % (this.width + vehicle.width);
     });
 
     this.logs.getChildren().forEach((log) => {
-      if (log.x > this.width + log.width / 2) log.x = -log.width / 2;
-      else if (log.x < -log.width / 2) log.x = this.width + log.width / 2;
+      log.x = log.x % (this.width + log.width);
     });
-
-    //This code fixes overlap but creates pop in and pop out.
-    // this.vehicles.getChildren().forEach((vehicle) => {
-    //   if (vehicle.x > this.width) vehicle.x = 0;
-    //   else if (vehicle.x < 0) vehicle.x = this.width;
-    // });
-
-    // this.logs.getChildren().forEach((log) => {
-    //   if (log.x > this.width) log.x = 0;
-    //   else if (log.x < 0) log.x = this.width;
-    // });
   }
-  //Create a vehicle
-  spawnVehicle(x, y, texture, speed) {
-    let vehicle = this.vehicles.create(x, y, texture);
-    vehicle.body.setVelocityX(speed);
+  spawnVehicle(x, y, textureKey, velocity) {
+    const vehicle = this.vehicles.create(x, y, textureKey);
+    vehicle.body.setVelocityX(velocity);
     vehicle.body.allowGravity = false;
     vehicle.body.immovable = true;
     return vehicle;
   }
 
-  //Create a log
-  spawnLog(x, y, texture, speed) {
-    let log = this.logs.create(x, y, texture);
+  // Create a log
+  spawnLog(x, y, textureKey, speed) {
+    const log = this.logs.create(x, y, textureKey);
     log.body.setVelocityX(speed);
     log.body.allowGravity = false;
-    log.body.immovalbe = true;
+    log.body.immovable = true;
     log.body.setSize(log.width, 50);
     log.setDepth(-1);
     return log;
