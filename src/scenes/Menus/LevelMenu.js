@@ -1,4 +1,5 @@
 import { Scene } from "phaser";
+import { levels } from "/src/lib/levels";
 
 export class LevelMenu extends Scene {
   constructor() {
@@ -7,7 +8,7 @@ export class LevelMenu extends Scene {
     this.fontFamily = "sans-serif";
     this.rem = 16;
 
-    this.numberOfLevels = 6;
+    this.numberOfLevels = levels.length - 1; // -1 for dev level
     this.maxCols = 3;
     this.maxRows = Math.ceil(this.numberOfLevels / this.maxCols);
     this.buttons = [];
@@ -46,6 +47,7 @@ export class LevelMenu extends Scene {
     //console.log("Current buttons array after creation: ", this.buttons);
     this.highlightButton(this.selectedButtonIndex);
   }
+
   createDevButton() {
     const developerButton = this.add
       .text(512, 100, "Dev", {
@@ -62,6 +64,7 @@ export class LevelMenu extends Scene {
       this.scene.start("Game", { level: 0 });
     });
   }
+
   createLevelButtons() {
     for (let col = 0; col < this.maxCols; col++) {
       for (let row = 0; row < this.maxRows; row++) {
