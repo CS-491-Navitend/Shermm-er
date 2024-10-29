@@ -7,12 +7,20 @@ export class Timer {
   }
 
   update() {
-    //console.log("Updating Timer..") // for debugging
+    if (this.isPaused) {
+      console.log("Timer is paused. Skipping update.");
+      return;
+    }
+
+    console.log("Updating Timer.."); // for debugging
+
     this.timeRemaining -= 1;
+
     if (this.timeRemaining <= 0) {
       this.stop();
       this.game.gameLogic.gameOver();
     }
+
     if (this.game.timerText) {
       this.game.timerText.setText(`Time: ${this.timeRemaining}`); // Update the timer text on the screen
     }
