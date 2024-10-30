@@ -30,10 +30,12 @@ export class MainMenu extends Scene {
         // Create buttons
         const playButton = this.createButton(512, 400, 'Play', 0);
         const levelSelectButton = this.createButton(512, 500, "Level Select", 1);
+        const creditsButton = this.createButton(512, 700, "Credits", 3);
+        const controlsButton = this.createButton(512, 600, "Controls", 2);
 
     
 
-    this.buttons.push(playButton, levelSelectButton);
+        this.buttons.push(playButton, levelSelectButton, controlsButton, creditsButton);
         //console.log("Current buttons array after creation: ", this.buttons);
     // Keyboard inputs
     
@@ -113,6 +115,10 @@ export class MainMenu extends Scene {
       } else if (selectedButton === this.buttons[1]) {
           this.scene.start("LevelMenu");
           //console.log("Starting level menu");
+      } else if (selectedButton == this.buttons[3]) {
+          this.scene.start("Credits");
+      } else if (selectedButton == this.buttons[2]) {
+          this.scene.start("Controls")
       }
 
           
