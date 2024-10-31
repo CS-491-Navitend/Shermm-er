@@ -40,7 +40,8 @@ export class PauseMenu extends Scene {
         const text = this.scene.add.text(0, -100, 'Paused', {
             fontFamily: 'Pixel',
             fontSize: '40px',
-            fill: '#ffffff'
+            fill: '#ffffff',
+            fontStyle: "Bold"
         }).setOrigin(0.5);
         this.pauseMenu.add(text);
         

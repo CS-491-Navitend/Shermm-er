@@ -25,7 +25,7 @@ export class LevelMenu extends Scene {
     //console.log("Data received: ", buttons);
     this.add
       .text(512, 200, "Level Select", {
-        fontFamily: this.fontFamily,
+        fontFamily: "Pixel",
         fontStyle: "bold",
         fontSize: this.rem * 4 + "px",
       })
@@ -52,7 +52,7 @@ export class LevelMenu extends Scene {
   createDevButton() {
     const developerButton = this.add
       .text(512, 100, "Dev", {
-        fontFamily: this.fontFamily,
+        fontFamily: "Pixel",
         fontStyle: "bold",
         fontSize: this.rem * 2 + "px",
         padding: { x: 100, y: 20 },
@@ -84,7 +84,7 @@ export class LevelMenu extends Scene {
   createLevelButton(col, row, levelNumber) {
     const levelButton = this.add
       .text(300 + col * 200, 300 + (row + 1) * 50, `Level ${levelNumber}`, {
-        fontFamily: this.fontFamily,
+        fontFamily: "Pixel",
         fontStyle: "bold",
         fontSize: this.rem * 2 + "px",
         backgroundColor: "#3388FF",

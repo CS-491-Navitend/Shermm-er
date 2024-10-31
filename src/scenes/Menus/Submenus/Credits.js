@@ -17,11 +17,18 @@ export class Credits extends Scene {
         // Credits content
         const credits = [
             "Game Development",
-            "Colin Chik",
+            " ",
+            "Colin",
             "Steve",
             "Johnny",
+            "Mike",
+            "Sean",
+            " ",
             "Art and Design",
-            "Music",
+            " ",
+            "Sean",
+            " ",
+            "Sound Design",
             "Special Thanks",
             "Press Enter to return"
         ];
