@@ -30,16 +30,34 @@ export class Controls extends Scene {
         });
 
         // Return instruction
-        this.add.text(512, 150 + controls.length * 40 + 20, "Press Enter to return", {
+        this.createBackButton();
+
+        
+    }
+    // creating back button
+    createBackButton() {
+        const backButton = this.add.text(
+            512, 400, "Back", {
             fontFamily: "Pixel",
             fontSize: "20px",
             color: "#ffffff",
-        }).setOrigin(0.5);
+            padding: { x: 20, y: 10 },
+            backgroundColor: "#3388FF",
+        })
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true });
 
-        // Input to return
-        this.input.keyboard.on('keydown-ENTER', () => {
-            this.scene.stop("Controls");
-            this.scene.start("MainMenu");
+        backButton.on("pointerdown", () => {
+            this.scene.stop("Controls")
+            this.scene.start("MainMenu"); // Call the return method on click
+        });
+
+        backButton.on("pointerover", () => {
+            backButton.setStyle({ backgroundColor: "#44AAFF" });
+        });
+
+        backButton.on("pointerout", () => {
+            backButton.setStyle({ backgroundColor: "#3388FF" });
         });
     }
 }

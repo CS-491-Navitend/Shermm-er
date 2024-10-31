@@ -42,12 +42,32 @@ export class Credits extends Scene {
         });
 
         // Input to return
-        this.input.keyboard.on('keydown-ENTER', () => {
-            this.scene.stop("Credits")
-            this.scene.start("MainMenu");
+        this.createBackButton();
+    }
+    // creating back button
+    createBackButton() {
+        const backButton = this.add.text(
+            512, 700, "Back", {
+            fontFamily: "Pixel",
+            fontSize: "20px",
+            color: "#ffffff",
+            padding: { x: 20, y: 10 },
+            backgroundColor: "#3388FF",
+        })
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true });
 
+        backButton.on("pointerdown", () => {
+            this.scene.stop("Credits")
+            this.scene.start("MainMenu"); // Call the return method on click
         });
 
- 
+        backButton.on("pointerover", () => {
+            backButton.setStyle({ backgroundColor: "#44AAFF" });
+        });
+
+        backButton.on("pointerout", () => {
+            backButton.setStyle({ backgroundColor: "#3388FF" });
+        });
     }
 }
