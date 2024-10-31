@@ -1,4 +1,5 @@
 import { Scene } from "phaser";
+import FontFaceObserver from 'fontfaceobserver';
 
 export class MainMenu extends Scene {
   constructor() {
@@ -11,6 +12,17 @@ export class MainMenu extends Scene {
     this.isActive = false;
   }
 
+    preload() {
+        const font = new FontFaceObserver('Pixel');
+        font.load().then(() => {
+            console.log('Font loaded successfully!');
+            // Optionally, you can store a flag or execute any logic here
+        }).catch(() => {
+            console.error('Font failed to load.');
+        });
+    }
+    
+
     create(buttons) {
       //console.log("Data received: ", buttons); 
       this.isActive = true;
@@ -21,7 +33,7 @@ export class MainMenu extends Scene {
     // Main menu text
     this.add
       .text(512, 200, "Shermm-er", {
-        fontFamily: this.fontFamily,
+        fontFamily: 'Pixel',
         fontStyle: "bold",
         fontSize: this.rem * 4 + "px",
       })
@@ -52,7 +64,7 @@ export class MainMenu extends Scene {
   createButton(x, y, text, mainButtonIndex) {
     const button = this.add
       .text(x, y, text, {
-        fontFamily: this.fontFamily,
+        fontFamily: 'Pixel',
         fontStyle: "bold",
         fontSize: this.rem * 2 + "px",
         padding: { x: 100, y: 20 },

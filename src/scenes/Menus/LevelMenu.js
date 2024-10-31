@@ -1,5 +1,6 @@
 import { Scene } from "phaser";
 import { levels } from "/src/lib/levels";
+import FontFaceObserver from 'fontfaceobserver';
 
 export class LevelMenu extends Scene {
   constructor() {

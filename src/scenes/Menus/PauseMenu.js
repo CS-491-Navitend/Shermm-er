@@ -2,6 +2,7 @@ import { Scene } from "phaser";
 import { Timer } from "/src/lib/Timer";
 import { Game } from "/src/scenes/Game";
 import { MainMenu } from "./MainMenu";
+import FontFaceObserver from 'fontfaceobserver';
 
 export class PauseMenu extends Scene {
     constructor(scene) {
@@ -37,6 +38,7 @@ export class PauseMenu extends Scene {
 
         //Paused text
         const text = this.scene.add.text(0, -100, 'Paused', {
+            fontFamily: 'Pixel',
             fontSize: '40px',
             fill: '#ffffff'
         }).setOrigin(0.5);
@@ -57,7 +59,8 @@ export class PauseMenu extends Scene {
 
     createResumeButton() {
         const resumeButton = this.scene.add.text(0, 70, 'Resume', {
-            fontSize: '32px',
+            fontFamily: 'Pixel',
+            fontSize: '20px',
             fill: '#ffffff'
         }).setOrigin(0.5).setInteractive({ useHandCursor: true }); // Added cursor style
 
@@ -68,7 +71,8 @@ export class PauseMenu extends Scene {
 
     createMainMenuButton() {
         const mainMenuButton = this.scene.add.text(0, -20, 'Main Menu', {
-            fontSize: '32px',
+            fontFamily: 'Pixel',
+            fontSize: '20px',
             fill: '#ffffff'
         }).setOrigin(0.5).setInteractive({ useHandCursor: true }); // Added cursor style
 

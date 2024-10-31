@@ -13,3 +13,10 @@ body {
     justify-content: center;
     align-items: center;
 }
+@font-face {
+    font-family: 'Pixel';
+    src: url('assets/fonts/PrStart.ttf') format('truetype'),
+         url('assets/fonts/prstartkttf') format('truetype');/* Adjust the path and filename */
+    font-weight: normal;
+    font-style: normal;
+}
