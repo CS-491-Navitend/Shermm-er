@@ -9,7 +9,7 @@ export class Controls extends Scene {
     create() {
         // Title
         this.add.text(512, 100, "Controls", {
-            fontFamily: "sans-serif",
+            fontFamily: "Pixel",
             fontSize: "32px",
             color: "#ffffff",
         }).setOrigin(0.5);
@@ -23,7 +23,7 @@ export class Controls extends Scene {
 
         controls.forEach((control, index) => {
             this.add.text(512, 150 + index * 40, `${control.action}: ${control.key}`, {
-                fontFamily: "sans-serif",
+                fontFamily: "Pixel",
                 fontSize: "20px",
                 color: "#ffffff",
             }).setOrigin(0.5);
@@ -31,7 +31,7 @@ export class Controls extends Scene {
 
         // Return instruction
         this.add.text(512, 150 + controls.length * 40 + 20, "Press Enter to return", {
-            fontFamily: "sans-serif",
+            fontFamily: "Pixel",
             fontSize: "20px",
             color: "#ffffff",
         }).setOrigin(0.5);

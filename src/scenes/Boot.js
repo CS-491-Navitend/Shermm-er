@@ -1,4 +1,6 @@
 import { Scene } from "phaser";
+//importing custom fonts
+import FontFaceObserver from 'fontfaceobserver';
 
 // Import car assets (backward and forward)
 import car1 from "/assets/vehiclesBackward/car1.png";
@@ -79,6 +81,15 @@ export class Boot extends Scene {
     this.load.image("rock", rock);
     this.load.image("lavaRoad", lavaRoad);
     //this.load.image("waterRoad", waterRoad);
+
+    //Font Family
+    const font = new FontFaceObserver('Pixel');
+        font.load().then(() => {
+            console.log('Font loaded successfully!');
+            // Optionally, you can store a flag or execute any logic here
+        }).catch(() => {
+            console.error('Font failed to load.');
+        });
   }
 
   create() {

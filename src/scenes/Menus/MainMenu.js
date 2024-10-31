@@ -12,15 +12,7 @@ export class MainMenu extends Scene {
     this.isActive = false;
   }
 
-    preload() {
-        const font = new FontFaceObserver('Pixel');
-        font.load().then(() => {
-            console.log('Font loaded successfully!');
-            // Optionally, you can store a flag or execute any logic here
-        }).catch(() => {
-            console.error('Font failed to load.');
-        });
-    }
+ 
     
 
     create(buttons) {

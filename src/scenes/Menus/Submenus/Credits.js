@@ -9,7 +9,7 @@ export class Credits extends Scene {
     create() {
         // Title
         this.add.text(512, 100, "Credits", {
-            fontFamily: "sans-serif",
+            fontFamily: "Pixel",
             fontSize: "32px",
             color: "#ffffff",
         }).setOrigin(0.5);
@@ -28,7 +28,7 @@ export class Credits extends Scene {
 
         credits.forEach((line, index) => {
             this.add.text(512, 150 + index * 30, line, {
-                fontFamily: "sans-serif",
+                fontFamily: "Pixel",
                 fontSize: "20px",
                 color: "#ffffff",
             }).setOrigin(0.5);
