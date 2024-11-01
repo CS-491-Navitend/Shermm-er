@@ -143,22 +143,22 @@ export class Game extends Scene {
     let goal;
     let end;
     if (this.textures.exists(goalZoneTexture)) {
-      // If goal zone texture exists
+      // If goal zone background texture exists
       let x = -20;
       for (let j = 0; j <= this.width + 40; j += imageWidth + 75) {
-        // For each image in goal zone
+        // For each image in goal background zone
         end = this.add // Add image
-          .image(x + imageWidth / 2, 0 + laneWidth / 2, goalZoneTexture) // Set image position
+          .image(x + imageWidth / 2, 0 + laneWidth / 2, goalZoneTexture) // Set image position TODO - GET NEW ASSET FOR DANGER ZONE
           .setDisplaySize(imageWidth, this.moveDistance) // Set image size
           .setDepth(-1); // Set image depth
-        this.physics.add.existing(end, true); // Add physics to each goal image
-        endZone.add(end); //these need to be danger zone instead of goal zone
+        this.physics.add.existing(end, true); // Add physics to each background image
+        endZone.add(end); //danger zone
         x += imageWidth + 75;
       }
-
-      x = 128;
+      
+      x = 128;//Initial starting place for goal segment
       for (let j = 0; j < 5; j++) {
-          goal = this.add.rectangle(x, 0 + laneWidth / 2, 75, this.moveDistance, 0x00ff00);
+          goal = this.add.rectangle(x, 0 + laneWidth / 2, 75, this.moveDistance, 0x00ff00);//TODO - GET NEW ASSET FOR GOAL ZONE
           this.physics.add.existing(goal, true);
           goalZone.add(goal);
           x += imageWidth + 75;
@@ -171,10 +171,6 @@ export class Game extends Scene {
       goalZone.add(goal); //these need to be danger zone instead of goal zone
     }
     // END GOAL ZONE LOGIC
-
-    this.input.on('pointerdown', function (pointer) {
-      console.log('Clicked at x: ' + pointer.x + ' y: ' + pointer.y);
-    });
 
     // SAFE ZONE LOGIC
     if (this.textures.exists(safeZoneTexture)) {
