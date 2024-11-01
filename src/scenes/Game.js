@@ -123,6 +123,7 @@ export class Game extends Scene {
     const goalZone = this.physics.add.staticGroup();
     const waterZone = this.physics.add.staticGroup();
     const endZone = this.physics.add.staticGroup();
+    const filledGoals = this.physics.add.staticGroup();
 
     // Define lane boundaries for water lanes
     const laneWidth = this.moveDistance;
@@ -290,6 +291,7 @@ export class Game extends Scene {
     );
     this.physics.add.overlap(this.shermie, this.logs, this.rideLog, null, this);
     this.physics.add.overlap(this.shermie, endZone, this.loseLife, null, this);
+    this.physics.add.overlap(this.shermie, filledGoals, this.loseLife, null, this);
 
     // Display timer and lives on screen
     this.timerText = this.add.text(16, 32, `Time: ${this.timeRemaining}`, { fontSize: "32px", fill: "#ffffff" });
