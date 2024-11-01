@@ -120,13 +120,14 @@ export class Game extends Scene {
     const safeZone = this.physics.add.staticGroup();
     const goalZone = this.physics.add.staticGroup();
     const waterZone = this.physics.add.staticGroup();
+    const endZone = this.physics.add.staticGroup();
 
     // Define lane boundaries for water lanes
     const laneWidth = this.moveDistance;
     const laneStart = roadEnd - this.safeZoneSize / 2 - this.moveDistance / 2;
 
     //This is used for background image size. used to paint the lanes
-    const imageWidth = this.width / 10;
+    const imageWidth = this.width / 9;
     const imageHeight = this.height / (this.numberOfLanes * 2 + 3);
 
     // Draw solid lines for top and bottom of road
@@ -140,24 +141,40 @@ export class Game extends Scene {
 
     //GOAL ZONE LOGIC
     let goal;
+    let end;
     if (this.textures.exists(goalZoneTexture)) {
       // If goal zone texture exists
-      for (let j = 0; j < this.width; j += imageWidth) {
+      let x = -20;
+      for (let j = 0; j <= this.width + 40; j += imageWidth + 75) {
         // For each image in goal zone
-        goal = this.add // Add image
-          .image(j + imageWidth / 2, 0 + laneWidth / 2, goalZoneTexture) // Set image position
+        end = this.add // Add image
+          .image(x + imageWidth / 2, 0 + laneWidth / 2, goalZoneTexture) // Set image position
           .setDisplaySize(imageWidth, this.moveDistance) // Set image size
           .setDepth(-1); // Set image depth
-        this.physics.add.existing(goal, true); // Add physics to each goal image
-        goalZone.add(goal); //these need to be danger zone instead of goal zone
+        this.physics.add.existing(end, true); // Add physics to each goal image
+        endZone.add(end); //these need to be danger zone instead of goal zone
+        x += imageWidth + 75;
       }
-    } else {
+
+      x = 128;
+      for (let j = 0; j < 5; j++) {
+          goal = this.add.rectangle(x, 0 + laneWidth / 2, 75, this.moveDistance, 0x00ff00);
+          this.physics.add.existing(goal, true);
+          goalZone.add(goal);
+          x += imageWidth + 75;
+      }
+    } 
+    else {
       // If goal zone texture doesn't exist then use a rectangle
       goal = this.add.rectangle(this.width / 2, this.moveDistance / 2, this.width, this.moveDistance, 0x00ff00);
       this.physics.add.existing(goal, true); // Add physics to the fallback rectangle
       goalZone.add(goal); //these need to be danger zone instead of goal zone
     }
     // END GOAL ZONE LOGIC
+
+    this.input.on('pointerdown', function (pointer) {
+      console.log('Clicked at x: ' + pointer.x + ' y: ' + pointer.y);
+    });
 
     // SAFE ZONE LOGIC
     if (this.textures.exists(safeZoneTexture)) {
@@ -264,6 +281,7 @@ export class Game extends Scene {
       this
     );
     this.physics.add.overlap(this.shermie, this.logs, this.rideLog, null, this);
+    this.physics.add.overlap(this.shermie, this.endZone, this.loseLife, null, this);
 
     // Display timer and lives on screen
     this.timerText = this.add.text(16, 32, `Time: ${this.timeRemaining}`, { fontSize: "32px", fill: "#ffffff" });
