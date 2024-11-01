@@ -30,6 +30,8 @@ export class Game extends Scene {
     this.winCount = 0;
     this.lives = 0;
     this.resetCount = 0;
+    this.goalCount = 0;
+    this.numOfGoals = 5;
 
     // road values
     this.numberOfRoads = 5;
@@ -262,8 +264,18 @@ export class Game extends Scene {
     createVehicles(this, roadStart, roadWidth, this.cars, this.carsForward, this.carSpacing);
     createLogs(this, laneStart, laneWidth, this.logTexture, this.logSpacing);
 
-    // Define overlap logic for goal, vehicles, and logs
-    this.physics.add.overlap(this.shermie, goalZone, this.winCollision, null, this);
+    //TODO - Create turtles
+
+    this.physics.add.overlap(this.shermie, goalZone, (shermie, goal) => {
+      this.goalCollision(goal);
+      setTimeout(() => {
+        const killerShermie = this.add.image(goal.x, goal.y + 20, "shermie");
+        this.physics.add.existing(killerShermie, true);
+        filledGoals.add(killerShermie);
+      }, 1);
+      
+      goal.destroy();
+    });
     this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
     this.physics.add.overlap(
       this.shermie,
@@ -373,6 +385,7 @@ export class Game extends Scene {
     return log;
   }
 
+
   loseLife() {
     // return if invinsible
     if (this.isInvincible) {
@@ -390,8 +403,8 @@ export class Game extends Scene {
     });
   }
 
-  winCollision() {
-    this.gameLogic.win();
+  goalCollision() {
+    this.gameLogic.goal();
   }
 
   updateTimer() {
@@ -415,5 +428,13 @@ export class Game extends Scene {
       this.paused = true;
       this.timer.pause();
     }
+  }
+  
+  getAdvanceNumber(){//Get number of goals for level transition
+    return this.advanceNumber;
+  }
+  
+  getNumberOfLevels(){
+    return levels.length;
   }
 }

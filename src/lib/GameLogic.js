@@ -5,19 +5,19 @@ export class GameLogic {
 
   goal() {
     this.game.goalCount++;
-    if (this.game.goalCount !== 5) {
-      console.log(`5 goals not met. Goals: ${this.game.goalCount}`);
+    if(this.game.goalCount != this.game.getAdvanceNumber()) {
+      console.log("Goals Hit: ", this.game.goalCount);
       this.resetPlayer();
-    } else {
-      console.log(`Goal condition met. Goals: ${this.game.goalCount}`);
-      this.resetPlayer();
+    }
+    else{
+      this.win();
     }
   }
 
   win() {
     this.game.winCount++;
     console.log(`Win condition met. Wins: ${this.game.winCount}`);
-    this.resetPlayer();
+    this.nextLevel();
   }
 
   loseLife() {
@@ -44,8 +44,17 @@ export class GameLogic {
     this.game.resetCount++;
     this.game.shermie.x = this.game.width / 2;
     this.game.shermie.y = this.game.height - this.game.safeZoneSize + this.game.moveDistance / 2;
+  }
 
-    this.game.isInvincible = false;
+  nextLevel(){
+    console.log("Starting next level");
+    this.game.goalCount = 0;
+    this.game.level += 1;
+    if (this.game.level < this.game.getNumberOfLevels()) {
+      this.game.scene.start("Game", { level: this.game.level });
+    } else {
+      this.game.scene.start("MainMenu");
+    }
   }
 }
 
