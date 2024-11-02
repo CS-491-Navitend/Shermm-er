@@ -14,6 +14,7 @@ import car10 from "/assets/vehiclesBackward/car10.png";
 import car11 from "/assets/vehiclesBackward/car11.png";
 import car12 from "/assets/vehiclesBackward/car12.png";
 import car13 from "/assets/vehiclesBackward/car13.png";
+import tractor from "/assets/vehiclesBackward/tractor.png";
 
 import car1forward from "/assets/vehicleForward/car1forward.png";
 import car2forward from "/assets/vehicleForward/car2forward.png";
@@ -28,26 +29,26 @@ import car10forward from "/assets/vehicleForward/car10forward.png";
 import car11forward from "/assets/vehicleForward/car11forward.png";
 import car12forward from "/assets/vehicleForward/car12forward.png";
 import car13forward from "/assets/vehicleForward/car13forward.png";
-
-// Import other assets
-import tractor from "/assets/vehiclesBackward/tractor.png";
 import tractorforward from "/assets/vehicleForward/tractorForward.png";
-import ShortLog from "/assets/ShortLog.png";
-import LongLog from "/assets/LongLog.png";
-import turtle from "/assets/turtle.png";
-import turtleforward from "/assets/turtleforward.png";
+
+// Import generic assets
 import shermie from "/assets/shermie.png";
 import life from "/assets/heart.png";
 
-// Import background assets
-import background from "/assets/backgrounds/background.jpeg";
-import background2 from "/assets/backgrounds/background2.jpeg";
-import lavaSafeZone from "/assets/backgrounds/LavaBrick.png";
-import lava from "/assets/backgrounds/Lava.png";
-import lavaGoal from "/assets/backgrounds/LavaBrick.png";
-import rock from "/assets/backgrounds/Rock.png";
-import lavaRoad from "/assets/backgrounds/LavaRoad.png";
-import waterRoad from "/assets/backgrounds/Lava.png";
+//Import Water assets
+import ShortLog from "/assets/WaterLevel/ShortLog.png";
+import LongLog from "/assets/WaterLevel/LongLog.png";
+import turtle from "/assets/WaterLevel/turtle.png";
+import turtleforward from "/assets/WaterLevel/turtleforward.png";
+
+// Import Lava assets
+import lavaSafeZone from "/assets/LavaLevel/LavaBrick.png";
+import lava from "/assets/LavaLevel/Lava.png";
+import lavaGoal from "/assets/LavaLevel/LavaBrick.png";
+import rock from "/assets/LavaLevel/Rock.png";
+import lavaRoad from "/assets/LavaLevel/LavaRoad.png";
+
+
 
 export class Boot extends Scene {
   constructor() {
