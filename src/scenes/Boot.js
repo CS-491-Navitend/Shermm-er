@@ -15,6 +15,9 @@ import car11 from "/assets/vehiclesBackward/car11.png";
 import car12 from "/assets/vehiclesBackward/car12.png";
 import car13 from "/assets/vehiclesBackward/car13.png";
 import tractor from "/assets/vehiclesBackward/tractor.png";
+import LavaTractor from "/assets/LavaLevel/LavaTruck.png";
+import LavaCar1 from "/assets/LavaLevel/LavaCar.png";
+import LavaCar2 from "/assets/LavaLevel/LavaCar2.png";
 
 import car1forward from "/assets/vehicleForward/car1forward.png";
 import car2forward from "/assets/vehicleForward/car2forward.png";
@@ -42,10 +45,12 @@ import turtle from "/assets/WaterLevel/turtle.png";
 import turtleforward from "/assets/WaterLevel/turtleforward.png";
 
 // Import Lava assets
-import lavaSafeZone from "/assets/LavaLevel/LavaBrick.png";
+import lavaSafeZone from "/assets/LavaLevel/LavaSafeZone.png";
 import lava from "/assets/LavaLevel/Lava.png";
-import lavaGoal from "/assets/LavaLevel/LavaBrick.png";
+import lavaGoal from "/assets/LavaLevel/LavaGoal.png";
+import lavaObjective from "/assets/LavaLevel/LavaObjective.png";
 import rock from "/assets/LavaLevel/Rock.png";
+import lavaLog from "/assets/LavaLevel/LavaLog1.png";
 import lavaRoad from "/assets/LavaLevel/LavaRoad.png";
 
 
@@ -78,8 +83,13 @@ export class Boot extends Scene {
     this.load.image("lava", lava);
     this.load.image("lavaGoal", lavaGoal);
     this.load.image("rock", rock);
-    this.load.image("lavaObjective", lavaRoad);
+    this.load.image("lavaRoad", lavaRoad);
+    this.load.image("lavaObjective", lavaObjective)
+    this.load.image("lavaCar1", LavaCar1)
+    this.load.image("lavaCar2", LavaCar2)
+    this.load.image("lavaTruck", LavaTractor)
     //this.load.image("waterRoad", waterRoad);
+    this.load.image("lavaLog", lavaLog)
   }
 
   create() {

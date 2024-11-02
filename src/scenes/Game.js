@@ -137,13 +137,13 @@ export class Game extends Scene {
     const imageHeight = this.height / (this.numberOfLanes * 2 + 3);
 
     // Draw solid lines for top and bottom of road
-    roadLines.strokeLineShape(new Phaser.Geom.Line(0, roadStart, this.width, roadStart));
-    roadLines.strokeLineShape(new Phaser.Geom.Line(0, roadEnd, this.width, roadEnd));
+    // roadLines.strokeLineShape(new Phaser.Geom.Line(0, roadStart, this.width, roadStart));
+    // roadLines.strokeLineShape(new Phaser.Geom.Line(0, roadEnd, this.width, roadEnd));
 
     // Draw dashed lines between road lanes
-    for (let i = 0; i < this.numberOfRoads - 1; i++) {
-      this.drawing.drawDashedLine(roadLines, 10, roadStart - i * roadWidth - roadWidth, this.width, roadStart - i * roadWidth - roadWidth, 30, 20);
-    }
+    // for (let i = 0; i < this.numberOfRoads - 1; i++) {
+    //   this.drawing.drawDashedLine(roadLines, 10, roadStart - i * roadWidth - roadWidth, this.width, roadStart - i * roadWidth - roadWidth, 30, 20);
+    // }
 
     //LAST ROW DANGER ZONE LOGIC
     let danger;
@@ -259,6 +259,8 @@ export class Game extends Scene {
       this.add.rectangle(this.width / 2, 2, this.width, roadWidth, 0x000000).setDepth(-2);
     }
     // END ROAD ZONE LOGIC
+
+    
     // Overlap detection for safe zone
     this.physics.add.overlap(this.shermie,safeZone,() => {this.shermie.setVelocity(0, 0);},null,this);
 

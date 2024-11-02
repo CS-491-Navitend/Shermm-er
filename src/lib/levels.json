@@ -29,18 +29,18 @@
     {
       "time": 10000,
 
-      "car_texture": ["car1", "car2", "car3", "tractor"],
-      "cars_Forward_texture": ["car1forward", "car2forward", "car3forward"],
+      "car_texture": ["lavaCar1", "lavaCar2", "lavaTruck"],
+      "cars_Forward_texture": ["lavaCar1", "lavaCar2", "lavaTruck"],
       "car_spacing": [250, 350, 100],
       "car_speed_multiplier": 1,
-      "number_of_cars": 0,
+      "number_of_cars": 2,
 
       "water_zone_type": "lava",
-      "log_texture": ["rock"],
+      "log_texture": ["rock", "lavaLog"],
       "log_spacing": [250, 350, 400],
 
       "log_speed_multiplier": 1,
-      "number_of_logs": 20,
+      "number_of_logs": 2,
 
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 0,
