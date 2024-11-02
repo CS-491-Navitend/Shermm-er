@@ -8,7 +8,7 @@ export class GameWin extends Scene {
   }
 
   create(data) {
-
+    document.getElementById('ui-bar').style.display = 'none';
     const gameLogic = new GameLogic(data["game"]);
     // Display win message
     this.add.text(data["game"].width / 2, 250, "You Win!", { fontSize: "32px", fill: "#fff" }).setOrigin(0.5);

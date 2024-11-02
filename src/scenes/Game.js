@@ -66,7 +66,7 @@ export class Game extends Scene {
 
   create(data) {
     // Set level based on data passed in
-    document.getElementById('ui-bar').style.display = 'flex';
+    document.getElementById('ui-bar').style.display = 'flex'; //display the UI-bar
     this.level = data["level"];
     // Timer setup from level data
     this.timerDuration = levels[data["level"]]["time"];
@@ -87,6 +87,8 @@ export class Game extends Scene {
     this.cars = levels[data["level"]]["car_texture"];
     this.carsForward = levels[data["level"]]["cars_Forward_texture"];
     this.carSpacing = levels[data["level"]]["car_spacing"];
+
+    this.updateLives(); //display lives in the html bar
 
     // Add player sprite with physics
     this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, "shermie");
@@ -317,7 +319,7 @@ export class Game extends Scene {
 
     document.getElementById("score").innerText = `Score: ${this.goalCount}`;
     // document.getElementById("time").innerText = `Time: ${this.timeRemaining}`;
-    document.getElementById("lives").innerText = `Lives: ${this.lives}`;
+   // document.getElementById("lives").innerText = `Lives: ${this.lives}`;
 
     if (this.canMove) {
       // Only move if the player can move
@@ -447,4 +449,18 @@ export class Game extends Scene {
     return levels.length;
   }
 
+  updateLives() {
+    const livesContainer = document.getElementById("lives-container");
+    livesContainer.innerHTML = "";
+
+    // Generate a Base64 image URL from the texture, which will work in an HTML img tag
+    const base64Image = this.textures.getBase64("shermie");
+
+    for (let i = 0; i < this.lives; i++) {
+        const lifeIcon = document.createElement("img");
+        lifeIcon.src = base64Image; 
+        lifeIcon.classList.add("life-icon");
+        livesContainer.appendChild(lifeIcon);
+    }
+  }
 }

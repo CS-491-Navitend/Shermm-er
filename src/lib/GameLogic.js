@@ -22,14 +22,14 @@ export class GameLogic {
 
   loseLife() {
     this.game.lives--;
-    // console.log("Lost a life. Lives:", this.game.lives);
+    this.game.updateLives(); // Update UI after life decrement
+
     if (this.game.lives < 1) {
-      // this.game.resetCount++;
-      this.gameOver();
-      this.game.lives = 3;
+        this.gameOver();
+        this.game.lives = 3;
     }
     this.resetPlayer();
-  }
+}
 
   gameOver() {
     this.game.goalCount=0;
@@ -58,5 +58,6 @@ export class GameLogic {
     }
   }
 }
+
 
 export default GameLogic;

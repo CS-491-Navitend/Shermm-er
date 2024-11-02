@@ -37,3 +37,19 @@ body {
 .hidden {
     display: none;
 }
+#lives-container {
+  display: flex;
+  gap: 5px; 
+  width: 150px; 
+  justify-content: flex-start; 
+  align-items: center;
+}
+
+.life-icon {
+  width: 50px;
+  height: 35px;
+}
+
+.hidden-life {
+  visibility: hidden; 
+}
