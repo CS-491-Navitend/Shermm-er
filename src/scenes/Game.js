@@ -195,7 +195,7 @@ export class Game extends Scene {
 
     // SAFE ZONE LOGIC
     if (this.textures.exists(safeZoneTexture)) {
-      // Top Bottom safe zone
+      // Top safe zone
       for (let j = 0; j < this.width; j += imageWidth) {
         const img = this.add.image(j + imageWidth / 2, this.height - this.safeZoneSize / 2, safeZoneTexture).setDisplaySize(imageWidth, this.safeZoneSize).setDepth(-1);
         this.physics.add.existing(img, true); // Add physics to each image
@@ -262,7 +262,7 @@ export class Game extends Scene {
 
     
     // Overlap detection for safe zone
-    this.physics.add.overlap(this.shermie,safeZone,() => {this.shermie.setVelocity(0, 0);},null,this);
+    this.physics.add.overlap(this.shermie,safeZone,() => {this.shermie.setVelocity(0, 0);this.isInvincible=false;},null,this);
 
     // Create physics groups for vehicles and logs
     this.vehicles = this.physics.add.group();
@@ -400,18 +400,13 @@ export class Game extends Scene {
   loseLife() {
     // return if invinsible
     if (this.isInvincible) {
-      console.log("Shermie is invincible");
+      // console.log("Shermie is invincible");
       return;
     }
 
     // Only Lose if if false, and return invincible
     this.isInvincible = true;
     this.gameLogic.loseLife();
-
-    // Set a delayed call to reset invincibility after the cooldown
-    this.time.delayedCall(this.invincibilityDuration, () => {
-      this.isInvincible = false;
-    });
   }
 
   goalCollision() {

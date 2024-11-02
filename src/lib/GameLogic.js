@@ -40,6 +40,7 @@ export class GameLogic {
   }
 
   resetPlayer() {
+    this.isInvincible = false;
     console.log("Resetting player");
     this.game.shermie.setVelocity(0, 0);
     this.game.resetCount++;
