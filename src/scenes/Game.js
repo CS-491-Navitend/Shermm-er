@@ -130,7 +130,7 @@ export class Game extends Scene {
     const laneStart = roadEnd - this.safeZoneSize / 2 - this.moveDistance / 2;
 
     //This is used for background image size. used to paint the lanes
-    const imageWidth = this.width / 9;
+    const imageWidth = this.width / 10;
     const imageHeight = this.height / (this.numberOfLanes * 2 + 3);
 
     // Draw solid lines for top and bottom of road
@@ -143,28 +143,29 @@ export class Game extends Scene {
     }
 
     //GOAL ZONE LOGIC
+    /////RESEEETTTTTTT PPPPOOOIIINt
     let goal;
     let end;
     if (this.textures.exists(goalZoneTexture)) {
       // If goal zone background texture exists
-      let x = -20;
-      for (let j = 0; j <= this.width + 40; j += imageWidth + 75) {
+      for (let j = 0; j < this.width; j += imageWidth) {
         // For each image in goal background zone
         end = this.add // Add image
-          .image(x + imageWidth / 2, 0 + laneWidth / 2, goalZoneTexture) // Set image position TODO - GET NEW ASSET FOR DANGER ZONE
-          .setDisplaySize(imageWidth, this.moveDistance) // Set image size
+          .image(j + imageWidth / 2, laneWidth / 2, goalZoneTexture) // Set image position TODO - GET NEW ASSET FOR DANGER ZONE
+          .setDisplaySize(imageWidth, imageHeight) // Set image size
           .setDepth(-1); // Set image depth
         this.physics.add.existing(end, true); // Add physics to each background image
         endZone.add(end); //danger zone
-        x += imageWidth + 75;
       }
       
-      x = 128;//Initial starting place for goal segment
-      for (let j = 0; j < 5; j++) {
-          goal = this.add.rectangle(x, 0 + laneWidth / 2, 75, this.moveDistance, 0x00ff00);//TODO - GET NEW ASSET FOR GOAL ZONE
+      let x = imageWidth+imageWidth ;//Initial starting place for goal segment
+      console.log(imageWidth*8)
+      for (let j = 0; j < (imageWidth*4); j+=imageWidth) {
+          goal = this.add.rectangle(x, 0 + laneWidth / 2, imageWidth, imageHeight, 0x00ff00);//TODO - GET NEW ASSET FOR GOAL ZONE
           this.physics.add.existing(goal, true);
           goalZone.add(goal);
-          x += imageWidth + 75;
+          x += imageWidth*2;
+          console.log(j)
       }
     } 
     else {
@@ -179,10 +180,7 @@ export class Game extends Scene {
     if (this.textures.exists(safeZoneTexture)) {
       // Top Bottom safe zone
       for (let j = 0; j < this.width; j += imageWidth) {
-        const img = this.add
-          .image(j + imageWidth / 2, this.height - this.safeZoneSize / 2, safeZoneTexture)
-          .setDisplaySize(imageWidth, this.safeZoneSize)
-          .setDepth(-1);
+        const img = this.add.image(j + imageWidth / 2, this.height - this.safeZoneSize / 2, safeZoneTexture).setDisplaySize(imageWidth, this.safeZoneSize).setDepth(-1);
         this.physics.add.existing(img, true); // Add physics to each image
         safeZone.add(img); // Add to safeZone group
       }

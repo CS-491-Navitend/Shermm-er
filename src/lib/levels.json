@@ -27,7 +27,7 @@
     },
 
     {
-      "time": 60,
+      "time": 10000,
 
       "car_texture": ["car1", "car2", "car3", "tractor"],
       "cars_Forward_texture": ["car1forward", "car2forward", "car3forward"],
@@ -40,13 +40,13 @@
       "log_spacing": [250, 350, 400],
 
       "log_speed_multiplier": 1,
-      "number_of_logs": 1,
+      "number_of_logs": 2,
 
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 0,
 
-      "number_of_lives": 3,
-      "goal_count": 3,
+      "number_of_lives": 5,
+      "goal_count": 5,
 
       "powerups": [0, 0, 0, 0]
     },
@@ -71,7 +71,7 @@
       "number_of_turtles": 0,
       
       "number_of_lives": 3,
-      "goal_count": 3,
+      "goal_count": 5,
 
       "powerups": [0, 0, 0, 0]
     }

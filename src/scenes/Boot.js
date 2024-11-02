@@ -44,7 +44,7 @@ import background from "/assets/backgrounds/background.jpeg";
 import background2 from "/assets/backgrounds/background2.jpeg";
 import lavaSafeZone from "/assets/backgrounds/LavaBrick.png";
 import lava from "/assets/backgrounds/Lava.png";
-import lavaGoal from "/assets/backgrounds/LavaGoal.png";
+import lavaGoal from "/assets/backgrounds/LavaBrick.png";
 import rock from "/assets/backgrounds/Rock.png";
 import lavaRoad from "/assets/backgrounds/LavaRoad.png";
 import waterRoad from "/assets/backgrounds/Lava.png";
