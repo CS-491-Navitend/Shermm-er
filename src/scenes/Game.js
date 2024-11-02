@@ -66,8 +66,8 @@ export class Game extends Scene {
 
   create(data) {
     // Set level based on data passed in
+    document.getElementById('ui-bar').style.display = 'flex';
     this.level = data["level"];
-
     // Timer setup from level data
     this.timerDuration = levels[data["level"]]["time"];
     this.timeRemaining = this.timerDuration;
@@ -302,10 +302,6 @@ export class Game extends Scene {
     }, null, this);
     this.physics.add.overlap(this.shermie, filledGoals, this.loseLife, null, this);
 
-    // Display timer and lives on screen
-    this.timerText = this.add.text(16, 32, `Time: ${this.timeRemaining}`, { fontSize: "32px", fill: "#ffffff" });
-    this.livesText = this.add.text(16, 64, `Lives: ${this.lives}`, { fontSize: "32px", fill: "#ffffff" });
-
     this.playing = true;
 
     // Start the timer for gameplay
@@ -314,8 +310,11 @@ export class Game extends Scene {
 
   update() {
     // Only update if the game is playing (not paused)
+
     if (this.paused) return;
-    
+    document.getElementById("score").innerText = `Score: ${this.goalCount}`;
+    document.getElementById("time").innerText = `Time: ${this.timeRemaining}`;
+    document.getElementById("lives").innerText = `Lives: ${this.lives}`;
     if (this.canMove) {
       // Only move if the player can move
       if (this.cursors.left.isDown && this.shermie.x > 0) {

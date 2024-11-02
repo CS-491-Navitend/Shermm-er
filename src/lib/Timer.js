@@ -24,6 +24,11 @@ export class Timer {
     if (this.game.timerText) {
       this.game.timerText.setText(`Time: ${this.timeRemaining}`); // Update the timer text on the screen
     }
+
+    const timeElement = document.getElementById("time");
+    if (timeElement) {
+        timeElement.innerText = `Time: ${this.timeRemaining}`;
+    }
   }
 
   start() {

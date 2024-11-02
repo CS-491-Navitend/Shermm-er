@@ -27,7 +27,7 @@
     },
 
     {
-      "time": 10000,
+      "time": 1000,
 
       "car_texture": ["lavaCar1", "lavaCar2", "lavaTruck"],
       "cars_Forward_texture": ["lavaCar1", "lavaCar2", "lavaTruck"],

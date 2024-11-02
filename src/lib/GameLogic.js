@@ -29,7 +29,6 @@ export class GameLogic {
       this.game.lives = 3;
     }
     this.resetPlayer();
-    this.game.livesText.setText(`Lives: ${this.game.lives}`);
   }
 
   gameOver() {

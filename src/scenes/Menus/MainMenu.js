@@ -3,7 +3,6 @@ import { Scene } from "phaser";
 export class MainMenu extends Scene {
   constructor() {
     super("MainMenu");
-
     this.fontFamily = "sans-serif";
     this.rem = 16;
     this.buttons = [];
@@ -114,13 +113,7 @@ export class MainMenu extends Scene {
           this.scene.start("LevelMenu");
           //console.log("Starting level menu");
       }
-
-          
-      
   }
-
-    
-    
     destroyButtons() {
         if (this.buttons.length > 0) {
             //console.log("Destorying Buttons...")
@@ -133,10 +126,6 @@ export class MainMenu extends Scene {
             });
             this.buttons = [];
             this.input.keyboard.removeAllListeners();
-            
-           
         }
-
     }
-  
 }
