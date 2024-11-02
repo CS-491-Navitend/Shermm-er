@@ -12,10 +12,9 @@ export class Timer {
       return;
     }
 
-    console.log("Updating Timer.."); // for debugging
+    // console.log("Updating Timer.."); // for debugging
 
     this.timeRemaining -= 1;
-    console.log(this.timeRemaining)
     if (this.timeRemaining <= 0) {
       this.stop();
       this.game.gameLogic.gameOver();
