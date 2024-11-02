@@ -77,7 +77,7 @@ export class Boot extends Scene {
     this.load.image("lava", lava);
     this.load.image("lavaGoal", lavaGoal);
     this.load.image("rock", rock);
-    this.load.image("lavaRoad", lavaRoad);
+    this.load.image("lavaObjective", lavaRoad);
     //this.load.image("waterRoad", waterRoad);
   }
 

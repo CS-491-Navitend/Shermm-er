@@ -33,14 +33,14 @@
       "cars_Forward_texture": ["car1forward", "car2forward", "car3forward"],
       "car_spacing": [250, 350, 100],
       "car_speed_multiplier": 1,
-      "number_of_cars": 1,
+      "number_of_cars": 0,
 
       "water_zone_type": "lava",
       "log_texture": ["rock"],
       "log_spacing": [250, 350, 400],
 
       "log_speed_multiplier": 1,
-      "number_of_logs": 2,
+      "number_of_logs": 20,
 
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 0,

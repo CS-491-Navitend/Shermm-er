@@ -33,6 +33,7 @@ export class GameLogic {
   }
 
   gameOver() {
+    this.game.goalCount=0;
     console.log("Starting game over scene");
     this.game.playing = false;
     this.game.scene.start("GameOver", { game: this.game });
