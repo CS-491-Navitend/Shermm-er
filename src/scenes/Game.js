@@ -305,6 +305,8 @@ export class Game extends Scene {
     this.playing = true;
 
     // Start the timer for gameplay
+    document.getElementById("time").innerText = `Time: ${this.timeRemaining}`;
+    
     this.timer.start();
   }
 
@@ -312,9 +314,11 @@ export class Game extends Scene {
     // Only update if the game is playing (not paused)
 
     if (this.paused) return;
+
     document.getElementById("score").innerText = `Score: ${this.goalCount}`;
-    document.getElementById("time").innerText = `Time: ${this.timeRemaining}`;
+    // document.getElementById("time").innerText = `Time: ${this.timeRemaining}`;
     document.getElementById("lives").innerText = `Lives: ${this.lives}`;
+
     if (this.canMove) {
       // Only move if the player can move
       if (this.cursors.left.isDown && this.shermie.x > 0) {
