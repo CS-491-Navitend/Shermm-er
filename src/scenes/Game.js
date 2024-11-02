@@ -422,14 +422,14 @@ export class Game extends Scene {
   }
 
   togglePause() {
-    console.log("Toggle Pause called. Current paused state:", this.paused);
+    // console.log("Toggle Pause called. Current paused state:", this.paused);
     if (this.paused) {
-      console.log("hiding the menu since this.paused state is true");
+      // console.log("hiding the menu since this.paused state is true");
       //this.pauseMenu.hide();
       this.paused = false;
       this.timer.resume();
     } else {
-      console.log("showing the menu since this.paused state is false");
+      // console.log("showing the menu since this.paused state is false");
       this.pauseMenu.show();
       this.paused = true;
       this.timer.pause();

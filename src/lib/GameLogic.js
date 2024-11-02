@@ -6,7 +6,7 @@ export class GameLogic {
   goal() {
     this.game.goalCount++;
     if(this.game.goalCount != this.game.getAdvanceNumber()) {
-      console.log("Goals Hit: ", this.game.goalCount);
+      // console.log("Goals Hit: ", this.game.goalCount);
       this.resetPlayer();
     }
     else{
@@ -16,13 +16,13 @@ export class GameLogic {
 
   win() {
     this.game.winCount++;
-    console.log(`Win condition met. Wins: ${this.game.winCount}`);
+    // console.log(`Win condition met. Wins: ${this.game.winCount}`);
     this.game.scene.start('GameWin', { game: this.game });
   }
 
   loseLife() {
     this.game.lives--;
-    console.log("Lost a life. Lives:", this.game.lives);
+    // console.log("Lost a life. Lives:", this.game.lives);
     if (this.game.lives < 1) {
       // this.game.resetCount++;
       this.gameOver();
@@ -34,14 +34,14 @@ export class GameLogic {
 
   gameOver() {
     this.game.goalCount=0;
-    console.log("Starting game over scene");
+    // console.log("Starting game over scene");
     this.game.playing = false;
     this.game.scene.start("GameOver", { game: this.game });
   }
 
   resetPlayer() {
     this.isInvincible = false;
-    console.log("Resetting player");
+    // console.log("Resetting player");
     this.game.shermie.setVelocity(0, 0);
     this.game.resetCount++;
     this.game.shermie.x = this.game.width / 2;
@@ -49,7 +49,7 @@ export class GameLogic {
   }
 
   nextLevel(){
-    console.log("Starting next level");
+    // console.log("Starting next level");
     this.game.goalCount = 0;
     this.game.level += 1;
     if (this.game.level < this.game.getNumberOfLevels()) {

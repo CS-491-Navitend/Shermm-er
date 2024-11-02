@@ -7,8 +7,8 @@ export function createVehicles(scene, roadStart, roadWidth, cars, carsForward, s
     const vehicleArray = road % 2 === 0 ? cars : carsForward;
     
     const vehicleType = vehicleArray[Math.floor(Math.random() * vehicleArray.length)];
-    
-    for(let i =0 ; i<spacing.length; i++){console.log(spacing[i])}
+
+    // for(let i =0 ; i<spacing.length; i++){console.log(spacing[i])}
     for (let i = 0; i < scene.numberOfCars; i++) {
       const spacingIndex = Math.floor(Math.random() * spacing.length);
       lastVehicleX += spacing[spacingIndex];
