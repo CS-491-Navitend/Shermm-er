@@ -44,7 +44,7 @@ import background from "/assets/backgrounds/background.jpeg";
 import background2 from "/assets/backgrounds/background2.jpeg";
 import lavaSafeZone from "/assets/backgrounds/LavaBrick.png";
 import lava from "/assets/backgrounds/Lava.png";
-import lavaGoal from "/assets/backgrounds/LavaGoal.png";
+import lavaGoal from "/assets/backgrounds/LavaBrick.png";
 import rock from "/assets/backgrounds/Rock.png";
 import lavaRoad from "/assets/backgrounds/LavaRoad.png";
 import waterRoad from "/assets/backgrounds/Lava.png";
@@ -77,7 +77,7 @@ export class Boot extends Scene {
     this.load.image("lava", lava);
     this.load.image("lavaGoal", lavaGoal);
     this.load.image("rock", rock);
-    this.load.image("lavaRoad", lavaRoad);
+    this.load.image("lavaObjective", lavaRoad);
     //this.load.image("waterRoad", waterRoad);
   }
 

@@ -30,6 +30,8 @@ export class Game extends Scene {
     this.winCount = 0;
     this.lives = 0;
     this.resetCount = 0;
+    this.goalCount = 0;
+    this.numOfGoals = 5;
 
     // road values
     this.numberOfRoads = 5;
@@ -58,6 +60,8 @@ export class Game extends Scene {
     //to prevent multiple lives lost at once
     this.isInvincible = false;
     this.invincibilityDuration = 500;
+
+    this.advanceNumber = 0;
   }
 
   create(data) {
@@ -83,7 +87,6 @@ export class Game extends Scene {
     this.cars = levels[data["level"]]["car_texture"];
     this.carsForward = levels[data["level"]]["cars_Forward_texture"];
     this.carSpacing = levels[data["level"]]["car_spacing"];
-    this.advanceNumber = levels[data["level"]]["goal_count"];
 
     // Add player sprite with physics
     this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, "shermie");
@@ -100,9 +103,7 @@ export class Game extends Scene {
     this.paused = false;
 
     // Toggle pause state on 'Enter' key press
-    this.input.keyboard.on("keydown-ENTER", () => {
-      this.togglePause();
-    });
+    this.input.keyboard.on("keydown-ENTER", () => {this.togglePause();});
 
     // Create road lines for the lanes
     const roadLines = this.add.graphics({ lineStyle: { width: 5, color: 0xffffff } });
@@ -115,11 +116,17 @@ export class Game extends Scene {
 
     // Define textures for safe zone and goal zone
     const safeZoneTexture = zoneType + "SafeZone";
-    const goalZoneTexture = zoneType + "Goal";
+    const endZoneTexture = zoneType + "Goal";
     const roadZoneTexture = zoneType + "Road";
+
+    const objectiveTexture = zoneType + "Objective";
+
+    const objectiveZone = this.physics.add.staticGroup();
+
     const safeZone = this.physics.add.staticGroup();
-    const goalZone = this.physics.add.staticGroup();
+    const endZone = this.physics.add.staticGroup();
     const waterZone = this.physics.add.staticGroup();
+    const filledGoals = this.physics.add.staticGroup();
 
     // Define lane boundaries for water lanes
     const laneWidth = this.moveDistance;
@@ -138,55 +145,80 @@ export class Game extends Scene {
       this.drawing.drawDashedLine(roadLines, 10, roadStart - i * roadWidth - roadWidth, this.width, roadStart - i * roadWidth - roadWidth, 30, 20);
     }
 
-    //GOAL ZONE LOGIC
-    let goal;
-    if (this.textures.exists(goalZoneTexture)) {
-      // If goal zone texture exists
+    //LAST ROW DANGER ZONE LOGIC
+    let danger;
+    if (this.textures.exists(endZoneTexture)) {// If goal zone background texture exist
+      for (let j = 0; j < this.width; j += imageWidth) {// For each image in goal background zone
+        danger = this.add.image(j + imageWidth / 2, laneWidth / 2, endZoneTexture).setDisplaySize(imageWidth, imageHeight).setDepth(-1);
+        this.physics.add.existing(danger, true); // Add physics to each background image
+        endZone.add(danger); //danger zone
+      }
+    }else {
       for (let j = 0; j < this.width; j += imageWidth) {
-        // For each image in goal zone
-        goal = this.add // Add image
-          .image(j + imageWidth / 2, 0 + laneWidth / 2, goalZoneTexture) // Set image position
-          .setDisplaySize(imageWidth, this.moveDistance) // Set image size
-          .setDepth(-1); // Set image depth
-        this.physics.add.existing(goal, true); // Add physics to each goal image
-        goalZone.add(goal); //these need to be danger zone instead of goal zone
+        danger = this.add.rectangle(j + imageWidth / 2, laneWidth / 2, imageWidth, this.moveDistance, 0x800000)
+          .setDepth(-1);
+        this.physics.add.existing(danger, true);
+        endZone.add(danger);
+      }
+    }
+    // END LAST ROW DANGER ZONELOGIC
+
+
+    //OBJECTIVE PLACEMENT
+    let objective;
+    let x = imageWidth * 2; // Initial starting position for each objective segment
+
+    if (this.textures.exists(objectiveTexture)) {
+      // Use images if the texture exists
+      for (let j = 0; j < imageWidth * 4; j += imageWidth) {//this 4 could be replaced by a variable, but we statically divide all by 10 so it works. If that changes we need to change this
+        objective = this.add.image(x, laneWidth / 2, objectiveTexture)
+          .setDisplaySize(imageWidth, imageHeight)
+          .setDepth(0);
+        this.physics.add.existing(objective, true);
+        objectiveZone.add(objective);
+        x += imageWidth * 2; // Space out each objective
+        this.advanceNumber++;
       }
     } else {
-      // If goal zone texture doesn't exist then use a rectangle
-      goal = this.add.rectangle(this.width / 2, this.moveDistance / 2, this.width, this.moveDistance, 0x00ff00);
-      this.physics.add.existing(goal, true); // Add physics to the fallback rectangle
-      goalZone.add(goal); //these need to be danger zone instead of goal zone
+      // Use maroon rectangles if the texture does not exist
+      for (let j = 0; j < imageWidth * 4; j += imageWidth) {
+        objective = this.add.rectangle(x, laneWidth / 2, imageWidth, imageHeight, 0x00ff00) // Maroon color in hex
+          .setDepth(0);
+        this.physics.add.existing(objective, true);
+        objectiveZone.add(objective);
+        x += imageWidth * 2; // Space out each objective
+        this.advanceNumber++;
+      }
     }
-    // END GOAL ZONE LOGIC
+    //END OBJECTIVE PLACEMENT
+
 
     // SAFE ZONE LOGIC
     if (this.textures.exists(safeZoneTexture)) {
       // Top Bottom safe zone
       for (let j = 0; j < this.width; j += imageWidth) {
-        const img = this.add
-          .image(j + imageWidth / 2, this.height - this.safeZoneSize / 2, safeZoneTexture)
-          .setDisplaySize(imageWidth, this.safeZoneSize)
-          .setDepth(-1);
+        const img = this.add.image(j + imageWidth / 2, this.height - this.safeZoneSize / 2, safeZoneTexture).setDisplaySize(imageWidth, this.safeZoneSize).setDepth(-1);
         this.physics.add.existing(img, true); // Add physics to each image
         safeZone.add(img); // Add to safeZone group
       }
       for (let j = 0; j < this.width; j += imageWidth) {
-        const img = this.add
-          .image(j + imageWidth / 2, roadEnd - this.safeZoneSize / 2, safeZoneTexture)
-          .setDisplaySize(imageWidth, this.safeZoneSize)
-          .setDepth(-1);
+        const img = this.add.image(j + imageWidth / 2, roadEnd - this.safeZoneSize / 2, safeZoneTexture).setDisplaySize(imageWidth, this.safeZoneSize).setDepth(-1);
         this.physics.add.existing(img, true); // Add physics to each image
         safeZone.add(img); // Add to safeZone group
       }
     } else {
       // Bottom safe zone rectangle fallback
-      const bottomRect = this.add.rectangle(this.width / 2, this.height - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).setDepth(-1);
-      this.physics.add.existing(bottomRect, true);
-      safeZone.add(bottomRect);
-      // Top safe zone rectangle fallback near `roadEnd`
-      const topRect = this.add.rectangle(this.width / 2, roadEnd - this.safeZoneSize / 2, this.width, this.safeZoneSize, 0x9400f9).setDepth(-1);
-      this.physics.add.existing(topRect, true);
-      safeZone.add(topRect);
+      for (let j = 0; j < this.width; j += imageWidth) {
+        const rectBottom = this.add.rectangle(j + imageWidth / 2, this.height - this.safeZoneSize / 2, imageWidth, this.safeZoneSize, 0x9400f9)
+          .setDepth(-1);
+        this.physics.add.existing(rectBottom, true);
+        safeZone.add(rectBottom);
+    
+        const rectTop = this.add.rectangle(j + imageWidth / 2, roadEnd - this.safeZoneSize / 2, imageWidth, this.safeZoneSize, 0x9400f9)
+          .setDepth(-1);
+        this.physics.add.existing(rectTop, true);
+        safeZone.add(rectTop);
+      }
     }
     // END SAFE ZONE LOGIC
 
@@ -197,20 +229,21 @@ export class Game extends Scene {
         const waterY = roadEnd - (laneWidth + laneWidth / 2) - laneWidth * i; // Adjust y-coordinate per lane
         //console.log("waterY " + i + " " + waterY)
         for (let j = 0; j < this.width; j += imageWidth) {
-          waterZoneTexture = this.add
-            .image(j + imageWidth / 2, waterY, zoneType)
-            .setDisplaySize(imageWidth, imageHeight)
-            .setDepth(-2);
+          waterZoneTexture = this.add.image(j + imageWidth / 2, waterY, zoneType).setDisplaySize(imageWidth, imageHeight).setDepth(-2);
           this.physics.add.existing(waterZoneTexture, true);
           waterZone.add(waterZoneTexture);
         }
       }
     } else {
-      waterZoneTexture = this.add
-        .rectangle(this.width / 2, roadEnd + this.safeZoneSize - roadWidth * this.numberOfRoads + roadWidth / 2, this.width, this.moveDistance * this.numberOfRoads, 0x1a31ac)
-        .setDepth(-2);
-      this.physics.add.existing(waterZoneTexture, true);
-      waterZone.add(waterZoneTexture);
+      for (let i = 0; i < this.numberOfLanes; i++) {
+        const waterY = roadEnd - (laneWidth + laneWidth / 2) - laneWidth * i;
+        for (let j = 0; j < this.width; j += imageWidth) {
+          const rect = this.add.rectangle(j + imageWidth / 2, waterY, imageWidth, imageHeight, 0x1a31ac)
+            .setDepth(-2);
+          this.physics.add.existing(rect, true);
+          waterZone.add(rect);
+        }
+      }
     }
     // END WATER ZONE LOGIC
 
@@ -219,27 +252,15 @@ export class Game extends Scene {
       for (let i = 0; i < this.numberOfLanes; i++) {
         const roadY = this.height - this.safeZoneSize - laneWidth / 2 - laneWidth * i;
         for (let j = 0; j < this.width; j += imageWidth) {
-          this.add
-            .image(j + imageWidth / 2, roadY, roadZoneTexture)
-            .setDisplaySize(imageWidth, roadWidth)
-            .setDepth(-1);
+          this.add.image(j + imageWidth / 2, roadY, roadZoneTexture).setDisplaySize(imageWidth, roadWidth).setDepth(-1);
         }
       }
     } else {
       this.add.rectangle(this.width / 2, 2, this.width, roadWidth, 0x000000).setDepth(-2);
     }
     // END ROAD ZONE LOGIC
-
     // Overlap detection for safe zone
-    this.physics.add.overlap(
-      this.shermie,
-      safeZone,
-      () => {
-        this.shermie.setVelocity(0, 0);
-      },
-      null,
-      this
-    );
+    this.physics.add.overlap(this.shermie,safeZone,() => {this.shermie.setVelocity(0, 0);},null,this);
 
     // Create physics groups for vehicles and logs
     this.vehicles = this.physics.add.group();
@@ -249,21 +270,35 @@ export class Game extends Scene {
     createVehicles(this, roadStart, roadWidth, this.cars, this.carsForward, this.carSpacing);
     createLogs(this, laneStart, laneWidth, this.logTexture, this.logSpacing);
 
-    // Define overlap logic for goal, vehicles, and logs
-    this.physics.add.overlap(this.shermie, goalZone, this.winCollision, null, this);
+    //TODO - Create turtles
+    this.physics.add.overlap(this.shermie, objectiveZone, (shermie, objective) => {
+      // Check if there’s already a killerShermie at this position
+      if (!this.physics.overlap(shermie, filledGoals)) {
+        this.goalCollision(objective); // Proceed with the goal logic
+        setTimeout(() => {
+          const killerShermie = this.add.image(objective.x, objective.y, "shermie");
+          this.physics.add.existing(killerShermie, true);
+          filledGoals.add(killerShermie); // Add to filledGoals
+        }, 1);
+      } else {
+        this.loseLife(); // Call loseLife if already colliding with a filled goal
+      }
+    }, null, this);
+    
     this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
-    this.physics.add.overlap(
-      this.shermie,
-      waterZone,
-      () => {
-        if (!this.physics.overlap(this.shermie, this.logs) && !this.physics.overlap(this.shermie, goalZone)) {
+    this.physics.add.overlap(this.shermie,waterZone,() => {
+        if (!this.physics.overlap(this.shermie, this.logs) && !this.physics.overlap(this.shermie, objectiveZone)) {
           this.loseLife();
         }
-      },
-      null,
-      this
+      }, null,this
     );
     this.physics.add.overlap(this.shermie, this.logs, this.rideLog, null, this);
+    this.physics.add.overlap(this.shermie, endZone, () => {
+      if (!this.physics.overlap(this.shermie, objectiveZone)) {
+        this.loseLife();
+      }
+    }, null, this);
+    this.physics.add.overlap(this.shermie, filledGoals, this.loseLife, null, this);
 
     // Display timer and lives on screen
     this.timerText = this.add.text(16, 32, `Time: ${this.timeRemaining}`, { fontSize: "32px", fill: "#ffffff" });
@@ -278,7 +313,7 @@ export class Game extends Scene {
   update() {
     // Only update if the game is playing (not paused)
     if (this.paused) return;
-
+    
     if (this.canMove) {
       // Only move if the player can move
       if (this.cursors.left.isDown && this.shermie.x > 0) {
@@ -359,6 +394,7 @@ export class Game extends Scene {
     return log;
   }
 
+
   loseLife() {
     // return if invinsible
     if (this.isInvincible) {
@@ -376,8 +412,8 @@ export class Game extends Scene {
     });
   }
 
-  winCollision() {
-    this.gameLogic.win();
+  goalCollision() {
+    this.gameLogic.goal();
   }
 
   updateTimer() {
@@ -402,4 +438,13 @@ export class Game extends Scene {
       this.timer.pause();
     }
   }
+  
+  getAdvanceNumber(){//Get number of goals for level transition
+    return this.advanceNumber;
+  }
+  
+  getNumberOfLevels(){
+    return levels.length;
+  }
+
 }
