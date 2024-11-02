@@ -266,7 +266,7 @@ export class Game extends Scene {
 
     
     // Overlap detection for safe zone
-    this.physics.add.overlap(this.shermie,safeZone,() => {this.shermie.setVelocity(0, 0);this.isInvincible=false;},null,this);
+    this.physics.add.overlap(this.shermie,safeZone,() => {this.shermie.setVelocity(0, 0);this.isInvincible=false;this.isAnimating=false;},null,this);
 
     // Create physics groups for vehicles and logs
     this.vehicles = this.physics.add.group();
@@ -292,17 +292,22 @@ export class Game extends Scene {
     }, null, this);
     
     this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
-    this.physics.add.overlap(this.shermie,waterZone,() => {
-        if (!this.physics.overlap(this.shermie, this.logs) && !this.physics.overlap(this.shermie, objectiveZone)) {
+    this.physics.add.overlap(this.shermie, waterZone, () => {
+      if (!this.isInvincible && !this.isAnimating && !this.physics.overlap(this.shermie, this.logs)) {
+        if (!this.inWater) { // inWater flag to prevent repeated triggers
+          this.inWater = true;
+          this.shermie.setVelocity(0, 0);
+          this.loseLife();
+          this.time.delayedCall(1000, () => { this.inWater = false; }); // Reset after delay
+        }
+      }
+    }, null, this
+  );
+    this.physics.add.overlap(this.shermie, this.logs, this.rideLog, null, this);
+    this.physics.add.overlap(this.shermie, endZone,() => {this.shermie.setVelocity(0,0);
+        if (!this.physics.overlap(this.shermie, objectiveZone)) {
           this.loseLife();
         }
-      }, null,this
-    );
-    this.physics.add.overlap(this.shermie, this.logs, this.rideLog, null, this);
-    this.physics.add.overlap(this.shermie, endZone, () => {
-      if (!this.physics.overlap(this.shermie, objectiveZone)) {
-        this.loseLife();
-      }
     }, null, this);
     this.physics.add.overlap(this.shermie, filledGoals, this.loseLife, null, this);
 
@@ -423,17 +428,13 @@ export class Game extends Scene {
 
 loseLife() {
     // Return if already invincible
-    if (this.isInvincible) {
+    if (this.isInvincible || this.isAnimating) {
         return;
     }
     this.isAnimating = true;
-    console.log("Triggering death animation")
-    // Set invincibility to prevent further loss
     this.isInvincible = true;
-
     // Trigger the death animation
     this.shermie.anims.play('shermieDeath');
-
     // Wait for the animation to complete before performing reset actions
     this.shermie.once('animationcomplete-shermieDeath', () => {
         this.shermie.setTexture(this.defaultTexture);

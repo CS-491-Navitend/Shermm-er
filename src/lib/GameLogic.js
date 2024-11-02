@@ -39,7 +39,9 @@ export class GameLogic {
   }
 
   resetPlayer() {
+    
     this.isInvincible = false;
+    this.isAnimating = false;
     // console.log("Resetting player");
     this.game.shermie.setVelocity(0, 0);
     this.game.resetCount++;
