@@ -60,6 +60,7 @@ export class Game extends Scene {
     //to prevent multiple lives lost at once
     this.isInvincible = false;
     this.invincibilityDuration = 500;
+    this.isAnimating = false;
 
     this.advanceNumber = 0;
   }
@@ -94,6 +95,7 @@ export class Game extends Scene {
     this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, "shermie");
     this.shermie.setSize(50, 50, true); // Set hitbox size
     this.shermie.setScale(1); // Scale player sprite
+    this.shermie.setDepth(10); // Scale player sprite
     this.shermie.setCollideWorldBounds(true);
 
     // Capture user input for movement
@@ -310,6 +312,23 @@ export class Game extends Scene {
     document.getElementById("time").innerText = `Time: ${this.timeRemaining}`;
     
     this.timer.start();
+
+    // Create the death animation sequence
+    this.defaultTexture = 'shermie';
+
+    this.anims.create({
+        key: 'shermieDeath', // Name of the animation
+        frames: [
+            { key: 'death1' },
+            { key: 'death2' },
+            { key: 'death3' },
+            { key: 'death4' }
+        ],
+        frameRate: 6,//speed of animation
+        repeat: 0, // no repeat
+        // hideOnComplete: true // Hide the sprite after animation completes
+    });
+
   }
 
   update() {
@@ -321,7 +340,7 @@ export class Game extends Scene {
     // document.getElementById("time").innerText = `Time: ${this.timeRemaining}`;
    // document.getElementById("lives").innerText = `Lives: ${this.lives}`;
 
-    if (this.canMove) {
+    if (this.canMove && !this.isAnimating) {
       // Only move if the player can move
       if (this.cursors.left.isDown && this.shermie.x > 0) {
         // move left if left arrow is pressed and not out of bounds
@@ -402,17 +421,26 @@ export class Game extends Scene {
   }
 
 
-  loseLife() {
-    // return if invinsible
+loseLife() {
+    // Return if already invincible
     if (this.isInvincible) {
-      // console.log("Shermie is invincible");
-      return;
+        return;
     }
-
-    // Only Lose if if false, and return invincible
+    this.isAnimating = true;
+    console.log("Triggering death animation")
+    // Set invincibility to prevent further loss
     this.isInvincible = true;
-    this.gameLogic.loseLife();
-  }
+
+    // Trigger the death animation
+    this.shermie.anims.play('shermieDeath');
+
+    // Wait for the animation to complete before performing reset actions
+    this.shermie.once('animationcomplete-shermieDeath', () => {
+        this.shermie.setTexture(this.defaultTexture);
+        this.gameLogic.loseLife(); 
+    });
+}
+
 
   goalCollision() {
     this.gameLogic.goal();

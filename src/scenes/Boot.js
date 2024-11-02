@@ -37,7 +37,10 @@ import tractorforward from "/assets/vehicleForward/tractorForward.png";
 // Import generic assets
 import shermie from "/assets/shermie.png";
 import life from "/assets/heart.png";
-
+import death1 from "/assets/death1.png";
+import death2 from "/assets/death2.png";
+import death3 from "/assets/death3.png";
+import death4 from "/assets/death4.png";
 //Import Water assets
 import ShortLog from "/assets/WaterLevel/ShortLog.png";
 import LongLog from "/assets/WaterLevel/LongLog.png";
@@ -78,6 +81,12 @@ export class Boot extends Scene {
     this.load.image("shermie", shermie);
     this.load.image("life", life);
 
+    this.load.image("lavaLog", lavaLog)
+    this.load.image("death1", death1)
+    this.load.image("death2", death2)
+    this.load.image("death3", death3)
+    this.load.image("death4", death4)
+
     // Load textures for background
     this.load.image("lavaSafeZone", lavaSafeZone);
     this.load.image("lava", lava);
@@ -89,7 +98,7 @@ export class Boot extends Scene {
     this.load.image("lavaCar2", LavaCar2)
     this.load.image("lavaTruck", LavaTractor)
     //this.load.image("waterRoad", waterRoad);
-    this.load.image("lavaLog", lavaLog)
+
   }
 
   create() {
