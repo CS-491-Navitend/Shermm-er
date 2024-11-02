@@ -41,10 +41,15 @@ import death1 from "/assets/death1.png";
 import death2 from "/assets/death2.png";
 import death3 from "/assets/death3.png";
 import death4 from "/assets/death4.png";
+
 //Import Water assets
+import waterSafeZone from "/assets/WaterLevel/waterSafeZone.png"
+import water from "/assets/WaterLevel/water.png";
+import waterGoal from "/assets/WaterLevel/waterGoal.png";
 import ShortLog from "/assets/WaterLevel/ShortLog.png";
 import LongLog from "/assets/WaterLevel/LongLog.png";
 import turtle from "/assets/WaterLevel/turtle.png";
+import waterObjective from "/assets/WaterLevel/waterObjective.png";
 import turtleforward from "/assets/WaterLevel/turtleforward.png";
 
 // Import Lava assets
@@ -87,7 +92,13 @@ export class Boot extends Scene {
     this.load.image("death3", death3)
     this.load.image("death4", death4)
 
-    // Load textures for background
+    //water Assets
+    this.load.image("waterSafeZone", waterSafeZone);
+    this.load.image("water", water);
+    this.load.image("waterGoal", waterGoal);
+    this.load.image("waterObjective", waterObjective)
+
+    // Lava Assets
     this.load.image("lavaSafeZone", lavaSafeZone);
     this.load.image("lava", lava);
     this.load.image("lavaGoal", lavaGoal);
