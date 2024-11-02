@@ -1,47 +1,59 @@
 export class Timer {
   constructor(game) {
     this.game = game;
-    this.timer = null;
     this.isPaused = false;
+    this.timeRemaining = 0;
+    this.timerEvent = null;
   }
 
-  updateTimer() {
-    this.game.timeRemaining -= 1;
-    if (this.game.timeRemaining <= 0) {
+  update() {
+    if (this.isPaused) {
+      console.log("Timer is paused. Skipping update.");
+      return;
+    }
+
+    console.log("Updating Timer.."); // for debugging
+
+    this.timeRemaining -= 1;
+
+    if (this.timeRemaining <= 0) {
+      this.stop();
       this.game.gameLogic.gameOver();
     }
-    this.game.timerText.setText(`Time: ${this.game.timeRemaining}`);
+
+    if (this.game.timerText) {
+      this.game.timerText.setText(`Time: ${this.timeRemaining}`); // Update the timer text on the screen
+    }
   }
 
+  start() {
+    this.stop();
+    this.timeRemaining = this.game.timeRemaining;
 
-  startTimer() {
+    this.timerEvent = this.game.time.addEvent({
+      delay: 1000, // 1 second
+      callback: this.update.bind(this), // Update the timer
+      loop: true, // Loop indefinitely
+    });
+  }
 
-    this.stop(); 
-    this.timer = setInterval(() => {
-      if (this.isPaused|| this.game.timeRemaining <= 0 || !this.game.playing) {
-        // stop timer
-        clearInterval(this.timer);
-        return;
-      }
+  pause() {
+    this.isPaused = true;
+  }
 
-      if (this.game.playing) {
-        this.updateTimer();
-      }
-    }, 1000);
+  resume() {
+    if (this.isPaused) {
+      this.isPaused = false; // Reset the paused state
     }
-   pause() {
-        this.isPaused = true;
+    // else do nothing (the timer is already running)
+  }
+  stop() {
+    if (this.timerEvent) {
+      this.timerEvent.remove(); // Remove the timer event
+      this.timerEvent = null; // Clear the reference
     }
-
-    resume() {
-        this.isPaused = false;
-        this.startTimer();
-    }
-    stop() {
-      this.isPaused = false;  
-      clearInterval(this.timer);
-      this.timer = null;
-    }
+    this.isPaused = false;
+  }
 }
 
 export default Timer;

@@ -1,63 +1,42 @@
-export function createVehicles(scene, roadStart, roadWidth, cars, carsforward, carSpacing) {
+export function createVehicles(scene, roadStart, roadWidth, cars, carsForward, spacing) {
+  // Iterate over each road
   for (let road = 0; road < scene.numberOfRoads; road++) {
-    let randomSpeed = Phaser.Math.Between(100, 300) * scene.carSpeedMultiplier;
+    // Determine vehicle speed, alternating direction based on road index
+    const speed = Phaser.Math.Between(100, 300) * scene.carSpeedMultiplier * (road % 2 === 0 ? 1 : -1);
 
-    if (road % 2 === 0) {
-      randomSpeed = randomSpeed * -1;
-    }
+    let lastVehicleX = 0;
 
-    let lastVehicle = null;  // Track last vehicle for this specific road
-
+    // Spawn vehicles on the current road
     for (let i = 0; i < scene.numberOfCars; i++) {
-      const carArray = randomSpeed > 0 ? carsforward : cars;
-      const randomCar = carArray[Math.floor(Math.random() * carArray.length)];
-      const randomSpacing = carSpacing[Math.floor(Math.random() * carSpacing.length)];
+      // Choose a car based on speed direction
+      const car = (speed > 0 ? carsForward : cars)[Math.floor(Math.random() * (speed > 0 ? carsForward.length : cars.length))];
+      // Select a random spacing between vehicles
+      const spacingIndex = Math.floor(Math.random() * spacing.length);
+      lastVehicleX += spacing[spacingIndex];
 
-      let newVehicleX = randomSpacing + i * randomSpacing;
-
-      if (lastVehicle) {
-        if (randomSpeed > 0) {
-          newVehicleX = lastVehicle.x + lastVehicle.width + randomSpacing;
-        } else {
-          newVehicleX = lastVehicle.x - randomSpacing - lastVehicle.width;
-        }
-      }
-
-      let vehicle = scene.spawnVehicle(newVehicleX, roadStart - roadWidth * road - roadWidth / 2, randomCar, randomSpeed);
-
-      lastVehicle = vehicle;
+      // Spawn the vehicle at the calculated position
+      scene.spawnVehicle(lastVehicleX, roadStart - roadWidth * road - roadWidth / 2, car, speed);
     }
   }
 }
 
-export function createLogs(scene, laneStart, laneWidth, logs, logSpacing) {
-  for (let lane = 0; lane < scene.numberOfLanes; lane++) {
-    let randomSpeed = Phaser.Math.Between(100, 300) * scene.logSpeedMultiplier;
-    
-    if (lane % 2 === 0) {
-      randomSpeed = randomSpeed * -1;  // Reverse direction for even-numbered lanes
-    }
-    let lastLog = null;
+export function createLogs(scene, laneStart, laneWidth, logTextures, spacingOptions) {
+  // Iterate over each water lane
+  for (let laneIndex = 0; laneIndex < scene.numberOfLanes; laneIndex++) {
+    // Determine log speed, alternating direction based on lane index
+    const speed = Phaser.Math.Between(100, 300) * scene.logSpeedMultiplier * (laneIndex % 2 === 0 ? 1 : -1);
+    let currentX = 0;
 
-    for (let i = 0; i < scene.numberOfLogs; i++) {
-      const randomLog = logs[Math.floor(Math.random() * logs.length)];
-      const randomSpacing = logSpacing[Math.floor(Math.random() * logSpacing.length)];
+    // Spawn logs on the current lane
+    for (let logIndex = 0; logIndex < scene.numberOfLogs; logIndex++) {
+      // Choose a random log texture
+      const texture = logTextures[Math.floor(Math.random() * logTextures.length)];
+      // Select a random spacing between logs
+      const spacing = spacingOptions[Math.floor(Math.random() * spacingOptions.length)];
+      currentX += spacing;
 
-      //nolastlog uses default
-      let newLogX = randomSpacing + i * randomSpacing;
-
-      if (lastLog) {
-        if (randomSpeed > 0) {
-          // left to right after last log
-          newLogX = lastLog.x + lastLog.width + randomSpacing;
-        } else {
-          // right to left after lastlog
-          newLogX = lastLog.x - randomSpacing - lastLog.width;
-        }
-      }
-      // Spawn the new log
-      let log = scene.spawnLog(newLogX, laneStart - laneWidth * lane - laneWidth / 2, randomLog, randomSpeed);
-      lastLog = log;
+      // Spawn the log at the calculated position
+      scene.spawnLog(currentX, laneStart - laneWidth * laneIndex - laneWidth / 2, texture, speed);
     }
   }
 }
