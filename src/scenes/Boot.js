@@ -53,6 +53,7 @@ import turtleforward from "/assets/WaterLevel/turtleforward.png";
 import iceSafeZone from "/assets/IceLevel/IceSafeZone.png";
 import ice from "/assets/IceLevel/ice.png";
 import iceGoal from "/assets/IceLevel/iceGoal.png";
+import iceObjective from "/assets/IceLevel/iceObjective.png";
 import iceRoad from "/assets/IceLevel/iceRoad.png";
 import iceLog from "/assets/IceLevel/iceLog.png";
 import iceberg from "/assets/IceLevel/iceberg.png";
@@ -112,6 +113,7 @@ export class Boot extends Scene {
     this.load.image("iceSafeZone", iceSafeZone);
     this.load.image("ice", ice);
     this.load.image("iceGoal", iceGoal);
+    this.load.image("iceObjective", iceObjective)
     this.load.image("iceRoad", iceRoad);
     this.load.image("iceLog", iceLog);
     this.load.image("iceCar1", iceCar1);
