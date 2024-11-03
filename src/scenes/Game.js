@@ -47,7 +47,7 @@ export class Game extends Scene {
     this.timeRemaining = this.timerDuration;
     this.numberOfCars = 0;
     this.numberOfLogs = 0;
-    this.numberOfFrogs = 0;
+    this.numberOfTurtles = 0;
     this.carSpeedMultiplier = 1;
     this.logSpeedMultiplier = 1;
     this.frogSinkMultiplier = 1;
@@ -81,13 +81,15 @@ export class Game extends Scene {
 
     // Object and spacing properties for vehicles and logs
     this.numberOfCars = levels[data["level"]]["number_of_cars"];
-    this.numberOfLogs = levels[data["level"]]["number_of_logs"];
-    this.logTexture = levels[data["level"]]["log_texture"];
-    this.numberOfTurtles = levels[data["level"]]["number_of_turtles"];
-    this.logSpacing = levels[data["level"]]["log_spacing"];
     this.cars = levels[data["level"]]["car_texture"];
     this.carsForward = levels[data["level"]]["cars_Forward_texture"];
     this.carSpacing = levels[data["level"]]["car_spacing"];
+    this.numberOfLogs = levels[data["level"]]["number_of_logs"];
+    this.logTexture = levels[data["level"]]["log_texture"];
+    this.logSpacing = levels[data["level"]]["log_spacing"];
+    this.numberOfTurtles = levels[data["level"]]["number_of_turtles"];
+    this.turtleTexture = levels[data["level"]]["turtle_texture"];
+    this.turtleTextureForward = levels[data["level"]]["turtle_Forward_texture"];
 
     this.updateLives(); //display lives in the html bar
 
@@ -271,10 +273,13 @@ export class Game extends Scene {
     // Create physics groups for vehicles and logs
     this.vehicles = this.physics.add.group();
     this.logs = this.physics.add.group();
+    this.turtles = this.physics.add.group();
 
-    // Spawn vehicles and logs based on configuration
+    // Spawn environmental objects based on configuration
     createVehicles(this, roadStart, roadWidth, this.cars, this.carsForward, this.carSpacing);
     createLogs(this, laneStart, laneWidth, this.logTexture, this.logSpacing);
+    createTurtles(this, laneStart, laneWidth, this.turtleTexture, this.turtleTextureForward, this.turtleSpacing);
+    
 
     //TODO - Create turtles
     this.physics.add.overlap(this.shermie, objectiveZone, (shermie, objective) => {
@@ -304,6 +309,7 @@ export class Game extends Scene {
     }, null, this
   );
     this.physics.add.overlap(this.shermie, this.logs, this.rideLog, null, this);
+    this.physics.add.overlap(this.shermie, this.turtles, this.rideTurtle, null, this);
     this.physics.add.overlap(this.shermie, endZone,() => {this.shermie.setVelocity(0,0);
         if (!this.physics.overlap(this.shermie, objectiveZone)) {
           this.loseLife();
@@ -333,7 +339,15 @@ export class Game extends Scene {
         repeat: 0, // no repeat
         // hideOnComplete: true // Hide the sprite after animation completes
     });
-
+    
+    /*this.anims.create({//TODO - Create turtle sink animation
+      key: 'turtleSink',
+      frames: [
+        
+      ],
+      frameRate: 6,
+      repeat : 0
+    })*/
   }
 
   update() {
@@ -393,6 +407,18 @@ export class Game extends Scene {
         log.x = -log.width / 2;
       }
     });
+
+    // Move turtles off the screen and reset their position
+    this.turtles.getChildren().forEach((turtle) => {
+      const isOffScreenLeft = turtle.x < -turtle.width / 2;
+      const isOffScreenRight = turtle.x > this.width + turtle.width / 2;
+
+      if(isOffScreenLeft){
+        turtle.x = this.width + turtle.width / 2;
+      }else if(isOffScreenRight){
+        turtle.x = -turtle.width / 2;
+      }
+    })
   }
   //Create a vehicle
   spawnVehicle(x, y, texture, speed) {
@@ -408,10 +434,21 @@ export class Game extends Scene {
     let log = this.logs.create(x, y, texture);
     log.body.setVelocityX(speed);
     log.body.allowGravity = false;
-    log.body.immovalbe = true;
+    log.body.immovable = true;
     log.body.setSize(log.width, 50);
     log.setDepth(-1);
     return log;
+  }
+
+  //Create a turtle
+  spawnTurtle(x, y, texture, speed){
+    let turtle = this.turtles.create(x, y, texture);
+    turtle.body.setVelocityX(speed);
+    turtle.body.allowGravity = false;
+    turtle.immovable = true;
+    turtle.body.setSize(turtle.width, 50);
+    turtle.setDepth(-1);
+    return turtle;
   }
 
 
@@ -445,6 +482,14 @@ loseLife() {
       shermie.setVelocityX(log.body.velocity.x);
     }else{
       return
+    }
+  }
+
+  rideTurtle(shermie, turtle){
+    if(!this.inWater){
+      shermie.setVelocityX(turtle.body.velocity.x);
+    }else{
+      return;
     }
   }
 

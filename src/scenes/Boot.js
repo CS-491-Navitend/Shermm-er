@@ -46,8 +46,8 @@ import waterGoal from "/assets/WaterLevel/waterGoal.png";
 import ShortLog from "/assets/WaterLevel/ShortLog.png";
 import LongLog from "/assets/WaterLevel/LongLog.png";
 import turtle from "/assets/WaterLevel/turtle.png";
-import waterObjective from "/assets/WaterLevel/waterObjective.png";
 import turtleforward from "/assets/WaterLevel/turtleforward.png";
+import waterObjective from "/assets/WaterLevel/waterObjective.png";
 
 //Import Ice assets
 import iceSafeZone from "/assets/IceLevel/IceSafeZone.png";
