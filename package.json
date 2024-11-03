@@ -16,7 +16,6 @@
         "vite": "^5.4.8"
     },
     "dependencies": {
-        "fontfaceobserver": "^2.3.0",
         "phaser": "^3.85.2",
         "webfonts-loader": "^8.0.1"
     }
