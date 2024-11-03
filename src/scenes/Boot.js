@@ -15,9 +15,6 @@ import car11 from "/assets/vehiclesBackward/car11.png";
 import car12 from "/assets/vehiclesBackward/car12.png";
 import car13 from "/assets/vehiclesBackward/car13.png";
 import tractor from "/assets/vehiclesBackward/tractor.png";
-import LavaTractor from "/assets/LavaLevel/LavaTruck.png";
-import LavaCar1 from "/assets/LavaLevel/LavaCar.png";
-import LavaCar2 from "/assets/LavaLevel/LavaCar2.png";
 
 import car1forward from "/assets/vehicleForward/car1forward.png";
 import car2forward from "/assets/vehicleForward/car2forward.png";
@@ -43,7 +40,7 @@ import death3 from "/assets/death3.png";
 import death4 from "/assets/death4.png";
 
 //Import Water assets
-import waterSafeZone from "/assets/WaterLevel/waterSafeZone.png"
+import waterSafeZone from "/assets/WaterLevel/waterSafeZone.png";
 import water from "/assets/WaterLevel/water.png";
 import waterGoal from "/assets/WaterLevel/waterGoal.png";
 import ShortLog from "/assets/WaterLevel/ShortLog.png";
@@ -51,6 +48,16 @@ import LongLog from "/assets/WaterLevel/LongLog.png";
 import turtle from "/assets/WaterLevel/turtle.png";
 import waterObjective from "/assets/WaterLevel/waterObjective.png";
 import turtleforward from "/assets/WaterLevel/turtleforward.png";
+
+//Import Ice assets
+import iceSafeZone from "/assets/IceLevel/IceSafeZone.png";
+import ice from "/assets/IceLevel/ice.png";
+import iceGoal from "/assets/IceLevel/iceGoal.png";
+import iceRoad from "/assets/IceLevel/iceRoad.png";
+import iceLog from "/assets/IceLevel/iceLog.png";
+import iceberg from "/assets/IceLevel/iceberg.png";
+import iceCar1 from "/assets/IceLevel/iceCar1.png";
+import iceTractor from "/assets/IceLevel/iceTruck.png";
 
 // Import Lava assets
 import lavaSafeZone from "/assets/LavaLevel/LavaSafeZone.png";
@@ -60,6 +67,9 @@ import lavaObjective from "/assets/LavaLevel/LavaObjective.png";
 import rock from "/assets/LavaLevel/Rock.png";
 import lavaLog from "/assets/LavaLevel/LavaLog1.png";
 import lavaRoad from "/assets/LavaLevel/LavaRoad.png";
+import LavaTractor from "/assets/LavaLevel/LavaTruck.png";
+import LavaCar1 from "/assets/LavaLevel/LavaCar.png";
+import LavaCar2 from "/assets/LavaLevel/LavaCar2.png";
 
 
 
@@ -97,6 +107,17 @@ export class Boot extends Scene {
     this.load.image("water", water);
     this.load.image("waterGoal", waterGoal);
     this.load.image("waterObjective", waterObjective)
+
+    //ice Assets
+    this.load.image("iceSafeZone", iceSafeZone);
+    this.load.image("ice", ice);
+    this.load.image("iceGoal", iceGoal);
+    this.load.image("iceRoad", iceRoad);
+    this.load.image("iceLog", iceLog);
+    this.load.image("iceCar1", iceCar1);
+    this.load.image("iceTruck", iceTractor);
+    this.load.image("iceberg", iceberg);
+
 
     // Lava Assets
     this.load.image("lavaSafeZone", lavaSafeZone);

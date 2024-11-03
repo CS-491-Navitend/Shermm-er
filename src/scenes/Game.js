@@ -345,7 +345,7 @@ export class Game extends Scene {
     // document.getElementById("time").innerText = `Time: ${this.timeRemaining}`;
    // document.getElementById("lives").innerText = `Lives: ${this.lives}`;
 
-    if (this.canMove && !this.isAnimating) {
+    if (this.canMove && !this.isAnimating && !this.inWater) {
       // Only move if the player can move
       if (this.cursors.left.isDown && this.shermie.x > 0) {
         // move left if left arrow is pressed and not out of bounds
@@ -441,7 +441,11 @@ loseLife() {
   }
 
   rideLog(shermie, log) {
-    shermie.setVelocityX(log.body.velocity.x);
+    if(!this.inWater){
+      shermie.setVelocityX(log.body.velocity.x);
+    }else{
+      return
+    }
   }
 
   togglePause() {

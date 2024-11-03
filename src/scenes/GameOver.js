@@ -21,6 +21,8 @@ export class GameOver extends Scene {
     this.add.text(x, y + 150, "Press R to restart", { fontSize: "32px", fill: "#fff" }).setOrigin(0.5);
 
     this.input.keyboard.once("keydown-R", () => {
+      console.log(game.inWater)
+      game.inWater=false
       this.scene.start("Game", { level: game.level });
     });
     

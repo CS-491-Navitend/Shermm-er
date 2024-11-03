@@ -54,14 +54,14 @@
     {
       "time": 120,
 
-      "car_texture": [],
-      "cars_Forward_texture":  [],
+      "car_texture": ["iceCar1"],
+      "cars_Forward_texture":  ["iceTruck"],
       "car_spacing": [250, 350, 100],
       "car_speed_multiplier": 1,
       "number_of_cars": 1,
 
       "water_zone_type": "ice",
-      "log_texture": [""],
+      "log_texture": ["iceLog","iceberg"],
       "log_spacing": [250, 350, 400],
 
       "log_speed_multiplier": 1,
