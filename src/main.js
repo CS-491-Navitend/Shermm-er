@@ -18,7 +18,7 @@ const config = {
   physics: {
     default: "arcade",
     arcade: {
-      debug: false, //handy to show collision
+      debug: true, //handy to show collision
     },
   },
   scale: {

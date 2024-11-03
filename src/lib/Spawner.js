@@ -54,8 +54,7 @@ export function createTurtles(scene, laneStart, laneWidth, turtleTextures, turtl
       currentX += spacing;
       console.log(spacing);
 
-      //Spawn the turtles at the calculated position using the pre-assigned texture
-      scene.spawnTurtle(currentX, laneStart - laneWidth * laneIndex - laneWidth / 2, turtleTexture, speed);//TEMP TAKEN OUT - FIX WHEN TURTLE ASSETS ARE FULLY IMPLEMNTED
+      scene.spawnTurtle(currentX, laneStart - laneWidth * laneIndex - laneWidth / 2, turtleTexture, speed);
     }
   }
 }

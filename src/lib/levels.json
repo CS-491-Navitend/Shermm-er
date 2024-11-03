@@ -17,8 +17,8 @@
       "log_speed_multiplier": 1,
       "number_of_logs": 2,
 
-      "turtle_texture": ["turtle"],
-      "turtles_Forward_texture": ["turtleforward"],
+      "turtle_texture": ["turtleShort, turtleLong"],
+      "turtles_Forward_texture": ["turtleShortForward, turtleLongForward"],
       "turtle_spacing": [250, 350, 400],
       "turtle_speed_multiplier": 1,
       "turtle_sink_multiplier": 1,

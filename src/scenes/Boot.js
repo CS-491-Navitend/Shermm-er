@@ -49,12 +49,12 @@ import turtle from "/assets/WaterLevel/turtle.png";
 import turtleforward from "/assets/WaterLevel/turtleforward.png";
 import turtleShort from "/assets/WaterLevel/turtlesShort.png";
 import turtleLong from "/assets/WaterLevel/turtlesLong.png";
-import turtleShortForward from "asserts/WaterLevel/turtlesShortForward.png";
-import turtleLongForward from "asserts/WaterLevel/turtlesLongForward.png";
-import turtleShortSink1 from "asserts/WaterLevel/turtlesShortSink1.png";
-import turtleLongSink1 from "asserts/WaterLevel/turtlesLongSink1.png";
-import turtleShortSink2 from "asserts/WaterLevel/turtlesShortSink2.png";
-import turtleLongSink2 from "asserts/WaterLevel/turtlesLongSink2.png";
+import turtleShortForward from "/assets/WaterLevel/turtlesShortForward.png";
+import turtleLongForward from "/assets/WaterLevel/turtlesLongForward.png";
+import turtleShortSink1 from "/assets/WaterLevel/turtlesShortSink1.png";
+import turtleLongSink1 from "/assets/WaterLevel/turtlesLongSink1.png";
+import turtleShortSink2 from "/assets/WaterLevel/turtlesShortSink2.png";
+import turtleLongSink2 from "/assets/WaterLevel/turtlesLongSink2.png";
 import waterObjective from "/assets/WaterLevel/waterObjective.png";
 
 //Import Ice assets
