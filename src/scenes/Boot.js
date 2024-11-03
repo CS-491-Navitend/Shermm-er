@@ -72,8 +72,6 @@ import LavaTractor from "/assets/LavaLevel/LavaTruck.png";
 import LavaCar1 from "/assets/LavaLevel/LavaCar.png";
 import LavaCar2 from "/assets/LavaLevel/LavaCar2.png";
 
-
-
 export class Boot extends Scene {
   constructor() {
     super("Boot");
@@ -97,29 +95,28 @@ export class Boot extends Scene {
     this.load.image("shermie", shermie);
     this.load.image("life", life);
 
-    this.load.image("lavaLog", lavaLog)
-    this.load.image("death1", death1)
-    this.load.image("death2", death2)
-    this.load.image("death3", death3)
-    this.load.image("death4", death4)
+    this.load.image("lavaLog", lavaLog);
+    this.load.image("death1", death1);
+    this.load.image("death2", death2);
+    this.load.image("death3", death3);
+    this.load.image("death4", death4);
 
     //water Assets
     this.load.image("waterSafeZone", waterSafeZone);
     this.load.image("water", water);
     this.load.image("waterGoal", waterGoal);
-    this.load.image("waterObjective", waterObjective)
+    this.load.image("waterObjective", waterObjective);
 
     //ice Assets
     this.load.image("iceSafeZone", iceSafeZone);
     this.load.image("ice", ice);
     this.load.image("iceGoal", iceGoal);
-    this.load.image("iceObjective", iceObjective)
+    this.load.image("iceObjective", iceObjective);
     this.load.image("iceRoad", iceRoad);
     this.load.image("iceLog", iceLog);
     this.load.image("iceCar1", iceCar1);
     this.load.image("iceTruck", iceTractor);
     this.load.image("iceberg", iceberg);
-
 
     // Lava Assets
     this.load.image("lavaSafeZone", lavaSafeZone);
@@ -127,20 +124,20 @@ export class Boot extends Scene {
     this.load.image("lavaGoal", lavaGoal);
     this.load.image("rock", rock);
     this.load.image("lavaRoad", lavaRoad);
-    this.load.image("lavaObjective", lavaObjective)
-    this.load.image("lavaCar1", LavaCar1)
-    this.load.image("lavaCar2", LavaCar2)
-    this.load.image("lavaTruck", LavaTractor)
+    this.load.image("lavaObjective", lavaObjective);
+    this.load.image("lavaCar1", LavaCar1);
+    this.load.image("lavaCar2", LavaCar2);
+    this.load.image("lavaTruck", LavaTractor);
     //this.load.image("waterRoad", waterRoad);
 
+    // Audio Assets
+    this.load.audio("hop", "/assets/audio/hop.wav");
   }
 
   create() {
     this.scene.start("MainMenu");
   }
 }
-
-
 
 // import { Scene } from "phaser";
 
@@ -151,7 +148,7 @@ export class Boot extends Scene {
 
 //   preload() {
 //     const totalCars = 13;  // Define how many cars you have (adjust this number based on your assets)
-    
+
 //     for (let i = 1; i <= totalCars; i++) {
 //       this.load.image(`car${i}`, `/assets/vehiclesBackward/car${i}.png`);
 //       this.load.image(`car${i}forward`, `/assets/vehicleForward/car${i}forward.png`);
@@ -160,7 +157,7 @@ export class Boot extends Scene {
 //     // Load other assets (static)
 //     this.load.image("tractor", "/assets/vehiclesBackward/tractor.png");
 //     this.load.image("tractorforward", "/assets/vehicleForward/tractorForward.png");
-    
+
 //     this.load.image("ShortLog", "/assets/ShortLog.png");
 //     this.load.image("LongLog", "/assets/LongLog.png");
 //     this.load.image("turtle", "/assets/turtle.png");
