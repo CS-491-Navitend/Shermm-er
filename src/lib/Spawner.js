@@ -4,7 +4,7 @@ export function createVehicles(scene, roadStart, roadWidth, cars, carsForward, s
     const speed = Phaser.Math.Between(100, 300) * scene.carSpeedMultiplier * (road % 2 === 0 ? 1 : -1);
     let lastVehicleX = 0;
 
-    const vehicleArray = road % 2 === 0 ? cars : carsForward;
+    const vehicleArray = road % 2 === 0 ? carsForward : cars;
     
     const vehicleType = vehicleArray[Math.floor(Math.random() * vehicleArray.length)];
 

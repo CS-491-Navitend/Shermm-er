@@ -393,17 +393,6 @@ export class Game extends Scene {
         log.x = -log.width / 2;
       }
     });
-
-    //This code fixes overlap but creates pop in and pop out.
-    // this.vehicles.getChildren().forEach((vehicle) => {
-    //   if (vehicle.x > this.width) vehicle.x = 0;
-    //   else if (vehicle.x < 0) vehicle.x = this.width;
-    // });
-
-    // this.logs.getChildren().forEach((log) => {
-    //   if (log.x > this.width) log.x = 0;
-    //   else if (log.x < 0) log.x = this.width;
-    // });
   }
   //Create a vehicle
   spawnVehicle(x, y, texture, speed) {
