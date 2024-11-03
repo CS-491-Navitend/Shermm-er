@@ -3,7 +3,7 @@ import { PauseMenu } from "./Menus/PauseMenu";
 import { GameLogic } from "/src/lib/GameLogic";
 import { Drawing } from "/src/lib/Drawing";
 import { Timer } from "/src/lib/Timer";
-import { createVehicles, createLogs } from "/src/lib/Spawner.js";
+import { createVehicles, createLogs, createTurtles } from "/src/lib/Spawner.js";
 import { levels } from "/src/lib/levels";
 
 export class Game extends Scene {
@@ -77,7 +77,8 @@ export class Game extends Scene {
     this.lives = levels[data["level"]]["number_of_lives"];
     this.carSpeedMultiplier = levels[data["level"]]["car_speed_multiplier"];
     this.logSpeedMultiplier = levels[data["level"]]["log_speed_multiplier"];
-    this.frogSinkMultiplier = levels[data["level"]]["turtle_sink_multiplier"];
+    this.turtleSpeedMultiplier = levels[data["level"]]["turtle_speed_multiplier"];
+    this.turtleSinkMultiplier = levels[data["level"]]["turtle_sink_multiplier"];
 
     // Object and spacing properties for vehicles and logs
     this.numberOfCars = levels[data["level"]]["number_of_cars"];
@@ -89,7 +90,8 @@ export class Game extends Scene {
     this.logSpacing = levels[data["level"]]["log_spacing"];
     this.numberOfTurtles = levels[data["level"]]["number_of_turtles"];
     this.turtleTexture = levels[data["level"]]["turtle_texture"];
-    this.turtleTextureForward = levels[data["level"]]["turtle_Forward_texture"];
+    this.turtleTextureForward = levels[data["level"]]["turtles_Forward_texture"];
+    this.turtleSpacing = levels[data["level"]]["turtle_spacing"];
 
     this.updateLives(); //display lives in the html bar
 
@@ -298,7 +300,7 @@ export class Game extends Scene {
     
     this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
     this.physics.add.overlap(this.shermie, waterZone, () => {
-      if (!this.isInvincible && !this.isAnimating && !this.physics.overlap(this.shermie, this.logs)) {
+      if (!this.isInvincible && !this.isAnimating && !this.physics.overlap(this.shermie, this.logs) && !this.physics.overlap(this.shermie, this.turtles)) {
         if (!this.inWater) { // inWater flag to prevent repeated triggers
           this.inWater = true;
           this.shermie.setVelocity(0, 0);

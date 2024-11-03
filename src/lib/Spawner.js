@@ -39,13 +39,15 @@ export function createLogs(scene, laneStart, laneWidth, logTextures, spacingOpti
   }
 }
 
-export function createTurtles(scene, laneStart, laneWidth, turtleTextures, spacingOptions) {
+export function createTurtles(scene, laneStart, laneWidth, turtleTextures, turtleTexturesForward, spacingOptions) {
   //Iterate over each water lane -- TODO - Change for lanes to only be occupied by one body
   for(let laneIndex = 1; laneIndex < scene.numberOfLanes; laneIndex+=2) {//TEMP - SET UP TURTLES ON ODD LANES
     const speed = Phaser.Math.Between(100, 300) * scene.turtleSpeedMultiplier * (laneIndex % 2 === 0 ? 1 : -1);
     let currentX = 0;
     
-    const turtleTexture = turtleTextures[Math.floor(Math.random() * turtleTextures.length)];
+    const turtleArray = laneIndex % 2 === 0 ? turtleTextures : turtleTexturesForward;
+    
+    const turtleTexture = turtleArray[Math.floor(Math.random() * turtleTextures.length)];
 
     for(let turtleIndex = 0; turtleIndex < scene.numberOfTurtles; turtleIndex++) {
       const spacing = spacingOptions[Math.floor(Math.random() * spacingOptions.length)];
@@ -53,7 +55,7 @@ export function createTurtles(scene, laneStart, laneWidth, turtleTextures, spaci
       console.log(spacing);
 
       //Spawn the turtles at the calculated position using the pre-assigned texture
-      scene.spawnTurtle(currentX, laneStart - laneWidth * laneIndex - laneWidth / 2, turtleTexture, speed);
+      scene.spawnTurtle(currentX, laneStart - laneWidth * laneIndex - laneWidth / 2, turtleTexture, speed);//TEMP TAKEN OUT - FIX WHEN TURTLE ASSETS ARE FULLY IMPLEMNTED
     }
   }
 }
