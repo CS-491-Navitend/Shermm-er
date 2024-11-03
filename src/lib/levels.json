@@ -52,20 +52,20 @@
     },
 
     {
-      "time": 120,
+      "time": 1000,
 
       "car_texture": ["iceCar1"],
       "cars_Forward_texture":  ["iceTruck"],
       "car_spacing": [250, 350, 500],
       "car_speed_multiplier": 1,
-      "number_of_cars": 1,
+      "number_of_cars": 2,
 
       "water_zone_type": "ice",
       "log_texture": ["iceLog","iceberg"],
       "log_spacing": [250, 350, 400],
 
       "log_speed_multiplier": 1,
-      "number_of_logs": 1,
+      "number_of_logs": 2,
 
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 0,
@@ -79,8 +79,8 @@
     {
       "time": 1000,
 
-      "car_texture": ["lavaCar1", "lavaCar2", "lavaTruck"],
-      "cars_Forward_texture": ["lavaCar1", "lavaCar2" ],
+      "car_texture": ["lavaCar1", "lavaTruck"],
+      "cars_Forward_texture": [ "lavaCar2" ],
       "car_spacing": [250, 350, 500],
       "car_speed_multiplier": 1,
       "number_of_cars": 2,
