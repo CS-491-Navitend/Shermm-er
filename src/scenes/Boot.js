@@ -47,6 +47,14 @@ import ShortLog from "/assets/WaterLevel/ShortLog.png";
 import LongLog from "/assets/WaterLevel/LongLog.png";
 import turtle from "/assets/WaterLevel/turtle.png";
 import turtleforward from "/assets/WaterLevel/turtleforward.png";
+import turtleShort from "/assets/WaterLevel/turtlesShort.png";
+import turtleLong from "/assets/WaterLevel/turtlesLong.png";
+import turtleShortForward from "asserts/WaterLevel/turtlesShortForward.png";
+import turtleLongForward from "asserts/WaterLevel/turtlesLongForward.png";
+import turtleShortSink1 from "asserts/WaterLevel/turtlesShortSink1.png";
+import turtleLongSink1 from "asserts/WaterLevel/turtlesLongSink1.png";
+import turtleShortSink2 from "asserts/WaterLevel/turtlesShortSink2.png";
+import turtleLongSink2 from "asserts/WaterLevel/turtlesLongSink2.png";
 import waterObjective from "/assets/WaterLevel/waterObjective.png";
 
 //Import Ice assets
@@ -94,6 +102,14 @@ export class Boot extends Scene {
     this.load.image("LongLog", LongLog);
     this.load.image("turtle", turtle);
     this.load.image("turtleforward", turtleforward);
+    this.load.image("turtleShort", turtleShort);
+    this.load.image("turtleLong", turtleLong);
+    this.load.image("turtleShortForward", turtleShortForward);
+    this.load.image("turtleLongForward", turtleLongForward);
+    this.load.image("turtleShortSink1", turtleShortSink1);
+    this.load.image("turtleLongSink1", turtleLongSink1);
+    this.load.image("turtleShortSink2", turtleShortSink2);
+    this.load.image("turtleLongSink2", turtleLongSink2);
     this.load.image("shermie", shermie);
     this.load.image("life", life);
 
