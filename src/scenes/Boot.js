@@ -134,10 +134,12 @@ export class Boot extends Scene {
     this.load.audio("hop", "/assets/audio/hop.wav");
     this.load.audio("squash", "/assets/audio/squash.wav");
     this.load.audio("plunk", "/assets/audio/plunk.wav");
+    this.load.audio("backgroundMusic", "/assets/audio/backgroundMusic.mp3");
   }
 
   create() {
     this.scene.start("MainMenu");
+    // this.scene.start("Game", { level: 0 }); //dev level on start
   }
 }
 
