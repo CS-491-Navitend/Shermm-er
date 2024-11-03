@@ -322,7 +322,16 @@ export class Game extends Scene {
       this
     );
 
-    this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
+    this.physics.add.overlap(
+      this.shermie,
+      this.vehicles,
+      () => {
+        this.sound.play("squash");
+        this.loseLife();
+      },
+      null,
+      this
+    );
     this.physics.add.overlap(
       this.shermie,
       waterZone,
@@ -332,6 +341,7 @@ export class Game extends Scene {
             // inWater flag to prevent repeated triggers
             this.inWater = true;
             this.shermie.setVelocity(0, 0);
+            this.sound.play("plunk");
             this.loseLife();
             this.time.delayedCall(1000, () => {
               this.inWater = false;

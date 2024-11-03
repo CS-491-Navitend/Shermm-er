@@ -132,6 +132,8 @@ export class Boot extends Scene {
 
     // Audio Assets
     this.load.audio("hop", "/assets/audio/hop.wav");
+    this.load.audio("squash", "/assets/audio/squash.wav");
+    this.load.audio("plunk", "/assets/audio/plunk.wav");
   }
 
   create() {
