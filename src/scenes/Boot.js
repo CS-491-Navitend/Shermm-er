@@ -1,3 +1,4 @@
+
 import { Scene } from "phaser";
 //importing custom fonts
 import FontFaceObserver from 'fontfaceobserver';

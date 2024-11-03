@@ -1,3 +1,4 @@
+import FontFaceObserver from 'fontfaceobserver';
 import { Boot } from "./scenes/Boot";
 // menus
 import { MainMenu } from "./scenes/Menus/MainMenu";
