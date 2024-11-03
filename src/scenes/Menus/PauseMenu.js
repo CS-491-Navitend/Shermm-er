@@ -2,7 +2,7 @@ import { Scene } from "phaser";
 import { Timer } from "/src/lib/Timer";
 import { Game } from "/src/scenes/Game";
 import { MainMenu } from "./MainMenu";
-import FontFaceObserver from 'fontfaceobserver';
+
 
 export class PauseMenu extends Scene {
     constructor(scene) {

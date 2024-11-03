@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-import FontFaceObserver from 'fontfaceobserver';
+
 
 export class Controls extends Scene {
     constructor() {

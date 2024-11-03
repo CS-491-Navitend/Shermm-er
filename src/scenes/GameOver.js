@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-import FontFaceObserver from 'fontfaceobserver';
+
 
 export class GameOver extends Scene {
   constructor() {

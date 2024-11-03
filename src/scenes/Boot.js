@@ -1,7 +1,7 @@
 
 import { Scene } from "phaser";
 //importing custom fonts
-import FontFaceObserver from 'fontfaceobserver';
+
 
 // Import car assets (backward and forward)
 import car1 from "/assets/vehiclesBackward/car1.png";
