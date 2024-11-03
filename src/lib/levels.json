@@ -31,7 +31,7 @@
 
       "car_texture": ["car1", "car2", "car3", "tractor"],
       "cars_Forward_texture": ["car1forward", "car2forward", "car3forward"],
-      "car_spacing": [250, 350, 100],
+      "car_spacing": [250, 350, 500],
       "car_speed_multiplier": 1,
       "number_of_cars": 2,
 
@@ -56,7 +56,7 @@
 
       "car_texture": ["iceCar1"],
       "cars_Forward_texture":  ["iceTruck"],
-      "car_spacing": [250, 350, 100],
+      "car_spacing": [250, 350, 500],
       "car_speed_multiplier": 1,
       "number_of_cars": 1,
 
@@ -80,8 +80,8 @@
       "time": 1000,
 
       "car_texture": ["lavaCar1", "lavaCar2", "lavaTruck"],
-      "cars_Forward_texture": ["lavaCar1", "lavaCar2", "lavaTruck"],
-      "car_spacing": [250, 350, 100],
+      "cars_Forward_texture": ["lavaCar1", "lavaCar2" ],
+      "car_spacing": [250, 350, 500],
       "car_speed_multiplier": 1,
       "number_of_cars": 2,
 

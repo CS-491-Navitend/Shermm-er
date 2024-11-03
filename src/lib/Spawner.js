@@ -31,6 +31,7 @@ export function createLogs(scene, laneStart, laneWidth, logTextures, spacingOpti
     for (let logIndex = 0; logIndex < scene.numberOfLogs; logIndex++) {
       const spacing = spacingOptions[Math.floor(Math.random() * spacingOptions.length)];
       currentX += spacing;
+      console.log(spacing)
 
       // Spawn the log at the calculated position using the pre-assigned texture
       scene.spawnLog(currentX, laneStart - laneWidth * laneIndex - laneWidth / 2, logTexture, speed);
