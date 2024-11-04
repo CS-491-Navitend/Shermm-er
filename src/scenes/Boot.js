@@ -55,7 +55,7 @@ import LavaCar2 from "/assets/LavaLevel/LavaCar2.png";
 //import batman assets
 import batman from "/assets/BatmanLevel/batman.png"
 import batmanSafeZone from "/assets/BatmanLevel/batmanSafeZone.png";
-import batnanRoad from "/assets/BatmanLevel/batmanRoad.png";
+import batmanRoad from "/assets/BatmanLevel/batmanRoad.png";
 import batmanGoal from "/assets/BatmanLevel/batmanGoal.png";
 import batmanObjective from "/assets/BatmanLevel/batmanObjective.png";
 import batmanBarrel from "/assets/BatmanLevel/barrel.png";
@@ -63,6 +63,10 @@ import batmobile from "/assets/BatmanLevel/batmobile.png";
 
 //swamp assets
 import swamp from "/assets/SwampLevel/swamp.png"
+import swampSafeZone from "/assets/SwampLevel/swampSafeZone.png";
+import swampGoal from "/assets/SwampLevel/swampGoal.png";
+import swampObjective from "/assets/SwampLevel/swampObjective.png";
+import swampRoad from "/assets/SwampLevel/swampRoad.png";
 
 export class Boot extends Scene {
   constructor() {
@@ -130,7 +134,7 @@ export class Boot extends Scene {
     // Lava Assets
     this.load.image("batman", batman);
     this.load.image("batmanSafeZone", batmanSafeZone);
-    this.load.image("batmanRoad", batnanRoad);
+    this.load.image("batmanRoad", batmanRoad);
     this.load.image("batmanGoal", batmanGoal);
     this.load.image("batmanObjective", batmanObjective);
     this.load.image("batmanBarrel", batmanBarrel);
@@ -138,6 +142,10 @@ export class Boot extends Scene {
 
     //swamp assets
     this.load.image("swamp", swamp);
+    this.load.image("swampSafeZone", swampSafeZone);
+    this.load.image("swampGoal", swampGoal);
+    this.load.image("swampObjective", swampObjective);
+    this.load.image("swampRoad", swampRoad);
 
 
 
