@@ -61,6 +61,9 @@ import batmanObjective from "/assets/BatmanLevel/batmanObjective.png";
 import batmanBarrel from "/assets/BatmanLevel/barrel.png";
 import batmobile from "/assets/BatmanLevel/batmobile.png";
 
+//swamp assets
+import swamp from "/assets/SwampLevel/swamp.png"
+
 export class Boot extends Scene {
   constructor() {
     super("Boot");
@@ -132,6 +135,10 @@ export class Boot extends Scene {
     this.load.image("batmanObjective", batmanObjective);
     this.load.image("batmanBarrel", batmanBarrel);
     this.load.image("batmobile", batmobile);
+
+    //swamp assets
+    this.load.image("swamp", swamp);
+
 
 
 
