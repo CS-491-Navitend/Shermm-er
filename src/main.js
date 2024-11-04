@@ -11,6 +11,7 @@ import { Controls } from "./scenes/Menus/Submenus/Controls"
 import { Game as MainGame } from "./scenes/Game";
 import { AUTO, Scale, Game } from "phaser";
 import { GameOver } from "./scenes/GameOver";
+import { GameWin } from "./scenes/GameWin";
 
 const config = {
   type: AUTO,
@@ -21,14 +22,17 @@ const config = {
   physics: {
     default: "arcade",
     arcade: {
-      debug: true, //handy to show collision
+      debug: false, //handy to show collision
     },
   },
   scale: {
     mode: Scale.FIT,
     autoCenter: Scale.CENTER_HORIZONTALLY,
   },
-  scene: [Boot, MainMenu, LevelMenu, MainGame, PauseMenu, GameOver, Credits, Controls],
+
+  scene: [Boot, MainMenu, LevelMenu, MainGame, PauseMenu, GameOver, GameWin, Credits, Controls],
+  parent: 'phaser-game',
+
 };
 
 export default new Game(config);

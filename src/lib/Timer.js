@@ -12,10 +12,9 @@ export class Timer {
       return;
     }
 
-    console.log("Updating Timer.."); // for debugging
+    // console.log("Updating Timer.."); // for debugging
 
     this.timeRemaining -= 1;
-
     if (this.timeRemaining <= 0) {
       this.stop();
       this.game.gameLogic.gameOver();
@@ -23,6 +22,11 @@ export class Timer {
 
     if (this.game.timerText) {
       this.game.timerText.setText(`Time: ${this.timeRemaining}`); // Update the timer text on the screen
+    }
+
+    const timeElement = document.getElementById("time");
+    if (timeElement) {
+        timeElement.innerText = `Time: ${this.timeRemaining}`;
     }
   }
 
