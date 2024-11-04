@@ -136,11 +136,11 @@
       "number_of_cars": 0,
 
       "water_zone_type": "swamp",
-      "log_texture": [],
+      "log_texture": ["swampLog"],
       "log_spacing": [250, 350, 400],
 
       "log_speed_multiplier": 1,
-      "number_of_logs": 0,
+      "number_of_logs": 2,
 
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 0,

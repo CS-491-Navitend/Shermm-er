@@ -67,6 +67,7 @@ import swampSafeZone from "/assets/SwampLevel/swampSafeZone.png";
 import swampGoal from "/assets/SwampLevel/swampGoal.png";
 import swampObjective from "/assets/SwampLevel/swampObjective.png";
 import swampRoad from "/assets/SwampLevel/swampRoad.png";
+import swampLog from "/assets/SwampLevel/swampLog.png";
 
 export class Boot extends Scene {
   constructor() {
@@ -146,6 +147,7 @@ export class Boot extends Scene {
     this.load.image("swampGoal", swampGoal);
     this.load.image("swampObjective", swampObjective);
     this.load.image("swampRoad", swampRoad);
+    this.load.image("swampLog", swampLog);
 
 
 
