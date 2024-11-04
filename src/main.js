@@ -26,7 +26,6 @@ const config = {
   },
   scale: {
     mode: Scale.FIT,
-    autoCenter: Scale.CENTER_HORIZONTALLY,
   },
   scene: [Boot, MainMenu, LevelMenu, MainGame, PauseMenu, GameOver, GameWin],
   parent: "phaser-game",
