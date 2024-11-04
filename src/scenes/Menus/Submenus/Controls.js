@@ -41,7 +41,7 @@ export class Controls extends Scene {
         });
         this.input.keyboard.on('keydown-ENTER', () => {
             if (this.isBackButtonHighlighted) {
-                this.scene.stop("Controls")
+                this.scene.stop("Controls");
                 this.scene.start("MainMenu"); 
             }
         });
@@ -61,7 +61,7 @@ export class Controls extends Scene {
             .setInteractive({ useHandCursor: true });
 
         this.backButton.on("pointerdown", () => {
-            this.scene.stop("Controls")
+            this.scene.stop("Controls");
             this.scene.start("MainMenu"); 
         });
 
