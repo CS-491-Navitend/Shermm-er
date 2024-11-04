@@ -44,8 +44,8 @@ export class LevelMenu extends Scene {
     //Keyboard inputs for naviagtion
 
     this.input.keyboard.on("keydown-UP", () => this.changeSelection(-1));
-    this.input.keyboard.on("keydown-RIGHT", () => this.changeSelection(2));
-    this.input.keyboard.on("keydown-LEFT", () => this.changeSelection(-2));
+    //this.input.keyboard.on("keydown-RIGHT", () => this.changeSelection(2));
+    //this.input.keyboard.on("keydown-LEFT", () => this.changeSelection(-2));
     this.input.keyboard.on("keydown-DOWN", () => this.changeSelection(1));
     this.input.keyboard.on("keydown-ENTER", () => this.confirmSelection());
 
@@ -87,7 +87,7 @@ export class LevelMenu extends Scene {
 
   createLevelButton(col, row, levelNumber) {
     const levelButton = this.add
-      .text(300 + col * 200, 300 + (row + 1) * 50, `Level ${levelNumber}`, {
+      .text(300 + col * 250, 300 + (row + 1) * 50, `Level ${levelNumber}`, {
         fontFamily: "Pixel",
         fontStyle: "bold",
         fontSize: this.rem * 2 + "px",

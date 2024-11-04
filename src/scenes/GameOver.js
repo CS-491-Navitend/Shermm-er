@@ -32,7 +32,7 @@ export class GameOver extends Scene {
       }).setOrigin(0.5);
 
       this.add.text(game.width / 2, 450, "Press M for Main Menu", {
-          fontfamily: "Pixel",
+          fontFamily: "Pixel",
           fontSize: "32px",
           fill: "#fff"
       }).setOrigin(0.5);
