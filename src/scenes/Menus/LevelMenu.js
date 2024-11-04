@@ -25,6 +25,11 @@ export class LevelMenu extends Scene {
     //background
     this.add.image(512, 384, 'background').setOrigin(0.5, 0.5);
 
+    this.backgroundMusic = this.sound.add("backgroundMusic", {
+      volume: 0.25,
+      loop: true,
+    });
+
     this.isActive = true;
     this.destroyButtons();
     //console.log("Data received: ", buttons);
@@ -83,15 +88,15 @@ export class LevelMenu extends Scene {
 
   createLevelButtons() {
     for (let col = 0; col < this.maxCols; col++) {
-      for (let row = 0; row < this.maxRows; row++) {
-        const levelNumber = col * this.maxRows + row + 1;
+      for (let row = 0; row <= this.maxRows; row++) {
+        const levelNumber = col * this.maxCols + row + 1;
 
         // Check if the level exists
         if (levelNumber > this.numberOfLevels) {
           break;
         }
 
-        this.createLevelButton(col, row, levelNumber);
+        this.createLevelButton(row, col, levelNumber);
       }
     }
   }
@@ -128,6 +133,8 @@ export class LevelMenu extends Scene {
 
     //when mouse select
     levelButton.on("pointerdown", () => {
+      console.log("Starting level: ", levelNumber);
+    this.backgroundMusic.play();
       this.selectedButtonIndex = levelButtonIndex;
       this.highlightButton(this.selectedButtonIndex);
       this.scene.start("Game", { level: levelNumber });
@@ -195,6 +202,7 @@ export class LevelMenu extends Scene {
   }
 
   confirmSelection() {
+    
     //const selectedButton = this.buttons[this.selectedButtonIndex];
     const levelNumber = this.selectedButtonIndex + 1; // Adjust for level number
     if (this.selectedButtonIndex === this.buttons.length - 1) {

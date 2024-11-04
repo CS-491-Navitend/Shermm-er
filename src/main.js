@@ -19,6 +19,9 @@ const config = {
   height: 1000,
   parent: "game-container",
   backgroundColor: "#000000",
+  audio: {
+    disableWebAudio: true,
+  },
   physics: {
     default: "arcade",
     arcade: {
