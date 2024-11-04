@@ -4,6 +4,7 @@ import { Scene } from "phaser";
 export class Credits extends Scene {
     constructor() {
         super("Credits");
+        this.isBackButtonHighlighted = false;
     }
 
     create() {
@@ -58,14 +59,20 @@ export class Credits extends Scene {
         // Input to return
         this.createBackButton();
 
+        this.input.keyboard.on('keydown-DOWN', () => {
+            this.highlightBackButton(true);
+        });
+
         this.input.keyboard.on('keydown-ENTER', () => {
-            this.scene.stop("Credits");
-            this.scene.start("MainMenu");
+            if (this.isBackButtonHighlighted) {
+                this.scene.stop("Credits");
+                this.scene.start("MainMenu");// Go back to the main menu
+            }
         });
     }
     // creating back button
     createBackButton() {
-        const backButton = this.add.text(
+         this.backButton = this.add.text(
             200, 900, "Back", {
             fontFamily: "Pixel",
             fontSize: "20px",
@@ -76,17 +83,23 @@ export class Credits extends Scene {
             .setOrigin(0.5)
             .setInteractive({ useHandCursor: true });
 
-        backButton.on("pointerdown", () => {
-            this.scene.stop("Credits")
-            this.scene.start("MainMenu"); // Call the return method on click
+        this.backButton.on("pointerdown", () => {
+            this.scene.stop("Credits");
+            this.scene.start("MainMenu");// Go back to the main menu
         });
 
-        backButton.on("pointerover", () => {
-            backButton.setStyle({ backgroundColor: "#44AAFF" });
+        this.backButton.on("pointerover", () => {
+            this.highlightBackButton(true);
         });
 
-        backButton.on("pointerout", () => {
-            backButton.setStyle({ backgroundColor: "#3388FF" });
+        this.backButton.on("pointerout", () => {
+            this.highlightBackButton(false);
+        });
+    }
+    highlightBackButton(isHighlighting) {
+        this.isBackButtonHighlighted = isHighlighting; // Update the highlight state
+        this.backButton.setStyle({
+            backgroundColor: isHighlighting ? "#44AAFF" : "#3388FF"
         });
     }
 }
