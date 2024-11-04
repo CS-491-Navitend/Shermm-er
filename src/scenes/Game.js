@@ -527,22 +527,22 @@ s
     }
   }
 
-  sinkTurtles() {
+  sinkTurtles() {//Sink turtles on timer interval
     this.sinkingTurtles.getChildren().forEach((turtle) => {
-      turtle.body.allowOverlap = false;
+      turtle.body.allowOverlap = false;//Disable overlap
       turtle.setVisible(false);
       turtle.body.checkCollision.none = true;  // Disable all collision checks
     });
-    this.turtlesAreSunk = true;
+    this.turtlesAreSunk = true;//Flag turtles as sunk
   }
   
-  raiseTurtles(){
+  raiseTurtles(){//Raise turtles on timer interval
     this.sinkingTurtles.getChildren().forEach((turtle) => {
-      turtle.body.allowOverlap = true;
+      turtle.body.allowOverlap = true;//Enable overlap
       turtle.setVisible(true);
       turtle.body.checkCollision.none = false;// Enable all collision checks
     });
-    this.turtlesAreSunk = false;
+    this.turtlesAreSunk = false;//Flag turtles as raised
   }
 
 
