@@ -41,6 +41,9 @@ export function createLogs(scene, laneStart, laneWidth, logTextures, spacingOpti
 
 export function createTurtles(scene, laneStart, laneWidth, turtleTextures, turtleTexturesForward, spacingOptions) {
   //Iterate over each water lane -- TODO - Change for lanes to only be occupied by one body
+  let maxSink = 1;
+  let sinkCount = 0;
+  
   for(let laneIndex = 1; laneIndex < scene.numberOfLanes; laneIndex+=2) {//TEMP - SET UP TURTLES ON ODD LANES
     const speed = Phaser.Math.Between(100, 300) * scene.turtleSpeedMultiplier * (laneIndex % 2 === 0 ? 1 : -1);
     let currentX = 0;
@@ -54,7 +57,18 @@ export function createTurtles(scene, laneStart, laneWidth, turtleTextures, turtl
       currentX += spacing;
       console.log(spacing);
 
-      scene.spawnTurtle(currentX, laneStart - laneWidth * laneIndex - laneWidth / 2, turtleTexture, speed);
+      let canSink = Math.random() < 0.5;
+
+      if(canSink == true && sinkCount < maxSink){
+        sinkCount++;
+        console.log("Sinking turtle added: " + sinkCount);
+      }
+      else{
+        console.log("Max sink count exceeded");
+        canSink = false;
+      }
+
+      scene.spawnTurtle(currentX, laneStart - laneWidth * laneIndex - laneWidth / 2, turtleTexture, speed, canSink);
     }
   }
 }

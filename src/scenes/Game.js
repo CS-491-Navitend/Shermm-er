@@ -27,11 +27,13 @@ export class Game extends Scene {
     this.vehicles = null;
     this.logs = null;
     this.turtles = null;
+    this.sinkingTurtles = null;
     this.winCount = 0;
     this.lives = 0;
     this.resetCount = 0;
     this.goalCount = 0;
     this.numOfGoals = 5;
+    this.savedVelocity = 0;
 
     // road values
     this.numberOfRoads = 5;
@@ -62,7 +64,11 @@ export class Game extends Scene {
     this.invincibilityDuration = 500;
     this.isAnimating = false;
 
+    //For level transitions
     this.advanceNumber = 0;
+
+    //Turtle sinking flag
+    this.turtlesAreSunk = false;
   }
 
   create(data) {
@@ -276,11 +282,14 @@ export class Game extends Scene {
     this.vehicles = this.physics.add.group();
     this.logs = this.physics.add.group();
     this.turtles = this.physics.add.group();
+    this.sinkingTurtles = this.physics.add.group();
+    
 
     // Spawn environmental objects based on configuration
     createVehicles(this, roadStart, roadWidth, this.cars, this.carsForward, this.carSpacing);
     createLogs(this, laneStart, laneWidth, this.logTexture, this.logSpacing);
     createTurtles(this, laneStart, laneWidth, this.turtleTexture, this.turtleTextureForward, this.turtleSpacing);
+    
     
 
     //TODO - Create turtles
@@ -300,7 +309,7 @@ export class Game extends Scene {
     
     this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
     this.physics.add.overlap(this.shermie, waterZone, () => {
-      if (!this.isInvincible && !this.isAnimating && !this.physics.overlap(this.shermie, this.logs) && !this.physics.overlap(this.shermie, this.turtles)) {
+      if (!this.isInvincible && !this.isAnimating && !this.physics.overlap(this.shermie, this.logs) && !this.physics.overlap(this.shermie, this.turtles) && !this.physics.overlap(this.shermie, this.sinkingTurtles)) {
         if (!this.inWater) { // inWater flag to prevent repeated triggers
           this.inWater = true;
           this.shermie.setVelocity(0, 0);
@@ -312,6 +321,7 @@ export class Game extends Scene {
   );
     this.physics.add.overlap(this.shermie, this.logs, this.rideLog, null, this);
     this.physics.add.overlap(this.shermie, this.turtles, this.rideTurtle, null, this);
+    this.physics.add.overlap(this.shermie, this.sinkingTurtles, this.rideTurtle, null, this);
     this.physics.add.overlap(this.shermie, endZone,() => {this.shermie.setVelocity(0,0);
         if (!this.physics.overlap(this.shermie, objectiveZone)) {
           this.loseLife();
@@ -421,6 +431,17 @@ export class Game extends Scene {
         turtle.x = -turtle.width / 2;
       }
     })
+
+    this.sinkingTurtles.getChildren().forEach((turtle) => {
+      const isOffScreenLeft = turtle.x < -turtle.width / 2;
+      const isOffScreenRight = turtle.x > this.width + turtle.width / 2;
+
+      if(isOffScreenLeft){
+        turtle.x = this.width + turtle.width / 2;
+      }else if(isOffScreenRight){ 
+        turtle.x = -turtle.width / 2;
+      }
+    })
   }
   //Create a vehicle
   spawnVehicle(x, y, texture, speed) {
@@ -443,14 +464,25 @@ export class Game extends Scene {
   }
 
   //Create a turtle
-  spawnTurtle(x, y, texture, speed){
-    let turtle = this.turtles.create(x, y, texture);
-    turtle.body.setVelocityX(speed);
-    turtle.body.allowGravity = false;
-    turtle.immovable = true;
-    turtle.body.setSize(turtle.width, 50);
-    turtle.setDepth(-1);
-    return turtle;
+  spawnTurtle(x, y, texture, speed, canSink){
+    if(canSink){
+      let turtle = this.turtles.create(x, y, texture);
+      turtle.body.setVelocityX(speed);
+      turtle.body.allowGravity = false;
+      turtle.immovable = true;
+      turtle.body.setSize(turtle.width, 50);
+      turtle.setDepth(-1);
+      return turtle;
+    }
+    else{
+      let turtle = this.sinkingTurtles.create(x, y, texture);
+      turtle.body.setVelocityX(speed);
+      turtle.body.allowGravity = false; 
+      turtle.immovable = true;
+      turtle.body.setSize(turtle.width, 50);
+      turtle.setDepth(-1);
+      return turtle;
+    }
   }
 
 
@@ -469,7 +501,7 @@ loseLife() {
         this.gameLogic.loseLife(); 
     });
 }
-
+s
 
   goalCollision() {
     this.gameLogic.goal();
@@ -494,6 +526,25 @@ loseLife() {
       return;
     }
   }
+
+  sinkTurtles() {
+    this.sinkingTurtles.getChildren().forEach((turtle) => {
+      turtle.body.allowOverlap = false;
+      turtle.setVisible(false);
+      turtle.body.checkCollision.none = true;  // Disable all collision checks
+    });
+    this.turtlesAreSunk = true;
+  }
+  
+  raiseTurtles(){
+    this.sinkingTurtles.getChildren().forEach((turtle) => {
+      turtle.body.allowOverlap = true;
+      turtle.setVisible(true);
+      turtle.body.checkCollision.none = false;// Enable all collision checks
+    });
+    this.turtlesAreSunk = false;
+  }
+
 
   togglePause() {
     // console.log("Toggle Pause called. Current paused state:", this.paused);

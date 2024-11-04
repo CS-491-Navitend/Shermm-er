@@ -22,7 +22,7 @@
       "turtle_spacing": [250, 350, 400],
       "turtle_speed_multiplier": 1,
       "turtle_sink_multiplier": 1,
-      "number_of_turtles": 2,
+      "number_of_turtles": 3,
 
       "number_of_lives": 99,
       "goal_count": 3,
