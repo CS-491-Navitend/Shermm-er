@@ -4,6 +4,7 @@ import { Scene } from "phaser";
 export class Controls extends Scene {
     constructor() {
         super("Controls");
+        this.selectedIndex = 0;
     }
 
     create() {
@@ -16,14 +17,17 @@ export class Controls extends Scene {
 
         // Controls content
         const controls = [
-            { action: "Move Left", key: "©" },
-            { action: "Move Right", key: "¨" },
+            { action: "Move Up", key: "\u2191 (Up Arrow)" },    // Up Arrow
+            { action: "Move Down", key: "\u2193 (Down Arrow)" }, // Down Arrow
+            { action: "Move Left", key: "\u2190 (Left Arrow)" }, // Left Arrow
+            { action: "Move Right", key: "\u2192 (Right Arrow)" }, // Right Arrow
+            { action: "Confirm Selection", key: "ENTER"}
             
         ];
 
         controls.forEach((control, index) => {
             this.add.text(512, 150 + index * 40, `${control.action}: ${control.key}`, {
-                fontFamily: "Pixel",
+                fontFamily: "sans-serif",
                 fontSize: "20px",
                 color: "#ffffff",
             }).setOrigin(0.5);
@@ -32,7 +36,13 @@ export class Controls extends Scene {
         // Return instruction
         this.createBackButton();
 
-        
+        this.input.keyboard.on('keydown-DOWN', () => {
+            this.highlightBackButton(true); // Highlight back button
+        });
+        this.input.keyboard.on('keydown-ENTER', () => {
+            this.scene.stop("Controls");
+            this.scene.start("MainMenu");
+        });
     }
     // creating back button
     createBackButton() {
@@ -53,11 +63,18 @@ export class Controls extends Scene {
         });
 
         backButton.on("pointerover", () => {
-            backButton.setStyle({ backgroundColor: "#44AAFF" });
+            this.backButton.setStyle({ backgroundColor: "#44AAFF" });
         });
 
         backButton.on("pointerout", () => {
-            backButton.setStyle({ backgroundColor: "#3388FF" });
+            this.backButton.setStyle({ backgroundColor: "#3388FF" });
         });
+    }
+    highlightBackButton(isHighlighting) {
+        if (isHighlighting) {
+            this.backButton.setStyle({ backgroundColor: "#44AAFF" });
+        } else {
+            this.backButton.setStyle({ backgroundColor: "#3388FF" });
+        }
     }
 }
