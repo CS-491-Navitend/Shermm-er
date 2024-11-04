@@ -11,10 +11,18 @@ export class MainMenu extends Scene {
     this.isActive = false;
   }
 
- 
+    preload() {
+        this.load.image("background", "/assets/ShermMainMenu.png")
+    }
     
 
     create(buttons) {
+
+
+    //background
+    this.add.image(512, 384, 'background').setOrigin(0.5, 0.5);
+
+
       //console.log("Data received: ", buttons); 
       this.isActive = true;
       this.destroyButtons();
@@ -27,8 +35,12 @@ export class MainMenu extends Scene {
         fontFamily: 'Pixel',
         fontStyle: "bold",
         fontSize: this.rem * 4 + "px",
+        color: "#FFFFFF", // White text
+        stroke: "#000000", // Black outline
+        strokeThickness: 6,
       })
       .setOrigin(0.5);
+
 
         // Create buttons
         const playButton = this.createButton(512, 400, 'Play', 0);

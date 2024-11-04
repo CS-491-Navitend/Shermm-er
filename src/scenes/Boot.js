@@ -1,6 +1,6 @@
 
 import { Scene } from "phaser";
-//importing custom fonts
+
 
 
 // Import car assets (backward and forward)
@@ -75,6 +75,9 @@ import LavaTractor from "/assets/LavaLevel/LavaTruck.png";
 import LavaCar1 from "/assets/LavaLevel/LavaCar.png";
 import LavaCar2 from "/assets/LavaLevel/LavaCar2.png";
 
+//Import UI and Background
+import BackgroundMain from "/assets/ShermMainMenu.png";
+
 
 
 export class Boot extends Scene {
@@ -136,6 +139,9 @@ export class Boot extends Scene {
     this.load.image("lavaTruck", LavaTractor)
     //this.load.image("waterRoad", waterRoad);
 
+
+    //UI and Background
+    this.load.image("BackgroundMain", BackgroundMain);
 
     //Font Family
     const font = new FontFaceObserver('Pixel');

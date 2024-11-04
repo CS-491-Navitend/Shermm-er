@@ -17,8 +17,13 @@ export class LevelMenu extends Scene {
     this.isActive = false;
   }
 
+  preload() {
+        this.load.image("background", "/assets/ShermMainMenu.png")
+    }
+
   create(buttons) {
-    // main menu text
+    //background
+    this.add.image(512, 384, 'background').setOrigin(0.5, 0.5);
 
     this.isActive = true;
     this.destroyButtons();
@@ -28,6 +33,9 @@ export class LevelMenu extends Scene {
         fontFamily: "Pixel",
         fontStyle: "bold",
         fontSize: this.rem * 4 + "px",
+        color: "#FFFFFF", // White text
+        stroke: "#000000", // Black outline
+        strokeThickness: 6,
       })
       .setOrigin(1 / 2);
 
@@ -60,6 +68,9 @@ export class LevelMenu extends Scene {
         fontStyle: "bold",
         fontSize: this.rem * 2 + "px",
         padding: { x: 100, y: 20 },
+        color: "#FFFFFF", // White text
+        stroke: "#000000", // Black outline
+        strokeThickness: 6,
       })
       .setOrigin(0.5)
       .setInteractive({ useHandCursor: true });
