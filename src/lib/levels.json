@@ -124,6 +124,30 @@
       "goal_count": 5,
 
       "powerups": [0, 0, 0, 0]
+    },
+    {
+      "time": 1000,
+
+      "car_texture": ["outerSpaceCar1", "outerSpaceCar2"],
+      "cars_Forward_texture": ["outerSpaceCar1b", "outerSpaceCar2b"],
+      "car_spacing": [250, 350, 500],
+      "car_speed_multiplier": 1.4,
+      "number_of_cars": 2.4,
+
+      "water_zone_type": "outerSpace",
+      "log_texture": ["outerSpaceRock"],
+      "log_spacing": [250, 350, 400],
+
+      "log_speed_multiplier": 1,
+      "number_of_logs": 2,
+
+      "turtle_sink_multiplier": 1,
+      "number_of_turtles": 0,
+
+      "number_of_lives": 5,
+      "goal_count": 5,
+
+      "powerups": [0, 0, 0, 0]
     }
   ]
 }
