@@ -75,14 +75,15 @@
       "log_speed_multiplier": 1,
       "number_of_logs": 2,
       
-      "turtle_texture": [],
-      "turtles_Forward_texture": [],
+      "turtle_texture": ["turtleShort", "turtleLong"],
+      "turtles_Forward_texture": ["turtleShortForward", "turtleLongForward"],
       "turtle_spacing": [250, 350, 400],
+      "turtle_speed_multiplier": 1,
       "turtle_sink_multiplier": 1,
-      "number_of_turtles": 0,
-      
-      "number_of_lives": 3,
-      "goal_count": 5,
+      "number_of_turtles": 3,
+
+      "number_of_lives": 99,
+      "goal_count": 3,
 
       "powerups": [0, 0, 0, 0]
     },
@@ -103,14 +104,15 @@
       "log_speed_multiplier": 1,
       "number_of_logs": 2,
 
-      "turtle_texture": [],
-      "turtles_Forward_texture": [],
+      "turtle_texture": ["turtleShort", "turtleLong"],
+      "turtles_Forward_texture": ["turtleShortForward", "turtleLongForward"],
       "turtle_spacing": [250, 350, 400],
+      "turtle_speed_multiplier": 1,
       "turtle_sink_multiplier": 1,
-      "number_of_turtles": 0,
+      "number_of_turtles": 3,
 
-      "number_of_lives": 5,
-      "goal_count": 5,
+      "number_of_lives": 99,
+      "goal_count": 3,
 
       "powerups": [0, 0, 0, 0]
     },
@@ -162,11 +164,15 @@
       "log_speed_multiplier": 1,
       "number_of_logs": 1,
 
+      "turtle_texture": ["cloudsLong", "cloudsShort"],
+      "turtles_Forward_texture": ["cloudsLong", "cloudsShort"],
+      "turtle_spacing": [250, 350, 400],
+      "turtle_speed_multiplier": 1,
       "turtle_sink_multiplier": 1,
-      "number_of_turtles": 0,
+      "number_of_turtles": 3,
 
-      "number_of_lives": 5,
-      "goal_count": 5,
+      "number_of_lives": 99,
+      "goal_count": 3,
 
       "powerups": [0, 0, 0, 0]
     },
@@ -188,11 +194,15 @@
       "log_speed_multiplier": 1,
       "number_of_logs": 1,
 
+      "turtle_texture": ["cloudsLong", "cloudsShort"],
+      "turtles_Forward_texture": ["cloudsLong", "cloudsShort"],
+      "turtle_spacing": [250, 350, 400],
+      "turtle_speed_multiplier": 1,
       "turtle_sink_multiplier": 1,
-      "number_of_turtles": 0,
+      "number_of_turtles": 3,
 
-      "number_of_lives": 5,
-      "goal_count": 5,
+      "number_of_lives": 99,
+      "goal_count": 3,
 
       "powerups": [0, 0, 0, 0]
     },
@@ -214,11 +224,15 @@
       "log_speed_multiplier": 1,
       "number_of_logs": 1,
 
+      "turtle_texture": ["cloudsLong", "cloudsShort"],
+      "turtles_Forward_texture": ["cloudsLong", "cloudsShort"],
+      "turtle_spacing": [250, 350, 400],
+      "turtle_speed_multiplier": 1,
       "turtle_sink_multiplier": 1,
-      "number_of_turtles": 0,
+      "number_of_turtles": 3,
 
-      "number_of_lives": 5,
-      "goal_count": 5,
+      "number_of_lives": 99,
+      "goal_count": 3,
 
       "powerups": [0, 0, 0, 0]
     },
@@ -240,11 +254,15 @@
       "log_speed_multiplier": 1,
       "number_of_logs": 2,
 
+      "turtle_texture": ["cloudsLong", "cloudsShort"],
+      "turtles_Forward_texture": ["cloudsLong", "cloudsShort"],
+      "turtle_spacing": [250, 350, 400],
+      "turtle_speed_multiplier": 1,
       "turtle_sink_multiplier": 1,
-      "number_of_turtles": 0,
+      "number_of_turtles": 3,
 
-      "number_of_lives": 5,
-      "goal_count": 5,
+      "number_of_lives": 99,
+      "goal_count": 3,
 
       "powerups": [0, 0, 0, 0]
     }
