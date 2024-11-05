@@ -132,7 +132,8 @@ export class PauseMenu extends Scene {
                 this.scene.togglePause();
             });
         } else if (selectedButton.text === 'Main Menu') {
-          //  console.log("Going to Main Menu....")
+            console.log("Going to Main Menu....")
+            this.scene.scene.stop("PauseMenu");
             this.scene.timer.stop();
             this.scene.scene.stop("Game");
             this.scene.scene.start("MainMenu");

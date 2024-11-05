@@ -61,7 +61,7 @@ import BackgroundMain from "/assets/ShermMainMenu.png";
 
 
 //import batman assets
-import batman from "/assets/BatmanLevel/batman.png"
+import batman from "/assets/BatmanLevel/batman.png";
 import batmanSafeZone from "/assets/BatmanLevel/batmanSafeZone.png";
 import batmanRoad from "/assets/BatmanLevel/batmanRoad.png";
 import batmanGoal from "/assets/BatmanLevel/batmanGoal.png";
@@ -71,12 +71,17 @@ import batmobile from "/assets/BatmanLevel/batmobile.png";
 
 
 //swamp assets
-import swamp from "/assets/SwampLevel/swamp.png"
+import swamp from "/assets/SwampLevel/swamp.png";
 import swampSafeZone from "/assets/SwampLevel/swampSafeZone.png";
 import swampGoal from "/assets/SwampLevel/swampGoal.png";
 import swampObjective from "/assets/SwampLevel/swampObjective.png";
 import swampRoad from "/assets/SwampLevel/swampRoad.png";
 import swampLog from "/assets/SwampLevel/swampLog.png";
+
+//cake assets
+import cake from "/assets/CakeLevel/Cake.png";
+import cakeSafeZone from "/assets/CakeLevel/ShortcakeSafeZone.png";
+import cakeRoad from "/assets/CakeLevel/CakeRoad.png";
 
 export class Boot extends Scene {
   constructor() {
@@ -158,8 +163,10 @@ export class Boot extends Scene {
     this.load.image("swampRoad", swampRoad);
     this.load.image("swampLog", swampLog);
 
-
-
+    //cake assets
+    this.load.image("cake", cake);
+    this.load.image("cakeSafeZone", cakeSafeZone);
+    this.load.image("cakeRoad", cakeRoad);
 
 
     //UI and Background
