@@ -1,4 +1,7 @@
+
 import { Scene } from "phaser";
+
+
 
 // Import car assets (backward and forward)
 import car1 from "/assets/vehiclesBackward/car1.png";
@@ -77,6 +80,12 @@ import blimpForward from "/assets/SkyLevel/blimpForward.png";
 import cloudsLong from "/assets/SkyLevel/cloudsLong.png";
 import cloudsShort from "/assets/SkyLevel/cloudsShort.png";
 
+
+//Import UI and Background
+import backgroundMain from "/assets/UI/ShermMainMenu.png";
+import button from "/assets/UI/Button.png";
+
+
 //import batman assets
 import batman from "/assets/BatmanLevel/batman.png";
 import batmanSafeZone from "/assets/BatmanLevel/batmanSafeZone.png";
@@ -101,8 +110,9 @@ import desertTurtle from "/assets/desertLevel/desertTurtle.png";
 import desertLog from "/assets/desertLevel/desertLog.png";
 import desertLog2 from "/assets/desertLevel/desertLog2.png";
 
+
 //swamp assets
-import swamp from "/assets/SwampLevel/swamp.png"
+import swamp from "/assets/SwampLevel/swamp.png";
 import swampSafeZone from "/assets/SwampLevel/swampSafeZone.png";
 import swampGoal from "/assets/SwampLevel/swampGoal.png";
 import swampObjective from "/assets/SwampLevel/swampObjective.png";
@@ -127,6 +137,16 @@ import outerSpaceCar2 from "/assets/OuterSpaceLevel/outerSpaceCar2.png";
 import outerSpaceCar2b from "/assets/OuterSpaceLevel/outerSpaceCar2b.png";
 import comet from "/assets/OuterSpaceLevel/comet.png";
 
+
+//cake assets
+import cake from "/assets/CakeLevel/Cake.png";
+import cakeSafeZone from "/assets/CakeLevel/ShortcakeSafeZone.png";
+import cakeRoad from "/assets/CakeLevel/CakeRoad.png";
+import cakeGoal from "/assets/CakeLevel/CakeGoal.png";
+import cakeObjective from "/assets/CakeLevel/CakeObjective.png";
+import cakeCherry from "/assets/CakeLevel/cherry.png"
+import cakeCar1 from "/assets/CakeLevel/cakeCar1.png";
+import cakeCar2 from "/assets/CakeLevel/iceCreamTruck.png";
 
 export class Boot extends Scene {
   constructor() {
@@ -226,6 +246,22 @@ export class Boot extends Scene {
     this.load.image("outerSpaceCar2", outerSpaceCar2);
     this.load.image("outerSpaceCar2b", outerSpaceCar2b);
     this.load.image("comet", comet);
+    
+    
+    //Sky Assets
+    this.load.image("skySafeZone", skySafeZone);
+    this.load.image("sky", sky);
+    this.load.image("skyRoad", skyRoad);
+    this.load.image("skyGoal", skyGoal);
+    this.load.image("skyObjective", skyObjective)
+    this.load.image("lightningBolt", lightningBolt);
+    this.load.image("lightningBoltForward", lightningBoltForward);
+    this.load.image("wind", wind);  
+    this.load.image("windForward", windForward);
+    this.load.image("blimp", blimp);
+    this.load.image("blimpForward", blimpForward);
+    this.load.image("cloudsShort", cloudsShort);
+    this.load.image("cloudsLong", cloudsLong);
 
 
     //desert Assets
@@ -254,20 +290,31 @@ export class Boot extends Scene {
     this.load.image("swampBuggy2Forward", swampBuggy2Forward);
     this.load.image("swampATVForward", swampATVForward);
 
-    //Sky Assets
-    this.load.image("skySafeZone", skySafeZone);
-    this.load.image("sky", sky);
-    this.load.image("skyRoad", skyRoad);
-    this.load.image("skyGoal", skyGoal);
-    this.load.image("skyObjective", skyObjective)
-    this.load.image("lightningBolt", lightningBolt);
-    this.load.image("lightningBoltForward", lightningBoltForward);
-    this.load.image("wind", wind);  
-    this.load.image("windForward", windForward);
-    this.load.image("blimp", blimp);
-    this.load.image("blimpForward", blimpForward);
-    this.load.image("cloudsShort", cloudsShort);
-    this.load.image("cloudsLong", cloudsLong);
+    //cake assets
+    this.load.image("cake", cake);
+    this.load.image("cakeSafeZone", cakeSafeZone);
+    this.load.image("cakeRoad", cakeRoad);
+    this.load.image("cakeGoal", cakeGoal);
+    this.load.image("cakeObjective", cakeObjective);
+    this.load.image("cherry", cakeCherry);
+    this.load.image("cakeCar1", cakeCar1);
+    this.load.image("cakeCar2", cakeCar2);
+
+
+    //UI and Background
+    this.load.image("background", backgroundMain);
+    this.load.image("button", button);
+
+    //Font Family
+    const font = new FontFaceObserver('Pixel');
+        font.load().then(() => {
+            console.log('Font loaded successfully!');
+            // Optionally, you can store a flag or execute any logic here
+        }).catch(() => {
+            console.error('Font failed to load.');
+        });
+
+
 
   }
 

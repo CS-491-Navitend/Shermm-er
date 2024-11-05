@@ -3,6 +3,7 @@ import { Timer } from "/src/lib/Timer";
 import { Game } from "/src/scenes/Game";
 import { MainMenu } from "./MainMenu";
 
+
 export class PauseMenu extends Scene {
     constructor(scene) {
         super(scene);
@@ -37,8 +38,10 @@ export class PauseMenu extends Scene {
 
         //Paused text
         const text = this.scene.add.text(0, -100, 'Paused', {
+            fontFamily: 'Pixel',
             fontSize: '40px',
-            fill: '#ffffff'
+            fill: '#ffffff',
+            fontStyle: "Bold"
         }).setOrigin(0.5);
         this.pauseMenu.add(text);
         
@@ -57,7 +60,8 @@ export class PauseMenu extends Scene {
 
     createResumeButton() {
         const resumeButton = this.scene.add.text(0, 70, 'Resume', {
-            fontSize: '32px',
+            fontFamily: 'Pixel',
+            fontSize: '20px',
             fill: '#ffffff'
         }).setOrigin(0.5).setInteractive({ useHandCursor: true }); // Added cursor style
 
@@ -68,7 +72,8 @@ export class PauseMenu extends Scene {
 
     createMainMenuButton() {
         const mainMenuButton = this.scene.add.text(0, -20, 'Main Menu', {
-            fontSize: '32px',
+            fontFamily: 'Pixel',
+            fontSize: '20px',
             fill: '#ffffff'
         }).setOrigin(0.5).setInteractive({ useHandCursor: true }); // Added cursor style
 
@@ -127,7 +132,8 @@ export class PauseMenu extends Scene {
                 this.scene.togglePause();
             });
         } else if (selectedButton.text === 'Main Menu') {
-          //  console.log("Going to Main Menu....")
+            console.log("Going to Main Menu....")
+            this.scene.scene.stop("PauseMenu");
             this.scene.timer.stop();
             this.scene.scene.stop("Game");
             this.scene.scene.start("MainMenu");

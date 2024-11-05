@@ -1,19 +1,19 @@
 {
   "levels": [
     {
-      
+
       "time": 10000,
 
-      "car_texture": ["car1", "car2", "car3", "tractor"],
-      "cars_Forward_texture": ["car1forward", "car2forward", "car3forward"],
-      "car_spacing": [250, 350, 100],
+      "car_texture": [ "car1", "car2", "car3", "tractor" ],
+      "cars_Forward_texture": [ "car1forward", "car2forward", "car3forward" ],
+      "car_spacing": [ 250, 350, 100 ],
       "car_speed_multiplier": 1,
       "number_of_cars": 2,
 
       "water_zone_type": " ",
 
-      "log_texture": ["LongLog", "ShortLog"],
-      "log_spacing": [250, 350, 400],
+      "log_texture": [ "LongLog", "ShortLog" ],
+      "log_spacing": [ 250, 350, 400 ],
       "log_speed_multiplier": 1,
       "number_of_logs": 2,
 
@@ -27,21 +27,21 @@
       "number_of_lives": 5,
       "goal_count": 3,
 
-      "powerups": [0, 0, 0, 0]
-    },    
-    
+      "powerups": [ 0, 0, 0, 0 ]
+    },
+
     {
       "time": 1000,
 
-      "car_texture": ["car1", "car2", "car3", "tractor"],
-      "cars_Forward_texture": ["car1forward", "car2forward", "car3forward"],
-      "car_spacing": [250, 350, 500],
+      "car_texture": [ "car1", "car2", "car3", "tractor" ],
+      "cars_Forward_texture": [ "car1forward", "car2forward", "car3forward" ],
+      "car_spacing": [ 250, 350, 500 ],
       "car_speed_multiplier": 1,
       "number_of_cars": 2,
 
       "water_zone_type": "water",
-      "log_texture": ["LongLog", "ShortLog"],
-      "log_spacing": [250, 350, 400],
+      "log_texture": [ "LongLog", "ShortLog" ],
+      "log_spacing": [ 250, 350, 400 ],
 
       "log_speed_multiplier": 1,
       "number_of_logs": 2,
@@ -56,21 +56,21 @@
       "number_of_lives": 5,
       "goal_count": 5,
 
-      "powerups": [0, 0, 0, 0]
+      "powerups": [ 0, 0, 0, 0 ]
     },
 
     {
       "time": 1000,
 
-      "car_texture": ["iceCar1"],
-      "cars_Forward_texture":  ["iceTruck"],
-      "car_spacing": [250, 350, 500],
+      "car_texture": [ "iceCar1" ],
+      "cars_Forward_texture": [ "iceTruck" ],
+      "car_spacing": [ 250, 350, 500 ],
       "car_speed_multiplier": 1,
       "number_of_cars": 2,
 
       "water_zone_type": "ice",
-      "log_texture": ["iceLog","iceberg"],
-      "log_spacing": [250, 350, 400],
+      "log_texture": [ "iceLog", "iceberg" ],
+      "log_spacing": [ 250, 350, 400 ],
 
       "log_speed_multiplier": 1,
       "number_of_logs": 2,
@@ -84,22 +84,22 @@
 
       "number_of_lives": 5,
       "goal_count": 3,
-
-      "powerups": [0, 0, 0, 0]
+      
+      "powerups": [ 0, 0, 0, 0 ]
     },
 
     {
       "time": 1000,
 
-      "car_texture": ["lavaCar1", "lavaTruck"],
+      "car_texture": [ "lavaCar1", "lavaTruck" ],
       "cars_Forward_texture": [ "lavaCar2" ],
-      "car_spacing": [250, 350, 500],
+      "car_spacing": [ 250, 350, 500 ],
       "car_speed_multiplier": 1,
       "number_of_cars": 2,
 
       "water_zone_type": "lava",
-      "log_texture": ["rock", "lavaLog"],
-      "log_spacing": [250, 350, 400],
+      "log_texture": [ "rock", "lavaLog" ],
+      "log_spacing": [ 250, 350, 400 ],
 
       "log_speed_multiplier": 1,
       "number_of_logs": 2,
@@ -175,7 +175,7 @@
       "number_of_lives": 5,
       "goal_count": 3,
 
-      "powerups": [0, 0, 0, 0]
+      "powerups": [ 0, 0, 0, 0 ]
     },
 
 
@@ -205,11 +205,12 @@
       "number_of_lives": 5,
       "goal_count": 3,
 
-      "powerups": [0, 0, 0, 0]
+      "powerups": [ 0, 0, 0, 0 ]
     },
 
     {
       "time": 1000,
+
 
       "car_texture": ["swampBuggy2","swampATV"],
       "cars_Forward_texture": ["swampBuggy2Forward","swampBuggy2Forward"],
@@ -218,8 +219,8 @@
       "number_of_cars": 2,
 
       "water_zone_type": "swamp",
-      "log_texture": ["swampLog"],
 
+      "log_texture": ["swampLog"],
       "log_spacing": [250, 350, 400],
 
       "log_speed_multiplier": 1,
@@ -264,7 +265,32 @@
       "number_of_lives": 5,
       "goal_count": 3,
 
-      "powerups": [0, 0, 0, 0]
+      "powerups": [ 0, 0, 0, 0 ]
+    },
+
+    {
+      "time": 1000,
+
+      "car_texture": [ "cakeCar2" ],
+      "cars_Forward_texture": [ "cakeCar1" ],
+      "car_spacing": [ 250, 350, 500 ],
+      "car_speed_multiplier": 1,
+      "number_of_cars": 2,
+
+      "water_zone_type": "cake",
+      "log_texture": ["cherry"],
+      "log_spacing": [ 250, 350, 400 ],
+
+      "log_speed_multiplier": 1,
+      "number_of_logs": 2,
+
+      "turtle_sink_multiplier": 1,
+      "number_of_turtles": 0,
+
+      "number_of_lives": 3,
+      "goal_count": 5,
+
+      "powerups": [ 0, 0, 0, 0 ]
     }
     
 

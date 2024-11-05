@@ -1,8 +1,12 @@
+
 import { Boot } from "./scenes/Boot";
 // menus
 import { MainMenu } from "./scenes/Menus/MainMenu";
 import { LevelMenu } from "./scenes/Menus/LevelMenu";
 import { PauseMenu } from "./scenes/Menus/PauseMenu";
+//submenus
+import { Credits } from "./scenes/Menus/Submenus/Credits";
+import { Controls } from "./scenes/Menus/Submenus/Controls"
 // game
 import { Game as MainGame } from "./scenes/Game";
 import { AUTO, Scale, Game } from "phaser";
@@ -27,8 +31,10 @@ const config = {
   scale: {
     mode: Scale.FIT,
   },
-  scene: [Boot, MainMenu, LevelMenu, MainGame, PauseMenu, GameOver, GameWin],
-  parent: "phaser-game",
+
+  scene: [Boot, MainMenu, LevelMenu, MainGame, PauseMenu, GameOver, GameWin, Credits, Controls],
+  parent: 'phaser-game',
+
 };
 
 export default new Game(config);
