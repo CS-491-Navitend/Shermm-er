@@ -34,11 +34,11 @@ export class Credits extends Scene {
             
             "Steve Curran",
             "Mike Luland",
-            "Johhny Mayo",
+            "Johnny Mayo",
             " ",
             "Sound Design",
             
-            "Johhny Mayo",
+            "Johnny Mayo",
             " ",
             "Special Thanks",
             
