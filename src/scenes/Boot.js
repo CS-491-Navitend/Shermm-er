@@ -61,6 +61,17 @@ import batmanObjective from "/assets/BatmanLevel/batmanObjective.png";
 import batmanBarrel from "/assets/BatmanLevel/barrel.png";
 import batmobile from "/assets/BatmanLevel/batmobile.png";
 
+
+//import desert assets
+import desert from "/assets/desertLevel/desert.png";
+import deserSafeZone from "/assets/desertLevel/desertSafeZone.png";
+import desertRoad from "/assets/desertLevel/desertRoad.png";
+import desertGoal from "/assets/desertLevel/desertGoal.png";
+import desertBuggy1 from "/assets/desertLevel/desertBuggy1.png";
+import desertBuggy2 from "/assets/desertLevel/desertBuggy2.png";
+import desertTruck from "/assets/desertLevel/desertTruck.png";
+import desertObjective from "/assets/desertLevel/desertObjective.png";
+
 //swamp assets
 import swamp from "/assets/SwampLevel/swamp.png"
 import swampSafeZone from "/assets/SwampLevel/swampSafeZone.png";
@@ -68,6 +79,7 @@ import swampGoal from "/assets/SwampLevel/swampGoal.png";
 import swampObjective from "/assets/SwampLevel/swampObjective.png";
 import swampRoad from "/assets/SwampLevel/swampRoad.png";
 import swampLog from "/assets/SwampLevel/swampLog.png";
+
 
 export class Boot extends Scene {
   constructor() {
@@ -141,6 +153,17 @@ export class Boot extends Scene {
     this.load.image("batmanBarrel", batmanBarrel);
     this.load.image("batmobile", batmobile);
 
+
+    //desert Assets
+    this.load.image("desert", desert);
+    this.load.image("desertSafeZone", deserSafeZone);
+    this.load.image("desertGoal", desertGoal);
+    this.load.image("desertRoad", desertRoad);
+    this.load.image("desertBuggy1", desertBuggy1);
+    this.load.image("desertBuggy2", desertBuggy2);
+    this.load.image("desertTruck", desertTruck);
+    this.load.image("desertObjective", desertObjective);
+
     //swamp assets
     this.load.image("swamp", swamp);
     this.load.image("swampSafeZone", swampSafeZone);
@@ -148,8 +171,6 @@ export class Boot extends Scene {
     this.load.image("swampObjective", swampObjective);
     this.load.image("swampRoad", swampRoad);
     this.load.image("swampLog", swampLog);
-
-
 
 
   }

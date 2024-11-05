@@ -129,6 +129,31 @@
     {
       "time": 1000,
 
+      "car_texture": ["desertBuggy2", "desertTruck"],
+      "cars_Forward_texture": ["desertBuggy1"],
+      "car_spacing": [250, 350, 500],
+      "car_speed_multiplier": 1,
+      "number_of_cars": 1,
+
+      "water_zone_type": "desert",
+      "log_texture": ["", ""],
+      "log_spacing": [250, 350, 400],
+
+      "log_speed_multiplier": 1,
+      "number_of_logs": 1,
+
+      "turtle_sink_multiplier": 1,
+      "number_of_turtles": 0,
+
+      "number_of_lives": 5,
+      "goal_count": 5,
+
+      "powerups": [0, 0, 0, 0]
+    },
+
+    {
+      "time": 1000,
+
       "car_texture": [],
       "cars_Forward_texture": [],
       "car_spacing": [250, 350, 500],
@@ -150,5 +175,6 @@
 
       "powerups": [0, 0, 0, 0]
     }
+
   ]
 }
