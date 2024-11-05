@@ -80,6 +80,22 @@ import LavaTractor from "/assets/LavaLevel/LavaTruck.png";
 import LavaCar1 from "/assets/LavaLevel/LavaCar.png";
 import LavaCar2 from "/assets/LavaLevel/LavaCar2.png";
 
+// Import Sky Assets
+import skySafeZone from "/assets/SkyLevel/skySafeZone.png";
+import sky from "/assets/SkyLevel/sky.png";
+import skyRoad from "/assets/SkyLevel/skyRoad.png";
+import skyGoal from "/assets/SkyLevel/skyGoal.png";
+import skyObjective from "/assets/SkyLevel/skyObjective.png";
+import lightningBolt from "/assets/SkyLevel/lightningBolt.png";
+import lightningBoltForward from "/assets/SkyLevel/lightningBoltForward.png";
+import wind from "/assets/SkyLevel/wind.png";
+import windForward from "/assets/SkyLevel/windForward.png";
+import blimp from "/assets/SkyLevel/blimp.png";
+import blimpForward from "/assets/SkyLevel/blimpForward.png";
+import cloudsLong from "/assets/SkyLevel/cloudsLong.png";
+import cloudsShort from "/assets/SkyLevel/cloudsShort.png";
+
+
 
 
 export class Boot extends Scene {
@@ -148,6 +164,21 @@ export class Boot extends Scene {
     this.load.image("lavaCar2", LavaCar2)
     this.load.image("lavaTruck", LavaTractor)
     //this.load.image("waterRoad", waterRoad);
+
+    //Sky Assets
+    this.load.image("skySafeZone", skySafeZone);
+    this.load.image("sky", sky);
+    this.load.image("skyRoad", skyRoad);
+    this.load.image("skyGoal", skyGoal);
+    this.load.image("skyObjective", skyObjective)
+    this.load.image("lightningBolt", lightningBolt);
+    this.load.image("lightningBoltForward", lightningBoltForward);
+    this.load.image("wind", wind);  
+    this.load.image("windForward", windForward);
+    this.load.image("blimp", blimp);
+    this.load.image("blimpForward", blimpForward);
+    this.load.image("cloudsShort", cloudsShort);
+    this.load.image("cloudsLong", cloudsLong);
 
   }
 
