@@ -82,6 +82,9 @@ import swampLog from "/assets/SwampLevel/swampLog.png";
 import cake from "/assets/CakeLevel/Cake.png";
 import cakeSafeZone from "/assets/CakeLevel/ShortcakeSafeZone.png";
 import cakeRoad from "/assets/CakeLevel/CakeRoad.png";
+import cakeGoal from "/assets/CakeLevel/CakeGoal.png";
+import cakeObjective from "/assets/CakeLevel/CakeObjective.png";
+import cakeCherry from "/assets/CakeLevel/cherry.png"
 
 export class Boot extends Scene {
   constructor() {
@@ -167,6 +170,9 @@ export class Boot extends Scene {
     this.load.image("cake", cake);
     this.load.image("cakeSafeZone", cakeSafeZone);
     this.load.image("cakeRoad", cakeRoad);
+    this.load.image("cakeGoal", cakeGoal);
+    this.load.image("cakeObjective", cakeObjective);
+    this.load.image("cherry", cakeCherry);
 
 
     //UI and Background
