@@ -72,7 +72,7 @@ export class LevelMenu extends Scene {
 
   createLevelButtons() {
     for (let col = 0; col < this.maxCols; col++) {
-      for (let row = 0; row <= this.maxRows; row++) {
+      for (let row = 0; row < this.maxRows; row++) {
         const levelNumber = col * this.maxCols + row + 1;
 
         // Check if the level exists
