@@ -19,6 +19,7 @@ export class LevelMenu extends Scene {
 
   preload() {
         this.load.image("background", "/assets/ShermMainMenu.png")
+        this.load.image("buttonImage", "/assets/UI/Button.png");
     }
 
   create(buttons) {

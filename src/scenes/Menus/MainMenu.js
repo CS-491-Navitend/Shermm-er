@@ -13,7 +13,8 @@ export class MainMenu extends Scene {
 
 
     preload() {
-        this.load.image("background", "/assets/ShermMainMenu.png")
+        this.load.image("background", "/assets/UI/ShermMainMenu.png");
+        this.load.image("buttonImage", "/assets/UI/Button.png");
     }
 
 
@@ -49,10 +50,10 @@ export class MainMenu extends Scene {
 
 
         // Create buttons
-        const playButton = this.createButton(512, 400, 'Play', 0);
-        const levelSelectButton = this.createButton(512, 500, "Level Select", 1);
+        const playButton = this.createButton(512, 370, 'Play', 0);
+        const levelSelectButton = this.createButton(512, 480, "Level Select", 1);
+        const controlsButton = this.createButton(512, 590, "Controls", 2);
         const creditsButton = this.createButton(512, 700, "Credits", 3);
-        const controlsButton = this.createButton(512, 600, "Controls", 2);
 
 
 
@@ -70,34 +71,40 @@ export class MainMenu extends Scene {
     }
 
     createButton(x, y, text, mainButtonIndex) {
-        const button = this.add
+        const buttonImage = this.add.image(x, y, 'buttonImage').setOrigin(0.5);
+
+        buttonImage.setScale(1);
+
+        const buttonText = this.add
             .text(x, y, text, {
                 fontFamily: 'Pixel',
                 fontStyle: "bold",
                 fontSize: this.rem * 2 + "px",
-                padding: { x: 100, y: 20 },
-                backgroundColor: "#3388FF",
+                //padding: { x: 100, y: 20 },
+                //backgroundColor: "#3388FF",
             })
             .setOrigin(0.5)
-            .setInteractive({ useHandCursor: true });
+            
         //console.log("Creating Button: ", text);
 
         //buttons length for main menu
 
-        button.on("pointerover", () => {
+        buttonImage.setInteractive({ useHandCursor: true });
+
+        buttonImage.on("pointerover", () => {
             this.selectedButtonIndex = mainButtonIndex; // Update the selected index on hover
             this.highlightButton(this.selectedButtonIndex);
         });
 
-        button.on("pointerout", () => {
+        buttonImage.on("pointerout", () => {
             this.highlightButton(this.selectedButtonIndex);
         });
 
-        button.on("pointerdown", () => {
+        buttonImage.on("pointerdown", () => {
             this.confirmSelection();
         });
 
-        return button;
+        return { buttonImage, buttonText };
     }
 
     changeSelection(direction) {
@@ -119,9 +126,22 @@ export class MainMenu extends Scene {
     }
 
     highlightButton(index) {
-        this.buttons.forEach((button, i) => {
+        this.buttons.forEach((buttonobj, i) => {
             const highlight = i === index;
-            button.setStyle({ backgroundColor: highlight ? "#44AAFF" : "#3388FF" });
+            const buttonImage = buttonobj.buttonImage;
+            const buttonText = buttonobj.buttonText;
+
+            if (buttonImage) {
+                buttonImage.setTint(highlight ? 0x44AAFF : 0xFFFFFF);
+            }
+
+            if (buttonText) {
+                buttonText.setStyle({
+                    color: highlight ? "#000000" : "#FFFFFF",  // Change text color
+                    stroke: highlight ? "#FFFFFF" : "#000000",  // Change stroke color
+                    strokeThickness: highlight ? 6 : 4,        // Change stroke thickness
+                });
+            }
         });
     }
 
@@ -146,11 +166,12 @@ export class MainMenu extends Scene {
         if (this.buttons.length > 0) {
             //console.log("Destorying Buttons...")
             this.buttons.forEach(button => {
-                button.off("pointerdown");
-                button.off("pointerover");
-                button.off("pointerout");
-                button.destroy();
-                console.log("Button destroyed: ", button.text);
+                button.buttonImage.off("pointerdown");
+                button.buttonImage.off("pointerover");
+                button.buttonImage.off("pointerout");
+                button.buttonImage.destroy();
+                button.buttonText.destroy();
+                console.log("Button destroyed: ", button.buttonText.text);
             });
             this.buttons = [];
             this.input.keyboard.removeAllListeners();

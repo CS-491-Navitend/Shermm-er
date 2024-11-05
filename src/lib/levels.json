@@ -154,8 +154,8 @@
     {
       "time": 1000,
 
-      "car_texture": [  ],
-      "cars_Forward_texture": [  ],
+      "car_texture": [ "cakeCar2" ],
+      "cars_Forward_texture": [ "cakeCar1" ],
       "car_spacing": [ 250, 350, 500 ],
       "car_speed_multiplier": 1,
       "number_of_cars": 2,

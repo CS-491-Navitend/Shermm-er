@@ -57,7 +57,8 @@ import LavaCar2 from "/assets/LavaLevel/LavaCar2.png";
 
 
 //Import UI and Background
-import BackgroundMain from "/assets/ShermMainMenu.png";
+import backgroundMain from "/assets/UI/ShermMainMenu.png";
+import button from "/assets/UI/Button.png";
 
 
 //import batman assets
@@ -85,6 +86,8 @@ import cakeRoad from "/assets/CakeLevel/CakeRoad.png";
 import cakeGoal from "/assets/CakeLevel/CakeGoal.png";
 import cakeObjective from "/assets/CakeLevel/CakeObjective.png";
 import cakeCherry from "/assets/CakeLevel/cherry.png"
+import cakeCar1 from "/assets/CakeLevel/cakeCar1.png";
+import cakeCar2 from "/assets/CakeLevel/iceCreamTruck.png";
 
 export class Boot extends Scene {
   constructor() {
@@ -173,10 +176,13 @@ export class Boot extends Scene {
     this.load.image("cakeGoal", cakeGoal);
     this.load.image("cakeObjective", cakeObjective);
     this.load.image("cherry", cakeCherry);
+    this.load.image("cakeCar1", cakeCar1);
+    this.load.image("cakeCar2", cakeCar2);
 
 
     //UI and Background
-    this.load.image("BackgroundMain", BackgroundMain);
+    this.load.image("background", backgroundMain);
+    this.load.image("button", button);
 
     //Font Family
     const font = new FontFaceObserver('Pixel');
