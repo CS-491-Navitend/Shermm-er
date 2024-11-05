@@ -28,6 +28,17 @@ export class Timer {
     if (timeElement) {
         timeElement.innerText = `Time: ${this.timeRemaining}`;
     }
+
+    if(this.timeRemaining % 3 == 0){//Sink and raise turtles every 3 seconds
+      if(this.game.turtlesAreSunk == false){
+        console.log("Sinking turtles");
+        this.game.sinkTurtles();
+      }
+      else if (this.game.turtlesAreSunk == true){
+        console.log("Raising turtles");
+        this.game.raiseTurtles();
+      }
+    }
   }
 
   start() {

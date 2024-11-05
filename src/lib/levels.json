@@ -17,8 +17,12 @@
       "log_speed_multiplier": 1,
       "number_of_logs": 2,
 
+      "turtle_texture": ["turtleShort", "turtleLong"],
+      "turtles_Forward_texture": ["turtleShortForward", "turtleLongForward"],
+      "turtle_spacing": [250, 350, 400],
+      "turtle_speed_multiplier": 1,
       "turtle_sink_multiplier": 1,
-      "number_of_turtles": 1,
+      "number_of_turtles": 3,
 
       "number_of_lives": 99,
       "goal_count": 3,
@@ -42,8 +46,12 @@
       "log_speed_multiplier": 1,
       "number_of_logs": 2,
 
+      "turtle_texture": ["turtleShort", "turtleLong"],
+      "turtles_Forward_texture": ["turtleShortForward", "turtleLongForward"],
+      "turtle_spacing": [250, 350, 400],
+      "turtle_speed_multiplier": 1,
       "turtle_sink_multiplier": 1,
-      "number_of_turtles": 0,
+      "number_of_turtles": 3,
 
       "number_of_lives": 5,
       "goal_count": 5,
@@ -66,7 +74,10 @@
 
       "log_speed_multiplier": 1,
       "number_of_logs": 2,
-
+      
+      "turtle_texture": [],
+      "turtles_Forward_texture": [],
+      "turtle_spacing": [250, 350, 400],
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 0,
       
@@ -92,6 +103,9 @@
       "log_speed_multiplier": 1,
       "number_of_logs": 2,
 
+      "turtle_texture": [],
+      "turtles_Forward_texture": [],
+      "turtle_spacing": [250, 350, 400],
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 0,
 
@@ -100,6 +114,37 @@
 
       "powerups": [0, 0, 0, 0]
     },
+
+    {
+      
+      "time": 10000,
+
+      "car_texture": ["wind","lightningBolt"],
+      "cars_Forward_texture": ["windForward", "lightningBoltForward"],
+      "car_spacing": [250, 350, 100],
+      "car_speed_multiplier": 1,
+      "number_of_cars": 2,
+
+      "water_zone_type": "sky",
+
+      "log_texture": ["blimp"],
+      "log_spacing": [250, 350, 400],
+      "log_speed_multiplier": 1,
+      "number_of_logs": 2,
+
+      "turtle_texture": ["cloudsLong", "cloudsShort"],
+      "turtles_Forward_texture": ["cloudsLong", "cloudsShort"],
+      "turtle_spacing": [250, 350, 400],
+      "turtle_speed_multiplier": 1,
+      "turtle_sink_multiplier": 1,
+      "number_of_turtles": 3,
+
+      "number_of_lives": 99,
+      "goal_count": 3,
+
+      "powerups": [0, 0, 0, 0]
+    },
+
 
     {
       "time": 1000,

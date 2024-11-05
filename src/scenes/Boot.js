@@ -26,8 +26,16 @@ import waterGoal from "/assets/WaterLevel/waterGoal.png";
 import ShortLog from "/assets/WaterLevel/ShortLog.png";
 import LongLog from "/assets/WaterLevel/LongLog.png";
 import turtle from "/assets/WaterLevel/turtle.png";
-import waterObjective from "/assets/WaterLevel/waterObjective.png";
 import turtleforward from "/assets/WaterLevel/turtleforward.png";
+import turtleShort from "/assets/WaterLevel/turtlesShort.png";
+import turtleLong from "/assets/WaterLevel/turtlesLong.png";
+import turtleShortForward from "/assets/WaterLevel/turtlesShortForward.png";
+import turtleLongForward from "/assets/WaterLevel/turtlesLongForward.png";
+import turtleShortSink1 from "/assets/WaterLevel/turtlesShortSink1.png";
+import turtleLongSink1 from "/assets/WaterLevel/turtlesLongSink1.png";
+import turtleShortSink2 from "/assets/WaterLevel/turtlesShortSink2.png";
+import turtleLongSink2 from "/assets/WaterLevel/turtlesLongSink2.png";
+import waterObjective from "/assets/WaterLevel/waterObjective.png";
 
 //Import Ice assets
 import iceSafeZone from "/assets/IceLevel/IceSafeZone.png";
@@ -51,6 +59,23 @@ import lavaRoad from "/assets/LavaLevel/LavaRoad.png";
 import LavaTractor from "/assets/LavaLevel/LavaTruck.png";
 import LavaCar1 from "/assets/LavaLevel/LavaCar.png";
 import LavaCar2 from "/assets/LavaLevel/LavaCar2.png";
+
+// Import Sky Assets
+import skySafeZone from "/assets/SkyLevel/skySafeZone.png";
+import sky from "/assets/SkyLevel/sky.png";
+import skyRoad from "/assets/SkyLevel/skyRoad.png";
+import skyGoal from "/assets/SkyLevel/skyGoal.png";
+import skyObjective from "/assets/SkyLevel/skyObjective.png";
+import lightningBolt from "/assets/SkyLevel/lightningBolt.png";
+import lightningBoltForward from "/assets/SkyLevel/lightningBoltForward.png";
+import wind from "/assets/SkyLevel/wind.png";
+import windForward from "/assets/SkyLevel/windForward.png";
+import blimp from "/assets/SkyLevel/blimp.png";
+import blimpForward from "/assets/SkyLevel/blimpForward.png";
+import cloudsLong from "/assets/SkyLevel/cloudsLong.png";
+import cloudsShort from "/assets/SkyLevel/cloudsShort.png";
+
+
 
 //import batman assets
 import batman from "/assets/BatmanLevel/batman.png";
@@ -81,6 +106,7 @@ import swampRoad from "/assets/SwampLevel/swampRoad.png";
 import swampLog from "/assets/SwampLevel/swampLog.png";
 
 
+
 export class Boot extends Scene {
   constructor() {
     super("Boot");
@@ -101,6 +127,14 @@ export class Boot extends Scene {
     this.load.image("LongLog", LongLog);
     this.load.image("turtle", turtle);
     this.load.image("turtleforward", turtleforward);
+    this.load.image("turtleShort", turtleShort);
+    this.load.image("turtleLong", turtleLong);
+    this.load.image("turtleShortForward", turtleShortForward);
+    this.load.image("turtleLongForward", turtleLongForward);
+    this.load.image("turtleShortSink1", turtleShortSink1);
+    this.load.image("turtleLongSink1", turtleLongSink1);
+    this.load.image("turtleShortSink2", turtleShortSink2);
+    this.load.image("turtleLongSink2", turtleLongSink2);
     this.load.image("shermie", shermie);
     this.load.image("life", life);
 
@@ -185,6 +219,21 @@ export class Boot extends Scene {
     this.load.image("swampRoad", swampRoad);
     this.load.image("swampLog", swampLog);
 
+
+    //Sky Assets
+    this.load.image("skySafeZone", skySafeZone);
+    this.load.image("sky", sky);
+    this.load.image("skyRoad", skyRoad);
+    this.load.image("skyGoal", skyGoal);
+    this.load.image("skyObjective", skyObjective)
+    this.load.image("lightningBolt", lightningBolt);
+    this.load.image("lightningBoltForward", lightningBoltForward);
+    this.load.image("wind", wind);  
+    this.load.image("windForward", windForward);
+    this.load.image("blimp", blimp);
+    this.load.image("blimpForward", blimpForward);
+    this.load.image("cloudsShort", cloudsShort);
+    this.load.image("cloudsLong", cloudsLong);
 
   }
 
