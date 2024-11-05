@@ -154,6 +154,19 @@ export class Boot extends Scene {
     this.load.image("batmobile", batmobile);
 
 
+    // Outer Space Assets
+    this.load.image("outerSpace", "/assets/OuterSpaceLevel/outerSpace.png");
+    this.load.image("outerSpaceRoad", "/assets/OuterSpaceLevel/outerSpaceRoad.png");
+    this.load.image("outerSpaceSafeZone", "/assets/OuterSpaceLevel/outerSpaceSafeZone.png");
+    this.load.image("outerSpaceRock", "/assets/OuterSpaceLevel/outerSpaceRock.png");
+    this.load.image("outerSpaceGoal", "/assets/OuterSpaceLevel/outerSpaceGoal.png");
+    this.load.image("outerSpaceObjective", "/assets/OuterSpaceLevel/outerSpaceObjective.png");
+    this.load.image("outerSpaceCar1", "/assets/OuterSpaceLevel/outerSpaceCar1.png");
+    this.load.image("outerSpaceCar1b", "/assets/OuterSpaceLevel/outerSpaceCar1b.png");
+    this.load.image("outerSpaceCar2", "/assets/OuterSpaceLevel/outerSpaceCar2.png");
+    this.load.image("outerSpaceCar2b", "/assets/OuterSpaceLevel/outerSpaceCar2b.png");
+
+
     //desert Assets
     this.load.image("desert", desert);
     this.load.image("desertSafeZone", deserSafeZone);
@@ -172,10 +185,11 @@ export class Boot extends Scene {
     this.load.image("swampRoad", swampRoad);
     this.load.image("swampLog", swampLog);
 
+
   }
 
   create() {
-    this.scene.start("MainMenu");
-    // this.scene.start("Game", { level: 0 }); //dev level on start
+    // this.scene.start("MainMenu");
+    this.scene.start("Game", { level: 5 }); //dev level on start
   }
 }
