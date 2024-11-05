@@ -94,8 +94,10 @@ import batmanGoal from "/assets/BatmanLevel/batmanGoal.png";
 import batmanObjective from "/assets/BatmanLevel/batmanObjective.png";
 import batmanBarrel from "/assets/BatmanLevel/barrel.png";
 import batmobile from "/assets/BatmanLevel/batmobile.png";
+import batmobileForward from "/assets/BatmanLevel/batmobileForward.png";
 import bap from "/assets/BatmanLevel/bap.png";
 import fwip from "/assets/BatmanLevel/fwip.png";
+import joker from "/assets/BatmanLevel/joker.png";
 
 //import desert assets
 import desert from "/assets/desertLevel/desert.png";
@@ -146,7 +148,8 @@ import cakeGoal from "/assets/CakeLevel/CakeGoal.png";
 import cakeObjective from "/assets/CakeLevel/CakeObjective.png";
 import cakeCherry from "/assets/CakeLevel/cherry.png"
 import cakeCar1 from "/assets/CakeLevel/cakeCar1.png";
-import cakeCar2 from "/assets/CakeLevel/iceCreamTruck.png";
+import cakeCar2 from "/assets/CakeLevel/cakeCar2.png";
+import banana from "/assets/CakeLevel/banana.png";
 
 export class Boot extends Scene {
   constructor() {
@@ -231,9 +234,11 @@ export class Boot extends Scene {
     this.load.image("batmanObjective", batmanObjective);
     this.load.image("batmanBarrel", batmanBarrel);
     this.load.image("batmobile", batmobile);
+    this.load.image("batmobileForward", batmobileForward);
     this.load.image("bap", bap);
     this.load.image("fwip", fwip);
-
+    this.load.image("joker", joker);
+    
     // Outer Space Assets
     this.load.image("outerSpace", outerSpace);
     this.load.image("outerSpaceRoad", outerSpaceRoad);
@@ -299,6 +304,7 @@ export class Boot extends Scene {
     this.load.image("cherry", cakeCherry);
     this.load.image("cakeCar1", cakeCar1);
     this.load.image("cakeCar2", cakeCar2);
+    this.load.image("banana", banana);
 
 
     //UI and Background

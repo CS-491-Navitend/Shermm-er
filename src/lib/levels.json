@@ -129,7 +129,7 @@
 
       "water_zone_type": "sky",
 
-      "log_texture": ["blimp"],
+      "log_texture": ["blimpForward"],
       "log_spacing": [250, 350, 400],
       "log_speed_multiplier": 1,
       "number_of_logs": 2,
@@ -242,28 +242,28 @@
     {
       "time": 1000,
 
-      "car_texture": ["batmobile", "bap"],
-      "cars_Forward_texture": ["bap", "fwip"],
-      "car_spacing": [250, 350, 500],
+      "car_texture": ["cakeCar1"],
+      "cars_Forward_texture": ["cakeCar2"],
+      "car_spacing": [ 250, 350, 500 ],
       "car_speed_multiplier": 1,
-      "number_of_cars": 1,
+      "number_of_cars": 2,
 
-      "water_zone_type": "batman",
-      "log_texture": ["batmanBarrel", "shipping"],
-      "log_spacing": [250, 350, 400],
+      "water_zone_type": "cake",
+      "log_texture": ["cherry","banana"],
+      "log_spacing": [ 250, 350, 400 ],
 
       "log_speed_multiplier": 1,
-      "number_of_logs": 1,
+      "number_of_logs": 2,
 
-      "turtle_texture": ["cloudsLong", "cloudsShort"],
-      "turtles_Forward_texture": ["cloudsLong", "cloudsShort"],
+      "turtle_texture": ["cherry", "cherry"],
+      "turtles_Forward_texture": ["cherry", "cherry"],
       "turtle_spacing": [250, 350, 400],
       "turtle_speed_multiplier": 1,
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 3,
 
-      "number_of_lives": 5,
-      "goal_count": 3,
+      "number_of_lives": 3,
+      "goal_count": 5,
 
       "powerups": [ 0, 0, 0, 0 ]
     },
@@ -271,24 +271,28 @@
     {
       "time": 1000,
 
-      "car_texture": [ "cakeCar2" ],
-      "cars_Forward_texture": [ "cakeCar1" ],
-      "car_spacing": [ 250, 350, 500 ],
+      "car_texture": ["batmobile", "bap"],
+      "cars_Forward_texture": ["bap", "fwip", "batmobileForward"],
+      "car_spacing": [250, 350, 500],
       "car_speed_multiplier": 1,
       "number_of_cars": 2,
 
-      "water_zone_type": "cake",
-      "log_texture": ["cherry"],
-      "log_spacing": [ 250, 350, 400 ],
+      "water_zone_type": "batman",
+      "log_texture": ["batmanBarrel"],
+      "log_spacing": [250, 350, 400],
 
       "log_speed_multiplier": 1,
-      "number_of_logs": 2,
+      "number_of_logs": 4,
 
+      "turtle_texture": ["joker", "joker"],
+      "turtles_Forward_texture": ["joker", "joker"],
+      "turtle_spacing": [250, 350, 400],
+      "turtle_speed_multiplier": 1,
       "turtle_sink_multiplier": 1,
-      "number_of_turtles": 0,
+      "number_of_turtles": 3,
 
-      "number_of_lives": 3,
-      "goal_count": 5,
+      "number_of_lives": 5,
+      "goal_count": 3,
 
       "powerups": [ 0, 0, 0, 0 ]
     }
