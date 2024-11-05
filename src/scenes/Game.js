@@ -3,7 +3,7 @@ import { PauseMenu } from "./Menus/PauseMenu";
 import { GameLogic } from "/src/lib/GameLogic";
 import { Drawing } from "/src/lib/Drawing";
 import { Timer } from "/src/lib/Timer";
-import { createVehicles, createLogs } from "/src/lib/Spawner.js";
+import { createVehicles, createLogs, createTurtles } from "/src/lib/Spawner.js";
 import { levels } from "/src/lib/levels";
 
 export class Game extends Scene {
@@ -27,11 +27,13 @@ export class Game extends Scene {
     this.vehicles = null;
     this.logs = null;
     this.turtles = null;
+    this.sinkingTurtles = null;
     this.winCount = 0;
     this.lives = 0;
     this.resetCount = 0;
     this.goalCount = 0;
     this.numOfGoals = 5;
+    this.savedVelocity = 0;
 
     // road values
     this.numberOfRoads = 5;
@@ -47,7 +49,7 @@ export class Game extends Scene {
     this.timeRemaining = this.timerDuration;
     this.numberOfCars = 0;
     this.numberOfLogs = 0;
-    this.numberOfFrogs = 0;
+    this.numberOfTurtles = 0;
     this.carSpeedMultiplier = 1;
     this.logSpeedMultiplier = 1;
     this.frogSinkMultiplier = 1;
@@ -62,7 +64,11 @@ export class Game extends Scene {
     this.invincibilityDuration = 500;
     this.isAnimating = false;
 
+    //For level transitions
     this.advanceNumber = 0;
+
+    //Turtle sinking flag
+    this.turtlesAreSunk = false;
   }
 
   create(data) {
@@ -77,17 +83,21 @@ export class Game extends Scene {
     this.lives = levels[data["level"]]["number_of_lives"];
     this.carSpeedMultiplier = levels[data["level"]]["car_speed_multiplier"];
     this.logSpeedMultiplier = levels[data["level"]]["log_speed_multiplier"];
-    this.frogSinkMultiplier = levels[data["level"]]["turtle_sink_multiplier"];
+    this.turtleSpeedMultiplier = levels[data["level"]]["turtle_speed_multiplier"];
+    this.turtleSinkMultiplier = levels[data["level"]]["turtle_sink_multiplier"];
 
     // Object and spacing properties for vehicles and logs
     this.numberOfCars = levels[data["level"]]["number_of_cars"];
-    this.numberOfLogs = levels[data["level"]]["number_of_logs"];
-    this.logTexture = levels[data["level"]]["log_texture"];
-    this.numberOfTurtles = levels[data["level"]]["number_of_turtles"];
-    this.logSpacing = levels[data["level"]]["log_spacing"];
     this.cars = levels[data["level"]]["car_texture"];
     this.carsForward = levels[data["level"]]["cars_Forward_texture"];
     this.carSpacing = levels[data["level"]]["car_spacing"];
+    this.numberOfLogs = levels[data["level"]]["number_of_logs"];
+    this.logTexture = levels[data["level"]]["log_texture"];
+    this.logSpacing = levels[data["level"]]["log_spacing"];
+    this.numberOfTurtles = levels[data["level"]]["number_of_turtles"];
+    this.turtleTexture = levels[data["level"]]["turtle_texture"];
+    this.turtleTextureForward = levels[data["level"]]["turtles_Forward_texture"];
+    this.turtleSpacing = levels[data["level"]]["turtle_spacing"];
 
     this.updateLives(); //display lives in the html bar
 
@@ -124,11 +134,9 @@ export class Game extends Scene {
     const safeZoneTexture = zoneType + "SafeZone";
     const endZoneTexture = zoneType + "Goal";
     const roadZoneTexture = zoneType + "Road";
-
     const objectiveTexture = zoneType + "Objective";
 
     const objectiveZone = this.physics.add.staticGroup();
-
     const safeZone = this.physics.add.staticGroup();
     const endZone = this.physics.add.staticGroup();
     const waterZone = this.physics.add.staticGroup();
@@ -141,15 +149,6 @@ export class Game extends Scene {
     //This is used for background image size. used to paint the lanes
     const imageWidth = this.width / 10;
     const imageHeight = this.height / (this.numberOfLanes * 2 + 3);
-
-    // Draw solid lines for top and bottom of road
-    // roadLines.strokeLineShape(new Phaser.Geom.Line(0, roadStart, this.width, roadStart));
-    // roadLines.strokeLineShape(new Phaser.Geom.Line(0, roadEnd, this.width, roadEnd));
-
-    // Draw dashed lines between road lanes
-    // for (let i = 0; i < this.numberOfRoads - 1; i++) {
-    //   this.drawing.drawDashedLine(roadLines, 10, roadStart - i * roadWidth - roadWidth, this.width, roadStart - i * roadWidth - roadWidth, 30, 20);
-    // }
 
     //LAST ROW DANGER ZONE LOGIC
     let danger;
@@ -242,7 +241,6 @@ export class Game extends Scene {
     if (this.textures.exists(zoneType)) {
       for (let i = 0; i < this.numberOfLanes; i++) {
         const waterY = roadEnd - (laneWidth + laneWidth / 2) - laneWidth * i; // Adjust y-coordinate per lane
-        //console.log("waterY " + i + " " + waterY)
         for (let j = 0; j < this.width; j += imageWidth) {
           waterZoneTexture = this.add
             .image(j + imageWidth / 2, waterY, zoneType)
@@ -296,76 +294,52 @@ export class Game extends Scene {
     // Create physics groups for vehicles and logs
     this.vehicles = this.physics.add.group();
     this.logs = this.physics.add.group();
+    this.turtles = this.physics.add.group();
+    this.sinkingTurtles = this.physics.add.group();
+    
 
-    // Spawn vehicles and logs based on configuration
+    // Spawn environmental objects based on configuration
     createVehicles(this, roadStart, roadWidth, this.cars, this.carsForward, this.carSpacing);
     createLogs(this, laneStart, laneWidth, this.logTexture, this.logSpacing);
-
-    //TODO - Create turtles
-    this.physics.add.overlap(
-      this.shermie,
-      objectiveZone,
-      (shermie, objective) => {
-        // Check if there’s already a killerShermie at this position
-        if (!this.physics.overlap(shermie, filledGoals)) {
-          this.goalCollision(objective); // Proceed with the goal logic
-          setTimeout(() => {
-            const killerShermie = this.add.image(objective.x, objective.y, "shermie");
-            this.physics.add.existing(killerShermie, true);
-            filledGoals.add(killerShermie); // Add to filledGoals
-          }, 1);
-        } else {
-          this.loseLife(); // Call loseLife if already colliding with a filled goal
-        }
-      },
-      null,
-      this
-    );
-
-    this.physics.add.overlap(
-      this.shermie,
-      this.vehicles,
-      () => {
-        this.sound.play("squash");
-        this.loseLife();
-      },
-      null,
-      this
-    );
-    this.physics.add.overlap(
-      this.shermie,
-      waterZone,
-      () => {
-        if (!this.isInvincible && !this.isAnimating && !this.physics.overlap(this.shermie, this.logs)) {
-          if (!this.inWater) {
-            // inWater flag to prevent repeated triggers
-            this.inWater = true;
-            this.shermie.setVelocity(0, 0);
-            this.sound.play("plunk");
-            this.loseLife();
-            this.time.delayedCall(1000, () => {
-              this.inWater = false;
-            }); // Reset after delay
-          }
-        }
-      },
-      null,
-      this
-    );
-    this.physics.add.overlap(this.shermie, this.logs, this.rideLog, null, this);
-    this.physics.add.overlap(
-      this.shermie,
-      endZone,
-      () => {
-        this.shermie.setVelocity(0, 0);
-        if (!this.physics.overlap(this.shermie, objectiveZone)) {
+    createTurtles(this, laneStart, laneWidth, this.turtleTexture, this.turtleTextureForward, this.turtleSpacing);
+    
+    this.physics.add.overlap(this.shermie, objectiveZone, (shermie, objective) => {
+      // Check if there’s already a killerShermie at this position
+      if (!this.physics.overlap(shermie, filledGoals)) {
+        this.goalCollision(objective); // Proceed with the goal logic
+        setTimeout(() => {
+          const killerShermie = this.add.image(objective.x, objective.y, "shermie");
+          this.physics.add.existing(killerShermie, true);
+          filledGoals.add(killerShermie); // Add to filledGoals
+        }, 1);
+      } else {
+        this.loseLife(); // Call loseLife if already colliding with a filled goal
+      }
+    }, null, this);
+    
+    this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
+    this.physics.add.overlap(this.shermie, waterZone, () => {
+      if (!this.isInvincible && !this.isAnimating && !this.physics.overlap(this.shermie, this.logs) && !this.physics.overlap(this.shermie, this.turtles) && !this.physics.overlap(this.shermie, this.sinkingTurtles)) {
+        if (!this.inWater) { // inWater flag to prevent repeated triggers
+          this.inWater = true;
+          this.shermie.setVelocity(0, 0);
           this.loseLife();
+          this.time.delayedCall(1000, () => { this.inWater = false; }); // Reset after delay
         }
-      },
-      null,
-      this
-    );
+      }
+    }, null, this);
+
     this.physics.add.overlap(this.shermie, filledGoals, this.loseLife, null, this);
+    this.physics.add.overlap(this.shermie, endZone,() => {this.shermie.setVelocity(0,0);
+
+    if (!this.physics.overlap(this.shermie, objectiveZone)) {
+      this.loseLife();
+    }
+    }, null, this);
+
+    this.physics.add.overlap(this.shermie, this.logs, this.rideLog, null, this);
+    this.physics.add.overlap(this.shermie, this.turtles, this.rideTurtle, null, this);
+    this.physics.add.overlap(this.shermie, this.sinkingTurtles, this.rideTurtle, null, this);
 
     this.playing = true;
 
@@ -382,51 +356,38 @@ export class Game extends Scene {
       frames: [{ key: "death1" }, { key: "death2" }, { key: "death3" }, { key: "death4" }],
       frameRate: 6, //speed of animation
       repeat: 0, // no repeat
-      // hideOnComplete: true // Hide the sprite after animation completes
     });
   }
 
   update() {
-    // Only update if the game is playing (not paused)
-
     if (this.paused) return;
 
     document.getElementById("score").innerText = `Score: ${this.goalCount}`;
-    // document.getElementById("time").innerText = `Time: ${this.timeRemaining}`;
-    // document.getElementById("lives").innerText = `Lives: ${this.lives}`;
 
     if (this.canMove && !this.isAnimating && !this.inWater) {
-      // Only move if the player can move
       if (this.cursors.left.isDown && this.shermie.x > 0) {
-        // move left if left arrow is pressed and not out of bounds
         this.shermie.x -= this.moveDistance;
         this.sound.play("hop");
       } else if (this.cursors.right.isDown && this.shermie.x < this.width) {
-        // '' right
         this.shermie.x += this.moveDistance;
         this.sound.play("hop");
       } else if (this.cursors.up.isDown && this.shermie.y > 0) {
-        // '' up
         this.shermie.y -= this.moveDistance;
         this.sound.play("hop");
       } else if (this.cursors.down.isDown && this.shermie.y < this.height) {
-        // '' down
         this.shermie.y += this.moveDistance;
         this.sound.play("hop");
       }
-      this.canMove = false; // Only allow the player to move once per key press
+      this.canMove = false;
     }
 
-    // If no keys are pressed, allow the player to move again
     if (!this.cursors.left.isDown && !this.cursors.right.isDown && !this.cursors.up.isDown && !this.cursors.down.isDown) {
       this.canMove = true;
     }
 
-    // Clamp the player's position within the game bounds
     this.shermie.x = Phaser.Math.Clamp(this.shermie.x, 0, this.width);
     this.shermie.y = Phaser.Math.Clamp(this.shermie.y, 0, this.height - this.safeZoneSize + this.moveDistance / 2);
 
-    // Move vehicles off the screen and reset their position
     this.vehicles.getChildren().forEach((vehicle) => {
       const isOffScreenLeft = vehicle.x < -vehicle.width / 2;
       const isOffScreenRight = vehicle.x > this.width + vehicle.width / 2;
@@ -436,7 +397,6 @@ export class Game extends Scene {
       }
     });
 
-    // Move logs off the screen and reset their position
     this.logs.getChildren().forEach((log) => {
       const isOffScreenLeft = log.x < -log.width / 2;
       const isOffScreenRight = log.x > this.width + log.width / 2;
@@ -447,8 +407,30 @@ export class Game extends Scene {
         log.x = -log.width / 2;
       }
     });
+
+    this.turtles.getChildren().forEach((turtle) => {
+      const isOffScreenLeft = turtle.x < -turtle.width / 2;
+      const isOffScreenRight = turtle.x > this.width + turtle.width / 2;
+
+      if(isOffScreenLeft){
+        turtle.x = this.width + turtle.width / 2;
+      }else if(isOffScreenRight){
+        turtle.x = -turtle.width / 2;
+      }
+    })
+
+    this.sinkingTurtles.getChildren().forEach((turtle) => {
+      const isOffScreenLeft = turtle.x < -turtle.width / 2;
+      const isOffScreenRight = turtle.x > this.width + turtle.width / 2;
+
+      if(isOffScreenLeft){
+        turtle.x = this.width + turtle.width / 2;
+      }else if(isOffScreenRight){ 
+        turtle.x = -turtle.width / 2;
+      }
+    })
   }
-  //Create a vehicle
+
   spawnVehicle(x, y, texture, speed) {
     let vehicle = this.vehicles.create(x, y, texture);
     vehicle.body.setVelocityX(speed);
@@ -457,27 +439,44 @@ export class Game extends Scene {
     return vehicle;
   }
 
-  //Create a log
   spawnLog(x, y, texture, speed) {
     let log = this.logs.create(x, y, texture);
     log.body.setVelocityX(speed);
     log.body.allowGravity = false;
-    log.body.immovalbe = true;
+    log.body.immovable = true;
     log.body.setSize(log.width, 50);
     log.setDepth(-1);
     return log;
   }
 
+  spawnTurtle(x, y, texture, speed, canSink){
+    if(canSink){
+      let turtle = this.turtles.create(x, y, texture);
+      turtle.body.setVelocityX(speed);
+      turtle.body.allowGravity = false;
+      turtle.immovable = true;
+      turtle.body.setSize(turtle.width, 50);
+      turtle.setDepth(-1);
+      return turtle;
+    }
+    else{
+      let turtle = this.sinkingTurtles.create(x, y, texture);
+      turtle.body.setVelocityX(speed);
+      turtle.body.allowGravity = false; 
+      turtle.immovable = true;
+      turtle.body.setSize(turtle.width, 50);
+      turtle.setDepth(-1);
+      return turtle;
+    }
+  }
+
   loseLife() {
-    // Return if already invincible
     if (this.isInvincible || this.isAnimating) {
       return;
     }
     this.isAnimating = true;
     this.isInvincible = true;
-    // Trigger the death animation
     this.shermie.anims.play("shermieDeath");
-    // Wait for the animation to complete before performing reset actions
     this.shermie.once("animationcomplete-shermieDeath", () => {
       this.shermie.setTexture(this.defaultTexture);
       this.gameLogic.loseLife();
@@ -495,20 +494,38 @@ export class Game extends Scene {
   rideLog(shermie, log) {
     if (!this.inWater) {
       shermie.setVelocityX(log.body.velocity.x);
-    } else {
-      return;
     }
   }
 
+  rideTurtle(shermie, turtle){
+    if(!this.inWater){
+      shermie.setVelocityX(turtle.body.velocity.x);
+    }
+  }
+
+  sinkTurtles() {
+    this.sinkingTurtles.getChildren().forEach((turtle) => {
+      turtle.body.allowOverlap = false;
+      turtle.setVisible(false);
+      turtle.body.checkCollision.none = true;
+    });
+    this.turtlesAreSunk = true;
+  }
+  
+  raiseTurtles(){
+    this.sinkingTurtles.getChildren().forEach((turtle) => {
+      turtle.body.allowOverlap = true;
+      turtle.setVisible(true);
+      turtle.body.checkCollision.none = false;
+    });
+    this.turtlesAreSunk = false;
+  }
+
   togglePause() {
-    // console.log("Toggle Pause called. Current paused state:", this.paused);
     if (this.paused) {
-      // console.log("hiding the menu since this.paused state is true");
-      //this.pauseMenu.hide();
       this.paused = false;
       this.timer.resume();
     } else {
-      // console.log("showing the menu since this.paused state is false");
       this.pauseMenu.show();
       this.paused = true;
       this.timer.pause();
@@ -516,7 +533,6 @@ export class Game extends Scene {
   }
 
   getAdvanceNumber() {
-    //Get number of goals for level transition
     return this.advanceNumber;
   }
 
@@ -528,7 +544,6 @@ export class Game extends Scene {
     const livesContainer = document.getElementById("lives-container");
     livesContainer.innerHTML = "";
 
-    // Generate a Base64 image URL from the texture, which will work in an HTML img tag
     const base64Image = this.textures.getBase64("shermie");
 
     for (let i = 0; i < this.lives; i++) {

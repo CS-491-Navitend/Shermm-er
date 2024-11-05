@@ -29,8 +29,16 @@ import waterGoal from "/assets/WaterLevel/waterGoal.png";
 import ShortLog from "/assets/WaterLevel/ShortLog.png";
 import LongLog from "/assets/WaterLevel/LongLog.png";
 import turtle from "/assets/WaterLevel/turtle.png";
-import waterObjective from "/assets/WaterLevel/waterObjective.png";
 import turtleforward from "/assets/WaterLevel/turtleforward.png";
+import turtleShort from "/assets/WaterLevel/turtlesShort.png";
+import turtleLong from "/assets/WaterLevel/turtlesLong.png";
+import turtleShortForward from "/assets/WaterLevel/turtlesShortForward.png";
+import turtleLongForward from "/assets/WaterLevel/turtlesLongForward.png";
+import turtleShortSink1 from "/assets/WaterLevel/turtlesShortSink1.png";
+import turtleLongSink1 from "/assets/WaterLevel/turtlesLongSink1.png";
+import turtleShortSink2 from "/assets/WaterLevel/turtlesShortSink2.png";
+import turtleLongSink2 from "/assets/WaterLevel/turtlesLongSink2.png";
+import waterObjective from "/assets/WaterLevel/waterObjective.png";
 
 //Import Ice assets
 import iceSafeZone from "/assets/IceLevel/IceSafeZone.png";
@@ -42,6 +50,7 @@ import iceLog from "/assets/IceLevel/iceLog.png";
 import iceberg from "/assets/IceLevel/iceberg.png";
 import iceCar1 from "/assets/IceLevel/iceCar1.png";
 import iceTractor from "/assets/IceLevel/iceTruck.png";
+import iceTurtle from "/assets/IceLevel/iceTurtle.png";
 
 // Import Lava assets
 import lavaSafeZone from "/assets/LavaLevel/LavaSafeZone.png";
@@ -54,6 +63,22 @@ import lavaRoad from "/assets/LavaLevel/LavaRoad.png";
 import LavaTractor from "/assets/LavaLevel/LavaTruck.png";
 import LavaCar1 from "/assets/LavaLevel/LavaCar.png";
 import LavaCar2 from "/assets/LavaLevel/LavaCar2.png";
+import lavaTurtle from "/assets/LavaLevel/lavaTurtle.png";
+
+// Import Sky Assets
+import skySafeZone from "/assets/SkyLevel/skySafeZone.png";
+import sky from "/assets/SkyLevel/sky.png";
+import skyRoad from "/assets/SkyLevel/skyRoad.png";
+import skyGoal from "/assets/SkyLevel/skyGoal.png";
+import skyObjective from "/assets/SkyLevel/skyObjective.png";
+import lightningBolt from "/assets/SkyLevel/lightningBolt.png";
+import lightningBoltForward from "/assets/SkyLevel/lightningBoltForward.png";
+import wind from "/assets/SkyLevel/wind.png";
+import windForward from "/assets/SkyLevel/windForward.png";
+import blimp from "/assets/SkyLevel/blimp.png";
+import blimpForward from "/assets/SkyLevel/blimpForward.png";
+import cloudsLong from "/assets/SkyLevel/cloudsLong.png";
+import cloudsShort from "/assets/SkyLevel/cloudsShort.png";
 
 
 //Import UI and Background
@@ -69,6 +94,21 @@ import batmanGoal from "/assets/BatmanLevel/batmanGoal.png";
 import batmanObjective from "/assets/BatmanLevel/batmanObjective.png";
 import batmanBarrel from "/assets/BatmanLevel/barrel.png";
 import batmobile from "/assets/BatmanLevel/batmobile.png";
+import bap from "/assets/BatmanLevel/bap.png";
+import fwip from "/assets/BatmanLevel/fwip.png";
+
+//import desert assets
+import desert from "/assets/desertLevel/desert.png";
+import deserSafeZone from "/assets/desertLevel/desertSafeZone.png";
+import desertRoad from "/assets/desertLevel/desertRoad.png";
+import desertGoal from "/assets/desertLevel/desertGoal.png";
+import desertBuggy1 from "/assets/desertLevel/desertBuggy1.png";
+import desertBuggy2 from "/assets/desertLevel/desertBuggy2.png";
+import desertTruck from "/assets/desertLevel/desertTruck.png";
+import desertObjective from "/assets/desertLevel/desertObjective.png";
+import desertTurtle from "/assets/desertLevel/desertTurtle.png";
+import desertLog from "/assets/desertLevel/desertLog.png";
+import desertLog2 from "/assets/desertLevel/desertLog2.png";
 
 
 //swamp assets
@@ -78,6 +118,25 @@ import swampGoal from "/assets/SwampLevel/swampGoal.png";
 import swampObjective from "/assets/SwampLevel/swampObjective.png";
 import swampRoad from "/assets/SwampLevel/swampRoad.png";
 import swampLog from "/assets/SwampLevel/swampLog.png";
+import swampTurtle from "/assets/SwampLevel/swampTurtle.png";
+import swampBuggy2 from "/assets/SwampLevel/swampBuggy2.png";
+import swampATV from "/assets/SwampLevel/swampATV.png";
+import swampBuggy2Forward from "/assets/SwampLevel/swampBuggy2Forward.png";
+import swampATVForward from "/assets/SwampLevel/swampATVForward.png";
+
+//import outerspace assets
+import outerSpace from "/assets/OuterSpaceLevel/outerSpace.png";
+import outerSpaceRoad from "/assets/OuterSpaceLevel/outerSpaceRoad.png";
+import outerSpaceSafeZone from "/assets/OuterSpaceLevel/outerSpaceSafeZone.png";
+import outerSpaceRock from "/assets/OuterSpaceLevel/outerSpaceRock.png";
+import outerSpaceGoal from "/assets/OuterSpaceLevel/outerSpaceGoal.png";
+import outerSpaceObjective from "/assets/OuterSpaceLevel/outerSpaceObjective.png";
+import outerSpaceCar1 from "/assets/OuterSpaceLevel/outerSpaceCar1.png";
+import outerSpaceCar1b from "/assets/OuterSpaceLevel/outerSpaceCar1b.png";
+import outerSpaceCar2 from "/assets/OuterSpaceLevel/outerSpaceCar2.png";
+import outerSpaceCar2b from "/assets/OuterSpaceLevel/outerSpaceCar2b.png";
+import comet from "/assets/OuterSpaceLevel/comet.png";
+
 
 //cake assets
 import cake from "/assets/CakeLevel/Cake.png";
@@ -109,6 +168,14 @@ export class Boot extends Scene {
     this.load.image("LongLog", LongLog);
     this.load.image("turtle", turtle);
     this.load.image("turtleforward", turtleforward);
+    this.load.image("turtleShort", turtleShort);
+    this.load.image("turtleLong", turtleLong);
+    this.load.image("turtleShortForward", turtleShortForward);
+    this.load.image("turtleLongForward", turtleLongForward);
+    this.load.image("turtleShortSink1", turtleShortSink1);
+    this.load.image("turtleLongSink1", turtleLongSink1);
+    this.load.image("turtleShortSink2", turtleShortSink2);
+    this.load.image("turtleLongSink2", turtleLongSink2);
     this.load.image("shermie", shermie);
     this.load.image("life", life);
 
@@ -118,7 +185,15 @@ export class Boot extends Scene {
     this.load.image("death3", death3);
     this.load.image("death4", death4);
 
-    //water Assets
+    
+    // Audio Assets
+    this.load.audio("hop", "/assets/audio/hop.wav");
+    this.load.audio("squash", "/assets/audio/squash.wav");
+    this.load.audio("plunk", "/assets/audio/plunk.wav");
+    this.load.audio("backgroundMusic", "/assets/audio/backgroundMusic.mp3");
+
+
+    //water Assets (default level)
     this.load.image("waterSafeZone", waterSafeZone);
     this.load.image("water", water);
     this.load.image("waterGoal", waterGoal);
@@ -134,6 +209,7 @@ export class Boot extends Scene {
     this.load.image("iceCar1", iceCar1);
     this.load.image("iceTruck", iceTractor);
     this.load.image("iceberg", iceberg);
+    this.load.image("iceTurtle", iceTurtle);
 
     // Lava Assets
     this.load.image("lavaSafeZone", lavaSafeZone);
@@ -145,14 +221,9 @@ export class Boot extends Scene {
     this.load.image("lavaCar1", LavaCar1);
     this.load.image("lavaCar2", LavaCar2);
     this.load.image("lavaTruck", LavaTractor);
+    this.load.image("lavaTurtle", lavaTurtle);
 
-    // Audio Assets
-    this.load.audio("hop", "/assets/audio/hop.wav");
-    this.load.audio("squash", "/assets/audio/squash.wav");
-    this.load.audio("plunk", "/assets/audio/plunk.wav");
-    this.load.audio("backgroundMusic", "/assets/audio/backgroundMusic.mp3");
-
-    // Lava Assets
+    // batman Assets
     this.load.image("batman", batman);
     this.load.image("batmanSafeZone", batmanSafeZone);
     this.load.image("batmanRoad", batmanRoad);
@@ -160,6 +231,51 @@ export class Boot extends Scene {
     this.load.image("batmanObjective", batmanObjective);
     this.load.image("batmanBarrel", batmanBarrel);
     this.load.image("batmobile", batmobile);
+    this.load.image("bap", bap);
+    this.load.image("fwip", fwip);
+
+    // Outer Space Assets
+    this.load.image("outerSpace", outerSpace);
+    this.load.image("outerSpaceRoad", outerSpaceRoad);
+    this.load.image("outerSpaceSafeZone", outerSpaceSafeZone);
+    this.load.image("outerSpaceRock", outerSpaceRock);
+    this.load.image("outerSpaceGoal", outerSpaceGoal);
+    this.load.image("outerSpaceObjective", outerSpaceObjective);
+    this.load.image("outerSpaceCar1", outerSpaceCar1);
+    this.load.image("outerSpaceCar1b", outerSpaceCar1b);
+    this.load.image("outerSpaceCar2", outerSpaceCar2);
+    this.load.image("outerSpaceCar2b", outerSpaceCar2b);
+    this.load.image("comet", comet);
+    
+    
+    //Sky Assets
+    this.load.image("skySafeZone", skySafeZone);
+    this.load.image("sky", sky);
+    this.load.image("skyRoad", skyRoad);
+    this.load.image("skyGoal", skyGoal);
+    this.load.image("skyObjective", skyObjective)
+    this.load.image("lightningBolt", lightningBolt);
+    this.load.image("lightningBoltForward", lightningBoltForward);
+    this.load.image("wind", wind);  
+    this.load.image("windForward", windForward);
+    this.load.image("blimp", blimp);
+    this.load.image("blimpForward", blimpForward);
+    this.load.image("cloudsShort", cloudsShort);
+    this.load.image("cloudsLong", cloudsLong);
+
+
+    //desert Assets
+    this.load.image("desert", desert);
+    this.load.image("desertSafeZone", deserSafeZone);
+    this.load.image("desertGoal", desertGoal);
+    this.load.image("desertRoad", desertRoad);
+    this.load.image("desertBuggy1", desertBuggy1);
+    this.load.image("desertBuggy2", desertBuggy2);
+    this.load.image("desertTruck", desertTruck);
+    this.load.image("desertObjective", desertObjective);
+    this.load.image("desertTurtle", desertTurtle);
+    this.load.image("desertLog", desertLog);
+    this.load.image("desertLog2", desertLog2);
 
     //swamp assets
     this.load.image("swamp", swamp);
@@ -168,6 +284,11 @@ export class Boot extends Scene {
     this.load.image("swampObjective", swampObjective);
     this.load.image("swampRoad", swampRoad);
     this.load.image("swampLog", swampLog);
+    this.load.image("swampTurtle", swampTurtle);
+    this.load.image("swampBuggy2", swampBuggy2);
+    this.load.image("swampATV", swampATV);
+    this.load.image("swampBuggy2Forward", swampBuggy2Forward);
+    this.load.image("swampATVForward", swampATVForward);
 
     //cake assets
     this.load.image("cake", cake);
@@ -193,10 +314,12 @@ export class Boot extends Scene {
             console.error('Font failed to load.');
         });
 
+
+
   }
 
   create() {
     this.scene.start("MainMenu");
-    // this.scene.start("Game", { level: 0 }); //dev level on start
+    // this.scene.start("Game", { level: 5 }); //dev level on start
   }
 }

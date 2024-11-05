@@ -18,8 +18,8 @@ export function createVehicles(scene, roadStart, roadWidth, cars, carsForward, s
 }
 
 export function createLogs(scene, laneStart, laneWidth, logTextures, spacingOptions) {
-  // Iterate over each water lane
-  for (let laneIndex = 0; laneIndex < scene.numberOfLanes; laneIndex++) {
+  //Iterate over each water lane -- TODO - Change for lanes to only be occupied by one body
+  for (let laneIndex = 0; laneIndex < scene.numberOfLanes; laneIndex+=2) {//TEMP - SET UP LOGS TO BE ON EVEN LANES
     // Determine log speed, alternating direction based on lane index
     const speed = Phaser.Math.Between(100, 300) * scene.logSpeedMultiplier * (laneIndex % 2 === 0 ? 1 : -1);
     let currentX = 0;
@@ -35,6 +35,40 @@ export function createLogs(scene, laneStart, laneWidth, logTextures, spacingOpti
 
       // Spawn the log at the calculated position using the pre-assigned texture
       scene.spawnLog(currentX, laneStart - laneWidth * laneIndex - laneWidth / 2, logTexture, speed);
+    }
+  }
+}
+
+export function createTurtles(scene, laneStart, laneWidth, turtleTextures, turtleTexturesForward, spacingOptions) {
+  //Iterate over each water lane -- TODO - Change for lanes to only be occupied by one body
+  let maxSink = 1;
+  let sinkCount = 0;
+  
+  for(let laneIndex = 1; laneIndex < scene.numberOfLanes; laneIndex+=2) {//TEMP - SET UP TURTLES ON ODD LANES
+    const speed = Phaser.Math.Between(100, 300) * scene.turtleSpeedMultiplier * (laneIndex % 2 === 0 ? 1 : -1);
+    let currentX = 0;
+    
+    const turtleArray = laneIndex % 2 === 0 ? turtleTextures : turtleTexturesForward;
+    
+    const turtleTexture = turtleArray[Math.floor(Math.random() * turtleTextures.length)];
+
+    for(let turtleIndex = 0; turtleIndex < scene.numberOfTurtles; turtleIndex++) {
+      const spacing = spacingOptions[Math.floor(Math.random() * spacingOptions.length)];
+      currentX += spacing;
+      console.log(spacing);
+
+      let canSink = Math.random() < 0.5;
+
+      if(canSink == true && sinkCount < maxSink){
+        sinkCount++;
+        console.log("Sinking turtle added: " + sinkCount);
+      }
+      else{
+        console.log("Max sink count exceeded");
+        canSink = false;
+      }
+
+      scene.spawnTurtle(currentX, laneStart - laneWidth * laneIndex - laneWidth / 2, turtleTexture, speed, canSink);
     }
   }
 }

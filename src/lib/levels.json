@@ -17,10 +17,14 @@
       "log_speed_multiplier": 1,
       "number_of_logs": 2,
 
+      "turtle_texture": ["turtleShort", "turtleLong"],
+      "turtles_Forward_texture": ["turtleShortForward", "turtleLongForward"],
+      "turtle_spacing": [250, 350, 400],
+      "turtle_speed_multiplier": 1,
       "turtle_sink_multiplier": 1,
-      "number_of_turtles": 1,
+      "number_of_turtles": 3,
 
-      "number_of_lives": 99,
+      "number_of_lives": 5,
       "goal_count": 3,
 
       "powerups": [ 0, 0, 0, 0 ]
@@ -42,8 +46,12 @@
       "log_speed_multiplier": 1,
       "number_of_logs": 2,
 
+      "turtle_texture": ["turtleShort", "turtleLong"],
+      "turtles_Forward_texture": ["turtleShortForward", "turtleLongForward"],
+      "turtle_spacing": [250, 350, 400],
+      "turtle_speed_multiplier": 1,
       "turtle_sink_multiplier": 1,
-      "number_of_turtles": 0,
+      "number_of_turtles": 3,
 
       "number_of_lives": 5,
       "goal_count": 5,
@@ -66,13 +74,17 @@
 
       "log_speed_multiplier": 1,
       "number_of_logs": 2,
-
+      
+      "turtle_texture": ["iceTurtle"],
+      "turtles_Forward_texture": ["iceTurtle"],
+      "turtle_spacing": [250, 350, 400],
+      "turtle_speed_multiplier": 1,
       "turtle_sink_multiplier": 1,
-      "number_of_turtles": 0,
+      "number_of_turtles": 3,
 
-      "number_of_lives": 3,
-      "goal_count": 5,
-
+      "number_of_lives": 5,
+      "goal_count": 3,
+      
       "powerups": [ 0, 0, 0, 0 ]
     },
 
@@ -92,61 +104,166 @@
       "log_speed_multiplier": 1,
       "number_of_logs": 2,
 
+      "turtle_texture": ["lavaTurtle"],
+      "turtles_Forward_texture": ["lavaTurtle"],
+      "turtle_spacing": [250, 350, 400],
+      "turtle_speed_multiplier": 1,
       "turtle_sink_multiplier": 1,
-      "number_of_turtles": 0,
+      "number_of_turtles": 3,
 
       "number_of_lives": 5,
-      "goal_count": 5,
+      "goal_count": 3,
 
-      "powerups": [ 0, 0, 0, 0 ]
+      "powerups": [0, 0, 0, 0]
     },
+
+    {
+      
+      "time": 10000,
+
+      "car_texture": ["wind","lightningBolt"],
+      "cars_Forward_texture": ["windForward", "lightningBoltForward"],
+      "car_spacing": [250, 350, 100],
+      "car_speed_multiplier": 1,
+      "number_of_cars": 2,
+
+      "water_zone_type": "sky",
+
+      "log_texture": ["blimp"],
+      "log_spacing": [250, 350, 400],
+      "log_speed_multiplier": 1,
+      "number_of_logs": 2,
+
+      "turtle_texture": ["cloudsLong", "cloudsShort"],
+      "turtles_Forward_texture": ["cloudsLong", "cloudsShort"],
+      "turtle_spacing": [250, 350, 400],
+      "turtle_speed_multiplier": 1,
+      "turtle_sink_multiplier": 1,
+      "number_of_turtles": 3,
+
+      "number_of_lives": 5,
+      "goal_count": 3,
+
+      "powerups": [0, 0, 0, 0]
+    },
+
 
     {
       "time": 1000,
 
-      "car_texture": [ "batmobile" ],
-      "cars_Forward_texture": [],
-      "car_spacing": [ 250, 350, 500 ],
+      "car_texture": ["outerSpaceCar1", "outerSpaceCar2"],
+      "cars_Forward_texture": ["outerSpaceCar1b", "outerSpaceCar2b"],
+      "car_spacing": [250, 350, 500],
+      "car_speed_multiplier": 1,
+      "number_of_cars": 2,
+
+      "water_zone_type": "outerSpace",
+      "log_texture": ["outerSpaceRock"],      
+  
+      "log_spacing": [250, 350, 400],
+
+      "log_speed_multiplier": 1,
+      "number_of_logs": 3,
+
+      "turtle_texture": ["comet"],
+      "turtles_Forward_texture": ["comet"],
+      "turtle_spacing": [250, 350, 400],
+      "turtle_speed_multiplier": 1,
+      "turtle_sink_multiplier": 1,
+      "number_of_turtles": 3,
+
+      "number_of_lives": 5,
+      "goal_count": 3,
+
+      "powerups": [ 0, 0, 0, 0 ]
+    },
+
+
+    {
+      "time": 1000,
+
+      "car_texture": ["desertBuggy2", "desertTruck"],
+      "cars_Forward_texture": ["desertBuggy1"],
+      "car_spacing": [250, 350, 500],
       "car_speed_multiplier": 1,
       "number_of_cars": 1,
 
-      "water_zone_type": "batman",
-      "log_texture": [ "batmanBarrel", "shipping" ],
-      "log_spacing": [ 250, 350, 400 ],
-
-      "log_speed_multiplier": 1,
-      "number_of_logs": 1,
-
-      "turtle_sink_multiplier": 1,
-      "number_of_turtles": 0,
-
-      "number_of_lives": 5,
-      "goal_count": 5,
-
-      "powerups": [ 0, 0, 0, 0 ]
-    },
-
-    {
-      "time": 1000,
-
-      "car_texture": [],
-      "cars_Forward_texture": [],
-      "car_spacing": [ 250, 350, 500 ],
-      "car_speed_multiplier": 1,
-      "number_of_cars": 0,
-
-      "water_zone_type": "swamp",
-      "log_texture": [ "swampLog" ],
-      "log_spacing": [ 250, 350, 400 ],
+      "water_zone_type": "desert",
+      "log_texture": ["desertLog","desertLog2"],
+      "log_spacing": [250, 350, 400],
 
       "log_speed_multiplier": 1,
       "number_of_logs": 2,
 
+      "turtle_texture": ["desertTurtle"],
+      "turtles_Forward_texture": ["desertTurtle"],
+      "turtle_spacing": [250, 350, 400],
+      "turtle_speed_multiplier": 1,
       "turtle_sink_multiplier": 1,
-      "number_of_turtles": 0,
+      "number_of_turtles": 3,
 
       "number_of_lives": 5,
-      "goal_count": 5,
+      "goal_count": 3,
+
+      "powerups": [ 0, 0, 0, 0 ]
+    },
+
+    {
+      "time": 1000,
+
+
+      "car_texture": ["swampBuggy2","swampATV"],
+      "cars_Forward_texture": ["swampBuggy2Forward","swampBuggy2Forward"],
+      "car_spacing": [250, 350, 500],
+      "car_speed_multiplier": 1,
+      "number_of_cars": 2,
+
+      "water_zone_type": "swamp",
+
+      "log_texture": ["swampLog"],
+      "log_spacing": [250, 350, 400],
+
+      "log_speed_multiplier": 1,
+      "number_of_logs": 2,
+
+      "turtle_texture": ["swampTurtle"],
+      "turtles_Forward_texture": ["swampTurtle"],
+      "turtle_spacing": [250, 350, 400],
+      "turtle_speed_multiplier": 1,
+      "turtle_sink_multiplier": 1,
+      "number_of_turtles": 3,
+
+      "number_of_lives": 5,
+      "goal_count": 3,
+
+      "powerups": [0, 0, 0, 0]
+    },
+
+    {
+      "time": 1000,
+
+      "car_texture": ["batmobile", "bap"],
+      "cars_Forward_texture": ["bap", "fwip"],
+      "car_spacing": [250, 350, 500],
+      "car_speed_multiplier": 1,
+      "number_of_cars": 1,
+
+      "water_zone_type": "batman",
+      "log_texture": ["batmanBarrel", "shipping"],
+      "log_spacing": [250, 350, 400],
+
+      "log_speed_multiplier": 1,
+      "number_of_logs": 1,
+
+      "turtle_texture": ["cloudsLong", "cloudsShort"],
+      "turtles_Forward_texture": ["cloudsLong", "cloudsShort"],
+      "turtle_spacing": [250, 350, 400],
+      "turtle_speed_multiplier": 1,
+      "turtle_sink_multiplier": 1,
+      "number_of_turtles": 3,
+
+      "number_of_lives": 5,
+      "goal_count": 3,
 
       "powerups": [ 0, 0, 0, 0 ]
     },
@@ -175,5 +292,7 @@
 
       "powerups": [ 0, 0, 0, 0 ]
     }
+    
+
   ]
 }
