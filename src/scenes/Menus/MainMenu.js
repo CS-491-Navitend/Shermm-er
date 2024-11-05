@@ -79,7 +79,7 @@ export class MainMenu extends Scene {
             .text(x, y, text, {
                 fontFamily: 'Pixel',
                 fontStyle: "bold",
-                fontSize: this.rem * 2 + "px",
+                fontSize: this.rem * 1.8 + "px",
                 //padding: { x: 100, y: 20 },
                 //backgroundColor: "#3388FF",
             })

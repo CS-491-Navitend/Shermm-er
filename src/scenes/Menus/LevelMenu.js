@@ -1,7 +1,6 @@
 import { Scene } from "phaser";
 import { levels } from "/src/lib/levels";
 
-
 export class LevelMenu extends Scene {
   constructor() {
     super("LevelMenu");
@@ -18,13 +17,13 @@ export class LevelMenu extends Scene {
   }
 
   preload() {
-        this.load.image("background", "/assets/ShermMainMenu.png")
-        this.load.image("buttonImage", "/assets/UI/Button.png");
-    }
+    this.load.image("background", "/assets/ShermMainMenu.png");
+    this.load.image("buttonImage", "/assets/UI/Button.png");
+  }
 
   create(buttons) {
     //background
-    this.add.image(512, 384, 'background').setOrigin(0.5, 0.5);
+    this.add.image(512, 384, "background").setOrigin(0.5, 0.5);
 
     this.backgroundMusic = this.sound.add("backgroundMusic", {
       volume: 0.25,
@@ -46,13 +45,13 @@ export class LevelMenu extends Scene {
       .setOrigin(1 / 2);
 
     //Developer Button
-    this.createDevButton();
+    // this.createDevButton();
 
     //Create level Buttons
     this.createLevelButtons();
 
     //Back Button
-    
+
     this.createBackButton();
 
     //Keyboard inputs for naviagtion
@@ -104,13 +103,14 @@ export class LevelMenu extends Scene {
 
   createLevelButton(col, row, levelNumber) {
     const levelButton = this.add
-      .text(300 + col * 250, 300 + (row + 1) * 50, `Level ${levelNumber}`, {
+      .text(500 + (col - Math.floor(this.maxCols / 2)) * 300, 300 + (row + 1) * 100, `Level ${levelNumber}`, {
         fontFamily: "Pixel",
         fontStyle: "bold",
+        padding: { x: 20, y: 10 },
         fontSize: this.rem * 2 + "px",
         backgroundColor: "#3388FF",
       })
-      .setOrigin(0.5)
+      .setOrigin(1 / 2)
       .setInteractive({ useHandCursor: true });
 
     const levelButtonIndex = this.buttons.length;
@@ -135,7 +135,7 @@ export class LevelMenu extends Scene {
     //when mouse select
     levelButton.on("pointerdown", () => {
       console.log("Starting level: ", levelNumber);
-    this.backgroundMusic.play();
+      this.backgroundMusic.play();
       this.selectedButtonIndex = levelButtonIndex;
       this.highlightButton(this.selectedButtonIndex);
       this.scene.start("Game", { level: levelNumber });
@@ -148,7 +148,7 @@ export class LevelMenu extends Scene {
 
   createBackButton() {
     const backButton = this.add
-      .text(800, 600, "Back", {
+      .text(500, 750, "Back", {
         fontFamily: "Pixel",
         fontStyle: "bold",
         fontSize: this.rem * 2 + "px",
@@ -160,7 +160,7 @@ export class LevelMenu extends Scene {
 
     backButton.on("pointerdown", () => {
       this.scene.stop("LevelMenu");
-      this.scene.start("MainMenu"); 
+      this.scene.start("MainMenu");
     });
 
     // Optionally, add hover effects
@@ -172,7 +172,7 @@ export class LevelMenu extends Scene {
       backButton.setStyle({ backgroundColor: "#3388FF" });
     });
     this.buttons.push(backButton);
-}
+  }
 
   changeSelection(direction) {
     // Highlight the currently selected button
@@ -203,15 +203,14 @@ export class LevelMenu extends Scene {
   }
 
   confirmSelection() {
-    
     //const selectedButton = this.buttons[this.selectedButtonIndex];
     const levelNumber = this.selectedButtonIndex + 1; // Adjust for level number
     if (this.selectedButtonIndex === this.buttons.length - 1) {
-        this.scene.stop("LevelMenu");
-        this.scene.start("MainMenu"); // Go back to the main menu if the back button is selected
+      this.scene.stop("LevelMenu");
+      this.scene.start("MainMenu"); // Go back to the main menu if the back button is selected
     } else {
-        const levelNumber = this.selectedButtonIndex + 1; // Adjust for level number
-        this.scene.start("Game", { level: levelNumber }); // Start the game with the selected level
+      const levelNumber = this.selectedButtonIndex + 1; // Adjust for level number
+      this.scene.start("Game", { level: levelNumber }); // Start the game with the selected level
     }
   }
   destroyButtons() {
