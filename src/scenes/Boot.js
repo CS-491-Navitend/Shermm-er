@@ -4,31 +4,11 @@ import { Scene } from "phaser";
 import car1 from "/assets/vehiclesBackward/car1.png";
 import car2 from "/assets/vehiclesBackward/car2.png";
 import car3 from "/assets/vehiclesBackward/car3.png";
-import car4 from "/assets/vehiclesBackward/car4.png";
-import car5 from "/assets/vehiclesBackward/car5.png";
-import car6 from "/assets/vehiclesBackward/car6.png";
-import car7 from "/assets/vehiclesBackward/car7.png";
-import car8 from "/assets/vehiclesBackward/car8.png";
-import car9 from "/assets/vehiclesBackward/car9.png";
-import car10 from "/assets/vehiclesBackward/car10.png";
-import car11 from "/assets/vehiclesBackward/car11.png";
-import car12 from "/assets/vehiclesBackward/car12.png";
-import car13 from "/assets/vehiclesBackward/car13.png";
 import tractor from "/assets/vehiclesBackward/tractor.png";
 
 import car1forward from "/assets/vehicleForward/car1forward.png";
 import car2forward from "/assets/vehicleForward/car2forward.png";
 import car3forward from "/assets/vehicleForward/car3forward.png";
-import car4forward from "/assets/vehicleForward/car4forward.png";
-import car5forward from "/assets/vehicleForward/car5forward.png";
-import car6forward from "/assets/vehicleForward/car6forward.png";
-import car7forward from "/assets/vehicleForward/car7forward.png";
-import car8forward from "/assets/vehicleForward/car8forward.png";
-import car9forward from "/assets/vehicleForward/car9forward.png";
-import car10forward from "/assets/vehicleForward/car10forward.png";
-import car11forward from "/assets/vehicleForward/car11forward.png";
-import car12forward from "/assets/vehicleForward/car12forward.png";
-import car13forward from "/assets/vehicleForward/car13forward.png";
 import tractorforward from "/assets/vehicleForward/tractorForward.png";
 
 // Import generic assets
@@ -97,6 +77,35 @@ import cloudsShort from "/assets/SkyLevel/cloudsShort.png";
 
 
 
+//import batman assets
+import batman from "/assets/BatmanLevel/batman.png";
+import batmanSafeZone from "/assets/BatmanLevel/batmanSafeZone.png";
+import batmanRoad from "/assets/BatmanLevel/batmanRoad.png";
+import batmanGoal from "/assets/BatmanLevel/batmanGoal.png";
+import batmanObjective from "/assets/BatmanLevel/batmanObjective.png";
+import batmanBarrel from "/assets/BatmanLevel/barrel.png";
+import batmobile from "/assets/BatmanLevel/batmobile.png";
+
+
+//import desert assets
+import desert from "/assets/desertLevel/desert.png";
+import deserSafeZone from "/assets/desertLevel/desertSafeZone.png";
+import desertRoad from "/assets/desertLevel/desertRoad.png";
+import desertGoal from "/assets/desertLevel/desertGoal.png";
+import desertBuggy1 from "/assets/desertLevel/desertBuggy1.png";
+import desertBuggy2 from "/assets/desertLevel/desertBuggy2.png";
+import desertTruck from "/assets/desertLevel/desertTruck.png";
+import desertObjective from "/assets/desertLevel/desertObjective.png";
+
+//swamp assets
+import swamp from "/assets/SwampLevel/swamp.png"
+import swampSafeZone from "/assets/SwampLevel/swampSafeZone.png";
+import swampGoal from "/assets/SwampLevel/swampGoal.png";
+import swampObjective from "/assets/SwampLevel/swampObjective.png";
+import swampRoad from "/assets/SwampLevel/swampRoad.png";
+import swampLog from "/assets/SwampLevel/swampLog.png";
+
+
 
 export class Boot extends Scene {
   constructor() {
@@ -105,8 +114,8 @@ export class Boot extends Scene {
 
   preload() {
     // Load cars (backward and forward)
-    const carsBackward = [car1, car2, car3, car4, car5, car6, car7, car8, car9, car10, car11, car12, car13];
-    const carsForward = [car1forward, car2forward, car3forward, car4forward, car5forward, car6forward, car7forward, car8forward, car9forward, car10forward, car11forward, car12forward, car13forward];
+    const carsBackward = [car1, car2, car3];
+    const carsForward = [car1forward, car2forward, car3forward];
 
     carsBackward.forEach((car, index) => this.load.image(`car${index + 1}`, car));
     carsForward.forEach((car, index) => this.load.image(`car${index + 1}forward`, car));
@@ -129,29 +138,28 @@ export class Boot extends Scene {
     this.load.image("shermie", shermie);
     this.load.image("life", life);
 
-    this.load.image("lavaLog", lavaLog)
-    this.load.image("death1", death1)
-    this.load.image("death2", death2)
-    this.load.image("death3", death3)
-    this.load.image("death4", death4)
+    this.load.image("lavaLog", lavaLog);
+    this.load.image("death1", death1);
+    this.load.image("death2", death2);
+    this.load.image("death3", death3);
+    this.load.image("death4", death4);
 
     //water Assets
     this.load.image("waterSafeZone", waterSafeZone);
     this.load.image("water", water);
     this.load.image("waterGoal", waterGoal);
-    this.load.image("waterObjective", waterObjective)
+    this.load.image("waterObjective", waterObjective);
 
     //ice Assets
     this.load.image("iceSafeZone", iceSafeZone);
     this.load.image("ice", ice);
     this.load.image("iceGoal", iceGoal);
-    this.load.image("iceObjective", iceObjective)
+    this.load.image("iceObjective", iceObjective);
     this.load.image("iceRoad", iceRoad);
     this.load.image("iceLog", iceLog);
     this.load.image("iceCar1", iceCar1);
     this.load.image("iceTruck", iceTractor);
     this.load.image("iceberg", iceberg);
-
 
     // Lava Assets
     this.load.image("lavaSafeZone", lavaSafeZone);
@@ -159,11 +167,58 @@ export class Boot extends Scene {
     this.load.image("lavaGoal", lavaGoal);
     this.load.image("rock", rock);
     this.load.image("lavaRoad", lavaRoad);
-    this.load.image("lavaObjective", lavaObjective)
-    this.load.image("lavaCar1", LavaCar1)
-    this.load.image("lavaCar2", LavaCar2)
-    this.load.image("lavaTruck", LavaTractor)
-    //this.load.image("waterRoad", waterRoad);
+    this.load.image("lavaObjective", lavaObjective);
+    this.load.image("lavaCar1", LavaCar1);
+    this.load.image("lavaCar2", LavaCar2);
+    this.load.image("lavaTruck", LavaTractor);
+
+    // Audio Assets
+    this.load.audio("hop", "/assets/audio/hop.wav");
+    this.load.audio("squash", "/assets/audio/squash.wav");
+    this.load.audio("plunk", "/assets/audio/plunk.wav");
+    this.load.audio("backgroundMusic", "/assets/audio/backgroundMusic.mp3");
+
+    // Lava Assets
+    this.load.image("batman", batman);
+    this.load.image("batmanSafeZone", batmanSafeZone);
+    this.load.image("batmanRoad", batmanRoad);
+    this.load.image("batmanGoal", batmanGoal);
+    this.load.image("batmanObjective", batmanObjective);
+    this.load.image("batmanBarrel", batmanBarrel);
+    this.load.image("batmobile", batmobile);
+
+
+    // Outer Space Assets
+    this.load.image("outerSpace", "/assets/OuterSpaceLevel/outerSpace.png");
+    this.load.image("outerSpaceRoad", "/assets/OuterSpaceLevel/outerSpaceRoad.png");
+    this.load.image("outerSpaceSafeZone", "/assets/OuterSpaceLevel/outerSpaceSafeZone.png");
+    this.load.image("outerSpaceRock", "/assets/OuterSpaceLevel/outerSpaceRock.png");
+    this.load.image("outerSpaceGoal", "/assets/OuterSpaceLevel/outerSpaceGoal.png");
+    this.load.image("outerSpaceObjective", "/assets/OuterSpaceLevel/outerSpaceObjective.png");
+    this.load.image("outerSpaceCar1", "/assets/OuterSpaceLevel/outerSpaceCar1.png");
+    this.load.image("outerSpaceCar1b", "/assets/OuterSpaceLevel/outerSpaceCar1b.png");
+    this.load.image("outerSpaceCar2", "/assets/OuterSpaceLevel/outerSpaceCar2.png");
+    this.load.image("outerSpaceCar2b", "/assets/OuterSpaceLevel/outerSpaceCar2b.png");
+
+
+    //desert Assets
+    this.load.image("desert", desert);
+    this.load.image("desertSafeZone", deserSafeZone);
+    this.load.image("desertGoal", desertGoal);
+    this.load.image("desertRoad", desertRoad);
+    this.load.image("desertBuggy1", desertBuggy1);
+    this.load.image("desertBuggy2", desertBuggy2);
+    this.load.image("desertTruck", desertTruck);
+    this.load.image("desertObjective", desertObjective);
+
+    //swamp assets
+    this.load.image("swamp", swamp);
+    this.load.image("swampSafeZone", swampSafeZone);
+    this.load.image("swampGoal", swampGoal);
+    this.load.image("swampObjective", swampObjective);
+    this.load.image("swampRoad", swampRoad);
+    this.load.image("swampLog", swampLog);
+
 
     //Sky Assets
     this.load.image("skySafeZone", skySafeZone);
@@ -183,44 +238,7 @@ export class Boot extends Scene {
   }
 
   create() {
-    this.scene.start("MainMenu");
+    // this.scene.start("MainMenu");
+    this.scene.start("Game", { level: 5 }); //dev level on start
   }
 }
-
-
-
-// import { Scene } from "phaser";
-
-// export class Boot extends Scene {
-//   constructor() {
-//     super("Boot");
-//   }
-
-//   preload() {
-//     const totalCars = 13;  // Define how many cars you have (adjust this number based on your assets)
-    
-//     for (let i = 1; i <= totalCars; i++) {
-//       this.load.image(`car${i}`, `/assets/vehiclesBackward/car${i}.png`);
-//       this.load.image(`car${i}forward`, `/assets/vehicleForward/car${i}forward.png`);
-//     }
-
-//     // Load other assets (static)
-//     this.load.image("tractor", "/assets/vehiclesBackward/tractor.png");
-//     this.load.image("tractorforward", "/assets/vehicleForward/tractorForward.png");
-    
-//     this.load.image("ShortLog", "/assets/ShortLog.png");
-//     this.load.image("LongLog", "/assets/LongLog.png");
-//     this.load.image("turtle", "/assets/turtle.png");
-//     this.load.image("turtleforward", "/assets/turtleforward.png");
-
-//     this.load.image("shermie", "/assets/shermie.png");
-//     this.load.image("background", "/assets/backgrounds/background.jpeg");
-//     this.load.image("background2", "/assets/backgrounds/background2.jpeg");
-//     this.load.image("life", "/assets/heart.png");
-//   }
-
-//   create() {
-//     // this.scene.start("Game", { level: 0 }); //dev level on start
-//     this.scene.start("MainMenu");
-//   }
-// }

@@ -10,11 +10,16 @@ export class MainMenu extends Scene {
     this.isActive = false;
   }
 
-    create(buttons) {
-      //console.log("Data received: ", buttons); 
-      this.isActive = true;
-      this.destroyButtons();
-     // console.log("Data received: ", buttons);
+  create(buttons) {
+    this.backgroundMusic = this.sound.add("backgroundMusic", {
+      volume: 0.25,
+      loop: true,
+    });
+
+    //console.log("Data received: ", buttons);
+    this.isActive = true;
+    this.destroyButtons();
+    // console.log("Data received: ", buttons);
 
     //console.log(this.buttons);
     // Main menu text
@@ -26,23 +31,19 @@ export class MainMenu extends Scene {
       })
       .setOrigin(0.5);
 
-        // Create buttons
-        const playButton = this.createButton(512, 400, 'Play', 0);
-        const levelSelectButton = this.createButton(512, 500, "Level Select", 1);
-
-    
+    // Create buttons
+    const playButton = this.createButton(512, 400, "Play", 0);
+    const levelSelectButton = this.createButton(512, 500, "Level Select", 1);
 
     this.buttons.push(playButton, levelSelectButton);
-        //console.log("Current buttons array after creation: ", this.buttons);
+    //console.log("Current buttons array after creation: ", this.buttons);
     // Keyboard inputs
-    
-    this.input.keyboard.on('keydown-UP', () => this.changeSelection(-1));
-    this.input.keyboard.on('keydown-DOWN', () => this.changeSelection(1));
-    this.input.keyboard.on('keydown-ENTER', () => this.confirmSelection());
 
-      
-  
-      //console.log(this.buttons);
+    this.input.keyboard.on("keydown-UP", () => this.changeSelection(-1));
+    this.input.keyboard.on("keydown-DOWN", () => this.changeSelection(1));
+    this.input.keyboard.on("keydown-ENTER", () => this.confirmSelection());
+
+    //console.log(this.buttons);
     this.highlightButton(this.selectedButtonIndex);
   }
 
@@ -56,24 +57,23 @@ export class MainMenu extends Scene {
         backgroundColor: "#3388FF",
       })
       .setOrigin(0.5)
-      .setInteractive({ useHandCursor: true })
-      //console.log("Creating Button: ", text);
+      .setInteractive({ useHandCursor: true });
+    //console.log("Creating Button: ", text);
 
-      //buttons length for main menu
-      
+    //buttons length for main menu
 
-      button.on('pointerover', () => {
-          this.selectedButtonIndex = mainButtonIndex; // Update the selected index on hover
-          this.highlightButton(this.selectedButtonIndex);
-      });
+    button.on("pointerover", () => {
+      this.selectedButtonIndex = mainButtonIndex; // Update the selected index on hover
+      this.highlightButton(this.selectedButtonIndex);
+    });
 
-      button.on('pointerout', () => {
-          this.highlightButton(this.selectedButtonIndex);
-      });
+    button.on("pointerout", () => {
+      this.highlightButton(this.selectedButtonIndex);
+    });
 
-      button.on('pointerdown', () => {
-          this.confirmSelection();
-      });
+    button.on("pointerdown", () => {
+      this.confirmSelection();
+    });
 
     return button;
   }
@@ -96,36 +96,37 @@ export class MainMenu extends Scene {
     this.highlightButton(this.selectedButtonIndex);
   }
 
-    highlightButton(index) {
-        this.buttons.forEach((button, i) => {
-            const highlight = i === index;
-            button.setStyle({ backgroundColor: highlight ? "#44AAFF" : "#3388FF" });
-        });
-    }
+  highlightButton(index) {
+    this.buttons.forEach((button, i) => {
+      const highlight = i === index;
+      button.setStyle({ backgroundColor: highlight ? "#44AAFF" : "#3388FF" });
+    });
+  }
 
   confirmSelection() {
-      const selectedButton = this.buttons[this.selectedButtonIndex];
-      //console.log('selected Button', this.selectedButtonIndex);
-      if (selectedButton === this.buttons[0]) {
-          this.scene.start("Game", { level: 1 });
-          //console.log("Starting level 1");
-      } else if (selectedButton === this.buttons[1]) {
-          this.scene.start("LevelMenu");
-          //console.log("Starting level menu");
-      }
-  }
-    destroyButtons() {
-        if (this.buttons.length > 0) {
-            //console.log("Destorying Buttons...")
-            this.buttons.forEach(button => {
-                button.off("pointerdown");
-                button.off("pointerover");
-                button.off("pointerout");
-                button.destroy();
-                //console.log("Button destroyed: ", button.text);
-            });
-            this.buttons = [];
-            this.input.keyboard.removeAllListeners();
-        }
+    const selectedButton = this.buttons[this.selectedButtonIndex];
+    //console.log('selected Button', this.selectedButtonIndex);
+    if (selectedButton === this.buttons[0]) {
+      this.backgroundMusic.play();
+      this.scene.start("Game", { level: 1 });
+      //console.log("Starting level 1");
+    } else if (selectedButton === this.buttons[1]) {
+      this.scene.start("LevelMenu");
+      //console.log("Starting level menu");
     }
+  }
+  destroyButtons() {
+    if (this.buttons.length > 0) {
+      //console.log("Destorying Buttons...")
+      this.buttons.forEach((button) => {
+        button.off("pointerdown");
+        button.off("pointerover");
+        button.off("pointerout");
+        button.destroy();
+        //console.log("Button destroyed: ", button.text);
+      });
+      this.buttons = [];
+      this.input.keyboard.removeAllListeners();
+    }
+  }
 }

@@ -15,6 +15,9 @@ const config = {
   height: 1000,
   parent: "game-container",
   backgroundColor: "#000000",
+  audio: {
+    disableWebAudio: true,
+  },
   physics: {
     default: "arcade",
     arcade: {
@@ -23,10 +26,9 @@ const config = {
   },
   scale: {
     mode: Scale.FIT,
-    autoCenter: Scale.CENTER_HORIZONTALLY,
   },
   scene: [Boot, MainMenu, LevelMenu, MainGame, PauseMenu, GameOver, GameWin],
-  parent: 'phaser-game',
+  parent: "phaser-game",
 };
 
 export default new Game(config);
