@@ -85,7 +85,8 @@ import batmanGoal from "/assets/BatmanLevel/batmanGoal.png";
 import batmanObjective from "/assets/BatmanLevel/batmanObjective.png";
 import batmanBarrel from "/assets/BatmanLevel/barrel.png";
 import batmobile from "/assets/BatmanLevel/batmobile.png";
-
+import bap from "/assets/BatmanLevel/bap.png";
+import fwip from "/assets/BatmanLevel/fwip.png";
 
 //import desert assets
 import desert from "/assets/desertLevel/desert.png";
@@ -96,6 +97,9 @@ import desertBuggy1 from "/assets/desertLevel/desertBuggy1.png";
 import desertBuggy2 from "/assets/desertLevel/desertBuggy2.png";
 import desertTruck from "/assets/desertLevel/desertTruck.png";
 import desertObjective from "/assets/desertLevel/desertObjective.png";
+import desertTurtle from "/assets/desertLevel/desertTurtle.png";
+import desertLog from "/assets/desertLevel/desertLog.png";
+import desertLog2 from "/assets/desertLevel/desertLog2.png";
 
 //swamp assets
 import swamp from "/assets/SwampLevel/swamp.png"
@@ -104,9 +108,13 @@ import swampGoal from "/assets/SwampLevel/swampGoal.png";
 import swampObjective from "/assets/SwampLevel/swampObjective.png";
 import swampRoad from "/assets/SwampLevel/swampRoad.png";
 import swampLog from "/assets/SwampLevel/swampLog.png";
+import swampTurtle from "/assets/SwampLevel/swampTurtle.png";
+import swampBuggy2 from "/assets/SwampLevel/swampBuggy2.png";
+import swampATV from "/assets/SwampLevel/swampATV.png";
+import swampBuggy2Forward from "/assets/SwampLevel/swampBuggy2Forward.png";
+import swampATVForward from "/assets/SwampLevel/swampATVForward.png";
 
 //import outerspace assets
-
 import outerSpace from "/assets/OuterSpaceLevel/outerSpace.png";
 import outerSpaceRoad from "/assets/OuterSpaceLevel/outerSpaceRoad.png";
 import outerSpaceSafeZone from "/assets/OuterSpaceLevel/outerSpaceSafeZone.png";
@@ -117,6 +125,7 @@ import outerSpaceCar1 from "/assets/OuterSpaceLevel/outerSpaceCar1.png";
 import outerSpaceCar1b from "/assets/OuterSpaceLevel/outerSpaceCar1b.png";
 import outerSpaceCar2 from "/assets/OuterSpaceLevel/outerSpaceCar2.png";
 import outerSpaceCar2b from "/assets/OuterSpaceLevel/outerSpaceCar2b.png";
+import comet from "/assets/OuterSpaceLevel/comet.png";
 
 
 export class Boot extends Scene {
@@ -194,7 +203,7 @@ export class Boot extends Scene {
     this.load.image("lavaTruck", LavaTractor);
     this.load.image("lavaTurtle", lavaTurtle);
 
-    // Lava Assets
+    // batman Assets
     this.load.image("batman", batman);
     this.load.image("batmanSafeZone", batmanSafeZone);
     this.load.image("batmanRoad", batmanRoad);
@@ -202,7 +211,8 @@ export class Boot extends Scene {
     this.load.image("batmanObjective", batmanObjective);
     this.load.image("batmanBarrel", batmanBarrel);
     this.load.image("batmobile", batmobile);
-
+    this.load.image("bap", bap);
+    this.load.image("fwip", fwip);
 
     // Outer Space Assets
     this.load.image("outerSpace", outerSpace);
@@ -215,6 +225,7 @@ export class Boot extends Scene {
     this.load.image("outerSpaceCar1b", outerSpaceCar1b);
     this.load.image("outerSpaceCar2", outerSpaceCar2);
     this.load.image("outerSpaceCar2b", outerSpaceCar2b);
+    this.load.image("comet", comet);
 
 
     //desert Assets
@@ -226,6 +237,9 @@ export class Boot extends Scene {
     this.load.image("desertBuggy2", desertBuggy2);
     this.load.image("desertTruck", desertTruck);
     this.load.image("desertObjective", desertObjective);
+    this.load.image("desertTurtle", desertTurtle);
+    this.load.image("desertLog", desertLog);
+    this.load.image("desertLog2", desertLog2);
 
     //swamp assets
     this.load.image("swamp", swamp);
@@ -234,7 +248,11 @@ export class Boot extends Scene {
     this.load.image("swampObjective", swampObjective);
     this.load.image("swampRoad", swampRoad);
     this.load.image("swampLog", swampLog);
-
+    this.load.image("swampTurtle", swampTurtle);
+    this.load.image("swampBuggy2", swampBuggy2);
+    this.load.image("swampATV", swampATV);
+    this.load.image("swampBuggy2Forward", swampBuggy2Forward);
+    this.load.image("swampATVForward", swampATVForward);
 
     //Sky Assets
     this.load.image("skySafeZone", skySafeZone);
