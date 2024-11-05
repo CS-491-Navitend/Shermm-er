@@ -39,9 +39,11 @@ export function createLogs(scene, laneStart, laneWidth, logTextures, spacingOpti
   }
 }
 
+Math.randomNumb
+
 export function createTurtles(scene, laneStart, laneWidth, turtleTextures, turtleTexturesForward, spacingOptions) {
   //Iterate over each water lane -- TODO - Change for lanes to only be occupied by one body
-  let maxSink = 1;
+  let maxSink = 2;
   let sinkCount = 0;
   
   for(let laneIndex = 1; laneIndex < scene.numberOfLanes; laneIndex+=2) {//TEMP - SET UP TURTLES ON ODD LANES
@@ -62,13 +64,15 @@ export function createTurtles(scene, laneStart, laneWidth, turtleTextures, turtl
       if(canSink == true && sinkCount < maxSink){
         sinkCount++;
         console.log("Sinking turtle added: " + sinkCount);
+        canSink = false;
       }
       else{
         console.log("Max sink count exceeded");
-        canSink = false;
+        canSink = true;
       }
 
       scene.spawnTurtle(currentX, laneStart - laneWidth * laneIndex - laneWidth / 2, turtleTexture, speed, canSink);
     }
   }
 }
+
