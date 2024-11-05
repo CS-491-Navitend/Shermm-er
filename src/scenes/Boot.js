@@ -53,7 +53,7 @@ import LavaCar1 from "/assets/LavaLevel/LavaCar.png";
 import LavaCar2 from "/assets/LavaLevel/LavaCar2.png";
 
 //import batman assets
-import batman from "/assets/BatmanLevel/batman.png"
+import batman from "/assets/BatmanLevel/batman.png";
 import batmanSafeZone from "/assets/BatmanLevel/batmanSafeZone.png";
 import batmanRoad from "/assets/BatmanLevel/batmanRoad.png";
 import batmanGoal from "/assets/BatmanLevel/batmanGoal.png";
@@ -171,7 +171,6 @@ export class Boot extends Scene {
     this.load.image("swampObjective", swampObjective);
     this.load.image("swampRoad", swampRoad);
     this.load.image("swampLog", swampLog);
-
 
   }
 
