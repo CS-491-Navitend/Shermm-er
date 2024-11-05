@@ -47,6 +47,7 @@ import iceLog from "/assets/IceLevel/iceLog.png";
 import iceberg from "/assets/IceLevel/iceberg.png";
 import iceCar1 from "/assets/IceLevel/iceCar1.png";
 import iceTractor from "/assets/IceLevel/iceTruck.png";
+import iceTurtle from "/assets/IceLevel/iceTurtle.png";
 
 // Import Lava assets
 import lavaSafeZone from "/assets/LavaLevel/LavaSafeZone.png";
@@ -59,6 +60,7 @@ import lavaRoad from "/assets/LavaLevel/LavaRoad.png";
 import LavaTractor from "/assets/LavaLevel/LavaTruck.png";
 import LavaCar1 from "/assets/LavaLevel/LavaCar.png";
 import LavaCar2 from "/assets/LavaLevel/LavaCar2.png";
+import lavaTurtle from "/assets/LavaLevel/lavaTurtle.png";
 
 // Import Sky Assets
 import skySafeZone from "/assets/SkyLevel/skySafeZone.png";
@@ -74,8 +76,6 @@ import blimp from "/assets/SkyLevel/blimp.png";
 import blimpForward from "/assets/SkyLevel/blimpForward.png";
 import cloudsLong from "/assets/SkyLevel/cloudsLong.png";
 import cloudsShort from "/assets/SkyLevel/cloudsShort.png";
-
-
 
 //import batman assets
 import batman from "/assets/BatmanLevel/batman.png";
@@ -105,6 +105,18 @@ import swampObjective from "/assets/SwampLevel/swampObjective.png";
 import swampRoad from "/assets/SwampLevel/swampRoad.png";
 import swampLog from "/assets/SwampLevel/swampLog.png";
 
+//import outerspace assets
+
+import outerSpace from "/assets/OuterSpaceLevel/outerSpace.png";
+import outerSpaceRoad from "/assets/OuterSpaceLevel/outerSpaceRoad.png";
+import outerSpaceSafeZone from "/assets/OuterSpaceLevel/outerSpaceSafeZone.png";
+import outerSpaceRock from "/assets/OuterSpaceLevel/outerSpaceRock.png";
+import outerSpaceGoal from "/assets/OuterSpaceLevel/outerSpaceGoal.png";
+import outerSpaceObjective from "/assets/OuterSpaceLevel/outerSpaceObjective.png";
+import outerSpaceCar1 from "/assets/OuterSpaceLevel/outerSpaceCar1.png";
+import outerSpaceCar1b from "/assets/OuterSpaceLevel/outerSpaceCar1b.png";
+import outerSpaceCar2 from "/assets/OuterSpaceLevel/outerSpaceCar2.png";
+import outerSpaceCar2b from "/assets/OuterSpaceLevel/outerSpaceCar2b.png";
 
 
 export class Boot extends Scene {
@@ -144,7 +156,15 @@ export class Boot extends Scene {
     this.load.image("death3", death3);
     this.load.image("death4", death4);
 
-    //water Assets
+    
+    // Audio Assets
+    this.load.audio("hop", "/assets/audio/hop.wav");
+    this.load.audio("squash", "/assets/audio/squash.wav");
+    this.load.audio("plunk", "/assets/audio/plunk.wav");
+    this.load.audio("backgroundMusic", "/assets/audio/backgroundMusic.mp3");
+
+
+    //water Assets (default level)
     this.load.image("waterSafeZone", waterSafeZone);
     this.load.image("water", water);
     this.load.image("waterGoal", waterGoal);
@@ -160,6 +180,7 @@ export class Boot extends Scene {
     this.load.image("iceCar1", iceCar1);
     this.load.image("iceTruck", iceTractor);
     this.load.image("iceberg", iceberg);
+    this.load.image("iceTurtle", iceTurtle);
 
     // Lava Assets
     this.load.image("lavaSafeZone", lavaSafeZone);
@@ -171,12 +192,7 @@ export class Boot extends Scene {
     this.load.image("lavaCar1", LavaCar1);
     this.load.image("lavaCar2", LavaCar2);
     this.load.image("lavaTruck", LavaTractor);
-
-    // Audio Assets
-    this.load.audio("hop", "/assets/audio/hop.wav");
-    this.load.audio("squash", "/assets/audio/squash.wav");
-    this.load.audio("plunk", "/assets/audio/plunk.wav");
-    this.load.audio("backgroundMusic", "/assets/audio/backgroundMusic.mp3");
+    this.load.image("lavaTurtle", lavaTurtle);
 
     // Lava Assets
     this.load.image("batman", batman);
@@ -189,16 +205,16 @@ export class Boot extends Scene {
 
 
     // Outer Space Assets
-    this.load.image("outerSpace", "/assets/OuterSpaceLevel/outerSpace.png");
-    this.load.image("outerSpaceRoad", "/assets/OuterSpaceLevel/outerSpaceRoad.png");
-    this.load.image("outerSpaceSafeZone", "/assets/OuterSpaceLevel/outerSpaceSafeZone.png");
-    this.load.image("outerSpaceRock", "/assets/OuterSpaceLevel/outerSpaceRock.png");
-    this.load.image("outerSpaceGoal", "/assets/OuterSpaceLevel/outerSpaceGoal.png");
-    this.load.image("outerSpaceObjective", "/assets/OuterSpaceLevel/outerSpaceObjective.png");
-    this.load.image("outerSpaceCar1", "/assets/OuterSpaceLevel/outerSpaceCar1.png");
-    this.load.image("outerSpaceCar1b", "/assets/OuterSpaceLevel/outerSpaceCar1b.png");
-    this.load.image("outerSpaceCar2", "/assets/OuterSpaceLevel/outerSpaceCar2.png");
-    this.load.image("outerSpaceCar2b", "/assets/OuterSpaceLevel/outerSpaceCar2b.png");
+    this.load.image("outerSpace", outerSpace);
+    this.load.image("outerSpaceRoad", outerSpaceRoad);
+    this.load.image("outerSpaceSafeZone", outerSpaceSafeZone);
+    this.load.image("outerSpaceRock", outerSpaceRock);
+    this.load.image("outerSpaceGoal", outerSpaceGoal);
+    this.load.image("outerSpaceObjective", outerSpaceObjective);
+    this.load.image("outerSpaceCar1", outerSpaceCar1);
+    this.load.image("outerSpaceCar1b", outerSpaceCar1b);
+    this.load.image("outerSpaceCar2", outerSpaceCar2);
+    this.load.image("outerSpaceCar2b", outerSpaceCar2b);
 
 
     //desert Assets
