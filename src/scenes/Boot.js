@@ -83,7 +83,7 @@ import cloudsShort from "/assets/SkyLevel/cloudsShort.png";
 
 //Import UI and Background
 import backgroundMain from "/assets/UI/ShermMainMenu.png";
-import button from "/assets/UI/Button.png";
+import buttonImage from "/assets/UI/Button.png";
 
 
 //import batman assets
@@ -151,6 +151,13 @@ import cakeCar1 from "/assets/CakeLevel/cakeCar1.png";
 import cakeCar2 from "/assets/CakeLevel/cakeCar2.png";
 import banana from "/assets/CakeLevel/banana.png";
 
+//sound assets
+import hop from "/assets/audio/hop.wav"
+import squash from "/assets/audio/squash.wav"
+import plunk from "/assets/audio/plunk.wav"
+import backgroundMusic from "/assets/audio/backgroundMusic.mp3"
+
+
 export class Boot extends Scene {
   constructor() {
     super("Boot");
@@ -190,10 +197,10 @@ export class Boot extends Scene {
 
     
     // Audio Assets
-    this.load.audio("hop", "/assets/audio/hop.wav");
-    this.load.audio("squash", "/assets/audio/squash.wav");
-    this.load.audio("plunk", "/assets/audio/plunk.wav");
-    this.load.audio("backgroundMusic", "/assets/audio/backgroundMusic.mp3");
+    this.load.audio("hop", hop);
+    this.load.audio("squash", squash);
+    this.load.audio("plunk", plunk);
+    this.load.audio("backgroundMusic", backgroundMusic);
 
 
     //water Assets (default level)
@@ -309,7 +316,7 @@ export class Boot extends Scene {
 
     //UI and Background
     this.load.image("background", backgroundMain);
-    this.load.image("button", button);
+    this.load.image("buttonImage", buttonImage);
 
     //Font Family
     const font = new FontFaceObserver('Pixel');

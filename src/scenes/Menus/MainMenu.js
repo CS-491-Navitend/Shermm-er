@@ -12,17 +12,11 @@ export class MainMenu extends Scene {
     }
 
 
-    preload() {
-        this.load.image("background", "/assets/UI/ShermMainMenu.png");
-        this.load.image("buttonImage", "/assets/UI/Button.png");
-    }
-
-
     create(buttons) {
 
         this.selectedButtonIndex = 0; 
         //background
-        this.add.image(512, 384, 'background').setOrigin(0.5, 0.5);
+        this.add.image(512, 384, "background").setOrigin(0.5, 0.5);
         this.backgroundMusic = this.sound.add("backgroundMusic", {
             volume: 0.25,
             loop: true,
@@ -71,7 +65,7 @@ export class MainMenu extends Scene {
     }
 
     createButton(x, y, text, mainButtonIndex) {
-        const buttonImage = this.add.image(x, y, 'buttonImage').setOrigin(0.5);
+        const buttonImage = this.add.image(x, y, "buttonImage").setOrigin(0.5);
 
         buttonImage.setScale(1);
 
