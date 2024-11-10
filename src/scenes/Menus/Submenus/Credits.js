@@ -64,7 +64,7 @@ export class Credits extends Scene {
         });
 
         this.input.keyboard.on('keydown-ENTER', () => {
-            if (this.isBackButtonHighlighted) {
+            if (this.isBackButtonHighlighted = true) {
                 this.scene.stop("Credits");
                 this.scene.start("MainMenu");// Go back to the main menu
             }
@@ -72,34 +72,56 @@ export class Credits extends Scene {
     }
     // creating back button
     createBackButton() {
-         this.backButton = this.add.text(
+
+        const backButtonImage = this.add
+            .image(200, 900, "buttonImage")
+            .setOrigin(0.5)
+            .setInteractive({ userHandCursor: true });
+
+         const backText = this.add.text(
             200, 900, "Back", {
             fontFamily: "Pixel",
             fontSize: "20px",
             color: "#ffffff",
-            padding: { x: 20, y: 10 },
-            backgroundColor: "#3388FF",
+           // padding: { x: 20, y: 10 },
+            //backgroundColor: "#3388FF",
         })
             .setOrigin(0.5)
-            .setInteractive({ useHandCursor: true });
 
-        this.backButton.on("pointerdown", () => {
+        backButtonImage.setDisplaySize(250, 80);
+
+        backButtonImage.on("pointerdown", () => {
             this.scene.stop("Credits");
             this.scene.start("MainMenu");// Go back to the main menu
         });
 
-        this.backButton.on("pointerover", () => {
+        backButtonImage.on("pointerover", () => {
             this.highlightBackButton(true);
         });
 
-        this.backButton.on("pointerout", () => {
+        backButtonImage.on("pointerout", () => {
             this.highlightBackButton(false);
         });
+
+        this.buttons = this.buttons || [];
+        this.buttons.push({ image: backButtonImage, text: backText });
     }
     highlightBackButton(isHighlighting) {
-        this.isBackButtonHighlighted = isHighlighting; // Update the highlight state
-        this.backButton.setStyle({
-            backgroundColor: isHighlighting ? "#44AAFF" : "#3388FF"
-        });
+        const backButton = this.buttons[this.buttons.length - 1]; // Get the last button (Back button)
+
+        // Set button image tint color for highlighting
+        backButton.image.setTint(isHighlighting ? 0x44AAFF : 0xFFFFFF); 
+
+        // Update text style based on highlight state
+        const highlight = isHighlighting;
+
+        // Change text style (color, stroke, stroke thickness)
+        if (backButton.text) {
+            backButton.text.setStyle({
+                color: highlight ? "#000000" : "#FFFFFF",  
+                stroke: highlight ? "#FFFFFF" : "#000000",  
+                strokeThickness: highlight ? 6 : 4,        
+            });
+        }
     }
 }

@@ -49,34 +49,57 @@ export class Controls extends Scene {
     }
     // creating back button
     createBackButton() {
-        this.backButton = this.add.text(
+        const backButtonImage = this.add
+            .image(512, 400, "buttonImage")  // Position it at (512, 400)
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true });
+        
+        backButtonImage.setDisplaySize(250, 80);
+
+        const backText = this.add.text(
             512, 400, "Back", {
             fontFamily: "Pixel",
-            fontSize: "20px",
+            fontSize: "30px",
             color: "#ffffff",
-            padding: { x: 20, y: 10 },
-            backgroundColor: "#3388FF",
+           // padding: { x: 20, y: 10 },
+           // backgroundColor: "#3388FF",
         })
             .setOrigin(0.5)
             .setInteractive({ useHandCursor: true });
 
-        this.backButton.on("pointerdown", () => {
+        backText.on("pointerdown", () => {
             this.scene.stop("Controls");
             this.scene.start("MainMenu"); 
         });
 
-        this.backButton.on("pointerover", () => {
+        backText.on("pointerover", () => {
             this.highlightBackButton(true);
         });
 
-        this.backButton.on("pointerout", () => {
+        backText.on("pointerout", () => {
             this.highlightBackButton(false);
         });
+
+        this.buttons = this.buttons || [];
+        this.buttons.push({ image: backButtonImage, text: backText });
     }
     highlightBackButton(isHighlighting) {
-        this.isBackButtonHighlighted = isHighlighting; // Update the highlight state
-        this.backButton.setStyle({
-            backgroundColor: isHighlighting ? "#44AAFF" : "#3388FF"
-        });
+        const backButton = this.buttons[this.buttons.length - 1]; // Get the last button (back button)
+
+        // Set the button image tint color for highlighting
+        backButton.image.setTint(isHighlighting ? 0x44AAFF : 0xFFFFFF); // Highlight in blue (0x44AAFF) or default white (0xFFFFFF)
+
+        const highlight = isHighlighting;
+
+        if (backButton.text) {
+            backButton.text.setStyle({
+                color: highlight ? "#000000" : "#FFFFFF",  // Change text color
+                stroke: highlight ? "#FFFFFF" : "#000000",  // Change stroke color
+                strokeThickness: highlight ? 6 : 4,        // Change stroke thickness
+            });
+        }
+
+        // Update the highlight state
+        this.isBackButtonHighlighted = isHighlighting;
     }
 }

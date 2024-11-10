@@ -66,7 +66,7 @@ export class LevelMenu extends Scene {
     this.highlightButton(this.selectedButtonIndex);
   }
 
-  createDevButton() {
+  /*createDevButton() {
     const developerButton = this.add
       .text(512, 100, "Dev", {
         fontFamily: "Pixel",
@@ -85,7 +85,7 @@ export class LevelMenu extends Scene {
       this.scene.start("Game", { level: 0 });
     });
   }
-
+  */
   createLevelButtons() {
     for (let col = 0; col < this.maxCols; col++) {
       for (let row = 0; row < this.maxRows; row++) {
@@ -102,21 +102,30 @@ export class LevelMenu extends Scene {
   }
 
   createLevelButton(col, row, levelNumber) {
-    const levelButton = this.add
+      const buttonImage = this.add
+      .image(500 + (col - Math.floor(this.maxCols / 2)) * 300, 300 + (row + 1) * 100, 'buttonImage')
+      .setOrigin(0.5)
+      .setInteractive({ useHandCursor: true });
+
+      buttonImage.setDisplaySize(250, 60);
+
+      const levelText = this.add
       .text(500 + (col - Math.floor(this.maxCols / 2)) * 300, 300 + (row + 1) * 100, `Level ${levelNumber}`, {
         fontFamily: "Pixel",
         fontStyle: "bold",
-        padding: { x: 20, y: 10 },
+        //padding: { x: 20, y: 10 },
         fontSize: this.rem * 2 + "px",
-        backgroundColor: "#3388FF",
+        //backgroundColor: "#3388FF",
+        color: "#FFFFFF", // White text
+        stroke: "#000000"
       })
       .setOrigin(1 / 2)
-      .setInteractive({ useHandCursor: true });
+      
 
     const levelButtonIndex = this.buttons.length;
 
     //when mouse hover over
-    levelButton.on("pointerover", () => {
+    buttonImage.on("pointerover", () => {
       // Ensure correct index on hover
       if (this.selectedButtonIndex !== levelButtonIndex) {
         this.highlightButton(this.selectedButtonIndex, false); // Clear the old highlight
@@ -126,14 +135,14 @@ export class LevelMenu extends Scene {
     });
 
     //when mouse hover out
-    levelButton.on("pointerout", () => {
+    buttonImage.on("pointerout", () => {
       if (this.selectedButtonIndex !== levelButtonIndex) {
         this.highlightButton(levelButtonIndex, false);
       }
     });
 
     //when mouse select
-    levelButton.on("pointerdown", () => {
+    buttonImage.on("pointerdown", () => {
       console.log("Starting level: ", levelNumber);
       this.backgroundMusic.play();
       this.selectedButtonIndex = levelButtonIndex;
@@ -142,36 +151,46 @@ export class LevelMenu extends Scene {
     });
 
     // Add the button to the buttons array
-    this.buttons.push(levelButton);
+      this.buttons.push({image: buttonImage, text: levelText});
     //console.log("Creating button: ", `Level ${levelNumber}`);
   }
 
   createBackButton() {
-    const backButton = this.add
+
+    const backButtonImage = this.add
+    .image(500, 750, "buttonImage")
+    .setOrigin(0.5)
+    .setInteractive({ useHandCursor: true });
+
+     backButtonImage.setDisplaySize(250, 80);
+
+    const backText = this.add
       .text(500, 750, "Back", {
         fontFamily: "Pixel",
         fontStyle: "bold",
         fontSize: this.rem * 2 + "px",
-        padding: { x: 20, y: 10 },
-        backgroundColor: "#3388FF",
+        //padding: { x: 20, y: 10 },
+        //backgroundColor: "#3388FF",
+        color: "#FFFFFF", // White text
+        stroke: "#000000"
       })
       .setOrigin(0.5)
-      .setInteractive({ useHandCursor: true });
+   
 
-    backButton.on("pointerdown", () => {
+    backButtonImage.on("pointerdown", () => {
       this.scene.stop("LevelMenu");
       this.scene.start("MainMenu");
     });
 
-    // Optionally, add hover effects
-    backButton.on("pointerover", () => {
-      backButton.setStyle({ backgroundColor: "#44AAFF" });
+    // add hover effects
+    backButtonImage.on("pointerover", () => {
+        this.highlightButton(this.buttons.length - 1, true);
     });
 
-    backButton.on("pointerout", () => {
-      backButton.setStyle({ backgroundColor: "#3388FF" });
+    backButtonImage.on("pointerout", () => {
+       this.highlightButton(this.buttons.length - 1, false); // Remove highlight
     });
-    this.buttons.push(backButton);
+      this.buttons.push({image: backButtonImage , text: backText});
   }
 
   changeSelection(direction) {
@@ -199,7 +218,10 @@ export class LevelMenu extends Scene {
     }
 
     const button = this.buttons[index];
-    button.setStyle({ backgroundColor: highlight ? "#44AAFF" : "#3388FF" });
+    const tint = highlight ? 0x44AAFF : 0xFFFFFF;  // Change to blue for highlight
+    button.image.setTint(tint);
+
+    button.text.setColor(highlight ? "#FFD700" : "#FFFFFF");
   }
 
   confirmSelection() {
@@ -217,10 +239,11 @@ export class LevelMenu extends Scene {
     if (this.buttons.length > 0) {
       //console.log("Destorying Buttons...")
       this.buttons.forEach((button) => {
-        button.off("pointerdown");
-        button.off("pointerover");
-        button.off("pointerout");
-        button.destroy();
+        button.image.off("pointerdown");
+        button.image.off("pointerover");
+        button.image.off("pointerout");
+        button.image.destroy();
+        button.text.destroy();
         //console.log("Button destroyed: ", button.text);
       });
       this.buttons = [];
