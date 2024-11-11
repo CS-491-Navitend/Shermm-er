@@ -102,7 +102,7 @@ export class Game extends Scene {
     this.updateLives(); //display lives in the html bar
 
     // Add player sprite with physics
-    this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, "shermie");
+    this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, "shermieRed");
     this.shermie.setSize(50, 50, true); // Set hitbox size
     this.shermie.setScale(1); // Scale player sprite
     this.shermie.setDepth(10); // Scale player sprite
