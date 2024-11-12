@@ -102,7 +102,11 @@ export class Game extends Scene {
     this.updateLives(); //display lives in the html bar
 
     // Add player sprite with physics
-    this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, "shermieRed");
+    const shermieArray = this.getShermieColor();
+    this.shermieColor = shermieArray[0];//Shermie Comparison Code
+    this.shermieTexture = shermieArray[1];//Shermie sprite color
+    this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, this.shermieTexture);//Set Shermie sprite color according to function
+    this.shermie.setData("color", this.shermieColor);//Set shermie color comparison code
     this.shermie.setSize(50, 50, true); // Set hitbox size
     this.shermie.setScale(1); // Scale player sprite
     this.shermie.setDepth(10); // Scale player sprite
@@ -184,6 +188,9 @@ export class Game extends Scene {
           .image(x, laneWidth / 2, objectiveTexture)
           .setDisplaySize(imageWidth, imageHeight)
           .setDepth(0);
+        const colorArray = this.getGoalZoneTint();
+        objective.setData("color", colorArray[0]);//Set color for later comparison with shermie
+        objective.setTint(objective.tint * 0.2 + colorArray[1] * 0.8);
         this.physics.add.existing(objective, true);
         objectiveZone.add(objective);
         x += imageWidth * 2; // Space out each objective
@@ -305,7 +312,7 @@ export class Game extends Scene {
     
     this.physics.add.overlap(this.shermie, objectiveZone, (shermie, objective) => {
       // Check if there’s already a killerShermie at this position
-      if (!this.physics.overlap(shermie, filledGoals)) {
+      if (!this.physics.overlap(shermie, filledGoals) && objective.getData("color") === shermie.getData("color")) {
         this.goalCollision(objective); // Proceed with the goal logic
         setTimeout(() => {
           const killerShermie = this.add.image(objective.x, objective.y, "shermie");
@@ -349,7 +356,7 @@ export class Game extends Scene {
     this.timer.start();
 
     // Create the death animation sequence
-    this.defaultTexture = "shermie";
+    this.defaultTexture = this.shermieTexture;
 
     this.anims.create({
       key: "shermieDeath", // Name of the animation
@@ -470,7 +477,7 @@ export class Game extends Scene {
     }
   }
 
-  loseLife() {
+  loseLife() {//TODO - Take different colors into account
     if (this.isInvincible || this.isAnimating) {
       return;
     }
@@ -552,5 +559,41 @@ export class Game extends Scene {
       lifeIcon.classList.add("life-icon");
       livesContainer.appendChild(lifeIcon);
     }
+  }
+
+  getShermieColor(){
+    const redColor = "red"; const redShermie = "shermieRed";
+    const blueColor = "blue"; const blueShermie = "shermieBlue";
+    const greenColor = "green"; const greenShermie = "shermieGreen";
+    const yellowColor = "yellow"; const yellowShermie = "shermieYellow";
+    const orangeColor = "orange"; const orangeShermie = "shermieOrange";    
+    const purpleColor = "purple"; const purpleShermie = "shermiePurple";
+
+    const colors = [redColor, blueColor, greenColor, yellowColor, orangeColor, purpleColor];
+    const shermies = [redShermie, blueShermie, greenShermie, yellowShermie, orangeShermie, purpleShermie];
+    
+    const index = Math.floor(Math.random() * colors.length);
+
+    const colorProperties = [colors[index], shermies[index]];
+
+    return colorProperties;
+  }
+
+  getGoalZoneTint(){
+    const redColor = "red"; const redTint = 0xff0000;
+    const blueColor = "blue"; const blueTint = 0x0000ff;
+    const greenColor = "green"; const greenTint = 0x00ff00;
+    const yellowColor = "yellow"; const yellowTint = 0xffff00;
+    const orangeColor = "orange"; const orangeTint = 0xffa500;
+    const purpleColor = "purple"; const purpleTint  = 0x800080;
+
+    const colors = [redColor, blueColor, greenColor, yellowColor, orangeColor, purpleColor];
+    const colorTints = [redTint, blueTint, greenTint, yellowTint, orangeTint, purpleTint];
+    
+    const index = Math.floor(Math.random() * colors.length);
+
+    const colorProperties = [colors[index], colorTints[index]];
+
+    return colorProperties;
   }
 }
