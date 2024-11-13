@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fontfaceobserver/2.1.0/fontfaceobserver.standalone.js"></script>
     <title>Shermm-er</title>
-  </head>
+</head>
   <body>
     <div id="app">
-      <div id="game-container"></div>
+      <div id="game-container">
+        <div id="ui-bar" style="display: none;">
+          <div id="score">Score: 00000</div>
+          <div id="time">Time: 99</div>
+          <div id="lives-container"></div>
+        </div>  
+        <div id="phaser-game"></div>
+      </div>
     </div>
     <script type="module" src="src/main.js"></script>
   </body>

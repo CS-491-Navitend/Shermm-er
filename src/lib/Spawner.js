@@ -1,63 +1,78 @@
-export function createVehicles(scene, roadStart, roadWidth, cars, carsforward, carSpacing) {
+export function createVehicles(scene, roadStart, roadWidth, cars, carsForward, spacing) {
+  // Iterate over each road
   for (let road = 0; road < scene.numberOfRoads; road++) {
-    let randomSpeed = Phaser.Math.Between(100, 300) * scene.carSpeedMultiplier;
+    const speed = Phaser.Math.Between(100, 300) * scene.carSpeedMultiplier * (road % 2 === 0 ? 1 : -1);
+    let lastVehicleX = 0;
 
-    if (road % 2 === 0) {
-      randomSpeed = randomSpeed * -1;
-    }
-
-    let lastVehicle = null;  // Track last vehicle for this specific road
-
-    for (let i = 0; i < scene.numberOfCars; i++) {
-      const carArray = randomSpeed > 0 ? carsforward : cars;
-      const randomCar = carArray[Math.floor(Math.random() * carArray.length)];
-      const randomSpacing = carSpacing[Math.floor(Math.random() * carSpacing.length)];
-
-      let newVehicleX = randomSpacing + i * randomSpacing;
-
-      if (lastVehicle) {
-        if (randomSpeed > 0) {
-          newVehicleX = lastVehicle.x + lastVehicle.width + randomSpacing;
-        } else {
-          newVehicleX = lastVehicle.x - randomSpacing - lastVehicle.width;
-        }
-      }
-
-      let vehicle = scene.spawnVehicle(newVehicleX, roadStart - roadWidth * road - roadWidth / 2, randomCar, randomSpeed);
-
-      lastVehicle = vehicle;
-    }
-  }
-}
-
-export function createLogs(scene, laneStart, laneWidth, logs, logSpacing) {
-  for (let lane = 0; lane < scene.numberOfLanes; lane++) {
-    let randomSpeed = Phaser.Math.Between(100, 300) * scene.logSpeedMultiplier;
+    const vehicleArray = road % 2 === 0 ? carsForward : cars;
     
-    if (lane % 2 === 0) {
-      randomSpeed = randomSpeed * -1;  // Reverse direction for even-numbered lanes
-    }
-    let lastLog = null;
+    const vehicleType = vehicleArray[Math.floor(Math.random() * vehicleArray.length)];
 
-    for (let i = 0; i < scene.numberOfLogs; i++) {
-      const randomLog = logs[Math.floor(Math.random() * logs.length)];
-      const randomSpacing = logSpacing[Math.floor(Math.random() * logSpacing.length)];
-
-      //nolastlog uses default
-      let newLogX = randomSpacing + i * randomSpacing;
-
-      if (lastLog) {
-        if (randomSpeed > 0) {
-          // left to right after last log
-          newLogX = lastLog.x + lastLog.width + randomSpacing;
-        } else {
-          // right to left after lastlog
-          newLogX = lastLog.x - randomSpacing - lastLog.width;
-        }
-      }
-      // Spawn the new log
-      let log = scene.spawnLog(newLogX, laneStart - laneWidth * lane - laneWidth / 2, randomLog, randomSpeed);
-      lastLog = log;
+    // for(let i =0 ; i<spacing.length; i++){console.log(spacing[i])}
+    for (let i = 0; i < scene.numberOfCars; i++) {
+      const spacingIndex = Math.floor(Math.random() * spacing.length);
+      lastVehicleX += spacing[spacingIndex];
+      scene.spawnVehicle(lastVehicleX, roadStart - roadWidth * road - roadWidth / 2, vehicleType, speed);
     }
   }
 }
+
+export function createLogs(scene, laneStart, laneWidth, logTextures, spacingOptions) {
+  //Iterate over each water lane -- TODO - Change for lanes to only be occupied by one body
+  for (let laneIndex = 0; laneIndex < scene.numberOfLanes; laneIndex+=2) {//TEMP - SET UP LOGS TO BE ON EVEN LANES
+    // Determine log speed, alternating direction based on lane index
+    const speed = Phaser.Math.Between(100, 300) * scene.logSpeedMultiplier * (laneIndex % 2 === 0 ? 1 : -1);
+    let currentX = 0;
+
+    // Pre-assign a random log texture for this lane
+    const logTexture = logTextures[Math.floor(Math.random() * logTextures.length)];
+
+    // Spawn logs on the current lane using the pre-assigned texture
+    for (let logIndex = 0; logIndex < scene.numberOfLogs; logIndex++) {
+      const spacing = spacingOptions[Math.floor(Math.random() * spacingOptions.length)];
+      currentX += spacing;
+      console.log(spacing)
+
+      // Spawn the log at the calculated position using the pre-assigned texture
+      scene.spawnLog(currentX, laneStart - laneWidth * laneIndex - laneWidth / 2, logTexture, speed);
+    }
+  }
+}
+
+Math.randomNumb
+
+export function createTurtles(scene, laneStart, laneWidth, turtleTextures, turtleTexturesForward, spacingOptions) {
+  //Iterate over each water lane -- TODO - Change for lanes to only be occupied by one body
+  let maxSink = 2;
+  let sinkCount = 0;
+  
+  for(let laneIndex = 1; laneIndex < scene.numberOfLanes; laneIndex+=2) {//TEMP - SET UP TURTLES ON ODD LANES
+    const speed = Phaser.Math.Between(100, 300) * scene.turtleSpeedMultiplier * (laneIndex % 2 === 0 ? 1 : -1);
+    let currentX = 0;
+    
+    const turtleArray = laneIndex % 2 === 0 ? turtleTextures : turtleTexturesForward;
+    
+    const turtleTexture = turtleArray[Math.floor(Math.random() * turtleTextures.length)];
+
+    for(let turtleIndex = 0; turtleIndex < scene.numberOfTurtles; turtleIndex++) {
+      const spacing = spacingOptions[Math.floor(Math.random() * spacingOptions.length)];
+      currentX += spacing;
+      console.log(spacing);
+
+      let canSink = Math.random() < 0.5;
+
+      if(canSink == true && sinkCount < maxSink){
+        sinkCount++;
+        console.log("Sinking turtle added: " + sinkCount);
+        canSink = false;
+      }
+      else{
+        console.log("Max sink count exceeded");
+        canSink = true;
+      }
+
+      scene.spawnTurtle(currentX, laneStart - laneWidth * laneIndex - laneWidth / 2, turtleTexture, speed, canSink);
+    }
+  }
+}
+
