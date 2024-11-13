@@ -31,14 +31,23 @@ export class Timer {
 
     if(this.timeRemaining % 3 == 0){//Sink and raise turtles every 3 seconds
       if(this.game.turtlesAreSunk == false){
-        console.log("Sinking turtles");
+        //console.log("Sinking turtles");
         this.game.sinkTurtles();
       }
       else if (this.game.turtlesAreSunk == true){
-        console.log("Raising turtles");
+        //console.log("Raising turtles");
         this.game.raiseTurtles();
       }
     }
+
+    //this chance needs to be a variable obtained from the json
+    if (this.timeRemaining % 5 === 0) {
+      const chance = Math.random();
+      console.log(chance)
+      if (chance > 0) { 
+          this.game.gameLogic.tryAddShermieSprite();
+      }
+  }
   }
 
   start() {

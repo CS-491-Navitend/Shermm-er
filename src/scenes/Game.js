@@ -69,6 +69,7 @@ export class Game extends Scene {
 
     //Turtle sinking flag
     this.turtlesAreSunk = false;
+
   }
 
   create(data) {
@@ -236,6 +237,19 @@ export class Game extends Scene {
     }
     // END SAFE ZONE LOGIC
 
+    //SHERMIE QUEUE LOGIC
+    
+    let boundarySpriteTexture;
+    if (this.textures.exists('pasture')) {
+        this.boundarySpriteTexture = this.add.sprite(this.width / 4 - this.safeZoneSize / 2, this.height - this.safeZoneSize / 2, 'pasture').setDisplaySize(this.width / 2 - this.safeZoneSize / 2, this.safeZoneSize).setDepth(1);
+    } else {
+        // pasture fallback
+        this.boundarySpriteTexture = this.add.rectangle(this.width / 4 - this.safeZoneSize / 2, this.height - this.safeZoneSize / 2, this.width / 2 - this.safeZoneSize / 2, this.safeZoneSize, 0x00ff00).setStrokeStyle(5, 0x00ff00).setFillStyle(0x00000,0).setDepth(1);
+    }
+    this.physics.add.existing(this.boundarySpriteTexture, true);
+    this.spritePlacementX = this.boundarySpriteTexture.x + this.boundarySpriteTexture.displayWidth / 2 - this.shermie.width;
+    //END SHERMIE QUEUE LOGIC
+
     //WATER ZONE LOGIC
     let waterZoneTexture;
     if (this.textures.exists(zoneType)) {
@@ -385,8 +399,18 @@ export class Game extends Scene {
       this.canMove = true;
     }
 
-    this.shermie.x = Phaser.Math.Clamp(this.shermie.x, 0, this.width);
-    this.shermie.y = Phaser.Math.Clamp(this.shermie.y, 0, this.height - this.safeZoneSize + this.moveDistance / 2);
+    if(this.shermie.y >= this.height - this.moveDistance){
+      this.shermie.x = Phaser.Math.Clamp(this.shermie.x, this.width / 2 - this.moveDistance / 4, this.width - this.moveDistance / 2);
+    }else{
+      this.shermie.x = Phaser.Math.Clamp(this.shermie.x, this.moveDistance / 2 , this.width - this.moveDistance / 2);
+    }
+    
+    //this logic still alows the user to press down when above, allowing them to basically teleport to the front of the pasture, but I think this is fine, because it's less limiting to the game space. 
+    if (this.shermie.x < this.width / 2 - this.moveDistance / 2) {
+      this.shermie.y = Phaser.Math.Clamp(this.shermie.y, 0, this.height - this.safeZoneSize - this.shermie.height);
+    } else {
+        this.shermie.y = Phaser.Math.Clamp(this.shermie.y, 0, this.height - this.moveDistance + this.moveDistance / 2);
+    }
 
     this.vehicles.getChildren().forEach((vehicle) => {
       const isOffScreenLeft = vehicle.x < -vehicle.width / 2;
