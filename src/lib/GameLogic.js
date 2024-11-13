@@ -41,6 +41,9 @@ export class GameLogic {
   }
 
   resetPlayer() {
+
+    this.game.shermie.isSelfServe = Math.random() < 0.5;
+    console.log(`Shermie is${this.game.shermie.isSelfServe ? "" : " not"} self-serve.`);
     
     this.isInvincible = false;
     this.isAnimating = false;
