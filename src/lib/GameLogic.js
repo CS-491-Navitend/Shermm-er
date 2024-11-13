@@ -72,8 +72,16 @@ export class GameLogic {
     if (this.shermieSprites != this.game.boundarySpriteTexture.x + this.game.boundarySpriteTexture.displayWidth / 2 - this.game.shermie.width) {
         this.newShermie.destroy(); 
         this.game.spritePlacementX += this.game.shermie.width; //move position right for next spirte, basically undo the add. 
-    }else{return}
-}
+    } else {
+      return
+    }
+  }
+
+  selfServeShermie() {
+    this.game.goalCount += 10;
+    this.resetPlayer();
+    // this.tryRemoveShermieSprite();
+  }
 
   nextLevel(){
     // console.log("Starting next level");
