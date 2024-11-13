@@ -250,6 +250,18 @@ export class Game extends Scene {
     this.spritePlacementX = this.boundarySpriteTexture.x + this.boundarySpriteTexture.displayWidth / 2 - this.shermie.width;
     //END SHERMIE QUEUE LOGIC
 
+
+    // SHERMIE SELF SERVE LOGIC
+    // if you press S then remove the shermie and increase the score by 10
+    this.input.keyboard.on('keydown-S', () => {
+      if (!this.shermie) return;
+      if (this.shermie.isSelfServe) {
+        this.gameLogic.selfServeShermie();
+        this.score += 10;
+      }
+    })
+    // END SHERMIE SELF SERVE LOGIC
+
     //WATER ZONE LOGIC
     let waterZoneTexture;
     if (this.textures.exists(zoneType)) {
