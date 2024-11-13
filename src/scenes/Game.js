@@ -109,6 +109,10 @@ export class Game extends Scene {
     this.shermie.setDepth(10); // Scale player sprite
     this.shermie.setCollideWorldBounds(true);
 
+    // randomly decide if the starting shermie is self serve
+    this.shermie.isSelfServe = Math.random() < 0.5;
+    console.log(`Shermie is${this.shermie.isSelfServe ? "" : " not"} self-serve.`);
+
     // Capture user input for movement
     this.cursors = this.input.keyboard.createCursorKeys();
 
