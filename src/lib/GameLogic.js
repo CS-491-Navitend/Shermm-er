@@ -51,13 +51,12 @@ export class GameLogic {
 
   nextLevel(){
     // console.log("Starting next level");
-    console.log(this.goalCount)
     this.game.goalCount = 0;
     this.game.level += 1;
     if (this.game.level < this.game.getNumberOfLevels()) {
       this.game.scene.start("Game", { level: this.game.level });
     } else {
-      this.game.scene.start("MainMenu");
+      this.game.scene.start("Credits");
     }
   }
 }

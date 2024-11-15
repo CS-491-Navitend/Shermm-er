@@ -17,7 +17,9 @@ export class Credits extends Scene {
 
         // Credits content
         const credits = [
-            "Project Manager",
+            "Thank you for playing our game!",
+
+            "\nProject Manager",
             
             "Steve Curran",
             " ",
@@ -46,6 +48,7 @@ export class Credits extends Scene {
             "Vin Nordfords",
             "Julian",
             "John Leanord",
+            "And everyone else at Navitend!"
         ];
 
         credits.forEach((line, index) => {
@@ -74,12 +77,12 @@ export class Credits extends Scene {
     createBackButton() {
 
         const backButtonImage = this.add
-            .image(200, 900, "buttonImage")
+            .image(100, 900, "buttonImage")
             .setOrigin(0.5)
             .setInteractive({ userHandCursor: true });
 
          const backText = this.add.text(
-            200, 900, "Back", {
+            100, 900, "Back", {
             fontFamily: "Pixel",
             fontSize: "20px",
             color: "#ffffff",
@@ -88,7 +91,7 @@ export class Credits extends Scene {
         })
             .setOrigin(0.5)
 
-        backButtonImage.setDisplaySize(250, 80);
+        backButtonImage.setDisplaySize(200, 75);
 
         backButtonImage.on("pointerdown", () => {
             this.scene.stop("Credits");
