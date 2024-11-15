@@ -32,8 +32,9 @@ export class Game extends Scene {
     this.lives = 0;
     this.resetCount = 0;
     this.goalCount = 0;
-    this.numOfGoals = 5;
+    this.numOfGoals = 4;
     this.savedVelocity = 0;
+    this.shermieIndex = 0;//Currently used shermie color
 
     // road values
     this.numberOfRoads = 5;
@@ -69,6 +70,9 @@ export class Game extends Scene {
 
     //Turtle sinking flag
     this.turtlesAreSunk = false;
+
+    //Color loading array
+    this.colorArray = null;
   }
 
   create(data) {
@@ -102,9 +106,9 @@ export class Game extends Scene {
     this.updateLives(); //display lives in the html bar
 
     // Add player sprite with physics
-    const shermieArray = this.getShermieColor();
-    this.shermieColor = shermieArray[0];//Shermie Comparison Code
-    this.shermieTexture = shermieArray[1];//Shermie sprite color
+    this.colorArray = this.getColors();
+    this.shermieColor = this.colorArray[this.shermieIndex][0];//Shermie Comparison Code
+    this.shermieTexture = this.colorArray[this.shermieIndex][1];//Shermie sprite color
     this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, this.shermieTexture);//Set Shermie sprite color according to function
     this.shermie.setData("color", this.shermieColor);//Set shermie color comparison code
     this.shermie.setSize(50, 50, true); // Set hitbox size
@@ -182,19 +186,20 @@ export class Game extends Scene {
 
     if (this.textures.exists(objectiveTexture)) {
       // Use images if the texture exists
+      let goalIndex = 0;
       for (let j = 0; j < imageWidth * 4; j += imageWidth) {
         //this 4 could be replaced by a variable, but we statically divide all by 10 so it works. If that changes we need to change this
         objective = this.add
           .image(x, laneWidth / 2, objectiveTexture)
           .setDisplaySize(imageWidth, imageHeight)
           .setDepth(0);
-        const colorArray = this.getGoalZoneTint();
-        objective.setData("color", colorArray[0]);//Set color for later comparison with shermie
-        objective.setTint(objective.tint * 0.2 + colorArray[1] * 0.8);
+        objective.setData("color", this.colorArray[goalIndex][0]);//Set color for later comparison with shermie
+        objective.setTint(objective.tint * 0.2 + this.colorArray[goalIndex][2] * 0.8);
         this.physics.add.existing(objective, true);
         objectiveZone.add(objective);
         x += imageWidth * 2; // Space out each objective
         this.advanceNumber++;
+        goalIndex++;
       }
     } else {
       // Use maroon rectangles if the texture does not exist
@@ -477,7 +482,7 @@ export class Game extends Scene {
     }
   }
 
-  loseLife() {//TODO - Take different colors into account
+  loseLife() {
     if (this.isInvincible || this.isAnimating) {
       return;
     }
@@ -485,13 +490,21 @@ export class Game extends Scene {
     this.isInvincible = true;
     this.shermie.anims.play("shermieDeath");
     this.shermie.once("animationcomplete-shermieDeath", () => {
-      this.shermie.setTexture(this.defaultTexture);
+      this.shermie.setTexture(this.shermieTexture);
       this.gameLogic.loseLife();
     });
   }
 
   goalCollision() {
     this.gameLogic.goal();
+    if(this.shermieIndex == this.advanceNumber - 1){
+      this.shermieIndex = 0;  
+    }else{
+      this.shermieIndex++;
+      this.shermieTexture = this.colorArray[this.shermieIndex][1];
+      this.shermie.setTexture(this.shermieTexture);
+      this.shermie.setData("color", this.colorArray[this.shermieIndex][0]);
+    }
   }
 
   updateTimer() {
@@ -561,38 +574,30 @@ export class Game extends Scene {
     }
   }
 
-  getShermieColor(){
-    const redColor = "red"; const redShermie = "shermieRed";
-    const blueColor = "blue"; const blueShermie = "shermieBlue";
-    const greenColor = "green"; const greenShermie = "shermieGreen";
-    const yellowColor = "yellow"; const yellowShermie = "shermieYellow";
-    const orangeColor = "orange"; const orangeShermie = "shermieOrange";    
-    const purpleColor = "purple"; const purpleShermie = "shermiePurple";
+  getColors(){
+    //FIXME - Return a datastructure that has an equal number of entries to the number of goals
+    // The structure will contain color comparison codes, shermie colors, and goal zone tints.
+    // Will be called once at game generation, guarantees that shermie textures correspond directly with goal zone colors.
+
+    //Load comparison codes, shermie textures, and tint hexcodes for goal zones
+    const redColor = "red"; const redShermie = "shermieRed"; const redTint = 0xff0000;;
+    const blueColor = "blue"; const blueShermie = "shermieBlue"; const blueTint = 0x0000ff;
+    const greenColor = "green"; const greenShermie = "shermieGreen"; const greenTint = 0x00ff00;
+    const yellowColor = "yellow"; const yellowShermie = "shermieYellow"; const yellowTint = 0xffff00;
+    const orangeColor = "orange"; const orangeShermie = "shermieOrange"; const orangeTint = 0xffa500;
+    const purpleColor = "purple"; const purpleShermie = "shermiePurple"; const purpleTint  = 0x800080;
 
     const colors = [redColor, blueColor, greenColor, yellowColor, orangeColor, purpleColor];
     const shermies = [redShermie, blueShermie, greenShermie, yellowShermie, orangeShermie, purpleShermie];
+    const tints = [redTint, blueTint, greenTint, yellowTint, orangeTint, purpleTint];
     
-    const index = Math.floor(Math.random() * colors.length);
+    let colorProperties = Array(this.numOfGoals);
 
-    const colorProperties = [colors[index], shermies[index]];
-
-    return colorProperties;
-  }
-
-  getGoalZoneTint(){
-    const redColor = "red"; const redTint = 0xff0000;
-    const blueColor = "blue"; const blueTint = 0x0000ff;
-    const greenColor = "green"; const greenTint = 0x00ff00;
-    const yellowColor = "yellow"; const yellowTint = 0xffff00;
-    const orangeColor = "orange"; const orangeTint = 0xffa500;
-    const purpleColor = "purple"; const purpleTint  = 0x800080;
-
-    const colors = [redColor, blueColor, greenColor, yellowColor, orangeColor, purpleColor];
-    const colorTints = [redTint, blueTint, greenTint, yellowTint, orangeTint, purpleTint];
-    
-    const index = Math.floor(Math.random() * colors.length);
-
-    const colorProperties = [colors[index], colorTints[index]];
+    for(let i = 0; i < this.numOfGoals; i++){
+       const index = Math.floor(Math.random() * colors.length);
+       colorProperties[i] = [colors[index], shermies[index], tints[index]];
+       console.log(colorProperties[i]);
+    }
 
     return colorProperties;
   }
