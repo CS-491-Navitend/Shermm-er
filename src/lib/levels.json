@@ -36,24 +36,24 @@
       "car_texture": [ "car1", "car2", "car3", "tractor" ],
       "cars_Forward_texture": [ "car1forward", "car2forward", "car3forward" ],
       "car_spacing": [ 250, 350, 500 ],
-      "car_speed_multiplier": 1,
-      "number_of_cars": 2,
+      "car_speed_multiplier": 0.85,
+      "number_of_cars": 1.5,
 
       "water_zone_type": "water",
       "log_texture": [ "LongLog", "ShortLog" ],
       "log_spacing": [ 250, 350, 400 ],
 
-      "log_speed_multiplier": 1,
-      "number_of_logs": 2,
+      "log_speed_multiplier": 0.75,
+      "number_of_logs": 3,
 
       "turtle_texture": ["turtleShort", "turtleLong"],
       "turtles_Forward_texture": ["turtleShortForward", "turtleLongForward"],
       "turtle_spacing": [250, 350, 400],
-      "turtle_speed_multiplier": 1,
+      "turtle_speed_multiplier": 0.75,
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 3,
 
-      "number_of_lives": 5,
+      "number_of_lives": 4,
       "goal_count": 5,
 
       "powerups": [ 0, 0, 0, 0 ]
@@ -65,24 +65,24 @@
       "car_texture": [ "iceCar1" ],
       "cars_Forward_texture": [ "iceTruck" ],
       "car_spacing": [ 250, 350, 500 ],
-      "car_speed_multiplier": 1,
+      "car_speed_multiplier": 0.95,
       "number_of_cars": 2,
 
       "water_zone_type": "ice",
       "log_texture": [ "iceLog", "iceberg" ],
       "log_spacing": [ 250, 350, 400 ],
 
-      "log_speed_multiplier": 1,
-      "number_of_logs": 2,
+      "log_speed_multiplier": 0.95,
+      "number_of_logs": 2.85,
       
       "turtle_texture": ["iceTurtle"],
       "turtles_Forward_texture": ["iceTurtle"],
       "turtle_spacing": [250, 350, 400],
-      "turtle_speed_multiplier": 1,
+      "turtle_speed_multiplier": 0.95,
       "turtle_sink_multiplier": 1,
-      "number_of_turtles": 3,
+      "number_of_turtles": 2.5,
 
-      "number_of_lives": 5,
+      "number_of_lives": 4,
       "goal_count": 3,
       
       "powerups": [ 0, 0, 0, 0 ]
@@ -94,7 +94,7 @@
       "car_texture": [ "lavaCar1", "lavaTruck" ],
       "cars_Forward_texture": [ "lavaCar2" ],
       "car_spacing": [ 250, 350, 500 ],
-      "car_speed_multiplier": 1,
+      "car_speed_multiplier": 1.25,
       "number_of_cars": 2,
 
       "water_zone_type": "lava",
@@ -108,8 +108,8 @@
       "turtles_Forward_texture": ["lavaTurtle"],
       "turtle_spacing": [250, 350, 400],
       "turtle_speed_multiplier": 1,
-      "turtle_sink_multiplier": 1,
-      "number_of_turtles": 3,
+      "turtle_sink_multiplier": 1.5,
+      "number_of_turtles": 2,
 
       "number_of_lives": 5,
       "goal_count": 3,
@@ -125,7 +125,7 @@
       "cars_Forward_texture": ["windForward", "lightningBoltForward"],
       "car_spacing": [250, 350, 100],
       "car_speed_multiplier": 1,
-      "number_of_cars": 2,
+      "number_of_cars": 3,
 
       "water_zone_type": "sky",
 
@@ -154,7 +154,7 @@
       "car_texture": ["outerSpaceCar1", "outerSpaceCar2"],
       "cars_Forward_texture": ["outerSpaceCar1b", "outerSpaceCar2b"],
       "car_spacing": [250, 350, 500],
-      "car_speed_multiplier": 1,
+      "car_speed_multiplier": 1.1,
       "number_of_cars": 2,
 
       "water_zone_type": "outerSpace",
@@ -162,13 +162,13 @@
   
       "log_spacing": [250, 350, 400],
 
-      "log_speed_multiplier": 1,
+      "log_speed_multiplier": 1.5,
       "number_of_logs": 3,
 
       "turtle_texture": ["comet"],
       "turtles_Forward_texture": ["comet"],
       "turtle_spacing": [250, 350, 400],
-      "turtle_speed_multiplier": 1,
+      "turtle_speed_multiplier": 1.5,
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 3,
 
@@ -185,20 +185,20 @@
       "car_texture": ["desertBuggy2", "desertTruck"],
       "cars_Forward_texture": ["desertBuggy1"],
       "car_spacing": [250, 350, 500],
-      "car_speed_multiplier": 1,
-      "number_of_cars": 1,
+      "car_speed_multiplier": 1.15,
+      "number_of_cars": 2,
 
       "water_zone_type": "desert",
       "log_texture": ["desertLog","desertLog2"],
       "log_spacing": [250, 350, 400],
 
-      "log_speed_multiplier": 1,
+      "log_speed_multiplier": 1.15,
       "number_of_logs": 2,
 
       "turtle_texture": ["desertTurtle"],
       "turtles_Forward_texture": ["desertTurtle"],
       "turtle_spacing": [250, 350, 400],
-      "turtle_speed_multiplier": 1,
+      "turtle_speed_multiplier": 1.15,
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 3,
 
@@ -215,7 +215,7 @@
       "car_texture": ["swampBuggy2","swampATV"],
       "cars_Forward_texture": ["swampBuggy2Forward","swampBuggy2Forward"],
       "car_spacing": [250, 350, 500],
-      "car_speed_multiplier": 1,
+      "car_speed_multiplier": 1.5,
       "number_of_cars": 2,
 
       "water_zone_type": "swamp",
@@ -223,7 +223,7 @@
       "log_texture": ["swampLog"],
       "log_spacing": [250, 350, 400],
 
-      "log_speed_multiplier": 1,
+      "log_speed_multiplier": 2,
       "number_of_logs": 2,
 
       "turtle_texture": ["swampTurtle"],
@@ -234,7 +234,7 @@
       "number_of_turtles": 3,
 
       "number_of_lives": 3,
-      "goal_count": 3,
+      "goal_count": 4,
 
       "powerups": [0, 0, 0, 0]
     },
@@ -245,7 +245,7 @@
       "car_texture": ["cakeCar1"],
       "cars_Forward_texture": ["cakeCar2"],
       "car_spacing": [ 250, 350, 500 ],
-      "car_speed_multiplier": 1,
+      "car_speed_multiplier": 1.5,
       "number_of_cars": 2,
 
       "water_zone_type": "cake",
@@ -258,7 +258,7 @@
       "turtle_texture": ["cherry", "cherry"],
       "turtles_Forward_texture": ["cherry", "cherry"],
       "turtle_spacing": [250, 350, 400],
-      "turtle_speed_multiplier": 1,
+      "turtle_speed_multiplier": 1.25,
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 3,
 
@@ -274,20 +274,20 @@
       "car_texture": ["batmobile", "bap"],
       "cars_Forward_texture": ["bap", "fwip", "batmobileForward"],
       "car_spacing": [250, 350, 500],
-      "car_speed_multiplier": 1,
+      "car_speed_multiplier": 2,
       "number_of_cars": 2,
 
       "water_zone_type": "batman",
       "log_texture": ["batmanBarrel"],
       "log_spacing": [250, 350, 400],
 
-      "log_speed_multiplier": 1,
+      "log_speed_multiplier": 1.50,
       "number_of_logs": 4,
 
       "turtle_texture": ["joker", "joker"],
       "turtles_Forward_texture": ["joker", "joker"],
       "turtle_spacing": [250, 350, 400],
-      "turtle_speed_multiplier": 1,
+      "turtle_speed_multiplier": 1.25,
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 3,
 
