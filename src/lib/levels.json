@@ -37,21 +37,21 @@
       "cars_Forward_texture": [ "car1forward", "car2forward", "car3forward" ],
       "car_spacing": [ 250, 350, 500 ],
       "car_speed_multiplier": 1,
-      "number_of_cars": 2,
+      "number_of_cars": 0,
 
       "water_zone_type": "water",
       "log_texture": [ "LongLog", "ShortLog" ],
       "log_spacing": [ 250, 350, 400 ],
 
       "log_speed_multiplier": 1,
-      "number_of_logs": 2,
+      "number_of_logs": 20,
 
       "turtle_texture": ["turtleShort", "turtleLong"],
       "turtles_Forward_texture": ["turtleShortForward", "turtleLongForward"],
       "turtle_spacing": [250, 350, 400],
       "turtle_speed_multiplier": 1,
       "turtle_sink_multiplier": 1,
-      "number_of_turtles": 3,
+      "number_of_turtles": 30,
 
       "number_of_lives": 5,
       "goal_count": 5,
@@ -66,21 +66,21 @@
       "cars_Forward_texture": [ "iceTruck" ],
       "car_spacing": [ 250, 350, 500 ],
       "car_speed_multiplier": 1,
-      "number_of_cars": 2,
+      "number_of_cars": 0,
 
       "water_zone_type": "ice",
       "log_texture": [ "iceLog", "iceberg" ],
       "log_spacing": [ 250, 350, 400 ],
 
       "log_speed_multiplier": 1,
-      "number_of_logs": 2,
+      "number_of_logs": 20,
       
       "turtle_texture": ["iceTurtle"],
       "turtles_Forward_texture": ["iceTurtle"],
       "turtle_spacing": [250, 350, 400],
       "turtle_speed_multiplier": 1,
       "turtle_sink_multiplier": 1,
-      "number_of_turtles": 3,
+      "number_of_turtles": 30,
 
       "number_of_lives": 5,
       "goal_count": 3,

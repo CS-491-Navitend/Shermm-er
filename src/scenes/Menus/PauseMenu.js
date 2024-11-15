@@ -93,7 +93,7 @@ export class PauseMenu extends Scene {
         });
 
         button.on('pointerdown', () => {
-            console.log(`${button.text} clicked`);
+            // console.log(`${button.text} clicked`);
             this.confirmSelection(); // Confirm selection on click
         });
     }
@@ -123,20 +123,21 @@ export class PauseMenu extends Scene {
     confirmSelection() {
         if (this.isDebounced) return;
         this.isDebounced = true;
-        console.log("Selected button: ", this.buttons[this.selectedButtonIndex]);
+        // console.log("Selected button: ", this.buttons[this.selectedButtonIndex]);
         const selectedButton = this.buttons[this.selectedButtonIndex];
         if (selectedButton.text === 'Resume') {
             this.hide();
-            console.log("Hiding the menu");
+            // console.log("Hiding the menu");
             this.scene.input.keyboard.on('keydown-ENTER', () => {
                 this.scene.togglePause();
             });
         } else if (selectedButton.text === 'Main Menu') {
-            console.log("Going to Main Menu....")
+            // console.log("Going to Main Menu....")
             this.scene.scene.stop("PauseMenu");
             this.scene.timer.stop();
             this.scene.scene.stop("Game");
             this.scene.scene.start("MainMenu");
+            document.getElementById('ui-bar').style.display = "none";
             this.isActive = false;
            // console.log('starting MainMenu');
         }
@@ -145,10 +146,10 @@ export class PauseMenu extends Scene {
         }, 300);
     }
 
-    
+     
     show(){
         // Pause the Game
-        console.log("PauseMenu show called. Current isActive:", this.isActive);
+        // console.log("PauseMenu show called. Current isActive:", this.isActive);
         if (this.isActive || this.isToggling) return;
         this.isToggling = true;
         this.isActive = true;
@@ -156,7 +157,7 @@ export class PauseMenu extends Scene {
         this.scene.physics.pause()
        // this.scene.timer.pause();
         this.scene.paused = true;
-        console.log("Pause Menu is now active.");
+        // console.log("Pause Menu is now active.");
         
         this.scene.input.keyboard.enabled = true; // Keep keyboard input enabled for menu navigation
         this.scene.input.mouse.enabled = true;
@@ -165,13 +166,13 @@ export class PauseMenu extends Scene {
         this.scene.input.keyboard.on('keydown-DOWN', () => this.changeSelection(1));
         this.scene.input.keyboard.on('keydown-ENTER', () => this.confirmSelection());
 
-        console.log("scene input added");
+        // console.log("scene input added");
         this.isToggling = false;
     }
 
     hide(){
         // Resume the Game
-        console.log("PauseMenu hide called. Current isActive:", this.isActive);
+        // console.log("PauseMenu hide called. Current isActive:", this.isActive);
         if (!this.isActive || this.isToggling) return;
         this.isToggling = true;
         this.isActive = false;
@@ -180,7 +181,7 @@ export class PauseMenu extends Scene {
        // this.scene.timer.resume();
        // this.scene.paused = false;
         this.scene.input.enabled = true;
-        console.log("PauseMenu is now inactive.");
+        // console.log("PauseMenu is now inactive.");
         this.scene.input.keyboard.removeAllListeners();
         this.isToggling = false;
         this.scene.paused = false;
@@ -193,7 +194,7 @@ export class PauseMenu extends Scene {
     
 
     destroy() {
-        console.log("Pause menu is being destroyed");
+        // console.log("Pause menu is being destroyed");
         this.scene.input.keyboard.removeAllListeners();
         if(this.pauseMenu){
             this.pauseMenu.destroy();
