@@ -31,7 +31,7 @@ export function createLogs(scene, laneStart, laneWidth, logTextures, spacingOpti
     for (let logIndex = 0; logIndex < scene.numberOfLogs; logIndex++) {
       const spacing = spacingOptions[Math.floor(Math.random() * spacingOptions.length)];
       currentX += spacing;
-      console.log(spacing)
+      // console.log(spacing)
 
       // Spawn the log at the calculated position using the pre-assigned texture
       scene.spawnLog(currentX, laneStart - laneWidth * laneIndex - laneWidth / 2, logTexture, speed);
@@ -57,17 +57,17 @@ export function createTurtles(scene, laneStart, laneWidth, turtleTextures, turtl
     for(let turtleIndex = 0; turtleIndex < scene.numberOfTurtles; turtleIndex++) {
       const spacing = spacingOptions[Math.floor(Math.random() * spacingOptions.length)];
       currentX += spacing;
-      console.log(spacing);
+      // console.log(spacing);
 
       let canSink = Math.random() < 0.5;
 
       if(canSink == true && sinkCount < maxSink){
         sinkCount++;
-        console.log("Sinking turtle added: " + sinkCount);
+        // console.log("Sinking turtle added: " + sinkCount);
         canSink = false;
       }
       else{
-        console.log("Max sink count exceeded");
+        // console.log("Max sink count exceeded");
         canSink = true;
       }
 
