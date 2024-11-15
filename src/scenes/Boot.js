@@ -65,7 +65,7 @@ import LavaCar1 from "/assets/LavaLevel/LavaCar.png";
 import LavaCar2 from "/assets/LavaLevel/LavaCar2.png";
 import lavaTurtle from "/assets/LavaLevel/lavaTurtle.png";
 
-// Import Sky Assets
+// Import Sky Assets4
 import skySafeZone from "/assets/SkyLevel/skySafeZone.png";
 import sky from "/assets/SkyLevel/sky.png";
 import skyRoad from "/assets/SkyLevel/skyRoad.png";
@@ -320,12 +320,12 @@ export class Boot extends Scene {
 
     //Font Family
     const font = new FontFaceObserver('Pixel');
-        font.load().then(() => {
-            console.log('Font loaded successfully!');
-            // Optionally, you can store a flag or execute any logic here
-        }).catch(() => {
-            console.error('Font failed to load.');
-        });
+        // font.load().then(() => {
+        //     // console.log('Font loaded successfully!');
+        //     // Optionally, you can store a flag or execute any logic here
+        // }).catch(() => {
+        //     console.error('Font failed to load.');
+        // });
 
 
 

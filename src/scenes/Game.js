@@ -477,6 +477,7 @@ export class Game extends Scene {
     this.isAnimating = true;
     this.isInvincible = true;
     this.shermie.anims.play("shermieDeath");
+    this.sound.play("squash");
     this.shermie.once("animationcomplete-shermieDeath", () => {
       this.shermie.setTexture(this.defaultTexture);
       this.gameLogic.loseLife();

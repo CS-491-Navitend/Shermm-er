@@ -14,7 +14,7 @@ export class GameWin extends Scene {
     this.add.text(data["game"].width / 2, 250, "You Win!", { fontSize: "32px", fill: "#fff" }).setOrigin(0.5);
 
     // Display win count
-    this.add.text(data["game"].width / 2, 300, `Wins: ${data["game"].winCount}`, { fontSize: "32px", fill: "#fff" }).setOrigin(0.5);
+    this.add.text(data["game"].width / 2, 300, `Goals: ${data["game"].winCount}`, { fontSize: "32px", fill: "#fff" }).setOrigin(0.5);
 
     // Display resets count
     this.add.text(data["game"].width / 2, 350, `Resets: ${data["game"].resetCount}`, { fontSize: "32px", fill: "#fff" }).setOrigin(0.5);
