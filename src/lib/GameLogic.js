@@ -17,7 +17,7 @@ export class GameLogic {
   win() {
     this.game.winCount++;
     // console.log(`Win condition met. Wins: ${this.game.winCount}`);
-    this.game.scene.start('GameWin', { game: this.game });
+    this.game.scene.start("GameWin", { game: this.game });
   }
 
   loseLife() {
@@ -56,7 +56,7 @@ export class GameLogic {
     if (this.game.level < this.game.getNumberOfLevels()) {
       this.game.scene.start("Game", { level: this.game.level });
     } else {
-      this.game.scene.start("MainMenu");
+      this.game.scene.start("Credits");
     }
   }
 }

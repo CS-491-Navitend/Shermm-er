@@ -13,7 +13,6 @@ export class MainMenu extends Scene {
 
 
     create(buttons) {
-
         this.selectedButtonIndex = 0; 
         //background
         this.add.image(512, 384, "background").setOrigin(0.5, 0.5);
@@ -21,7 +20,6 @@ export class MainMenu extends Scene {
             volume: 0.25,
             loop: true,
         });
-
         //console.log("Data received: ", buttons);
         this.isActive = true;
         this.destroyButtons();
@@ -142,7 +140,7 @@ export class MainMenu extends Scene {
     confirmSelection() {
 
         const selectedButton = this.buttons[this.selectedButtonIndex];
-        console.log('selected Button', this.selectedButtonIndex);
+        // console.log('selected Button', this.selectedButtonIndex);
         if (selectedButton === this.buttons[0]) {
             this.backgroundMusic.play();
             this.scene.start("Game", { level: 1 });
@@ -165,7 +163,7 @@ export class MainMenu extends Scene {
                 button.buttonImage.off("pointerout");
                 button.buttonImage.destroy();
                 button.buttonText.destroy();
-                console.log("Button destroyed: ", button.buttonText.text);
+                // console.log("Button destroyed: ", button.buttonText.text);
             });
             this.buttons = [];
             this.input.keyboard.removeAllListeners();

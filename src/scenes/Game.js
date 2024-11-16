@@ -177,7 +177,10 @@ export class Game extends Scene {
     let x = imageWidth * 2; // Initial starting position for each objective segment
 
     if (this.textures.exists(objectiveTexture)) {
-      // Use images if the texture exists
+      // Use images if the texture exists\
+      if(this.advanceNumber > 0){
+        this.advanceNumber = 0;
+      }
       for (let j = 0; j < imageWidth * 4; j += imageWidth) {
         //this 4 could be replaced by a variable, but we statically divide all by 10 so it works. If that changes we need to change this
         objective = this.add
@@ -188,9 +191,13 @@ export class Game extends Scene {
         objectiveZone.add(objective);
         x += imageWidth * 2; // Space out each objective
         this.advanceNumber++;
+        console.log(this.advanceNumber)
       }
     } else {
-      // Use maroon rectangles if the texture does not exist
+      // Use maroon rectangles if the texture does not exist      
+      if(this.advanceNumber > 0){
+        this.advanceNumber = 0;
+      }
       for (let j = 0; j < imageWidth * 4; j += imageWidth) {
         objective = this.add
           .rectangle(x, laneWidth / 2, imageWidth, imageHeight, 0x00ff00) // Maroon color in hex
@@ -198,7 +205,6 @@ export class Game extends Scene {
         this.physics.add.existing(objective, true);
         objectiveZone.add(objective);
         x += imageWidth * 2; // Space out each objective
-        this.advanceNumber++;
       }
     }
     //END OBJECTIVE PLACEMENT
@@ -363,7 +369,6 @@ export class Game extends Scene {
     if (this.paused) return;
 
     document.getElementById("score").innerText = `Score: ${this.goalCount}`;
-
     if (this.canMove && !this.isAnimating && !this.inWater) {
       if (this.cursors.left.isDown && this.shermie.x > 0) {
         this.shermie.x -= this.moveDistance;
@@ -477,6 +482,7 @@ export class Game extends Scene {
     this.isAnimating = true;
     this.isInvincible = true;
     this.shermie.anims.play("shermieDeath");
+    this.sound.play("squash");
     this.shermie.once("animationcomplete-shermieDeath", () => {
       this.shermie.setTexture(this.defaultTexture);
       this.gameLogic.loseLife();
