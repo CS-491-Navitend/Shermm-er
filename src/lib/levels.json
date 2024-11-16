@@ -10,20 +10,20 @@
       "cars_Forward_texture": [ "car1forward", "car2forward", "car3forward" ],
       "car_spacing": [ 250, 350, 100 ],
       "car_speed_multiplier": 1,
-      "number_of_cars": 2,
+      "number_of_cars": 0,
 
 
       "log_texture": [ "LongLog", "ShortLog" ],
       "log_spacing": [ 250, 350, 400 ],
       "log_speed_multiplier": 1,
-      "number_of_logs": 2,
+      "number_of_logs": 10,
 
       "turtle_texture": ["turtleShort", "turtleLong"],
       "turtles_Forward_texture": ["turtleShortForward", "turtleLongForward"],
       "turtle_spacing": [250, 350, 400],
       "turtle_speed_multiplier": 1,
       "turtle_sink_multiplier": 1,
-      "number_of_turtles": 3,
+      "number_of_turtles": 10,
 
       "number_of_lives": 5,
       "goal_count": 3,

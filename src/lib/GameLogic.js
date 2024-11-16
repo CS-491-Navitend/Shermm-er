@@ -12,6 +12,8 @@ export class GameLogic {
     else{
       this.win();
     }
+    
+    this.tryRemoveShermieSprite();
   }
 
   win() {
@@ -48,6 +50,27 @@ export class GameLogic {
     this.game.shermie.x = this.game.width / 2;
     this.game.shermie.y = this.game.height - this.game.safeZoneSize + this.game.moveDistance / 2;
   }
+
+  tryAddShermieSprite() {
+    
+    // Check if there's room to add another sprite
+    if (this.game.spritePlacementX < 0) {
+        this.gameOver();
+        return;
+    }
+    this.newShermie = this.game.add.sprite(this.game.spritePlacementX, this.game.boundarySpriteTexture.y, 'shermie');
+    this.newShermie.setDisplaySize(this.game.shermie.width, this.game.shermie.height);
+    this.game.spritePlacementX -= this.game.shermie.width; // Move position left for next sprite
+  }
+
+  tryRemoveShermieSprite() {
+    console.log()
+    // Check if there are any sprites to remove
+    if (this.shermieSprites != this.game.boundarySpriteTexture.x + this.game.boundarySpriteTexture.displayWidth / 2 - this.game.shermie.width) {
+        this.newShermie.destroy(); 
+        this.game.spritePlacementX += this.game.shermie.width; //move position right for next spirte, basically undo the add. 
+    }else{return}
+}
 
   nextLevel(){
     // console.log("Starting next level");

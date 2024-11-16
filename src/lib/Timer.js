@@ -39,6 +39,15 @@ export class Timer {
         this.game.raiseTurtles();
       }
     }
+
+    //this chance needs to be a variable obtained from the json
+    if (this.timeRemaining % 5 === 0) {
+      const chance = Math.random();
+      console.log(chance)
+      if (chance > 0) { 
+          this.game.gameLogic.tryAddShermieSprite();
+      }
+  }
   }
 
   start() {
