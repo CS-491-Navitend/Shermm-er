@@ -157,6 +157,10 @@ import squash from "/assets/audio/squash.wav"
 import plunk from "/assets/audio/plunk.wav"
 import backgroundMusic from "/assets/audio/backgroundMusic.mp3"
 
+//advanced assets
+import pasture from "/assets/pasture.png"
+import pasture_end from "/assets/pasture_end.png"
+
 
 export class Boot extends Scene {
   constructor() {
@@ -312,6 +316,10 @@ export class Boot extends Scene {
     this.load.image("cakeCar1", cakeCar1);
     this.load.image("cakeCar2", cakeCar2);
     this.load.image("banana", banana);
+
+    //advanced feature assets
+    this.load.image("pasture", pasture);
+    this.load.image("pasture_end", pasture_end);
 
 
     //UI and Background

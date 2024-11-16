@@ -41,7 +41,6 @@ export class GameLogic {
   }
 
   resetPlayer() {
-    
     this.isInvincible = false;
     this.isAnimating = false;
     // console.log("Resetting player");
@@ -52,7 +51,6 @@ export class GameLogic {
   }
 
   tryAddShermieSprite() {
-    
     // Check if there's room to add another sprite
     if (this.game.spritePlacementX < 0) {
         this.gameOver();
@@ -64,12 +62,16 @@ export class GameLogic {
   }
 
   tryRemoveShermieSprite() {
-    console.log()
+    // console.log()
     // Check if there are any sprites to remove
-    if (this.shermieSprites != this.game.boundarySpriteTexture.x + this.game.boundarySpriteTexture.displayWidth / 2 - this.game.shermie.width) {
-        this.newShermie.destroy(); 
-        this.game.spritePlacementX += this.game.shermie.width; //move position right for next spirte, basically undo the add. 
-    }else{return}
+  if (this.shermieSprites != this.game.boundarySpriteTexture.x + this.game.boundarySpriteTexture.displayWidth / 2 - this.game.shermie.width) {
+      if (this.newShermie) {
+          this.newShermie.destroy(); 
+          this.game.spritePlacementX += this.game.shermie.width;
+      } 
+  } else {
+      return;
+  }
 }
 
   nextLevel(){

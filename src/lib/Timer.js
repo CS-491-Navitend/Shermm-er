@@ -43,8 +43,10 @@ export class Timer {
     //this chance needs to be a variable obtained from the json
     if (this.timeRemaining % 5 === 0) {
       const chance = Math.random();
-      console.log(chance)
-      if (chance > 0) { 
+      //this queue chance is a variable obtained from levels.json and should be between 0 and 1, the lower the more likely it is to occur. 
+      // console.log(this.game.queueChance)
+      // console.log(chance)
+      if (chance > this.game.queueChance) { 
           this.game.gameLogic.tryAddShermieSprite();
       }
   }

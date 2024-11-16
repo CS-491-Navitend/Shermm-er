@@ -26,9 +26,11 @@
       "number_of_turtles": 10,
 
       "number_of_lives": 5,
-      "goal_count": 3,
 
-      "powerups": [ 0, 0, 0, 0 ]
+      "powerups": [ 0, 0, 0, 0 ],
+
+      "advance_number": 1,
+      "queue_chance": 0.5
     },
 
     {
@@ -61,9 +63,11 @@
       "number_of_turtles": 3,
 
       "number_of_lives": 4,
-      "goal_count": 5,
 
-      "powerups": [ 0, 0, 0, 0 ]
+      "powerups": [ 0, 0, 0, 0 ],
+      
+      "advance_number": 1,
+      "queue_chance": 0.5
     },
 
     {
@@ -96,10 +100,12 @@
       "number_of_turtles": 2.5,
 
       "number_of_lives": 4,
-      "goal_count": 3,
 
       
-      "powerups": [ 0, 0, 0, 0 ]
+      "powerups": [ 0, 0, 0, 0 ],
+      
+      "advance_number": 3,
+      "queue_chance": 0.5
     },
 
     {
@@ -130,9 +136,11 @@
 
 
       "number_of_lives": 5,
-      "goal_count": 5,
+      "advance_number": 5,
 
-      "powerups": [0, 0, 0, 0]
+      "powerups": [0, 0, 0, 0],
+      
+      "queue_chance": 0.5
     },
 
     {
@@ -148,9 +156,6 @@
       "car_speed_multiplier": 1,
       "number_of_cars": 3,
 
-      "water_zone_type": "sky",
-
-
       "log_texture": ["blimpForward"],
       "log_spacing": [ 150, 200, 250],
       "log_speed_multiplier":  0.75,
@@ -165,9 +170,11 @@
       "number_of_turtles": 3,
 
       "number_of_lives": 4,
-      "goal_count": 5,
 
-      "powerups": [0, 0, 0, 0]
+      "powerups": [0, 0, 0, 0],
+      
+      "advance_number": 5,
+      "queue_chance": 0.5
     },
 
 
@@ -198,9 +205,11 @@
       "number_of_turtles": 3,
 
       "number_of_lives": 4,
-      "goal_count": 3,
 
-      "powerups": [ 0, 0, 0, 0 ]
+      "powerups": [ 0, 0, 0, 0 ],
+      
+      "advance_number": 3,
+      "queue_chance": 0.5
     },
 
 
@@ -231,9 +240,11 @@
       "number_of_turtles": 3,
 
       "number_of_lives": 4,
-      "goal_count": 3,
 
-      "powerups": [ 0, 0, 0, 0 ]
+      "powerups": [ 0, 0, 0, 0 ],
+      
+      "advance_number": 3,
+      "queue_chance": 0.5
     },
 
     {
@@ -264,9 +275,11 @@
       "number_of_turtles": 3,
 
       "number_of_lives": 3,
-      "goal_count": 4,
 
-      "powerups": [0, 0, 0, 0]
+      "powerups": [0, 0, 0, 0],
+      
+      "advance_number": 4,
+      "queue_chance": 0.5
     },
 
     {
@@ -294,9 +307,11 @@
       "number_of_turtles": 3,
 
       "number_of_lives": 3,
-      "goal_count": 5,
 
-      "powerups": [ 0, 0, 0, 0 ]
+      "powerups": [ 0, 0, 0, 0 ],
+      
+      "advance_number": 5,
+      "queue_chance": 0.5
     },
 
     {
@@ -326,9 +341,11 @@
       "number_of_turtles": 3,
 
       "number_of_lives": 3,
-      "goal_count": 3,
 
-      "powerups": [ 0, 0, 0, 0 ]
+      "powerups": [ 0, 0, 0, 0 ],
+      
+      "advance_number": 3,
+      "queue_chance": 0.5
     }
     
 
