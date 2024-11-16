@@ -16,11 +16,6 @@ export class LevelMenu extends Scene {
     this.isActive = false;
   }
 
-  preload() {
-    this.load.image("background", "/assets/ShermMainMenu.png");
-    this.load.image("buttonImage", "/assets/UI/Button.png");
-  }
-
   create(buttons) {
     //background
     this.add.image(512, 384, "background").setOrigin(0.5, 0.5);
@@ -103,7 +98,7 @@ export class LevelMenu extends Scene {
 
   createLevelButton(col, row, levelNumber) {
       const buttonImage = this.add
-      .image(500 + (col - Math.floor(this.maxCols / 2)) * 300, 300 + (row + 1) * 100, 'buttonImage')
+      .image(500 + (col - Math.floor(this.maxCols / 2)) * 300, 300 + (row + 1) * 100, "buttonImage")
       .setOrigin(0.5)
       .setInteractive({ useHandCursor: true });
 

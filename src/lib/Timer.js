@@ -8,7 +8,7 @@ export class Timer {
 
   update() {
     if (this.isPaused) {
-      console.log("Timer is paused. Skipping update.");
+      // console.log("Timer is paused. Skipping update.");
       return;
     }
 
@@ -31,11 +31,11 @@ export class Timer {
 
     if(this.timeRemaining % 3 == 0){//Sink and raise turtles every 3 seconds
       if(this.game.turtlesAreSunk == false){
-        //console.log("Sinking turtles");
+        // console.log("Sinking turtles");
         this.game.sinkTurtles();
       }
       else if (this.game.turtlesAreSunk == true){
-        //console.log("Raising turtles");
+        // console.log("Raising turtles");
         this.game.raiseTurtles();
       }
     }
