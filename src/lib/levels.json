@@ -25,6 +25,8 @@
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 3,
 
+      "goal_zone_block": "goalBlock",
+
       "number_of_lives": 5,
       "goal_count": 3,
 
@@ -53,6 +55,8 @@
       "turtle_speed_multiplier": 0.5,
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 3,
+
+      "goal_zone_block": "goalBlock",
 
       "number_of_lives": 5,
       "goal_count": 5,
