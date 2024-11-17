@@ -46,6 +46,7 @@ export class GameOver extends Scene {
 
     this.input.keyboard.once("keydown-R", () => {
       // console.log(game.inWater)
+      game.turtlesAreSunk = false;
       game.inWater=false
       this.scene.start("Game", { level: game.level });
     });

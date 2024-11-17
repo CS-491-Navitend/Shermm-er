@@ -54,6 +54,7 @@ export class Game extends Scene {
     this.carSpeedMultiplier = 1;
     this.logSpeedMultiplier = 1;
     this.frogSinkMultiplier = 1;
+    this.scoreDecrement = 0;
 
     this.gameLogic = new GameLogic(this);
     this.drawing = new Drawing(this);
@@ -110,6 +111,7 @@ export class Game extends Scene {
     //advanced feature variables. 
     this.queueChance = levels[data["level"]]["queue_chance"];
     this.advanceNumber = levels[data["level"]]["advance_number"];
+    this.decrementScore = levels[data["level"]]["decrement_score"];
 
     this.updateLives(); //display lives in the html bar
 
@@ -349,14 +351,14 @@ export class Game extends Scene {
     this.physics.add.overlap(this.shermie, objectiveZone, (shermie, objective) => {
       // Check if there’s already a killerShermie at this position
       if (!this.physics.overlap(shermie, filledGoals) && objective.getData("color") === shermie.getData("color")) {
-        this.goalCollision(objective); // Proceed with the goal logic
+        this.goalCollision(false, this.scoreDecrement); // Proceed with the goal logic
         // setTimeout(() => {
         //   const killerShermie = this.add.image(objective.x, objective.y, "shermie");
         //   this.physics.add.existing(killerShermie, true);
         //   filledGoals.add(killerShermie); // Add to filledGoals
         // }, 1);
       } else {
-        this.loseLife(); // Call loseLife if already colliding with a filled goal
+        this.goalCollision(true, this.scoreDecrement); // Call decrementScore if already colliding with a different colored goal
       }
     }, null, this);
     
@@ -536,16 +538,18 @@ export class Game extends Scene {
     });
   }
 
-  goalCollision() {
-    this.gameLogic.goal();
-    if(this.shermieIndex == this.advanceNumber - 1){
-      this.shermieIndex = 0;  
-    }else{
+  goalCollision(decrementFlag, scoreDecrement) {
+    this.gameLogic.goal(decrementFlag, scoreDecrement);
+    console.log("SHERMIE INDEX BEFORE: " + this.shermieIndex);
+    if(this.shermieIndex == this.advanceNumber)
+      this.shermieIndex = 0;
+    else
       this.shermieIndex++;
-      this.shermieTexture = this.colorArray[this.shermieIndex][1];
-      this.shermie.setTexture(this.shermieTexture);
-      this.shermie.setData("color", this.colorArray[this.shermieIndex][0]);
-    }
+
+    this.shermieTexture = this.colorArray[this.shermieIndex][1];
+    this.shermie.setTexture(this.shermieTexture);
+    this.shermie.setData("color", this.colorArray[this.shermieIndex][0]);
+    console.log("SHERMIE INDEX AFTER: " + this.shermieIndex);
   }
 
   updateTimer() {

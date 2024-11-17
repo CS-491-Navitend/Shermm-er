@@ -3,9 +3,15 @@ export class GameLogic {
     this.game = game; // Get the game object from the scene
   }
 
-  goal() {
-    this.game.goalCount++;
-    if(this.game.goalCount != this.game.getAdvanceNumber()) {
+  goal(decrementFlag, scoreDecrement) {
+    if (decrementFlag) {//Check to see if different color goal zone was hit
+      this.game.goalCount -= scoreDecrement;
+      if(this.game.goalCount < 0)
+        this.game.goalCount = 0;
+    } else {
+      this.game.goalCount++;
+    }
+    if(this.game.goalCount < this.game.getAdvanceNumber()) {
       // console.log("Goals Hit: ", this.game.goalCount);
       this.resetPlayer();
     }
