@@ -16,6 +16,13 @@ import tractorforward from "/assets/vehicleForward/tractorForward.png";
 
 // Import generic assets
 import shermie from "/assets/shermie.png";
+import shermieRed from "/assets/shermieRed.png";
+import shermieBlue from "/assets/shermieBlue.png";
+import shermieGreen from "/assets/shermieGreen.png";
+import shermieYellow from "/assets/shermieYellow.png";
+import shermieOrange from "/assets/shermieOrange.png";
+import shermiePurple from "/assets/shermiePurple.png";
+
 import life from "/assets/heart.png";
 import death1 from "/assets/death1.png";
 import death2 from "/assets/death2.png";
@@ -191,6 +198,12 @@ export class Boot extends Scene {
     this.load.image("turtleShortSink2", turtleShortSink2);
     this.load.image("turtleLongSink2", turtleLongSink2);
     this.load.image("shermie", shermie);
+    this.load.image("shermieRed", shermieRed);
+    this.load.image("shermieBlue", shermieBlue);
+    this.load.image("shermieYellow", shermieYellow);
+    this.load.image("shermieGreen", shermieGreen);
+    this.load.image("shermieOrange", shermieOrange);
+    this.load.image("shermiePurple", shermiePurple);
     this.load.image("life", life);
 
     this.load.image("lavaLog", lavaLog);
