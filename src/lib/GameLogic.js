@@ -73,9 +73,11 @@ export class GameLogic {
     if (this.shermieSprites != this.game.boundarySpriteTexture.x + this.game.boundarySpriteTexture.displayWidth / 2 - this.game.shermie.width) {
         if (this.newShermie) {
             this.newShermie.destroy(); 
-            this.game.spritePlacementX += this.game.shermie.width;
+            if( this.game.spritePlacementX < this.game.boundarySpriteTexture.x + this.game.boundarySpriteTexture.displayWidth / 2 - this.game.shermie.width){
+              this.game.spritePlacementX += this.game.shermie.width;
+            }
             console.log(this.newShermie)
-            console.log(this.game.spritePlacementX)
+            console.log( this.game.spritePlacementX)
         } 
     } else {
         return;

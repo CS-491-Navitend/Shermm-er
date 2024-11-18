@@ -83,7 +83,7 @@
 
       "car_speed_multiplier": 0.95,
 
-      "number_of_cars": 2,
+      "number_of_cars": 0,
 
       "log_texture": [ "iceLog", "iceberg" ],
 
