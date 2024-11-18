@@ -78,6 +78,9 @@ export class Game extends Scene {
     //advanced feature variables
     this.queueChance = 0;
 
+
+
+
   }
 
   create(data) {
@@ -113,6 +116,10 @@ export class Game extends Scene {
     this.advanceNumber = levels[data["level"]]["advance_number"];
     this.decrementScore = levels[data["level"]]["decrement_score"];
 
+    //shermie bomb variables
+    this.bombSpawnRate = levels[data["level"]]["bomb_spawn_rate"];
+    this.bombTimer = levels[data["level"]]["bomb_timer"];
+
     this.updateLives(); //display lives in the html bar
 
     // Add player sprite with physics
@@ -122,38 +129,27 @@ export class Game extends Scene {
     this.shermieColor = this.colorArray[this.shermieIndex][0];//Shermie Comparison Code
     this.shermieTexture = this.colorArray[this.shermieIndex][1];//Shermie sprite color
 
+    //Loop the animation frame for bomb shermie
+    this.anims.create({
+        key: "burnFuse",
+        frames: this.anims.generateFrameNumbers("shermieBomb", { start: 0, end: 3 }),
+        frameRate: 1,
+        repeat: -1
+    });
+
 
     /*Bomb shermie and Color coded shermie
-    Applying which texture for shermie */
-    const randomChance = Math.random();
-    this.isBomb = false
-
-      if (randomChance < 0.1) {
-          this.isBomb = true;
-          this.shermieTexture = "bombShermieTexture";
-      }
-
+    Applying texture for shermie */
     this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, this.shermieTexture);//Set Shermie sprite color according to function
     this.shermie.setData("color", this.shermieColor);//Set shermie color comparison code
     this.shermie.setData("isBomb", this.isBomb); //Set shermie as a bomb
     //END OF APPLYING
-
-    //Apply the tinit for color coded shermie
-    if(!this.isbomb){
-        const tint = this.colorArray[this.shermieIndex][2];
-        this.shermie.setTint(tint);
-    }
 
     //Setting the size and depth/keeping shermie inBounds
     this.shermie.setSize(50, 50, true); // Set hitbox size
     this.shermie.setScale(1); // Scale player sprite
     this.shermie.setDepth(10); // Scale player sprite
     this.shermie.setCollideWorldBounds(true);
-
-   //If it's a bomb sheep
-   if(this.isBomb){
-       this.getBomb(this.shermie);
-   }
 
     // Capture user input for movement
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -579,6 +575,21 @@ export class Game extends Scene {
     this.shermie.setTexture(this.shermieTexture);
     this.shermie.setData("color", this.colorArray[this.shermieIndex][0]);
     console.log("SHERMIE INDEX AFTER: " + this.shermieIndex);
+
+    const randomChance = Math.random();
+    console.log("Random Chance: " + randomChance);
+
+    this.isBomb = false;
+
+    if (randomChance < bombSpawnRate) { //pulled the spawn rate from the json file
+        console.log("Bomb spawned");
+        this.isBomb = true;
+        this.shermieTexture = "shermieBomb";  //update the next shermie to be a bomb
+        this.shermie.setTexture(this.shermieTexture);  // Update the actual texture on the Shermie
+    }
+    if(this.isBomb){
+        this.getBomb(this.shermie);
+    }
   }
 
   updateTimer() {
@@ -675,12 +686,12 @@ export class Game extends Scene {
 
     return colorProperties;
   }
-
-    getBomb(shermie) {
-        shermie.setData("timer", 5);
-        this.time.delayedCall(5000, () => {
+  //Timer for bomb shermie
+  getBomb(shermie) {
+     shermie.setData("timer", 5);
+     this.time.delayedCall(30000, () => {
             console.log("Boom! the bomb shermie exploded");
-            shermie.destroy();
-        })
-    }
+            this.gameLogic.gameOver();
+     })
+  }
 }
