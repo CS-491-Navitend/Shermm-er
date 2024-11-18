@@ -116,15 +116,44 @@ export class Game extends Scene {
     this.updateLives(); //display lives in the html bar
 
     // Add player sprite with physics
+
+    //calls the getColor method for random colors assginment
     this.colorArray = this.getColors();
     this.shermieColor = this.colorArray[this.shermieIndex][0];//Shermie Comparison Code
     this.shermieTexture = this.colorArray[this.shermieIndex][1];//Shermie sprite color
+
+
+    /*Bomb shermie and Color coded shermie
+    Applying which texture for shermie */
+    const randomChance = Math.random();
+    this.isBomb = false
+
+      if (randomChance < 0.1) {
+          this.isBomb = true;
+          this.shermieTexture = "bombShermieTexture";
+      }
+
     this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, this.shermieTexture);//Set Shermie sprite color according to function
     this.shermie.setData("color", this.shermieColor);//Set shermie color comparison code
+    this.shermie.setData("isBomb", this.isBomb); //Set shermie as a bomb
+    //END OF APPLYING
+
+    //Apply the tinit for color coded shermie
+    if(!this.isbomb){
+        const tint = this.colorArray[this.shermieIndex][2];
+        this.shermie.setTint(tint);
+    }
+
+    //Setting the size and depth/keeping shermie inBounds
     this.shermie.setSize(50, 50, true); // Set hitbox size
     this.shermie.setScale(1); // Scale player sprite
     this.shermie.setDepth(10); // Scale player sprite
     this.shermie.setCollideWorldBounds(true);
+
+   //If it's a bomb sheep
+   if(this.isBomb){
+       this.getBomb(this.shermie);
+   }
 
     // Capture user input for movement
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -646,4 +675,12 @@ export class Game extends Scene {
 
     return colorProperties;
   }
+
+    getBomb(shermie) {
+        shermie.setData("timer", 5);
+        this.time.delayedCall(5000, () => {
+            console.log("Boom! the bomb shermie exploded");
+            shermie.destroy();
+        })
+    }
 }
