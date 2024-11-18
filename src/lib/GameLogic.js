@@ -70,14 +70,16 @@ export class GameLogic {
   tryRemoveShermieSprite() {
     // console.log()
     // Check if there are any sprites to remove
-  if (this.shermieSprites != this.game.boundarySpriteTexture.x + this.game.boundarySpriteTexture.displayWidth / 2 - this.game.shermie.width) {
-      if (this.newShermie) {
-          this.newShermie.destroy(); 
-          this.game.spritePlacementX += this.game.shermie.width;
-      } 
-  } else {
-      return;
-  }
+    if (this.shermieSprites != this.game.boundarySpriteTexture.x + this.game.boundarySpriteTexture.displayWidth / 2 - this.game.shermie.width) {
+        if (this.newShermie) {
+            this.newShermie.destroy(); 
+            this.game.spritePlacementX += this.game.shermie.width;
+            console.log(this.newShermie)
+            console.log(this.game.spritePlacementX)
+        } 
+    } else {
+        return;
+    }
 }
 
   nextLevel(){
