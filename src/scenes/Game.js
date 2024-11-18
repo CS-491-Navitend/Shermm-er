@@ -78,9 +78,6 @@ export class Game extends Scene {
     //advanced feature variables
     this.queueChance = 0;
 
-
-
-
   }
 
   create(data) {
@@ -575,13 +572,14 @@ export class Game extends Scene {
     this.shermie.setTexture(this.shermieTexture);
     this.shermie.setData("color", this.colorArray[this.shermieIndex][0]);
     console.log("SHERMIE INDEX AFTER: " + this.shermieIndex);
-
+   
+    //bomb shermie logic
     const randomChance = Math.random();
     console.log("Random Chance: " + randomChance);
 
     this.isBomb = false;
 
-    if (randomChance < bombSpawnRate) { //pulled the spawn rate from the json file
+    if (randomChance < this.bombSpawnRate) { //pulled the spawn rate from the json file
         console.log("Bomb spawned");
         this.isBomb = true;
         this.shermieTexture = "shermieBomb";  //update the next shermie to be a bomb
@@ -688,7 +686,7 @@ export class Game extends Scene {
   }
   //Timer for bomb shermie
   getBomb(shermie) {
-     shermie.setData("timer", 5);
+     shermie.setData("timer", this.bombTimer);
      this.time.delayedCall(30000, () => {
             console.log("Boom! the bomb shermie exploded");
             this.gameLogic.gameOver();
