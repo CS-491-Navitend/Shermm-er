@@ -158,7 +158,7 @@ import plunk from "/assets/audio/plunk.wav"
 import backgroundMusic from "/assets/audio/backgroundMusic.mp3"
 
 //goal zone block
-import goalBlock from "/assets/GoalBlock.png";
+import goalBlock from "/assets/GoalZoneBlock.png";
 
 
 export class Boot extends Scene {

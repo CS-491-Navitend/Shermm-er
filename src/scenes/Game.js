@@ -85,6 +85,7 @@ export class Game extends Scene {
     this.logSpeedMultiplier = levels[data["level"]]["log_speed_multiplier"];
     this.turtleSpeedMultiplier = levels[data["level"]]["turtle_speed_multiplier"];
     this.turtleSinkMultiplier = levels[data["level"]]["turtle_sink_multiplier"];
+    this.block_percentage = levels[data["level"]]["block_percentage"];
 
     // Object and spacing properties for vehicles and logs
     this.numberOfCars = levels[data["level"]]["number_of_cars"];
@@ -570,21 +571,20 @@ export class Game extends Scene {
     }
   }
 
+  // Still needs to implement if the game is paused or the timer is below 20 seconds then the block should not spawn
   spawnGoalZoneBlock() {
-    while (this.paused == true || this.timer <= 100) {
-      console.log("Game is paused or timer is less than 100");
-      return;
-    }
     const spawnChance = Math.random();
-    if (spawnChance < 0.9) { // 50% chance to spawn the goal zone block
+    if (spawnChance < this.block_percentage) { // per level block percentage
       let goalBlock = Math.floor(Math.random() * this.numOfGoals);
-      // insert black square over the random goal zone
       let goalBlockX = goalBlock * this.width / this.numOfGoals;
       let goalBlockY = 45;
       let goalBlockWidth = 80;
-      let goalBlockHeight = 75;      
-      
-      // if filledgoal group exists then dont spawn block
+      let goalBlockHeight = 75;
+      const minX = 200;
+      const maxX = 800;
+      goalBlockX = Math.max(minX, Math.min(maxX, goalBlockX));
+
+      // if filledgoal group exists then dont spawn block // This needs to be changed with the color coding 
       if (this.physics.overlap(this.shermie, this.filledGoals)) {
         return;
       }
@@ -592,7 +592,6 @@ export class Game extends Scene {
       let block = this.add.image(goalBlockX, goalBlockY, 'goalBlock').setDisplaySize(goalBlockWidth, goalBlockHeight);
       this.physics.add.existing(block, true);
       block.setDepth(1);
-
 
       // if shermie runs into an existing block, lose a life
       this.physics.add.overlap(this.shermie, block, () => {
