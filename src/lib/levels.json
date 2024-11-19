@@ -385,8 +385,8 @@
       "queue_chance": 0.5,
       "score_decrease": 2,
 
-      "bomb_spawn_rate": 0.1,
-      "bomb_timer": 20
+      "bomb_spawn_rate": 0.5,
+      "bomb_timer": 20000
     }
     
 
