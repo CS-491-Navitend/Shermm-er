@@ -550,11 +550,11 @@ export class Game extends Scene {
   }
 
   createShermie(){
-    this.shermieType = this.shermieArray[Math.floor(Math.random() * this.shermieArray.length)];
-    if(this.shermieType == "normal"){
+    this.shermieType = this.shermieArray[Math.floor(Math.random() * this.shermieArray.length)];//Randomly select shermie type
+    if(this.shermieType == "normal"){//Default
       this.shermieTexture = "shermie";
     }
-    else if(this.shermieType == "colored"){
+    else if(this.shermieType == "colored"){//Colored
       this.colorArray = this.getColors();
       this.shermieColor = this.colorArray[0];//Shermie Comparison Code
       this.shermieTexture = this.colorArray[1];//Shermie sprite color
@@ -565,13 +565,14 @@ export class Game extends Scene {
       randomGoal.setData("color", this.shermieColor);
       randomGoal.setTint(this.objectiveTint);
     }
-    else if(this.shermieType == "bomb"){
+    else if(this.shermieType == "bomb"){//Toxic
       this.isBomb = true;
       this.shermieTexture = "shermieBomb";
       this.getBomb(this.shermie);
     }
-    console.log(this.shermieType);
-    this.shermie.setTexture(this.shermieTexture);
+    //else if(this.shermieType == "toxic")//TODO - IMPLEMENT TOXIC LOGIC
+    
+    this.shermie.setTexture(this.shermieTexture);//Set texture 
   }
 
   loseLife() {
