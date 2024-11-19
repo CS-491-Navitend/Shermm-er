@@ -178,7 +178,7 @@ export class PauseMenu extends Scene {
         this.isActive = false;
         this.pauseMenu.setVisible(false);
         this.scene.physics.resume(); // Resume the physics
-       // this.scene.timer.resume();
+        this.scene.timer.resume();
        // this.scene.paused = false;
         this.scene.input.enabled = true;
         // console.log("PauseMenu is now inactive.");
