@@ -378,7 +378,7 @@ export class Game extends Scene {
         //   filledGoals.add(killerShermie); // Add to filledGoals
         // }, 1);
       } else if(!this.physics.overlap(shermie, filledGoals) && this.shermieType == "colored"){
-        if(this.objectiveZone.getData("color") == this.shermie.getData("color")){
+        if(objective.getData("color") == this.shermie.getData("color")){
           this.decrementFlag = false;
         }else{
           this.decrementFlag = true;
@@ -550,7 +550,7 @@ export class Game extends Scene {
   }
 
   createShermie(){
-    this.shermieType = this.shermieArray[1];
+    this.shermieType = this.shermieArray[Math.floor(Math.random() * this.shermieArray.length)];
     if(this.shermieType == "normal"){
       this.shermieTexture = "shermie";
     }
@@ -570,6 +570,7 @@ export class Game extends Scene {
       this.shermieTexture = "shermieBomb";
       this.getBomb(this.shermie);
     }
+    console.log(this.shermieType);
     this.shermie.setTexture(this.shermieTexture);
   }
 
@@ -589,17 +590,17 @@ export class Game extends Scene {
 
   goalCollision() {
     this.gameLogic.goal();
+    this.turtlesAreSunk == false; // Reset turtle flag
     this.objectiveZone.getChildren().forEach(child => {
       child.clearTint();
       child.setData("color", null);
     });//Clear goal zone tints
     this.decrementFlag == false;//Reset decrement flag
     this.shermie.setData("color", null);//Reset shermie color
-    this.shermieTexture = "shermie";//TODO REPLACE WITH CREATE SHERMIE TO GET A NEW SHERMIE
-    this.shermie.setTexture(this.shermieTexture);//SAME AS ABOVE
     // Reset bomb flag
     this.isBomb = false;
     this.getBomb(this.shermie);
+    this.createShermie();
   }
 
   updateTimer() {
