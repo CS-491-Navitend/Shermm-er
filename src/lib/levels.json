@@ -75,7 +75,7 @@
       "score_decrease": 1,
 
       "bomb_spawn_rate": 0.8,
-      "bomb_timer": 20
+      "bomb_timer": 100000
     },
 
     {
@@ -116,8 +116,8 @@
       "queue_chance": 0.5,
       "score_decrease": 1,
 
-      "bomb_spawn_rate": 0.1,
-      "bomb_timer": 20
+      "bomb_spawn_rate": 0.9,
+      "bomb_timer": 20000
     },
 
     {
