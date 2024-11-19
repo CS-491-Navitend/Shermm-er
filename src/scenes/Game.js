@@ -32,8 +32,9 @@ export class Game extends Scene {
     this.lives = 0;
     this.resetCount = 0;
     this.goalCount = 0;
-    this.numOfGoals = 5;
+    this.numOfGoals = 4;
     this.savedVelocity = 0;
+    this.shermieIndex = 0;//Currently used shermie color
 
     // road values
     this.numberOfRoads = 5;
@@ -53,6 +54,7 @@ export class Game extends Scene {
     this.carSpeedMultiplier = 1;
     this.logSpeedMultiplier = 1;
     this.frogSinkMultiplier = 1;
+    this.scoreDecrement = 0;
 
     this.gameLogic = new GameLogic(this);
     this.drawing = new Drawing(this);
@@ -69,6 +71,12 @@ export class Game extends Scene {
 
     //Turtle sinking flag
     this.turtlesAreSunk = false;
+
+    //Color loading array
+    this.colorArray = null;
+
+    //advanced feature variables
+    this.queueChance = 0;
 
   }
 
@@ -100,10 +108,19 @@ export class Game extends Scene {
     this.turtleTextureForward = levels[data["level"]]["turtles_Forward_texture"];
     this.turtleSpacing = levels[data["level"]]["turtle_spacing"];
 
+    //advanced feature variables. 
+    this.queueChance = levels[data["level"]]["queue_chance"];
+    this.advanceNumber = levels[data["level"]]["advance_number"];
+    this.decrementScore = levels[data["level"]]["decrement_score"];
+
     this.updateLives(); //display lives in the html bar
 
     // Add player sprite with physics
-    this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, "shermie");
+    this.colorArray = this.getColors();
+    this.shermieColor = this.colorArray[this.shermieIndex][0];//Shermie Comparison Code
+    this.shermieTexture = this.colorArray[this.shermieIndex][1];//Shermie sprite color
+    this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, this.shermieTexture);//Set Shermie sprite color according to function
+    this.shermie.setData("color", this.shermieColor);//Set shermie color comparison code
     this.shermie.setSize(50, 50, true); // Set hitbox size
     this.shermie.setScale(1); // Scale player sprite
     this.shermie.setDepth(10); // Scale player sprite
@@ -145,6 +162,8 @@ export class Game extends Scene {
     const safeZone = this.physics.add.staticGroup();
     const endZone = this.physics.add.staticGroup();
     const waterZone = this.physics.add.staticGroup();
+
+    //removed for the sake of changing the nature of the way winning works, left in in the event we decide to change it back
     const filledGoals = this.physics.add.staticGroup();
 
     // Define lane boundaries for water lanes
@@ -182,20 +201,30 @@ export class Game extends Scene {
     let x = imageWidth * 2; // Initial starting position for each objective segment
 
     if (this.textures.exists(objectiveTexture)) {
-      // Use images if the texture exists
+      // Use images if the texture exists\
+      // if(this.advanceNumber > 0){
+      //   this.advanceNumber = 0;
+      // }
+      let goalIndex = 0;
       for (let j = 0; j < imageWidth * 4; j += imageWidth) {
         //this 4 could be replaced by a variable, but we statically divide all by 10 so it works. If that changes we need to change this
         objective = this.add
           .image(x, laneWidth / 2, objectiveTexture)
           .setDisplaySize(imageWidth, imageHeight)
           .setDepth(0);
+        objective.setData("color", this.colorArray[goalIndex][0]);//Set color for later comparison with shermie
+        objective.setTint(objective.tint * 0.2 + this.colorArray[goalIndex][2] * 0.8);
         this.physics.add.existing(objective, true);
         objectiveZone.add(objective);
         x += imageWidth * 2; // Space out each objective
-        this.advanceNumber++;
+        // this.advanceNumber++;
+        goalIndex++;
       }
     } else {
-      // Use maroon rectangles if the texture does not exist
+      // Use maroon rectangles if the texture does not exist      
+      // if(this.advanceNumber > 0){
+      //   this.advanceNumber = 0;
+      // }
       for (let j = 0; j < imageWidth * 4; j += imageWidth) {
         objective = this.add
           .rectangle(x, laneWidth / 2, imageWidth, imageHeight, 0x00ff00) // Maroon color in hex
@@ -203,7 +232,6 @@ export class Game extends Scene {
         this.physics.add.existing(objective, true);
         objectiveZone.add(objective);
         x += imageWidth * 2; // Space out each objective
-        this.advanceNumber++;
       }
     }
     //END OBJECTIVE PLACEMENT
@@ -245,7 +273,10 @@ export class Game extends Scene {
     
     let boundarySpriteTexture;
     if (this.textures.exists('pasture')) {
-        this.boundarySpriteTexture = this.add.sprite(this.width / 4 - this.safeZoneSize / 2, this.height - this.safeZoneSize / 2, 'pasture').setDisplaySize(this.width / 2 - this.safeZoneSize / 2, this.safeZoneSize).setDepth(1);
+      for (let j = 0; j < (this.width / 2 - this.safeZoneSize / 2); j += imageWidth) {
+        const isLast = j + imageWidth >= (this.width / 2 - this.safeZoneSize / 2); 
+        this.boundarySpriteTexture = this.add.sprite(j + (imageWidth / 20),this.height - this.safeZoneSize / 2,isLast ? 'pasture_end' : 'pasture').setDepth(0);
+    }
     } else {
         // pasture fallback
         this.boundarySpriteTexture = this.add.rectangle(this.width / 4 - this.safeZoneSize / 2, this.height - this.safeZoneSize / 2, this.width / 2 - this.safeZoneSize / 2, this.safeZoneSize, 0x00ff00).setStrokeStyle(5, 0x00ff00).setFillStyle(0x00000,0).setDepth(1);
@@ -335,15 +366,15 @@ export class Game extends Scene {
     
     this.physics.add.overlap(this.shermie, objectiveZone, (shermie, objective) => {
       // Check if there’s already a killerShermie at this position
-      if (!this.physics.overlap(shermie, filledGoals)) {
-        this.goalCollision(objective); // Proceed with the goal logic
-        setTimeout(() => {
-          const killerShermie = this.add.image(objective.x, objective.y, "shermie");
-          this.physics.add.existing(killerShermie, true);
-          filledGoals.add(killerShermie); // Add to filledGoals
-        }, 1);
+      if (!this.physics.overlap(shermie, filledGoals) && objective.getData("color") === shermie.getData("color")) {
+        this.goalCollision(false, this.scoreDecrement); // Proceed with the goal logic
+        // setTimeout(() => {
+        //   const killerShermie = this.add.image(objective.x, objective.y, "shermie");
+        //   this.physics.add.existing(killerShermie, true);
+        //   filledGoals.add(killerShermie); // Add to filledGoals
+        // }, 1);
       } else {
-        this.loseLife(); // Call loseLife if already colliding with a filled goal
+        this.goalCollision(true, this.scoreDecrement); // Call decrementScore if already colliding with a different colored goal
       }
     }, null, this);
     
@@ -379,7 +410,7 @@ export class Game extends Scene {
     this.timer.start();
 
     // Create the death animation sequence
-    this.defaultTexture = "shermie";
+    this.defaultTexture = this.shermieTexture;
 
     this.anims.create({
       key: "shermieDeath", // Name of the animation
@@ -393,7 +424,6 @@ export class Game extends Scene {
     if (this.paused) return;
 
     document.getElementById("score").innerText = `Score: ${this.goalCount}`;
-
     if (this.canMove && !this.isAnimating && !this.inWater) {
       if (this.cursors.left.isDown && this.shermie.x > 0) {
         this.shermie.x -= this.moveDistance;
@@ -517,14 +547,25 @@ export class Game extends Scene {
     this.isAnimating = true;
     this.isInvincible = true;
     this.shermie.anims.play("shermieDeath");
+    this.sound.play("squash");
     this.shermie.once("animationcomplete-shermieDeath", () => {
-      this.shermie.setTexture(this.defaultTexture);
+      this.shermie.setTexture(this.shermieTexture);
       this.gameLogic.loseLife();
     });
   }
 
-  goalCollision() {
-    this.gameLogic.goal();
+  goalCollision(decrementFlag, scoreDecrement) {
+    this.gameLogic.goal(decrementFlag, scoreDecrement);
+    console.log("SHERMIE INDEX BEFORE: " + this.shermieIndex);
+    if(this.shermieIndex == this.advanceNumber)
+      this.shermieIndex = 0;
+    else
+      this.shermieIndex++;
+
+    this.shermieTexture = this.colorArray[this.shermieIndex][1];
+    this.shermie.setTexture(this.shermieTexture);
+    this.shermie.setData("color", this.colorArray[this.shermieIndex][0]);
+    console.log("SHERMIE INDEX AFTER: " + this.shermieIndex);
   }
 
   updateTimer() {
@@ -592,5 +633,33 @@ export class Game extends Scene {
       lifeIcon.classList.add("life-icon");
       livesContainer.appendChild(lifeIcon);
     }
+  }
+
+  getColors(){
+    //FIXME - Return a datastructure that has an equal number of entries to the number of goals
+    // The structure will contain color comparison codes, shermie colors, and goal zone tints.
+    // Will be called once at game generation, guarantees that shermie textures correspond directly with goal zone colors.
+
+    //Load comparison codes, shermie textures, and tint hexcodes for goal zones
+    const redColor = "red"; const redShermie = "shermieRed"; const redTint = 0xff0000;;
+    const blueColor = "blue"; const blueShermie = "shermieBlue"; const blueTint = 0x0000ff;
+    const greenColor = "green"; const greenShermie = "shermieGreen"; const greenTint = 0x00ff00;
+    const yellowColor = "yellow"; const yellowShermie = "shermieYellow"; const yellowTint = 0xffff00;
+    const orangeColor = "orange"; const orangeShermie = "shermieOrange"; const orangeTint = 0xffa500;
+    const purpleColor = "purple"; const purpleShermie = "shermiePurple"; const purpleTint  = 0x800080;
+
+    const colors = [redColor, blueColor, greenColor, yellowColor, orangeColor, purpleColor];
+    const shermies = [redShermie, blueShermie, greenShermie, yellowShermie, orangeShermie, purpleShermie];
+    const tints = [redTint, blueTint, greenTint, yellowTint, orangeTint, purpleTint];
+    
+    let colorProperties = Array(this.numOfGoals);
+
+    for(let i = 0; i < this.numOfGoals; i++){
+       const index = Math.floor(Math.random() * colors.length);
+       colorProperties[i] = [colors[index], shermies[index], tints[index]];
+       console.log(colorProperties[i]);
+    }
+
+    return colorProperties;
   }
 }

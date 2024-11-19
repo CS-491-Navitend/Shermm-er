@@ -3,9 +3,15 @@ export class GameLogic {
     this.game = game; // Get the game object from the scene
   }
 
-  goal() {
-    this.game.goalCount++;
-    if(this.game.goalCount != this.game.getAdvanceNumber()) {
+  goal(decrementFlag, scoreDecrement) {
+    if (decrementFlag) {//Check to see if different color goal zone was hit
+      this.game.goalCount -= scoreDecrement;
+      if(this.game.goalCount < 0)
+        this.game.goalCount = 0;
+    } else {
+      this.game.goalCount++;
+    }
+    if(this.game.goalCount < this.game.getAdvanceNumber()) {
       // console.log("Goals Hit: ", this.game.goalCount);
       this.resetPlayer();
     }
@@ -19,7 +25,7 @@ export class GameLogic {
   win() {
     this.game.winCount++;
     // console.log(`Win condition met. Wins: ${this.game.winCount}`);
-    this.game.scene.start('GameWin', { game: this.game });
+    this.game.scene.start("GameWin", { game: this.game });
   }
 
   loseLife() {
@@ -55,7 +61,6 @@ export class GameLogic {
   }
 
   tryAddShermieSprite() {
-    
     // Check if there's room to add another sprite
     if (this.game.spritePlacementX < 0) {
         this.gameOver();
@@ -67,7 +72,7 @@ export class GameLogic {
   }
 
   tryRemoveShermieSprite() {
-    console.log()
+    // console.log()
     // Check if there are any sprites to remove
     if (this.shermieSprites != this.game.boundarySpriteTexture.x + this.game.boundarySpriteTexture.displayWidth / 2 - this.game.shermie.width) {
         this.newShermie.destroy(); 
@@ -76,11 +81,15 @@ export class GameLogic {
       return
     }
   }
-
   selfServeShermie() {
     this.game.goalCount += 10;
     this.resetPlayer();
-    // this.tryRemoveShermieSprite();
+    if (this.newShermie) {
+      this.newShermie.destroy();
+      if (this.game.spritePlacementX < this.game.boundarySpriteTexture.x + this.game.boundarySpriteTexture.displayWidth / 2 - this.game.shermie.width) {
+        this.game.spritePlacementX += this.game.shermie.width;
+      }
+    }
   }
 
   nextLevel(){
@@ -90,7 +99,7 @@ export class GameLogic {
     if (this.game.level < this.game.getNumberOfLevels()) {
       this.game.scene.start("Game", { level: this.game.level });
     } else {
-      this.game.scene.start("MainMenu");
+      this.game.scene.start("Credits");
     }
   }
 }
