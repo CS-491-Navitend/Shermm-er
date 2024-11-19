@@ -55,6 +55,7 @@ export class Game extends Scene {
     this.logSpeedMultiplier = 1;
     this.frogSinkMultiplier = 1;
     this.scoreDecrement = 0;
+    this.decrementFlag = false;
 
     this.gameLogic = new GameLogic(this);
     this.drawing = new Drawing(this);
@@ -111,7 +112,7 @@ export class Game extends Scene {
     //advanced feature variables. 
     this.queueChance = levels[data["level"]]["queue_chance"];
     this.advanceNumber = levels[data["level"]]["advance_number"];
-    this.decrementScore = levels[data["level"]]["decrement_score"];
+    this.decrementScore = levels[data["level"]]["score_decrease"];
 
     this.updateLives(); //display lives in the html bar
 
@@ -350,15 +351,17 @@ export class Game extends Scene {
     
     this.physics.add.overlap(this.shermie, objectiveZone, (shermie, objective) => {
       // Check if there’s already a killerShermie at this position
-      if (!this.physics.overlap(shermie, filledGoals) && objective.getData("color") === shermie.getData("color")) {
-        this.goalCollision(false, this.scoreDecrement); // Proceed with the goal logic
+      if (!this.physics.overlap(shermie, filledGoals) && objective.getData("color") == shermie.getData("color")) {
+        this.decrementFlag = false;
+        this.goalCollision(); // Proceed with the goal logic
         // setTimeout(() => {
         //   const killerShermie = this.add.image(objective.x, objective.y, "shermie");
         //   this.physics.add.existing(killerShermie, true);
         //   filledGoals.add(killerShermie); // Add to filledGoals
         // }, 1);
       } else {
-        this.goalCollision(true, this.scoreDecrement); // Call decrementScore if already colliding with a different colored goal
+        this.decrementFlag = true;
+        this.goalCollision(); // Call decrementScore if already colliding with a different colored goal
       }
     }, null, this);
     
@@ -538,8 +541,8 @@ export class Game extends Scene {
     });
   }
 
-  goalCollision(decrementFlag, scoreDecrement) {
-    this.gameLogic.goal(decrementFlag, scoreDecrement);
+  goalCollision() {
+    this.gameLogic.goal();
     console.log("SHERMIE INDEX BEFORE: " + this.shermieIndex);
     if(this.shermieIndex == this.advanceNumber)
       this.shermieIndex = 0;

@@ -3,9 +3,9 @@ export class GameLogic {
     this.game = game; // Get the game object from the scene
   }
 
-  goal(decrementFlag, scoreDecrement) {
-    if (decrementFlag) {//Check to see if different color goal zone was hit
-      this.game.goalCount -= scoreDecrement;
+  goal() {
+    if (this.game.decrementFlag) {//Check to see if different color goal zone was hit
+      this.game.goalCount -= this.game.decrementScore;
       if(this.game.goalCount < 0)
         this.game.goalCount = 0;
     } else {
