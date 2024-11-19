@@ -114,14 +114,36 @@ export class Game extends Scene {
     this.advanceNumber = levels[data["level"]]["advance_number"];
     this.decrementScore = levels[data["level"]]["score_decrease"];
 
+    //shermie bomb variables
+    this.bombSpawnRate = levels[data["level"]]["bomb_spawn_rate"];
+    this.bombTimer = levels[data["level"]]["bomb_timer"];
+
     this.updateLives(); //display lives in the html bar
 
     // Add player sprite with physics
+
+    //calls the getColor method for random colors assginment
     this.colorArray = this.getColors();
     this.shermieColor = this.colorArray[this.shermieIndex][0];//Shermie Comparison Code
     this.shermieTexture = this.colorArray[this.shermieIndex][1];//Shermie sprite color
+
+    //Loop the animation frame for bomb shermie
+    this.anims.create({
+        key: "burnFuse",
+        frames: this.anims.generateFrameNumbers("shermieBomb", { start: 0, end: 3 }),
+        frameRate: 1,
+        repeat: -1
+    });
+
+
+    /*Bomb shermie and Color coded shermie
+    Applying texture for shermie */
     this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, this.shermieTexture);//Set Shermie sprite color according to function
     this.shermie.setData("color", this.shermieColor);//Set shermie color comparison code
+    this.shermie.setData("isBomb", this.isBomb); //Set shermie as a bomb
+    //END OF APPLYING
+
+    //Setting the size and depth/keeping shermie inBounds
     this.shermie.setSize(50, 50, true); // Set hitbox size
     this.shermie.setScale(1); // Scale player sprite
     this.shermie.setDepth(10); // Scale player sprite
@@ -553,6 +575,26 @@ export class Game extends Scene {
     this.shermie.setTexture(this.shermieTexture);
     this.shermie.setData("color", this.colorArray[this.shermieIndex][0]);
     console.log("SHERMIE INDEX AFTER: " + this.shermieIndex);
+   
+   // Bomb logic
+    const randomChance = Math.random();
+    console.log("Random Chance: " + randomChance);
+
+    // Reset bomb flag
+    this.isBomb = false;
+
+    // Determine if the Shermie should be a bomb
+    if (randomChance < this.bombSpawnRate) { // Pulled the spawn rate from the JSON file
+        console.log("Bomb spawned");
+        this.isBomb = true;
+        this.shermieTexture = "shermieBomb";  // Update the next Shermie to be a bomb
+        this.shermie.setTexture(this.shermieTexture);  // Update the texture for Shermie
+    } 
+
+    // Only start the bomb timer if it's actually a bomb
+    if (this.isBomb) {
+        this.getBomb(this.shermie);  
+    }
   }
 
   updateTimer() {
@@ -649,4 +691,61 @@ export class Game extends Scene {
 
     return colorProperties;
   }
+  //Timer for bomb shermie
+    getBomb(shermie) {
+       
+        // If it's a bomb, reset the timer and event
+        if (this.isBomb) {
+            //console.log("Bomb is active. Resetting timer and creating new event...");
+
+            // Ensure that the timer value is reset to the initial value for each new bomb
+            shermie.setData("timer", this.bombTimer);
+
+            // remove any old timer event if it exists
+            if (this.bombTimerEvent) {
+              //  console.log("Removing old bomb timer event...");
+                this.bombTimerEvent.remove();  // Remove the previous event
+                this.bombTimerEvent = null;    // Clear the reference to the event
+            }
+
+            //clear the old bomb timer text
+            if (this.bombTimerText) {
+              //  console.log("Clearing old bomb timer text...");
+                this.bombTimerText.setText(""); // Clear the text
+            }
+
+            // Create the bomb timer text again
+
+          
+            if (!this.bombTimerText) {
+              //  console.log("Creating new bomb timer text...");
+                this.bombTimerText = this.add.text(10, 10, `Bomb Timer: ${this.bombTimer / 1000}`, {
+                    fontSize: '32px',
+                    fill: '#fff',
+                    backgroundColor: 0x000000
+                });
+            }
+
+            // Create the new bomb timer event
+           // console.log("Creating new bomb timer event...");
+            this.bombTimerEvent = this.time.addEvent({
+                delay: 1000, // Update every 1 second
+                callback: () => {
+                    const remainingTime = Math.max(0, shermie.getData("timer") - 1000); // Decrease by 1 second
+                    shermie.setData("timer", remainingTime);
+
+                    // Update the text to show the remaining time
+                    this.bombTimerText.setText(`Bomb Timer: ${remainingTime / 1000}`);
+
+                    // Check if the bomb has exploded
+                    if (remainingTime <= 0) {
+                       // console.log("Boom! the bomb exploded");
+                        this.gameLogic.gameOver();
+                        
+                    }
+                },
+                loop: true // Repeat this event every second
+            });
+        }
+    }
 }

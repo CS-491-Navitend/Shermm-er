@@ -22,6 +22,7 @@ import shermieGreen from "/assets/shermieGreen.png";
 import shermieYellow from "/assets/shermieYellow.png";
 import shermieOrange from "/assets/shermieOrange.png";
 import shermiePurple from "/assets/shermiePurple.png";
+import shermieBomb from "/assets/shermieBombSheet.png";
 
 import life from "/assets/heart.png";
 import death1 from "/assets/death1.png";
@@ -206,6 +207,11 @@ export class Boot extends Scene {
     this.load.image("shermiePurple", shermiePurple);
     this.load.image("life", life);
 
+    this.load.spritesheet("shermieBomb", shermieBomb, {
+          frameWidth: 57,
+          frameHeight: 42
+    });
+
     this.load.image("lavaLog", lavaLog);
     this.load.image("death1", death1);
     this.load.image("death2", death2);
@@ -343,7 +349,7 @@ export class Boot extends Scene {
     const font = new FontFaceObserver('Pixel');
         // font.load().then(() => {
         //     // console.log('Font loaded successfully!');
-        //     // Optionally, you can store a flag or execute any logic here
+        //    
         // }).catch(() => {
         //     console.error('Font failed to load.');
         // });
