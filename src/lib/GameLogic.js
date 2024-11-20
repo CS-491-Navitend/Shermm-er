@@ -12,7 +12,6 @@ export class GameLogic {
       this.game.goalCount++;
     }
     if(this.game.goalCount < this.game.getAdvanceNumber()) {
-      // console.log("Goals Hit: ", this.game.goalCount);
       this.resetPlayer();
     }
     else{
@@ -24,7 +23,6 @@ export class GameLogic {
 
   win() {
     this.game.winCount++;
-    // console.log(`Win condition met. Wins: ${this.game.winCount}`);
     this.game.scene.start("GameWin", { game: this.game });
   }
 
@@ -41,7 +39,6 @@ export class GameLogic {
 
   gameOver() {
     this.game.goalCount=0;
-    // console.log("Starting game over scene");
     this.game.playing = false;
     this.game.scene.start("GameOver", { game: this.game });
   }
@@ -49,7 +46,6 @@ export class GameLogic {
   resetPlayer() {
     this.isInvincible = false;
     this.isAnimating = false;
-    // console.log("Resetting player");
     this.game.shermie.setVelocity(0, 0);
     this.game.resetCount++;
     this.game.shermie.x = this.game.width / 2;
@@ -68,7 +64,6 @@ export class GameLogic {
   }
 
   tryRemoveShermieSprite() {
-    // console.log()
     // Check if there are any sprites to remove
     if (this.shermieSprites != this.game.boundarySpriteTexture.x + this.game.boundarySpriteTexture.displayWidth / 2 - this.game.shermie.width) {
         if (this.newShermie) {
@@ -76,8 +71,6 @@ export class GameLogic {
             if( this.game.spritePlacementX < this.game.boundarySpriteTexture.x + this.game.boundarySpriteTexture.displayWidth / 2 - this.game.shermie.width){
               this.game.spritePlacementX += this.game.shermie.width;
             }
-            console.log(this.newShermie)
-            console.log( this.game.spritePlacementX)
         } 
     } else {
         return;
@@ -85,7 +78,6 @@ export class GameLogic {
 }
 
   nextLevel(){
-    // console.log("Starting next level");
     this.game.goalCount = 0;
     this.game.level += 1;
     if (this.game.level < this.game.getNumberOfLevels()) {

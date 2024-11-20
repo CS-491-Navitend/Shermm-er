@@ -565,7 +565,6 @@ export class Game extends Scene {
 
   goalCollision() {
     this.gameLogic.goal();
-    console.log("SHERMIE INDEX BEFORE: " + this.shermieIndex);
     if(this.shermieIndex == this.advanceNumber)
       this.shermieIndex = 0;
     else
@@ -574,18 +573,15 @@ export class Game extends Scene {
     this.shermieTexture = this.colorArray[this.shermieIndex][1];
     this.shermie.setTexture(this.shermieTexture);
     this.shermie.setData("color", this.colorArray[this.shermieIndex][0]);
-    console.log("SHERMIE INDEX AFTER: " + this.shermieIndex);
-   
+
    // Bomb logic
     const randomChance = Math.random();
-    console.log("Random Chance: " + randomChance);
 
     // Reset bomb flag
     this.isBomb = false;
 
     // Determine if the Shermie should be a bomb
     if (randomChance < this.bombSpawnRate) { // Pulled the spawn rate from the JSON file
-        console.log("Bomb spawned");
         this.isBomb = true;
         this.shermieTexture = "shermieBomb";  // Update the next Shermie to be a bomb
         this.shermie.setTexture(this.shermieTexture);  // Update the texture for Shermie
@@ -686,7 +682,6 @@ export class Game extends Scene {
     for(let i = 0; i < this.numOfGoals; i++){
        const index = Math.floor(Math.random() * colors.length);
        colorProperties[i] = [colors[index], shermies[index], tints[index]];
-       console.log(colorProperties[i]);
     }
 
     return colorProperties;
@@ -696,21 +691,18 @@ export class Game extends Scene {
        
         // If it's a bomb, reset the timer and event
         if (this.isBomb) {
-            //console.log("Bomb is active. Resetting timer and creating new event...");
 
             // Ensure that the timer value is reset to the initial value for each new bomb
             shermie.setData("timer", this.bombTimer);
 
             // remove any old timer event if it exists
             if (this.bombTimerEvent) {
-              //  console.log("Removing old bomb timer event...");
                 this.bombTimerEvent.remove();  // Remove the previous event
                 this.bombTimerEvent = null;    // Clear the reference to the event
             }
 
             //clear the old bomb timer text
             if (this.bombTimerText) {
-              //  console.log("Clearing old bomb timer text...");
                 this.bombTimerText.setText(""); // Clear the text
             }
 
@@ -718,7 +710,6 @@ export class Game extends Scene {
 
           
             if (!this.bombTimerText) {
-              //  console.log("Creating new bomb timer text...");
                 this.bombTimerText = this.add.text(10, 10, `Bomb Timer: ${this.bombTimer / 1000}`, {
                     fontSize: '32px',
                     fill: '#fff',
@@ -727,7 +718,6 @@ export class Game extends Scene {
             }
 
             // Create the new bomb timer event
-           // console.log("Creating new bomb timer event...");
             this.bombTimerEvent = this.time.addEvent({
                 delay: 1000, // Update every 1 second
                 callback: () => {
@@ -739,7 +729,6 @@ export class Game extends Scene {
 
                     // Check if the bomb has exploded
                     if (remainingTime <= 0) {
-                       // console.log("Boom! the bomb exploded");
                         this.gameLogic.gameOver();
                         
                     }

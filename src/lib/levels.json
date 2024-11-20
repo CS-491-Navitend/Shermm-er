@@ -31,7 +31,7 @@
 
       "advance_number": 3,
       "queue_chance": 0.5,
-      "score_decrease": 1,
+      "score_decrease": 0,
 
       "bomb_spawn_rate": 0.1,
       "bomb_timer": 20 
@@ -72,7 +72,7 @@
 
       "advance_number": 3,
       "queue_chance": 0.5,
-      "score_decrease": 1,
+      "score_decrease": 0,
 
       "bomb_spawn_rate": 0.8,
       "bomb_timer": 100000
@@ -114,7 +114,7 @@
 
       "advance_number": 3,
       "queue_chance": 0.5,
-      "score_decrease": 1,
+      "score_decrease": 0,
 
       "bomb_spawn_rate": 0.9,
       "bomb_timer": 20000
@@ -153,7 +153,7 @@
       "powerups": [ 0, 0, 0, 0 ],
 
       "queue_chance": 0.5,
-      "score_decrease": 1,
+      "score_decrease": 0,
 
       "bomb_spawn_rate": 0.1,
       "bomb_timer": 20
@@ -191,7 +191,7 @@
 
       "advance_number": 5,
       "queue_chance": 0.5,
-      "score_decrease": 2,
+      "score_decrease": 0,
 
       "bomb_spawn_rate": 0.1,
       "bomb_timer": 20
