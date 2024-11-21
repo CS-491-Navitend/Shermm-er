@@ -633,10 +633,12 @@ export class Game extends Scene {
   togglePause() {
     if (this.paused) {
       this.paused = false;
+      this.timer.resume();
       this.timer.resumeBombTimer();
     } else {
       this.pauseMenu.show();
       this.paused = true;
+      this.timer.pause();
       this.timer.pauseBombTimer();
     }
   }

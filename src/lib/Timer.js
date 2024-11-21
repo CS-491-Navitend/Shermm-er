@@ -10,7 +10,7 @@ export class Timer {
 
   update() {
     if (this.isPaused) {
-      // console.log("Timer is paused. Skipping update.");
+       console.log("Timer is paused. Skipping update.");
       return;
     }
 
@@ -65,7 +65,8 @@ export class Timer {
     });
   }
 
-  pause() {
+    pause() {
+      console.log("paused")
     this.isPaused = true;
       if (this.bombTimerEvent) {
           this.pauseBombTimer();
