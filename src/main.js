@@ -4,7 +4,7 @@ import { Boot } from "./scenes/Boot";
 import { MainMenu } from "./scenes/Menus/MainMenu";
 import { LevelMenu } from "./scenes/Menus/LevelMenu";
 import { PauseMenu } from "./scenes/Menus/PauseMenu";
-import { PauseMenu } from "./scenes/Menus/";
+import { TutorialMenu } from "./scenes/Menus/TutorialMenu";
 //submenus
 import { Credits } from "./scenes/Menus/Submenus/Credits";
 import { Controls } from "./scenes/Menus/Submenus/Controls"
