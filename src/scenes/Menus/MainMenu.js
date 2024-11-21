@@ -7,6 +7,7 @@ export class MainMenu extends Scene {
         this.buttons = [];
         this.selectedButtonIndex = 0; // Tracks the selected button
         this.isActive = false;
+        this.isMuted = false;
     }
 
 
@@ -46,7 +47,7 @@ export class MainMenu extends Scene {
         const creditsButton = this.createButton(512, 660, "Credits", 3); 
         const statsButton = this.createButton(512, 770, "Stats", 4);
 
-
+        this.createMuteButton(950, 50);
 
         this.buttons.push(playButton, levelSelectButton, controlsButton, creditsButton, statsButton);
         //console.log("Current buttons array after creation: ", this.buttons);
@@ -59,6 +60,56 @@ export class MainMenu extends Scene {
 
         //console.log(this.buttons);
         this.highlightButton(this.selectedButtonIndex);
+    }
+    createMuteButton(x, y) {
+        const muteButtonText = this.add.text(x, y, 'Mute', {
+            fontFamily: 'Arial',
+            fontSize: '24px',
+            color: '#ffffff',
+            backgroundColor: '#444444',
+            padding: { x: 10, y: 5 },
+            align: 'center'
+        }).setOrigin(0.5);
+
+        muteButtonText.setInteractive({ useHandCursor: true });
+
+        muteButtonText.on("pointerdown", () => this.toggleMute());
+
+        // Set initial text to "Mute" or "Unmute" based on the mute state
+        if (this.isMuted) {
+            muteButtonText.setText('Unmute');
+        } else {
+            muteButtonText.setText('Mute');
+        }
+
+        /*
+        const muteButtonImage = this.add.image(x, y, "muteButton").setOrign(0.5).setScale(0.5);
+        muteButtonImage.setInteractive({ userHandCursor: true });
+
+        muteButtonImage.on("pointerdown", () => this.toggleMute());
+        */
+        /*
+        if (this.isMuted) {
+            muteButtonImage.setFrame(1); // Mute icon
+        } else {
+            muteButtonImage.setFrame(0); // Unmute icon
+        }
+        */
+    }
+    toggleMute() {
+        this.isMuted = !this.isMuted;
+
+        this.sys.game.registry.set("isMuted", this.isMuted);
+
+        if (this.isMuted) {
+            this.sound.mute = true;
+
+        } else {
+            this.sound.mute = false;
+        }
+
+        const muteButtonText = this.children.getAt(this.children.length - 1);
+        muteButtonText.setText(this.isMuted ? 1 : 0);
     }
 
     createButton(x, y, text, mainButtonIndex) {
