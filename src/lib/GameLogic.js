@@ -41,6 +41,7 @@ export class GameLogic {
     this.game.goalCount=0;
     this.game.playing = false;
     this.game.scene.start("GameOver", { game: this.game });
+    
   }
 
   resetPlayer() {
