@@ -1,6 +1,4 @@
 import { Scene } from "phaser";
-
-
 export class MainMenu extends Scene {
     constructor() {
         super("MainMenu");
@@ -42,14 +40,15 @@ export class MainMenu extends Scene {
 
 
         // Create buttons
-        const playButton = this.createButton(512, 370, 'Play', 0);
-        const levelSelectButton = this.createButton(512, 480, "Level Select", 1);
-        const controlsButton = this.createButton(512, 590, "Controls", 2);
-        const creditsButton = this.createButton(512, 700, "Credits", 3);
+        const playButton = this.createButton(512, 330, 'Play', 0);
+        const levelSelectButton = this.createButton(512, 440, "Level Select", 1);
+        const controlsButton = this.createButton(512, 550, "Controls", 2);
+        const creditsButton = this.createButton(512, 660, "Credits", 3); 
+        const statsButton = this.createButton(512, 770, "Stats", 4);
 
 
 
-        this.buttons.push(playButton, levelSelectButton, controlsButton, creditsButton);
+        this.buttons.push(playButton, levelSelectButton, controlsButton, creditsButton, statsButton);
         //console.log("Current buttons array after creation: ", this.buttons);
 
         // Keyboard inputs
@@ -151,7 +150,9 @@ export class MainMenu extends Scene {
         } else if (selectedButton == this.buttons[3]) {
             this.scene.start("Credits");
         } else if (selectedButton == this.buttons[2]) {
-            this.scene.start("Controls")
+            this.scene.start("Controls");
+        } else if (selectedButton == this.buttons[4]) {
+            this.scene.start("Stats");
         }
     }
     destroyButtons() {
