@@ -586,11 +586,14 @@ export class Game extends Scene {
         this.shermieTexture = "shermieBomb";  // Update the next Shermie to be a bomb
         this.shermie.setTexture(this.shermieTexture);  // Update the texture for Shermie
     } 
-
+      const bombTimerUI = document.getElementById("bomb-timer");
     // Only start the bomb timer if it's actually a bomb
-    if (this.isBomb) {
-        this.getBomb(this.shermie);  
-    }
+      if (this.isBomb) {
+          bombTimerUI.style.display = "block";
+          this.timer.getBomb(this.shermie);  
+      } else {
+          bombTimerUI.style.display = "none";
+      }
   }
 
   updateTimer() {
@@ -630,11 +633,11 @@ export class Game extends Scene {
   togglePause() {
     if (this.paused) {
       this.paused = false;
-      this.timer.resume();
+      this.timer.resumeBombTimer();
     } else {
       this.pauseMenu.show();
       this.paused = true;
-      this.timer.pause();
+      this.timer.pauseBombTimer();
     }
   }
 
@@ -686,55 +689,4 @@ export class Game extends Scene {
 
     return colorProperties;
   }
-  //Timer for bomb shermie
-    getBomb(shermie) {
-       
-        // If it's a bomb, reset the timer and event
-        if (this.isBomb) {
-
-            // Ensure that the timer value is reset to the initial value for each new bomb
-            shermie.setData("timer", this.bombTimer);
-
-            // remove any old timer event if it exists
-            if (this.bombTimerEvent) {
-                this.bombTimerEvent.remove();  // Remove the previous event
-                this.bombTimerEvent = null;    // Clear the reference to the event
-            }
-
-            //clear the old bomb timer text
-            if (this.bombTimerText) {
-                this.bombTimerText.setText(""); // Clear the text
-            }
-
-            // Create the bomb timer text again
-
-          
-            if (!this.bombTimerText) {
-                this.bombTimerText = this.add.text(10, 10, `Bomb Timer: ${this.bombTimer / 1000}`, {
-                    fontSize: '32px',
-                    fill: '#fff',
-                    backgroundColor: 0x000000
-                });
-            }
-
-            // Create the new bomb timer event
-            this.bombTimerEvent = this.time.addEvent({
-                delay: 1000, // Update every 1 second
-                callback: () => {
-                    const remainingTime = Math.max(0, shermie.getData("timer") - 1000); // Decrease by 1 second
-                    shermie.setData("timer", remainingTime);
-
-                    // Update the text to show the remaining time
-                    this.bombTimerText.setText(`Bomb Timer: ${remainingTime / 1000}`);
-
-                    // Check if the bomb has exploded
-                    if (remainingTime <= 0) {
-                        this.gameLogic.gameOver();
-                        
-                    }
-                },
-                loop: true // Repeat this event every second
-            });
-        }
-    }
 }
