@@ -4,6 +4,7 @@ import { Boot } from "./scenes/Boot";
 import { MainMenu } from "./scenes/Menus/MainMenu";
 import { LevelMenu } from "./scenes/Menus/LevelMenu";
 import { PauseMenu } from "./scenes/Menus/PauseMenu";
+import { PauseMenu } from "./scenes/Menus/";
 //submenus
 import { Credits } from "./scenes/Menus/Submenus/Credits";
 import { Controls } from "./scenes/Menus/Submenus/Controls"
@@ -33,7 +34,7 @@ const config = {
     mode: Scale.FIT,
   },
 
-  scene: [Boot, MainMenu, LevelMenu, MainGame, PauseMenu, GameOver, GameWin, Credits, Controls, Stats],
+  scene: [Boot, MainMenu, LevelMenu, MainGame, PauseMenu, GameOver, GameWin, Credits, Controls, Stats, TutorialMenu],
   parent: 'phaser-game',
 
 };
