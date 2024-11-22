@@ -56,7 +56,7 @@ export class Game extends Scene {
     this.logSpeedMultiplier = 1;
     this.frogSinkMultiplier = 1;
     this.scoreDecrement = 0;
-    this.decrementFlag = false;
+    this.bonusFlag = false;
 
     this.gameLogic = new GameLogic(this);
     this.drawing = new Drawing(this);
@@ -117,7 +117,7 @@ export class Game extends Scene {
     //advanced feature variables. 
     this.queueChance = levels[data["level"]]["queue_chance"];
     this.advanceNumber = levels[data["level"]]["advance_number"];
-    this.decrementScore = levels[data["level"]]["score_decrease"];
+    this.bonusScore = levels[data["level"]]["score_bonus"];
 
     //shermie bomb variables
     this.bombSpawnRate = levels[data["level"]]["bomb_spawn_rate"];
@@ -378,12 +378,12 @@ export class Game extends Scene {
         //   filledGoals.add(killerShermie); // Add to filledGoals
         // }, 1);
       } else if(!this.physics.overlap(shermie, filledGoals) && this.shermieType == "colored"){
-        if(objective.getData("color") == this.shermie.getData("color")){
-          this.decrementFlag = false;
+        if(objective.getData("color") == this.shermie.getData("color")){// Call bonus score if already colliding with a same colored goal
+          this.bonusFlag = true;
         }else{
-          this.decrementFlag = true;
+          this.bonusFlag = false;
         }
-        this.goalCollision(); // Call decrementScore if already colliding with a different colored goal
+        this.goalCollision(); 
       }
     }, null, this);
     
@@ -596,7 +596,7 @@ export class Game extends Scene {
       child.clearTint();
       child.setData("color", null);
     });//Clear goal zone tints
-    this.decrementFlag == false;//Reset decrement flag
+    this.bonus = false;//Reset decrement flag
     this.shermie.setData("color", null);//Reset shermie color
     // Reset bomb flag
     this.isBomb = false;

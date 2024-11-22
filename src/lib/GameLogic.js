@@ -4,10 +4,8 @@ export class GameLogic {
   }
 
   goal() {
-    if (this.game.decrementFlag) {//Check to see if different color goal zone was hit
-      this.game.goalCount -= this.game.decrementScore;
-      if(this.game.goalCount < 0)
-        this.game.goalCount = 0;
+    if (this.game.bonusFlag) {//Check to see if different color goal zone was hit
+      this.game.goalCount += 1 + this.game.bonusScore;
     } else {
       this.game.goalCount++;
     }
