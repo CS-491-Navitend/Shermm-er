@@ -553,6 +553,9 @@ export class Game extends Scene {
 
   createShermie(){
     this.shermieType = this.shermieArray[Math.floor(Math.random() * this.shermieArray.length)];//Randomly select shermie type
+      if (!this.isBomb) {
+          this.bombTimerUI.style.display = "none";
+    }
     if(this.shermieType == "normal"){//Default
       this.shermieTexture = "shermie";
     }
@@ -570,7 +573,9 @@ export class Game extends Scene {
     else if(this.shermieType == "bomb"){//Toxic
       this.isBomb = true;
       this.shermieTexture = "shermieBomb";
-      this.getBomb(this.shermie);
+      this.timer.getBomb(this.shermie);
+      this.bombTimerUI.style.display = "block";
+      
     }
     //else if(this.shermieType == "toxic")//TODO - IMPLEMENT TOXIC LOGIC
     
@@ -602,7 +607,7 @@ export class Game extends Scene {
     this.shermie.setData("color", null);//Reset shermie color
     // Reset bomb flag
     this.isBomb = false;
-    this.getBomb(this.shermie);
+    this.timer.getBomb(this.shermie);
     this.createShermie();
   }
 
