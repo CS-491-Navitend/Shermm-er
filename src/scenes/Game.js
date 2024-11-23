@@ -102,6 +102,7 @@ export class Game extends Scene {
     this.logSpeedMultiplier = levels[data["level"]]["log_speed_multiplier"];
     this.turtleSpeedMultiplier = levels[data["level"]]["turtle_speed_multiplier"];
     this.turtleSinkMultiplier = levels[data["level"]]["turtle_sink_multiplier"];
+    this.block_percentage = levels[data["level"]]["block_percentage"];
 
     // Object and spacing properties for vehicles and logs
     this.numberOfCars = levels[data["level"]]["number_of_cars"];
@@ -115,6 +116,7 @@ export class Game extends Scene {
     this.turtleTexture = levels[data["level"]]["turtle_texture"];
     this.turtleTextureForward = levels[data["level"]]["turtles_Forward_texture"];
     this.turtleSpacing = levels[data["level"]]["turtle_spacing"];
+    this.goalZoneBlock = levels[data["level"]]["goal_zone_block"];
 
     //advanced feature variables. 
     this.queueChance = levels[data["level"]]["queue_chance"];
@@ -213,6 +215,9 @@ export class Game extends Scene {
 
     if (this.textures.exists(objectiveTexture)) {
       // Use images if the texture exists\
+      if (this.advanceNumber > 0) {
+        this.advanceNumber = 0;
+      }
       // if(this.advanceNumber > 0){
       //   this.advanceNumber = 0;
       // }
@@ -232,6 +237,7 @@ export class Game extends Scene {
       
     } else {
       // Use maroon rectangles if the texture does not exist      
+
       // if(this.advanceNumber > 0){
       //   this.advanceNumber = 0;
       // }
@@ -363,14 +369,16 @@ export class Game extends Scene {
     this.logs = this.physics.add.group();
     this.turtles = this.physics.add.group();
     this.sinkingTurtles = this.physics.add.group();
-    
+
 
     // Spawn environmental objects based on configuration
     createVehicles(this, roadStart, roadWidth, this.cars, this.carsForward, this.carSpacing);
     createLogs(this, laneStart, laneWidth, this.logTexture, this.logSpacing);
     createTurtles(this, laneStart, laneWidth, this.turtleTexture, this.turtleTextureForward, this.turtleSpacing);
+
     
     this.physics.add.overlap(this.shermie, this.objectiveZone, (shermie, objective) => {
+
       // Check if there’s already a killerShermie at this position
       if (!this.physics.overlap(shermie, filledGoals) && (this.shermieType == "normal" || this.shermieType == "bomb")) {
         this.goalCollision(); // Proceed with the goal logic
@@ -388,7 +396,7 @@ export class Game extends Scene {
         this.goalCollision(); 
       }
     }, null, this);
-    
+
     this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
     this.physics.add.overlap(this.shermie, waterZone, () => {
       if (!this.isInvincible && !this.isAnimating && !this.physics.overlap(this.shermie, this.logs) && !this.physics.overlap(this.shermie, this.turtles) && !this.physics.overlap(this.shermie, this.sinkingTurtles)) {
@@ -402,11 +410,13 @@ export class Game extends Scene {
     }, null, this);
 
     this.physics.add.overlap(this.shermie, filledGoals, this.loseLife, null, this);
-    this.physics.add.overlap(this.shermie, endZone,() => {this.shermie.setVelocity(0,0);
+    this.physics.add.overlap(this.shermie, endZone, () => {
+      this.shermie.setVelocity(0, 0);
 
     if (!this.physics.overlap(this.shermie, this.objectiveZone)) {
       this.loseLife();
     }
+      
     }, null, this);
 
     this.physics.add.overlap(this.shermie, this.logs, this.rideLog, null, this);
@@ -429,7 +439,15 @@ export class Game extends Scene {
       frameRate: 6, //speed of animation
       repeat: 0, // no repeat
     });
-  }
+
+    //spawngoalzone block every 10 seconds
+    this.time.addEvent({
+      delay: 10000,
+      callback: this.spawnGoalZoneBlock,
+      callbackScope: this,
+      loop: true,
+    });
+  };
 
   update() {
     if (this.paused) return;
@@ -493,9 +511,9 @@ export class Game extends Scene {
       const isOffScreenLeft = turtle.x < -turtle.width / 2;
       const isOffScreenRight = turtle.x > this.width + turtle.width / 2;
 
-      if(isOffScreenLeft){
+      if (isOffScreenLeft) {
         turtle.x = this.width + turtle.width / 2;
-      }else if(isOffScreenRight){
+      } else if (isOffScreenRight) {
         turtle.x = -turtle.width / 2;
       }
     })
@@ -504,9 +522,9 @@ export class Game extends Scene {
       const isOffScreenLeft = turtle.x < -turtle.width / 2;
       const isOffScreenRight = turtle.x > this.width + turtle.width / 2;
 
-      if(isOffScreenLeft){
+      if (isOffScreenLeft) {
         turtle.x = this.width + turtle.width / 2;
-      }else if(isOffScreenRight){ 
+      } else if (isOffScreenRight) {
         turtle.x = -turtle.width / 2;
       }
     })
@@ -530,8 +548,8 @@ export class Game extends Scene {
     return log;
   }
 
-  spawnTurtle(x, y, texture, speed, canSink){
-    if(canSink){
+  spawnTurtle(x, y, texture, speed, canSink) {
+    if (canSink) {
       let turtle = this.turtles.create(x, y, texture);
       turtle.body.setVelocityX(speed);
       turtle.body.allowGravity = false;
@@ -540,10 +558,10 @@ export class Game extends Scene {
       turtle.setDepth(-1);
       return turtle;
     }
-    else{
+    else {
       let turtle = this.sinkingTurtles.create(x, y, texture);
       turtle.body.setVelocityX(speed);
-      turtle.body.allowGravity = false; 
+      turtle.body.allowGravity = false;
       turtle.immovable = true;
       turtle.body.setSize(turtle.width, 50);
       turtle.setDepth(-1);
@@ -621,8 +639,8 @@ export class Game extends Scene {
     }
   }
 
-  rideTurtle(shermie, turtle){
-    if(!this.inWater){
+  rideTurtle(shermie, turtle) {
+    if (!this.inWater) {
       shermie.setVelocityX(turtle.body.velocity.x);
     }
   }
@@ -635,8 +653,8 @@ export class Game extends Scene {
     });
     this.turtlesAreSunk = true;
   }
-  
-  raiseTurtles(){
+
+  raiseTurtles() {
     this.sinkingTurtles.getChildren().forEach((turtle) => {
       turtle.body.allowOverlap = true;
       turtle.setVisible(true);
@@ -680,6 +698,37 @@ export class Game extends Scene {
     }
   }
 
+  // Still needs to implement if the game is paused or the timer is below 20 seconds then the block should not spawn
+  spawnGoalZoneBlock() {
+    const spawnChance = Math.random();
+    if (spawnChance < this.block_percentage) { // per level block percentage
+      let goalBlock = Math.floor(Math.random() * this.numOfGoals);
+      let goalBlockX = goalBlock * this.width / this.numOfGoals;
+      let goalBlockY = 45;
+      let goalBlockWidth = 80;
+      let goalBlockHeight = 75;
+      const minX = 200;
+      const maxX = 800;
+      goalBlockX = Math.max(minX, Math.min(maxX, goalBlockX));
+
+      // if filledgoal group exists then dont spawn block // This needs to be changed with the color coding 
+      if (this.physics.overlap(this.shermie, this.filledGoals)) {
+        return;
+      }
+
+      let block = this.add.image(goalBlockX, goalBlockY, 'goalBlock').setDisplaySize(goalBlockWidth, goalBlockHeight);
+      this.physics.add.existing(block, true);
+      block.setDepth(1);
+
+      // if shermie runs into an existing block, lose a life
+      this.physics.add.overlap(this.shermie, block, () => {
+        this.loseLife();
+      });
+
+      // remove the block after 5 seconds 
+      this.time.addEvent({ delay: 10000, callback: () => { block.destroy(); }, callbackScope: this, loop: false });
+    }
+    
   getColors(){
     //FIXME - Return a datastructure that has an equal number of entries to the number of goals
     // The structure will contain color comparison codes, shermie colors, and goal zone tints.

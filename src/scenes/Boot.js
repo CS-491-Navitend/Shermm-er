@@ -165,6 +165,9 @@ import squash from "/assets/audio/squash.wav"
 import plunk from "/assets/audio/plunk.wav"
 import backgroundMusic from "/assets/audio/backgroundMusic.mp3"
 
+//goal zone block
+import goalBlock from "/assets/GoalZoneBlock.png";
+
 //advanced assets
 import pasture from "/assets/pasture.png"
 import pasture_end from "/assets/pasture_end.png"
@@ -344,6 +347,9 @@ export class Boot extends Scene {
     //UI and Background
     this.load.image("background", backgroundMain);
     this.load.image("buttonImage", buttonImage);
+
+    //goal block
+    this.load.image("goalBlock", goalBlock);
 
     //Font Family
     const font = new FontFaceObserver('Pixel');
