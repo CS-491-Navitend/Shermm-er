@@ -608,6 +608,7 @@ export class Game extends Scene {
     // Reset bomb flag
     this.isBomb = false;
     this.timer.getBomb(this.shermie);
+    this.timer.getBomb(this.shermie);
     this.createShermie();
   }
 
@@ -697,12 +698,10 @@ export class Game extends Scene {
     const shermies = [redShermie, blueShermie, greenShermie, yellowShermie, orangeShermie, purpleShermie];
     const tints = [redTint, blueTint, greenTint, yellowTint, orangeTint, purpleTint];
     
-    let colorProperties = Array(this.numOfGoals);
+    let colorProperties = Array(3);
 
-    for(let i = 0; i < this.numOfGoals; i++){
-       const index = Math.floor(Math.random() * colors.length);
-       colorProperties[i] = [colors[index], shermies[index], tints[index]];
-    }
+    const index = Math.floor(Math.random() * colors.length);//Randomly select color
+    colorProperties = [colors[index], shermies[index], tints[index]];//Return color properties
 
     return colorProperties;
   }
