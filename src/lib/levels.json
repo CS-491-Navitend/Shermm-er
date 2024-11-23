@@ -31,7 +31,7 @@
 
       "powerups": [ 0, 0, 0, 0 ],
 
-      "block_percentage": 0.2
+      "block_percentage": 0.2,
       
       "advance_number": 3,
       "queue_chance": 0.5,
@@ -76,16 +76,13 @@
       "number_of_lives": 5,
       "goal_count": 5,
 
-      "powerups": [ 0, 0, 0, 0 ],
-
-      "block_percentage": 0.2
-      "number_of_lives": 4,
+      "block_percentage": 1,
 
       "powerups": [ 0, 0, 0, 0 ],
 
-      "advance_number": 3,
+      "advance_number": 300,
       "queue_chance": 0.5,
-      "score_bonus": 1,
+      "score_bonus": 0,
 
       "bomb_spawn_rate": 0.8,
       "bomb_timer": 100000
@@ -127,11 +124,7 @@
       
       "powerups": [ 0, 0, 0, 0 ],
 
-      "block_percentage": 0.2
-      "number_of_lives": 4,
-
-
-      "powerups": [ 0, 0, 0, 0 ],
+      "block_percentage": 0.2,
 
       "advance_number": 3,
       "queue_chance": 0.5,
@@ -176,7 +169,7 @@
 
       "powerups": [ 0, 0, 0, 0 ],
 
-      "block_percentage": 0.3
+      "block_percentage": 0.3,
       "queue_chance": 0.5,
       "score_bonus": 1,
 
@@ -215,8 +208,7 @@
       "number_of_lives": 5,
       "goal_count": 5,
 
-      "block_percentage": 0.4
-      "number_of_lives": 4,
+      "block_percentage": 0.4,
 
       "powerups": [ 0, 0, 0, 0 ],
 
@@ -263,7 +255,7 @@
 
       "powerups": [ 0, 0, 0, 0 ],
 
-      "block_percentage": 0.5
+      "block_percentage": 0.5,
 
       "advance_number": 3,
       "queue_chance": 0.5,
@@ -307,7 +299,7 @@
 
       "powerups": [ 0, 0, 0, 0 ],
 
-      "block_percentage": 0.6
+      "block_percentage": 0.6,
 
       "advance_number": 3,
       "queue_chance": 0.5,
@@ -388,7 +380,7 @@
       "number_of_lives": 3,
 
       "powerups": [ 0, 0, 0, 0 ],
-      "block_percentage": 0.8
+      "block_percentage": 0.8,
       "advance_number": 5,
       "queue_chance": 0.5,
       "score_bonus": 2,

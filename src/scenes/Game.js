@@ -214,13 +214,7 @@ export class Game extends Scene {
     let x = imageWidth * 2; // Initial starting position for each objective segment
 
     if (this.textures.exists(objectiveTexture)) {
-      // Use images if the texture exists\
-      if (this.advanceNumber > 0) {
-        this.advanceNumber = 0;
-      }
-      // if(this.advanceNumber > 0){
-      //   this.advanceNumber = 0;
-      // }
+
       let goalIndex = 0;
       for (let j = 0; j < imageWidth * 4; j += imageWidth) {
         //this 4 could be replaced by a variable, but we statically divide all by 10 so it works. If that changes we need to change this
@@ -231,16 +225,13 @@ export class Game extends Scene {
         this.physics.add.existing(objective, true);
         this.objectiveZone.add(objective);
         x += imageWidth * 2; // Space out each objective
-        // this.advanceNumber++;
         goalIndex++;
       }
       
     } else {
       // Use maroon rectangles if the texture does not exist      
 
-      // if(this.advanceNumber > 0){
-      //   this.advanceNumber = 0;
-      // }
+
       for (let j = 0; j < imageWidth * 4; j += imageWidth) {
         objective = this.add
           .rectangle(x, laneWidth / 2, imageWidth, imageHeight, 0x00ff00) // Maroon color in hex
@@ -440,13 +431,6 @@ export class Game extends Scene {
       repeat: 0, // no repeat
     });
 
-    //spawngoalzone block every 10 seconds
-    this.time.addEvent({
-      delay: 10000,
-      callback: this.spawnGoalZoneBlock,
-      callbackScope: this,
-      loop: true,
-    });
   };
 
   update() {
@@ -528,6 +512,7 @@ export class Game extends Scene {
         turtle.x = -turtle.width / 2;
       }
     })
+  
   }
 
   spawnVehicle(x, y, texture, speed) {
@@ -676,10 +661,6 @@ export class Game extends Scene {
     }
   }
 
-  getAdvanceNumber() {
-    return this.advanceNumber;
-  }
-
   getNumberOfLevels() {
     return levels.length;
   }
@@ -697,37 +678,6 @@ export class Game extends Scene {
       livesContainer.appendChild(lifeIcon);
     }
   }
-
-  // Still needs to implement if the game is paused or the timer is below 20 seconds then the block should not spawn
-  spawnGoalZoneBlock() {
-    const spawnChance = Math.random();
-    if (spawnChance < this.block_percentage) { // per level block percentage
-      let goalBlock = Math.floor(Math.random() * this.numOfGoals);
-      let goalBlockX = goalBlock * this.width / this.numOfGoals;
-      let goalBlockY = 45;
-      let goalBlockWidth = 80;
-      let goalBlockHeight = 75;
-      const minX = 200;
-      const maxX = 800;
-      goalBlockX = Math.max(minX, Math.min(maxX, goalBlockX));
-
-      // if filledgoal group exists then dont spawn block // This needs to be changed with the color coding 
-      if (this.physics.overlap(this.shermie, this.filledGoals)) {
-        return;
-      }
-
-      let block = this.add.image(goalBlockX, goalBlockY, 'goalBlock').setDisplaySize(goalBlockWidth, goalBlockHeight);
-      this.physics.add.existing(block, true);
-      block.setDepth(1);
-
-      // if shermie runs into an existing block, lose a life
-      this.physics.add.overlap(this.shermie, block, () => {
-        this.loseLife();
-      });
-
-      // remove the block after 5 seconds 
-      this.time.addEvent({ delay: 10000, callback: () => { block.destroy(); }, callbackScope: this, loop: false });
-    }
     
   getColors(){
     //FIXME - Return a datastructure that has an equal number of entries to the number of goals
