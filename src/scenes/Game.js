@@ -608,7 +608,6 @@ export class Game extends Scene {
     // Reset bomb flag
     this.isBomb = false;
     this.timer.getBomb(this.shermie);
-    this.timer.getBomb(this.shermie);
     this.createShermie();
   }
 
