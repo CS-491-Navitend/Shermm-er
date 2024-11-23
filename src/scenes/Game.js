@@ -24,6 +24,7 @@ export class Game extends Scene {
     this.playing = true;
     this.canMove = true;
     this.shermie = null;
+    this.shermieSprite = null;
     this.vehicles = null;
     this.logs = null;
     this.turtles = null;
@@ -32,8 +33,9 @@ export class Game extends Scene {
     this.lives = 0;
     this.resetCount = 0;
     this.goalCount = 0;
-    this.numOfGoals = 5;
+    this.numOfGoals = 4;
     this.savedVelocity = 0;
+    this.objectiveZone = null;
 
     // road values
     this.numberOfRoads = 5;
@@ -53,6 +55,8 @@ export class Game extends Scene {
     this.carSpeedMultiplier = 1;
     this.logSpeedMultiplier = 1;
     this.frogSinkMultiplier = 1;
+    this.scoreDecrement = 0;
+    this.bonusFlag = false;
 
     this.gameLogic = new GameLogic(this);
     this.drawing = new Drawing(this);
@@ -66,9 +70,20 @@ export class Game extends Scene {
 
     //For level transitions
     this.advanceNumber = 0;
+    
 
     //Turtle sinking flag
     this.turtlesAreSunk = false;
+
+    //Color loading array
+    this.colorArray = null;
+
+    //advanced feature variables
+    this.queueChance = 0;
+    this.shermieType = null;
+    this.shermieArray = ["normal", "colored", "bomb" /*"toxic"*/];//TODO - Implement toxic shermie functionality
+    this.colorArray = null;
+    this.objectiveTint = null;
   }
 
   create(data) {
@@ -78,6 +93,8 @@ export class Game extends Scene {
     // Timer setup from level data
     this.timerDuration = levels[data["level"]]["time"];
     this.timeRemaining = this.timerDuration;
+    this.bombTimerUI = document.getElementById("bomb-timer");
+    this.bombTimerUI.style.display = "none";
 
     // Initialize various level-based properties
     this.lives = levels[data["level"]]["number_of_lives"];
@@ -99,14 +116,30 @@ export class Game extends Scene {
     this.turtleTextureForward = levels[data["level"]]["turtles_Forward_texture"];
     this.turtleSpacing = levels[data["level"]]["turtle_spacing"];
 
+    //advanced feature variables. 
+    this.queueChance = levels[data["level"]]["queue_chance"];
+    this.advanceNumber = levels[data["level"]]["advance_number"];
+    this.bonusScore = levels[data["level"]]["score_bonus"];
+
+    //shermie bomb variables
+    this.bombSpawnRate = levels[data["level"]]["bomb_spawn_rate"];
+    this.bombTimer = levels[data["level"]]["bomb_timer"];
+    //Instantiate Shermie for later use
+    this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, "shermie");
+
     this.updateLives(); //display lives in the html bar
 
-    // Add player sprite with physics
-    this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, "shermie");
-    this.shermie.setSize(50, 50, true); // Set hitbox size
-    this.shermie.setScale(1); // Scale player sprite
-    this.shermie.setDepth(10); // Scale player sprite
-    this.shermie.setCollideWorldBounds(true);
+    // Spawn a shermie, randomly determine the type. TODO: Add weights for this in levels.json
+
+    //Loop the animation frame for bomb shermie
+    this.anims.create({
+        key: "burnFuse",
+        frames: this.anims.generateFrameNumbers("shermieBomb", { start: 0, end: 3 }),
+        frameRate: 1,
+        repeat: -1
+    });
+
+   
 
     // Capture user input for movement
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -136,10 +169,12 @@ export class Game extends Scene {
     const roadZoneTexture = zoneType + "Road";
     const objectiveTexture = zoneType + "Objective";
 
-    const objectiveZone = this.physics.add.staticGroup();
+    this.objectiveZone = this.physics.add.staticGroup();
     const safeZone = this.physics.add.staticGroup();
     const endZone = this.physics.add.staticGroup();
     const waterZone = this.physics.add.staticGroup();
+
+    //removed for the sake of changing the nature of the way winning works, left in in the event we decide to change it back
     const filledGoals = this.physics.add.staticGroup();
 
     // Define lane boundaries for water lanes
@@ -178,9 +213,10 @@ export class Game extends Scene {
 
     if (this.textures.exists(objectiveTexture)) {
       // Use images if the texture exists\
-      if(this.advanceNumber > 0){
-        this.advanceNumber = 0;
-      }
+      // if(this.advanceNumber > 0){
+      //   this.advanceNumber = 0;
+      // }
+      let goalIndex = 0;
       for (let j = 0; j < imageWidth * 4; j += imageWidth) {
         //this 4 could be replaced by a variable, but we statically divide all by 10 so it works. If that changes we need to change this
         objective = this.add
@@ -188,16 +224,17 @@ export class Game extends Scene {
           .setDisplaySize(imageWidth, imageHeight)
           .setDepth(0);
         this.physics.add.existing(objective, true);
-        objectiveZone.add(objective);
+        this.objectiveZone.add(objective);
         x += imageWidth * 2; // Space out each objective
-        this.advanceNumber++;
-        console.log(this.advanceNumber)
+        // this.advanceNumber++;
+        goalIndex++;
       }
+      
     } else {
       // Use maroon rectangles if the texture does not exist      
-      if(this.advanceNumber > 0){
-        this.advanceNumber = 0;
-      }
+      // if(this.advanceNumber > 0){
+      //   this.advanceNumber = 0;
+      // }
       for (let j = 0; j < imageWidth * 4; j += imageWidth) {
         objective = this.add
           .rectangle(x, laneWidth / 2, imageWidth, imageHeight, 0x00ff00) // Maroon color in hex
@@ -241,6 +278,30 @@ export class Game extends Scene {
       }
     }
     // END SAFE ZONE LOGIC
+    
+    //Create Shermie using previously instatiated object. Randomly determines the type of shermie the user gets.
+    this.createShermie();
+    //Setting the size and depth/keeping shermie inBounds
+    this.shermie.setSize(50, 50, true); // Set hitbox size
+    this.shermie.setScale(1); // Scale player sprite
+    this.shermie.setDepth(10); // Scale player sprite
+    this.shermie.setCollideWorldBounds(true);
+    
+    //SHERMIE QUEUE LOGIC
+    
+    let boundarySpriteTexture;
+    if (this.textures.exists('pasture')) {
+      for (let j = 0; j < (this.width / 2 - this.safeZoneSize / 2); j += imageWidth) {
+        const isLast = j + imageWidth >= (this.width / 2 - this.safeZoneSize / 2); 
+        this.boundarySpriteTexture = this.add.sprite(j + (imageWidth / 20),this.height - this.safeZoneSize / 2,isLast ? 'pasture_end' : 'pasture').setDepth(0);
+    }
+    } else {
+        // pasture fallback
+        this.boundarySpriteTexture = this.add.rectangle(this.width / 4 - this.safeZoneSize / 2, this.height - this.safeZoneSize / 2, this.width / 2 - this.safeZoneSize / 2, this.safeZoneSize, 0x00ff00).setStrokeStyle(5, 0x00ff00).setFillStyle(0x00000,0).setDepth(1);
+    }
+    this.physics.add.existing(this.boundarySpriteTexture, true);
+    this.spritePlacementX = this.boundarySpriteTexture.x + this.boundarySpriteTexture.displayWidth / 2 - this.shermie.width;
+    //END SHERMIE QUEUE LOGIC
 
     //WATER ZONE LOGIC
     let waterZoneTexture;
@@ -309,17 +370,22 @@ export class Game extends Scene {
     createLogs(this, laneStart, laneWidth, this.logTexture, this.logSpacing);
     createTurtles(this, laneStart, laneWidth, this.turtleTexture, this.turtleTextureForward, this.turtleSpacing);
     
-    this.physics.add.overlap(this.shermie, objectiveZone, (shermie, objective) => {
+    this.physics.add.overlap(this.shermie, this.objectiveZone, (shermie, objective) => {
       // Check if there’s already a killerShermie at this position
-      if (!this.physics.overlap(shermie, filledGoals)) {
-        this.goalCollision(objective); // Proceed with the goal logic
-        setTimeout(() => {
-          const killerShermie = this.add.image(objective.x, objective.y, "shermie");
-          this.physics.add.existing(killerShermie, true);
-          filledGoals.add(killerShermie); // Add to filledGoals
-        }, 1);
-      } else {
-        this.loseLife(); // Call loseLife if already colliding with a filled goal
+      if (!this.physics.overlap(shermie, filledGoals) && (this.shermieType == "normal" || this.shermieType == "bomb")) {
+        this.goalCollision(); // Proceed with the goal logic
+        // setTimeout(() => {
+        //   const killerShermie = this.add.image(objective.x, objective.y, "shermie");
+        //   this.physics.add.existing(killerShermie, true);
+        //   filledGoals.add(killerShermie); // Add to filledGoals
+        // }, 1);
+      } else if(!this.physics.overlap(shermie, filledGoals) && this.shermieType == "colored"){
+        if(objective.getData("color") == this.shermie.getData("color")){// Call bonus score if already colliding with a same colored goal
+          this.bonusFlag = true;
+        }else{
+          this.bonusFlag = false;
+        }
+        this.goalCollision(); 
       }
     }, null, this);
     
@@ -338,7 +404,7 @@ export class Game extends Scene {
     this.physics.add.overlap(this.shermie, filledGoals, this.loseLife, null, this);
     this.physics.add.overlap(this.shermie, endZone,() => {this.shermie.setVelocity(0,0);
 
-    if (!this.physics.overlap(this.shermie, objectiveZone)) {
+    if (!this.physics.overlap(this.shermie, this.objectiveZone)) {
       this.loseLife();
     }
     }, null, this);
@@ -355,7 +421,7 @@ export class Game extends Scene {
     this.timer.start();
 
     // Create the death animation sequence
-    this.defaultTexture = "shermie";
+    this.defaultTexture = this.shermieTexture;
 
     this.anims.create({
       key: "shermieDeath", // Name of the animation
@@ -390,8 +456,18 @@ export class Game extends Scene {
       this.canMove = true;
     }
 
-    this.shermie.x = Phaser.Math.Clamp(this.shermie.x, 0, this.width);
-    this.shermie.y = Phaser.Math.Clamp(this.shermie.y, 0, this.height - this.safeZoneSize + this.moveDistance / 2);
+    if(this.shermie.y >= this.height - this.moveDistance){
+      this.shermie.x = Phaser.Math.Clamp(this.shermie.x, this.width / 2 - this.moveDistance / 4, this.width - this.moveDistance / 2);
+    }else{
+      this.shermie.x = Phaser.Math.Clamp(this.shermie.x, this.moveDistance / 2 , this.width - this.moveDistance / 2);
+    }
+    
+    //this logic still alows the user to press down when above, allowing them to basically teleport to the front of the pasture, but I think this is fine, because it's less limiting to the game space. 
+    if (this.shermie.x < this.width / 2 - this.moveDistance / 2) {
+      this.shermie.y = Phaser.Math.Clamp(this.shermie.y, 0, this.height - this.safeZoneSize - this.shermie.height);
+    } else {
+        this.shermie.y = Phaser.Math.Clamp(this.shermie.y, 0, this.height - this.moveDistance + this.moveDistance / 2);
+    }
 
     this.vehicles.getChildren().forEach((vehicle) => {
       const isOffScreenLeft = vehicle.x < -vehicle.width / 2;
@@ -475,6 +551,37 @@ export class Game extends Scene {
     }
   }
 
+  createShermie(){
+    this.shermieType = this.shermieArray[Math.floor(Math.random() * this.shermieArray.length)];//Randomly select shermie type
+      if (!this.isBomb) {
+          this.bombTimerUI.style.display = "none";
+    }
+    if(this.shermieType == "normal"){//Default
+      this.shermieTexture = "shermie";
+    }
+    else if(this.shermieType == "colored"){//Colored
+      this.colorArray = this.getColors();
+      this.shermieColor = this.colorArray[0];//Shermie Comparison Code
+      this.shermieTexture = this.colorArray[1];//Shermie sprite color
+      this.objectiveTint = this.colorArray[2];//Objective zone tint - TODO - Change this to different textures. Functionality handled in goal zone generation logic.
+      this.shermie.setData("color", this.shermieColor);
+
+      let randomGoal = Phaser.Utils.Array.GetRandom(this.objectiveZone.getChildren());
+      randomGoal.setData("color", this.shermieColor);
+      randomGoal.setTint(this.objectiveTint);
+    }
+    else if(this.shermieType == "bomb"){//Toxic
+      this.isBomb = true;
+      this.shermieTexture = "shermieBomb";
+      this.timer.getBomb(this.shermie);
+      this.bombTimerUI.style.display = "block";
+      
+    }
+    //else if(this.shermieType == "toxic")//TODO - IMPLEMENT TOXIC LOGIC
+    
+    this.shermie.setTexture(this.shermieTexture);//Set texture 
+  }
+
   loseLife() {
     if (this.isInvincible || this.isAnimating) {
       return;
@@ -484,13 +591,24 @@ export class Game extends Scene {
     this.shermie.anims.play("shermieDeath");
     this.sound.play("squash");
     this.shermie.once("animationcomplete-shermieDeath", () => {
-      this.shermie.setTexture(this.defaultTexture);
+      this.shermie.setTexture(this.shermieTexture);
       this.gameLogic.loseLife();
     });
   }
 
   goalCollision() {
     this.gameLogic.goal();
+    this.turtlesAreSunk == false; // Reset turtle flag
+    this.objectiveZone.getChildren().forEach(child => {
+      child.clearTint();
+      child.setData("color", null);
+    });//Clear goal zone tints
+    this.bonus = false;//Reset decrement flag
+    this.shermie.setData("color", null);//Reset shermie color
+    // Reset bomb flag
+    this.isBomb = false;
+    this.timer.getBomb(this.shermie);
+    this.createShermie();
   }
 
   updateTimer() {
@@ -531,10 +649,12 @@ export class Game extends Scene {
     if (this.paused) {
       this.paused = false;
       this.timer.resume();
+      this.timer.resumeBombTimer();
     } else {
       this.pauseMenu.show();
       this.paused = true;
       this.timer.pause();
+      this.timer.pauseBombTimer();
     }
   }
 
@@ -558,5 +678,30 @@ export class Game extends Scene {
       lifeIcon.classList.add("life-icon");
       livesContainer.appendChild(lifeIcon);
     }
+  }
+
+  getColors(){
+    //FIXME - Return a datastructure that has an equal number of entries to the number of goals
+    // The structure will contain color comparison codes, shermie colors, and goal zone tints.
+    // Will be called once at game generation, guarantees that shermie textures correspond directly with goal zone colors.
+
+    //Load comparison codes, shermie textures, and tint hexcodes for goal zones
+    const redColor = "red"; const redShermie = "shermieRed"; const redTint = 0xff0000;;
+    const blueColor = "blue"; const blueShermie = "shermieBlue"; const blueTint = 0x0000ff;
+    const greenColor = "green"; const greenShermie = "shermieGreen"; const greenTint = 0x00ff00;
+    const yellowColor = "yellow"; const yellowShermie = "shermieYellow"; const yellowTint = 0xffff00;
+    const orangeColor = "orange"; const orangeShermie = "shermieOrange"; const orangeTint = 0xffa500;
+    const purpleColor = "purple"; const purpleShermie = "shermiePurple"; const purpleTint  = 0x800080;
+
+    const colors = [redColor, blueColor, greenColor, yellowColor, orangeColor, purpleColor];
+    const shermies = [redShermie, blueShermie, greenShermie, yellowShermie, orangeShermie, purpleShermie];
+    const tints = [redTint, blueTint, greenTint, yellowTint, orangeTint, purpleTint];
+    
+    let colorProperties = Array(3);
+
+    const index = Math.floor(Math.random() * colors.length);//Randomly select color
+    colorProperties = [colors[index], shermies[index], tints[index]];//Return color properties
+
+    return colorProperties;
   }
 }
