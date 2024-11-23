@@ -7,9 +7,7 @@ export class TutorialMenu extends Scene {
 
     }
 
-    preload() {
-
-    }
+   
 
     create() {
 
