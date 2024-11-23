@@ -1,0 +1,81 @@
+﻿{
+  "mechanic": [
+    {
+      "level": 1,
+      "levelMechanic": "Queue",
+      "description": "We'll introduce the queue. If it overflows, it's game over!",
+      "steps": [
+        {
+          "title": "Introducing the Queue",
+          "text": "As tickets come in, the dispatcher must get them to technicians. If you get too behind, it'll spell trouble!"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "levelMechanic": "Color Code",
+      "description": "We'll introduce the color code. The right ticket needs to get to the right tech.",
+      "steps": [
+        {
+          "title": "Color-Coding Tickets",
+          "text": "If Shermie has a color, make sure that ticket goes to the right person. It's all about the right match!"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "levelMechanic": "Gates",
+      "description": "We'll introduce Gates. Sometimes a tech is out of office and you can't get a ticket to them.",
+      "steps": [
+        {
+          "title": "Gates Are Closed",
+          "text": "Sometimes a tech is out of the office! That means you can’t send tickets to them. Make sure you're aware of who’s available."
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "levelMechanic": "Bomb Shermie",
+      "description": "We'll introduce Bomb Shermie. Some tickets are time-critical – take care of them fast!",
+      "steps": [
+        {
+          "title": "Bomb Shermie",
+          "text": "Some tickets are critical! If you don’t assign them quickly, it’s game over!"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "levelMechanic": "Toxic Shermie",
+      "description": "We'll introduce Toxic Shermie. Some tickets need to be waited on and put back into the queue.",
+      "steps": [
+        {
+          "title": "Toxic Shermie",
+          "text": "Some tickets need to be put back into the queue. These tickets cannot be handled immediately – wait your turn!"
+        }
+      ]
+    },
+    {
+      "level": 6,
+      "levelMechanic": "Powerup 1: Invulnerability",
+      "description": "We'll introduce Powerup 1: Invulnerability. Some tickets are much simpler once you use the powerup!",
+      "steps": [
+        {
+          "title": "Invulnerability Powerup",
+          "text": "Some tickets look harder than they are. Use the invulnerability powerup to complete them faster!"
+        }
+      ]
+    },
+    {
+      "level": 7,
+      "levelMechanic": "Powerup 2",
+      "description": "We'll introduce Powerup 2. This powerup is super helpful, and you'll need it!",
+      "steps": [
+        {
+          "title": "Powerup 2",
+          "text": "Powerup 2 is going to make your life easier. Use it wisely and keep the queue under control."
+        }
+      ]
+    }
+  ]
+}
