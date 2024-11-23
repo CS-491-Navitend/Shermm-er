@@ -10,9 +10,6 @@ export class GameLogic {
     } else {
       this.game.goalCount++;
     }
-    
-    console.log("Goal count: ", this.game.goalCount)
-    console.log("Advance number: ",this.game.advanceNumber)
 
     if(this.game.goalCount < this.game.advanceNumber) {
       this.resetPlayer();
@@ -92,37 +89,7 @@ export class GameLogic {
   }
 
   
-  spawnGoalZoneBlock() {
-    const spawnChance = Math.random();
-    if (spawnChance < this.block_percentage) { // per level block percentage
-      let goalBlock = Math.floor(Math.random() * this.numOfGoals);
-      let goalBlockX = goalBlock * this.width / this.numOfGoals;
-      let goalBlockY = 45;
-      let goalBlockWidth = 80;
-      let goalBlockHeight = 75;
-      const minX = 200;
-      const maxX = 800;
-      goalBlockX = Math.max(minX, Math.min(maxX, goalBlockX));
 
-      // if filledgoal group exists then dont spawn block // This needs to be changed with the color coding 
-      if (this.physics.overlap(this.shermie, this.filledGoals)) {
-        return;
-      }
-
-      let block = this.add.image(goalBlockX, goalBlockY, 'goalBlock').setDisplaySize(goalBlockWidth, goalBlockHeight);
-      this.physics.add.existing(block, true);
-      block.setDepth(5);
-
-      // if shermie runs into an existing block, lose a life
-      this.physics.add.overlap(this.shermie, block, () => {
-        console.log('Hit goal block')
-        this.loseLife();
-      });
-
-      // remove the block after 5 seconds 
-      this.time.addEvent({ delay: 10000, callback: () => { block.destroy(); }, callbackScope: this, loop: false });
-    }
-  }
 }
 
 

@@ -84,6 +84,7 @@ export class Game extends Scene {
     this.shermieArray = ["normal", "colored", "bomb" /*"toxic"*/];//TODO - Implement toxic shermie functionality
     this.colorArray = null;
     this.objectiveTint = null;
+    this.max_block = 0;
   }
 
   create(data) {
@@ -122,6 +123,7 @@ export class Game extends Scene {
     this.queueChance = levels[data["level"]]["queue_chance"];
     this.advanceNumber = levels[data["level"]]["advance_number"];
     this.bonusScore = levels[data["level"]]["score_bonus"];
+    this.max_block = levels[data["level"]]["max_blocks"];
 
     //shermie bomb variables
     this.bombSpawnRate = levels[data["level"]]["bomb_spawn_rate"];
@@ -367,24 +369,27 @@ export class Game extends Scene {
     createLogs(this, laneStart, laneWidth, this.logTexture, this.logSpacing);
     createTurtles(this, laneStart, laneWidth, this.turtleTexture, this.turtleTextureForward, this.turtleSpacing);
 
-    
-    this.physics.add.overlap(this.shermie, this.objectiveZone, (shermie, objective) => {
-
-      // Check if there’s already a killerShermie at this position
-      if (!this.physics.overlap(shermie, filledGoals) && (this.shermieType == "normal" || this.shermieType == "bomb")) {
-        this.goalCollision(); // Proceed with the goal logic
+    //killer shermie logic
+     // Proceed with the goal logic
         // setTimeout(() => {
         //   const killerShermie = this.add.image(objective.x, objective.y, "shermie");
         //   this.physics.add.existing(killerShermie, true);
         //   filledGoals.add(killerShermie); // Add to filledGoals
         // }, 1);
-      } else if(!this.physics.overlap(shermie, filledGoals) && this.shermieType == "colored"){
-        if(objective.getData("color") == this.shermie.getData("color")){// Call bonus score if already colliding with a same colored goal
+    this.physics.add.overlap(this.shermie, this.objectiveZone, (shermie, objective) => {
+      // Handle normal and bomb Shermie types
+      if (!this.physics.overlap(shermie, this.filledGoals) && (this.shermieType == "normal" || this.shermieType == "bomb")) {
+        this.goalCollision();
+      } 
+
+      // Handle colored Shermie types
+      else if (!this.physics.overlap(shermie,  this.filledGoals) && this.shermieType == "colored") {
+        if (objective.getData("color") == this.shermie.getData("color")) { // Bonus score for matching color
           this.bonusFlag = true;
-        }else{
+        } else {
           this.bonusFlag = false;
         }
-        this.goalCollision(); 
+        this.goalCollision();
       }
     }, null, this);
 
@@ -435,7 +440,6 @@ export class Game extends Scene {
 
   update() {
     if (this.paused) return;
-
     document.getElementById("score").innerText = `Score: ${this.goalCount}`;
     if (this.canMove && !this.isAnimating && !this.inWater) {
       if (this.cursors.left.isDown && this.shermie.x > 0) {
@@ -601,7 +605,7 @@ export class Game extends Scene {
 
   goalCollision() {
     this.gameLogic.goal();
-    this.turtlesAreSunk == false; // Reset turtle flag
+    this.turtlesAreSunk == false; 
     this.objectiveZone.getChildren().forEach(child => {
       child.clearTint();
       child.setData("color", null);

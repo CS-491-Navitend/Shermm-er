@@ -10,11 +10,8 @@ export class Timer {
 
   update() {
     if (this.isPaused) {
-       //console.log("Timer is paused. Skipping update.");
       return;
     }
-
-    // console.log("Updating Timer.."); // for debugging
 
     this.timeRemaining -= 1;
     if (this.timeRemaining <= 0) {
@@ -33,11 +30,9 @@ export class Timer {
 
     if(this.timeRemaining % 3 == 0){//Sink and raise turtles every 3 seconds
       if(this.game.turtlesAreSunk == false){
-        // console.log("Sinking turtles");
         this.game.sinkTurtles();
       }
       else if (this.game.turtlesAreSunk == true){
-        // console.log("Raising turtles");
         this.game.raiseTurtles();
       }
     }
@@ -46,8 +41,6 @@ export class Timer {
     if (this.timeRemaining % 5 === 0) {
       const chance = Math.random();
       //this queue chance is a variable obtained from levels.json and should be between 0 and 1, the lower the more likely it is to occur. 
-      // console.log(this.game.queueChance)
-      // console.log(chance)
       if (chance > this.game.queueChance) { 
           this.game.gameLogic.tryAddShermieSprite();
       }
@@ -56,18 +49,45 @@ export class Timer {
     if (this.timeRemaining % 2 === 0) {
       const chance = Math.random();
       //this queue chance is a variable obtained from levels.json and should be between 0 and 1, the lower the more likely it is to occur. 
-      // console.log(this.game.queueChance)
-      // console.log(chance)
       if (chance > this.game.queueChance) { 
           this.game.gameLogic.tryAddShermieSprite();
       }
     }
 
-    if (this.timeRemaining % 2 === 0) {
-      this.game.gameLogic.spawnGoalZoneBlock();
-    }
+    ///NEEDS WORK
 
+    if (this.timeRemaining % 2 === 0) { // Spawn a goal zone block every 2 seconds
+      this.block = this.game.physics.add.group();
+      const zones = this.game.objectiveZone.getChildren();
+      const currentBlocks = this.block.getChildren().length; // Count existing blocks
+    
+      if (zones.length > 0 && currentBlocks < this.game.max_block) {
+        const eligibleZones = zones.filter(zone => !zone.getData("color"));
+    
+        if (eligibleZones.length > 0) {
+          const randomZone = Phaser.Utils.Array.GetRandom(eligibleZones);
+    
+          let block;
+          if (this.game.textures.exists('goalBlock')) {
+            block = this.block.create(randomZone.x, randomZone.y, 'goalBlock'); // Add to group
+          } else {
+            block = this.block.create(randomZone.x, randomZone.y, null).setFillStyle(0xff0000); // Add to group
+          }
+    
+          block.setDepth(10); // Ensure it appears above other objects
+    
+          // Remove the block after 5 seconds
+          this.game.time.delayedCall(5000, () => {
+            if (block) {
+              block.destroy(); // Remove from group
+            }
+          });
+        }
+      }
+    }
   }
+
+  ///NEEDS WORK
 
   start() {
     this.stop();
@@ -81,7 +101,6 @@ export class Timer {
   }
 
     pause() {
-     // console.log("paused")
     this.isPaused = true;
       if (this.bombTimerEvent) {
           this.pauseBombTimer();
@@ -133,7 +152,6 @@ export class Timer {
 
           // Check if the bomb has exploded
           if (remainingTime <= 0) {
-            console.log("Boom! The bomb exploded!");
             this.game.gameLogic.gameOver();
             if (bombTimerUI) {
               bombTimerUI.style.display = "none"; // Hide the timer UI after explosion
