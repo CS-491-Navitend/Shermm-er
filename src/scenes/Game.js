@@ -81,7 +81,7 @@ export class Game extends Scene {
     //advanced feature variables
     this.queueChance = 0;
     this.shermieType = null;
-    this.shermieArray = ["normal", "colored", "bomb", "toxic"];//TODO - Implement toxic shermie functionality
+    this.shermieArray = null;
     this.colorArray = null;
     this.objectiveTint = null;
     this.max_block = 0;
@@ -131,8 +131,12 @@ export class Game extends Scene {
     this.bombSpawnRate = levels[data["level"]]["bomb_spawn_rate"];
     this.bombTimer = levels[data["level"]]["bomb_timer"];
     this.removeRatChance = levels[data["level"]]["try_remove_rat"];
+    this.toxicSpawnRate = levels[data["level"]]["toxic_spawn_rate"];
     //Instantiate Shermie for later use
     this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, "shermie");
+
+
+    this.populateShermieArray();
 
     this.updateLives(); //display lives in the html bar
 
@@ -742,6 +746,16 @@ export class Game extends Scene {
     popup.setDepth(10); 
     this.cameras.main.shake(500, 0.01); 
     this.tweens.add({targets: popup,alpha: 0,duration: 1000, onComplete: () => popup.destroy(),});
+  }
+
+  populateShermieArray(){
+    this.shermieArray = ["normal", "colored"]; 
+    if (this.bombSpawnRate === 1) {
+      this.shermieArray.push("bomb");
+    }
+    if (this.toxicSpawnRate === 1) {
+      this.shermieArray.push("toxic");
+    }
   }
   
 }

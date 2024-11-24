@@ -38,10 +38,10 @@
       "queue_chance": 0.5,
       "score_bonus": 1,
 
-      "bomb_spawn_rate": 0.1,
-      "bomb_timer": 20, 
+      "bomb_spawn_rate": 0,
+      "bomb_timer": 50, 
 
-      "toxic_spawn_rate": 0.8,
+      "toxic_spawn_rate": 0,
       "try_remove_rat": 0.5
       
     },
@@ -89,10 +89,10 @@
       "queue_chance": 1,
       "score_bonus": 10,
 
-      "bomb_spawn_rate": 0.1,
-      "bomb_timer": 100000,
+      "bomb_spawn_rate": 1,
+      "bomb_timer": 50, 
 
-      "toxic_spawn_rate": 0.8,
+      "toxic_spawn_rate": 1,
       "try_remove_rat": 0.5
     },
 
@@ -139,10 +139,10 @@
       "queue_chance": 0.5,
       "score_bonus": 1,
 
-      "bomb_spawn_rate": 0.9,
-      "bomb_timer": 20000, 
+      "bomb_spawn_rate": 1,
+      "bomb_timer": 50, 
 
-      "toxic_spawn_rate": 0.8,
+      "toxic_spawn_rate": 1,
       "try_remove_rat": 0.5
 
     },
@@ -186,10 +186,10 @@
       "queue_chance": 0.5,
       "score_bonus": 1,
 
-      "bomb_spawn_rate": 0.1,
-      "bomb_timer": 20, 
+      "bomb_spawn_rate": 1,
+      "bomb_timer": 50, 
 
-      "toxic_spawn_rate": 0.8,
+      "toxic_spawn_rate": 1,
       "try_remove_rat": 0.5
     },
 
@@ -233,10 +233,10 @@
       "queue_chance": 0.5,
       "score_bonus": 2,
 
-      "bomb_spawn_rate": 0.1,
-      "bomb_timer": 20, 
+      "bomb_spawn_rate": 1,
+      "bomb_timer": 50, 
 
-      "toxic_spawn_rate": 0.8,
+      "toxic_spawn_rate": 1,
       "try_remove_rat": 0.5
 
     },
@@ -282,10 +282,10 @@
       "queue_chance": 0.5,
       "score_bonus": 2,
 
-      "bomb_spawn_rate": 0.1,
-      "bomb_timer": 20, 
+      "bomb_spawn_rate": 1,
+      "bomb_timer": 50, 
 
-      "toxic_spawn_rate": 0.8,
+      "toxic_spawn_rate": 1,
       "try_remove_rat": 0.5
     },
 
@@ -330,10 +330,10 @@
       "queue_chance": 0.5,
       "score_bonus": 2,
 
-      "bomb_spawn_rate": 0.1,
-      "bomb_timer": 20, 
+      "bomb_spawn_rate": 1,
+      "bomb_timer": 50, 
 
-      "toxic_spawn_rate": 0.8,
+      "toxic_spawn_rate": 1,
       "try_remove_rat": 0.5
       
     },
@@ -376,10 +376,10 @@
       "queue_chance": 0.5,
       "score_bonus": 2,
 
-      "bomb_spawn_rate": 0.1,
-      "bomb_timer": 20, 
+      "bomb_spawn_rate": 1,
+      "bomb_timer": 50, 
 
-      "toxic_spawn_rate": 0.8,
+      "toxic_spawn_rate": 1,
       "try_remove_rat": 0.5
       
     },
@@ -419,10 +419,10 @@
       "queue_chance": 0.5,
       "score_bonus": 2,
 
-      "bomb_spawn_rate": 0.1,
-      "bomb_timer": 20, 
+      "bomb_spawn_rate": 1,
+      "bomb_timer": 50, 
 
-      "toxic_spawn_rate": 0.8,
+      "toxic_spawn_rate": 1,
       "try_remove_rat": 0.5
     },
 
@@ -459,15 +459,16 @@
 
       "powerups": [ 0, 0, 0, 0 ],
 
+      "block_percentage": 0.9, 
+
       "advance_number": 3,
       "queue_chance": 0.5,
       "score_bonus": 2,
 
-      "bomb_spawn_rate": 0.5,
-      "bomb_timer": 20000,
-    
-      "block_percentage": 0.9, 
+      "bomb_spawn_rate": 1,
+      "bomb_timer": 50, 
 
+      "toxic_spawn_rate": 1,
       "try_remove_rat": 0.5
     }
   ]
