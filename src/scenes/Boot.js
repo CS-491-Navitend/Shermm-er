@@ -23,6 +23,7 @@ import shermieYellow from "/assets/shermieYellow.png";
 import shermieOrange from "/assets/shermieOrange.png";
 import shermiePurple from "/assets/shermiePurple.png";
 import shermieBomb from "/assets/shermieBombSheet.png";
+import shermieToxic from "/assets/shermieToxic.png";
 
 import life from "/assets/heart.png";
 import death1 from "/assets/death1.png";
@@ -208,6 +209,7 @@ export class Boot extends Scene {
     this.load.image("shermieGreen", shermieGreen);
     this.load.image("shermieOrange", shermieOrange);
     this.load.image("shermiePurple", shermiePurple);
+    this.load.image("shermieToxic", shermieToxic);
     this.load.image("life", life);
 
     this.load.spritesheet("shermieBomb", shermieBomb, {

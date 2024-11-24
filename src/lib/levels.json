@@ -39,7 +39,10 @@
       "score_bonus": 1,
 
       "bomb_spawn_rate": 0.1,
-      "bomb_timer": 20 
+      "bomb_timer": 20, 
+
+      "toxic_spawn_rate": 0.8,
+      "try_remove_rat": 0.5
       
     },
 
@@ -84,10 +87,13 @@
 
       "advance_number": 300,
       "queue_chance": 1,
-      "score_bonus": 0,
+      "score_bonus": 10,
 
-      "bomb_spawn_rate": 0.8,
-      "bomb_timer": 100000
+      "bomb_spawn_rate": 0.1,
+      "bomb_timer": 100000,
+
+      "toxic_spawn_rate": 0.8,
+      "try_remove_rat": 0.5
     },
 
     {
@@ -134,7 +140,10 @@
       "score_bonus": 1,
 
       "bomb_spawn_rate": 0.9,
-      "bomb_timer": 20000
+      "bomb_timer": 20000, 
+
+      "toxic_spawn_rate": 0.8,
+      "try_remove_rat": 0.5
 
     },
 
@@ -178,7 +187,10 @@
       "score_bonus": 1,
 
       "bomb_spawn_rate": 0.1,
-      "bomb_timer": 20
+      "bomb_timer": 20, 
+
+      "toxic_spawn_rate": 0.8,
+      "try_remove_rat": 0.5
     },
 
     {
@@ -222,7 +234,10 @@
       "score_bonus": 2,
 
       "bomb_spawn_rate": 0.1,
-      "bomb_timer": 20
+      "bomb_timer": 20, 
+
+      "toxic_spawn_rate": 0.8,
+      "try_remove_rat": 0.5
 
     },
 
@@ -268,7 +283,10 @@
       "score_bonus": 2,
 
       "bomb_spawn_rate": 0.1,
-      "bomb_timer": 20
+      "bomb_timer": 20, 
+
+      "toxic_spawn_rate": 0.8,
+      "try_remove_rat": 0.5
     },
 
 
@@ -313,7 +331,10 @@
       "score_bonus": 2,
 
       "bomb_spawn_rate": 0.1,
-      "bomb_timer": 20
+      "bomb_timer": 20, 
+
+      "toxic_spawn_rate": 0.8,
+      "try_remove_rat": 0.5
       
     },
 
@@ -356,7 +377,10 @@
       "score_bonus": 2,
 
       "bomb_spawn_rate": 0.1,
-      "bomb_timer": 20
+      "bomb_timer": 20, 
+
+      "toxic_spawn_rate": 0.8,
+      "try_remove_rat": 0.5
       
     },
 
@@ -396,7 +420,10 @@
       "score_bonus": 2,
 
       "bomb_spawn_rate": 0.1,
-      "bomb_timer": 20
+      "bomb_timer": 20, 
+
+      "toxic_spawn_rate": 0.8,
+      "try_remove_rat": 0.5
     },
 
     {
@@ -439,7 +466,9 @@
       "bomb_spawn_rate": 0.5,
       "bomb_timer": 20000,
     
-      "block_percentage": 0.9
+      "block_percentage": 0.9, 
+
+      "try_remove_rat": 0.5
     }
   ]
 }

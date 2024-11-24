@@ -55,7 +55,13 @@ export class Timer {
       }
     }
 
-    ///NEEDS WORK
+    if(this.timeRemaining % 2 ===0){
+      const chance = Math.random();
+      if(chance > this.game.removeRatChance){
+        this.game.gameLogic.tryRemoveRat();
+      }
+    }
+
     if (this.timeRemaining % 2 === 0) {
       if (this.currentBlockCount < this.game.max_block) {
         this.block = this.game.physics.add.group();
