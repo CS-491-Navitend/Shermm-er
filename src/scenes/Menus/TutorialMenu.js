@@ -51,32 +51,6 @@ export class TutorialMenu extends Scene {
             this.yPosition += 60; // Add space between steps
         });
 
-        // Optional: Add images based on the level number
-        switch (levelNumber) {
-            case 1:
-                // this.add.image(500, 300, 'queueImage');
-                break;
-            case 2:
-                // this.add.image(500, 300, 'colorCodeImage');
-                break;
-            case 3:
-                // this.add.image(500, 300, 'gatesImage');
-                break;
-            case 4:
-                // this.add.image(500, 300, 'bombImage');
-                break;
-            case 5:
-                // this.add.image(500, 300, 'toxicImage');
-                break;
-            case 6:
-                // this.add.image(500, 300, 'invulnerabilityImage');
-                break;
-            case 7:
-                // this.add.image(500, 300, 'powerup2Image');
-                break;
-            default:
-                break;
-        }
 
         // Add "Continue" button
         const continueButton = this.add.text(400, this.yPosition + 100, 'Continue', {
