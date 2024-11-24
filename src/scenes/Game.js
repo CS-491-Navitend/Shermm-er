@@ -740,12 +740,11 @@ export class Game extends Scene {
   }
 
   showToxicPopup() {
-    // Add "TOXIC!" text to the center of the screen
     const popup = this.add.text( this.cameras.main.centerX, this.cameras.main.centerY,  "THIS SHERMIE IS TOXIC!", {fontSize: "64px", color: "#FFFF00", fontStyle: "bold", align: "center",});
     popup.setOrigin(0.5); 
     popup.setDepth(10); 
     this.cameras.main.shake(500, 0.01); 
-    this.tweens.add({targets: popup,alpha: 0,duration: 1000, onComplete: () => popup.destroy(),});
+    this.tweens.add({targets: popup,alpha: 0,duration: 3000, onComplete: () => popup.destroy(),});
   }
 
   populateShermieArray(){

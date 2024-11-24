@@ -41,21 +41,12 @@ export class Timer {
     //this chance needs to be a variable obtained from the json
     if (this.timeRemaining % 5 === 0) {
       const chance = Math.random();
-      //this queue chance is a variable obtained from levels.json and should be between 0 and 1, the lower the more likely it is to occur. 
       if (chance > this.game.queueChance) { 
           this.game.gameLogic.tryAddShermieSprite();
       }
     }
 
-    if (this.timeRemaining % 2 === 0) {
-      const chance = Math.random();
-      //this queue chance is a variable obtained from levels.json and should be between 0 and 1, the lower the more likely it is to occur. 
-      if (chance > this.game.queueChance) { 
-          this.game.gameLogic.tryAddShermieSprite();
-      }
-    }
-
-    if(this.timeRemaining % 2 ===0){
+    if(this.timeRemaining % 5 ===0){
       const chance = Math.random();
       if(chance > this.game.removeRatChance){
         this.game.gameLogic.tryRemoveRat();
