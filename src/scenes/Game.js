@@ -377,13 +377,12 @@ export class Game extends Scene {
         //   filledGoals.add(killerShermie); // Add to filledGoals
         // }, 1);
         this.physics.add.overlap(this.shermie, this.objectiveZone, (shermie, objective) => {
-          // Access the blocker group via Timer
           const blockers = this.timer.getBlockGroup();
         
           // Check if Shermie overlaps with a blocker
           if (this.physics.overlap(shermie, blockers)) {
-            this.loseLife(); // Implement your lose life logic here
-            return; // Exit to prevent further processing
+            this.loseLife();
+            return; 
           }
         
           // Handle normal and bomb Shermie types
