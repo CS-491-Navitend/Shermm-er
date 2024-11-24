@@ -1,27 +1,28 @@
 import { Scene } from "phaser";
-import { mechanic } from "/src/lib/gameTutorial";
+import { tutorials } from "/src/lib/tutorials";
 
 export class TutorialMenu extends Scene {
     constructor() {
         super("TutorialMenu");
+        this.level = 0;
 
     }
     
    
 
     create(data) {
-        console.log("Tutorial");
-
-        this.levelNumber = data.level;
+        this.level = data["level"]
+        this.levelName = tutorials[data["level"]]["level"]
+        this.levelMechanic = tutorials[data["level"]]["levelMechanic"];
+        this.description = tutorials[data["level"]]["description"];
+        this.steps = tutorials[data["level"]]["steps"];
         let yPosition = 50;
-        const tutorialData = this.cache.json.get("gameTutorial");
+       
+        
 
-        const levelTutorial = tutorialData.mechanic.find(mechanic => mechanic.level === levelNumber);
         if (levelTutorial) {
 
-            const levelMechanic = levelTutorial.levelMechanic;
-            const description = levelTutorial.description;
-            const steps = levelTutorial.steps;
+            
 
             this.yPosition = 50;
 
