@@ -82,7 +82,8 @@ export class GameLogic {
     this.game.goalCount = 0;
     this.game.level += 1;
     if (this.game.level < this.game.getNumberOfLevels()) {
-      this.game.scene.start("Game", { level: this.game.level });
+      this.game.scene.start("TutorialMenu", {level: this.game.level})
+      //this.game.scene.start("Game", { level: this.game.level });
     } else {
       this.game.scene.start("Credits");
     }
