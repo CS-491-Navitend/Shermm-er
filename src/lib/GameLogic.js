@@ -4,12 +4,14 @@ export class GameLogic {
   }
 
   goal() {
+    
     if (this.game.bonusFlag) {//Check to see if different color goal zone was hit
       this.game.goalCount += 1 + this.game.bonusScore;
     } else {
       this.game.goalCount++;
     }
-    if(this.game.goalCount < this.game.getAdvanceNumber()) {
+
+    if(this.game.goalCount < this.game.advanceNumber) {
       this.resetPlayer();
     }
     else{
@@ -85,6 +87,9 @@ export class GameLogic {
       this.game.scene.start("Credits");
     }
   }
+
+  
+
 }
 
 

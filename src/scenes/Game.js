@@ -84,6 +84,7 @@ export class Game extends Scene {
     this.shermieArray = ["normal", "colored", "bomb" /*"toxic"*/];//TODO - Implement toxic shermie functionality
     this.colorArray = null;
     this.objectiveTint = null;
+    this.max_block = 0;
   }
 
   create(data) {
@@ -102,6 +103,7 @@ export class Game extends Scene {
     this.logSpeedMultiplier = levels[data["level"]]["log_speed_multiplier"];
     this.turtleSpeedMultiplier = levels[data["level"]]["turtle_speed_multiplier"];
     this.turtleSinkMultiplier = levels[data["level"]]["turtle_sink_multiplier"];
+    this.block_percentage = levels[data["level"]]["block_percentage"];
 
     // Object and spacing properties for vehicles and logs
     this.numberOfCars = levels[data["level"]]["number_of_cars"];
@@ -115,11 +117,13 @@ export class Game extends Scene {
     this.turtleTexture = levels[data["level"]]["turtle_texture"];
     this.turtleTextureForward = levels[data["level"]]["turtles_Forward_texture"];
     this.turtleSpacing = levels[data["level"]]["turtle_spacing"];
+    this.goalZoneBlock = levels[data["level"]]["goal_zone_block"];
 
     //advanced feature variables. 
     this.queueChance = levels[data["level"]]["queue_chance"];
     this.advanceNumber = levels[data["level"]]["advance_number"];
     this.bonusScore = levels[data["level"]]["score_bonus"];
+    this.max_block = levels[data["level"]]["max_blocks"];
 
     //shermie bomb variables
     this.bombSpawnRate = levels[data["level"]]["bomb_spawn_rate"];
@@ -212,10 +216,7 @@ export class Game extends Scene {
     let x = imageWidth * 2; // Initial starting position for each objective segment
 
     if (this.textures.exists(objectiveTexture)) {
-      // Use images if the texture exists\
-      // if(this.advanceNumber > 0){
-      //   this.advanceNumber = 0;
-      // }
+
       let goalIndex = 0;
       for (let j = 0; j < imageWidth * 4; j += imageWidth) {
         //this 4 could be replaced by a variable, but we statically divide all by 10 so it works. If that changes we need to change this
@@ -226,15 +227,13 @@ export class Game extends Scene {
         this.physics.add.existing(objective, true);
         this.objectiveZone.add(objective);
         x += imageWidth * 2; // Space out each objective
-        // this.advanceNumber++;
         goalIndex++;
       }
       
     } else {
       // Use maroon rectangles if the texture does not exist      
-      // if(this.advanceNumber > 0){
-      //   this.advanceNumber = 0;
-      // }
+
+
       for (let j = 0; j < imageWidth * 4; j += imageWidth) {
         objective = this.add
           .rectangle(x, laneWidth / 2, imageWidth, imageHeight, 0x00ff00) // Maroon color in hex
@@ -363,32 +362,47 @@ export class Game extends Scene {
     this.logs = this.physics.add.group();
     this.turtles = this.physics.add.group();
     this.sinkingTurtles = this.physics.add.group();
-    
+
 
     // Spawn environmental objects based on configuration
     createVehicles(this, roadStart, roadWidth, this.cars, this.carsForward, this.carSpacing);
     createLogs(this, laneStart, laneWidth, this.logTexture, this.logSpacing);
     createTurtles(this, laneStart, laneWidth, this.turtleTexture, this.turtleTextureForward, this.turtleSpacing);
-    
-    this.physics.add.overlap(this.shermie, this.objectiveZone, (shermie, objective) => {
-      // Check if there’s already a killerShermie at this position
-      if (!this.physics.overlap(shermie, filledGoals) && (this.shermieType == "normal" || this.shermieType == "bomb")) {
-        this.goalCollision(); // Proceed with the goal logic
+
+    //killer shermie logic
+     // Proceed with the goal logic
         // setTimeout(() => {
         //   const killerShermie = this.add.image(objective.x, objective.y, "shermie");
         //   this.physics.add.existing(killerShermie, true);
         //   filledGoals.add(killerShermie); // Add to filledGoals
         // }, 1);
-      } else if(!this.physics.overlap(shermie, filledGoals) && this.shermieType == "colored"){
-        if(objective.getData("color") == this.shermie.getData("color")){// Call bonus score if already colliding with a same colored goal
-          this.bonusFlag = true;
-        }else{
-          this.bonusFlag = false;
-        }
-        this.goalCollision(); 
-      }
-    }, null, this);
-    
+        this.physics.add.overlap(this.shermie, this.objectiveZone, (shermie, objective) => {
+          // Access the blocker group via Timer
+          const blockers = this.timer.getBlockGroup();
+        
+          // Check if Shermie overlaps with a blocker
+          if (this.physics.overlap(shermie, blockers)) {
+            this.loseLife(); // Implement your lose life logic here
+            return; // Exit to prevent further processing
+          }
+        
+          // Handle normal and bomb Shermie types
+          if (!this.physics.overlap(shermie, this.filledGoals) && (this.shermieType == "normal" || this.shermieType == "bomb")) {
+            this.goalCollision();
+          } 
+        
+          // Handle colored Shermie types
+          else if (!this.physics.overlap(shermie, this.filledGoals) && this.shermieType == "colored") {
+            if (objective.getData("color") == this.shermie.getData("color")) {
+              this.bonusFlag = true;
+            } else {
+              this.bonusFlag = false;
+            }
+            this.goalCollision();
+          }
+        }, null, this);
+        
+
     this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
     this.physics.add.overlap(this.shermie, waterZone, () => {
       if (!this.isInvincible && !this.isAnimating && !this.physics.overlap(this.shermie, this.logs) && !this.physics.overlap(this.shermie, this.turtles) && !this.physics.overlap(this.shermie, this.sinkingTurtles)) {
@@ -402,11 +416,13 @@ export class Game extends Scene {
     }, null, this);
 
     this.physics.add.overlap(this.shermie, filledGoals, this.loseLife, null, this);
-    this.physics.add.overlap(this.shermie, endZone,() => {this.shermie.setVelocity(0,0);
+    this.physics.add.overlap(this.shermie, endZone, () => {
+      this.shermie.setVelocity(0, 0);
 
     if (!this.physics.overlap(this.shermie, this.objectiveZone)) {
       this.loseLife();
     }
+      
     }, null, this);
 
     this.physics.add.overlap(this.shermie, this.logs, this.rideLog, null, this);
@@ -429,11 +445,11 @@ export class Game extends Scene {
       frameRate: 6, //speed of animation
       repeat: 0, // no repeat
     });
-  }
+
+  };
 
   update() {
     if (this.paused) return;
-
     document.getElementById("score").innerText = `Score: ${this.goalCount}`;
     if (this.canMove && !this.isAnimating && !this.inWater) {
       if (this.cursors.left.isDown && this.shermie.x > 0) {
@@ -493,9 +509,9 @@ export class Game extends Scene {
       const isOffScreenLeft = turtle.x < -turtle.width / 2;
       const isOffScreenRight = turtle.x > this.width + turtle.width / 2;
 
-      if(isOffScreenLeft){
+      if (isOffScreenLeft) {
         turtle.x = this.width + turtle.width / 2;
-      }else if(isOffScreenRight){
+      } else if (isOffScreenRight) {
         turtle.x = -turtle.width / 2;
       }
     })
@@ -504,12 +520,13 @@ export class Game extends Scene {
       const isOffScreenLeft = turtle.x < -turtle.width / 2;
       const isOffScreenRight = turtle.x > this.width + turtle.width / 2;
 
-      if(isOffScreenLeft){
+      if (isOffScreenLeft) {
         turtle.x = this.width + turtle.width / 2;
-      }else if(isOffScreenRight){ 
+      } else if (isOffScreenRight) {
         turtle.x = -turtle.width / 2;
       }
     })
+  
   }
 
   spawnVehicle(x, y, texture, speed) {
@@ -530,8 +547,8 @@ export class Game extends Scene {
     return log;
   }
 
-  spawnTurtle(x, y, texture, speed, canSink){
-    if(canSink){
+  spawnTurtle(x, y, texture, speed, canSink) {
+    if (canSink) {
       let turtle = this.turtles.create(x, y, texture);
       turtle.body.setVelocityX(speed);
       turtle.body.allowGravity = false;
@@ -540,10 +557,10 @@ export class Game extends Scene {
       turtle.setDepth(-1);
       return turtle;
     }
-    else{
+    else {
       let turtle = this.sinkingTurtles.create(x, y, texture);
       turtle.body.setVelocityX(speed);
-      turtle.body.allowGravity = false; 
+      turtle.body.allowGravity = false;
       turtle.immovable = true;
       turtle.body.setSize(turtle.width, 50);
       turtle.setDepth(-1);
@@ -598,7 +615,7 @@ export class Game extends Scene {
 
   goalCollision() {
     this.gameLogic.goal();
-    this.turtlesAreSunk == false; // Reset turtle flag
+    this.turtlesAreSunk == false; 
     this.objectiveZone.getChildren().forEach(child => {
       child.clearTint();
       child.setData("color", null);
@@ -621,8 +638,8 @@ export class Game extends Scene {
     }
   }
 
-  rideTurtle(shermie, turtle){
-    if(!this.inWater){
+  rideTurtle(shermie, turtle) {
+    if (!this.inWater) {
       shermie.setVelocityX(turtle.body.velocity.x);
     }
   }
@@ -635,8 +652,8 @@ export class Game extends Scene {
     });
     this.turtlesAreSunk = true;
   }
-  
-  raiseTurtles(){
+
+  raiseTurtles() {
     this.sinkingTurtles.getChildren().forEach((turtle) => {
       turtle.body.allowOverlap = true;
       turtle.setVisible(true);
@@ -658,10 +675,6 @@ export class Game extends Scene {
     }
   }
 
-  getAdvanceNumber() {
-    return this.advanceNumber;
-  }
-
   getNumberOfLevels() {
     return levels.length;
   }
@@ -679,7 +692,7 @@ export class Game extends Scene {
       livesContainer.appendChild(lifeIcon);
     }
   }
-
+    
   getColors(){
     //FIXME - Return a datastructure that has an equal number of entries to the number of goals
     // The structure will contain color comparison codes, shermie colors, and goal zone tints.
