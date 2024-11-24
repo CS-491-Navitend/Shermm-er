@@ -11,7 +11,7 @@ export class TutorialMenu extends Scene {
     create(data) {
         // Get the tutorial data based on the level
         this.level = data["level"];
-        const tutorial = tutorials[this.level];
+        const tutorial = tutorials[this.level -1];
 
         if (!tutorial) {
             console.error("Invalid tutorial level");
