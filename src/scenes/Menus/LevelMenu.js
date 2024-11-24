@@ -142,7 +142,7 @@ export class LevelMenu extends Scene {
       this.backgroundMusic.play();
       this.selectedButtonIndex = levelButtonIndex;
       this.highlightButton(this.selectedButtonIndex);
-      this.scene.start("Game", { level: levelNumber });
+      this.scene.start("TutorialMenu", { level: levelNumber });
     });
 
     // Add the button to the buttons array
@@ -226,8 +226,10 @@ export class LevelMenu extends Scene {
       this.scene.stop("LevelMenu");
       this.scene.start("MainMenu"); // Go back to the main menu if the back button is selected
     } else {
+      console.log("Selected level");
       const levelNumber = this.selectedButtonIndex + 1; // Adjust for level number
-      this.scene.start("Game", { level: levelNumber }); // Start the game with the selected level
+      this.scene.start("TutorialMenu", { level: levelNumber }); // Start the game with the selected level
+      
     }
   }
   destroyButtons() {
