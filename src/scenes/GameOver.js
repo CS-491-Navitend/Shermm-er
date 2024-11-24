@@ -9,6 +9,7 @@ export class GameOver extends Scene {
     create({ game }) {
 
         document.getElementById('ui-bar').style.display = 'none';
+        document.getElementById('rats-container').style.display = "none";
         const x = game.width / 2;
         const y = 250;
 

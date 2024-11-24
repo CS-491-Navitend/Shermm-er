@@ -39,7 +39,7 @@
       "score_bonus": 1,
 
       "bomb_spawn_rate": 0,
-      "bomb_timer": 50, 
+      "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 0,
       "try_remove_rat": 0.5
@@ -85,12 +85,12 @@
 
       "powerups": [ 0, 0, 0, 0 ],
 
-      "advance_number": 300,
-      "queue_chance": 1,
+      "advance_number": 10,
+      "queue_chance": 0.5,
       "score_bonus": 10,
 
       "bomb_spawn_rate": 1,
-      "bomb_timer": 50, 
+      "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
       "try_remove_rat": 0.5
@@ -140,7 +140,7 @@
       "score_bonus": 1,
 
       "bomb_spawn_rate": 1,
-      "bomb_timer": 50, 
+      "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
       "try_remove_rat": 0.5
@@ -187,7 +187,7 @@
       "score_bonus": 1,
 
       "bomb_spawn_rate": 1,
-      "bomb_timer": 50, 
+      "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
       "try_remove_rat": 0.5
@@ -234,7 +234,7 @@
       "score_bonus": 2,
 
       "bomb_spawn_rate": 1,
-      "bomb_timer": 50, 
+      "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
       "try_remove_rat": 0.5
@@ -283,7 +283,7 @@
       "score_bonus": 2,
 
       "bomb_spawn_rate": 1,
-      "bomb_timer": 50, 
+      "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
       "try_remove_rat": 0.5
@@ -331,7 +331,7 @@
       "score_bonus": 2,
 
       "bomb_spawn_rate": 1,
-      "bomb_timer": 50, 
+      "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
       "try_remove_rat": 0.5
@@ -377,7 +377,7 @@
       "score_bonus": 2,
 
       "bomb_spawn_rate": 1,
-      "bomb_timer": 50, 
+      "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
       "try_remove_rat": 0.5
@@ -420,7 +420,7 @@
       "score_bonus": 2,
 
       "bomb_spawn_rate": 1,
-      "bomb_timer": 50, 
+      "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
       "try_remove_rat": 0.5
@@ -466,7 +466,7 @@
       "score_bonus": 2,
 
       "bomb_spawn_rate": 1,
-      "bomb_timer": 50, 
+      "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
       "try_remove_rat": 0.5

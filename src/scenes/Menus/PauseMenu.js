@@ -152,6 +152,7 @@ export class PauseMenu extends Scene {
             this.scene.scene.stop("Game");
             this.scene.scene.start("MainMenu");
             document.getElementById('ui-bar').style.display = "none";
+            document.getElementById('rats-container').style.display = "none";
             this.isActive = false;
             // console.log('starting MainMenu');
         } else if (selectedButton.text === "Restart") {
