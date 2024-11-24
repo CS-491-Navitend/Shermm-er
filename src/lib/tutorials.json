@@ -1,7 +1,7 @@
 ﻿{
-  "mechanic": [
+  "tutorials": [
     {
-      "level": 1,
+      "levelNumber": 1,
       "levelMechanic": "Queue",
       "description": "We'll introduce the queue. If it overflows, it's game over!",
       "steps": [
@@ -12,7 +12,7 @@
       ]
     },
     {
-      "level": 2,
+      "levelNumber": 2,
       "levelMechanic": "Color Code",
       "description": "We'll introduce the color code. The right ticket needs to get to the right tech.",
       "steps": [
@@ -23,7 +23,7 @@
       ]
     },
     {
-      "level": 3,
+      "levelNumber": 3,
       "levelMechanic": "Gates",
       "description": "We'll introduce Gates. Sometimes a tech is out of office and you can't get a ticket to them.",
       "steps": [
@@ -34,7 +34,7 @@
       ]
     },
     {
-      "level": 4,
+      "levelNumber": 4,
       "levelMechanic": "Bomb Shermie",
       "description": "We'll introduce Bomb Shermie. Some tickets are time-critical – take care of them fast!",
       "steps": [
@@ -45,7 +45,7 @@
       ]
     },
     {
-      "level": 5,
+      "levelNumber": 5,
       "levelMechanic": "Toxic Shermie",
       "description": "We'll introduce Toxic Shermie. Some tickets need to be waited on and put back into the queue.",
       "steps": [
@@ -56,7 +56,7 @@
       ]
     },
     {
-      "level": 6,
+      "levelNumber": 6,
       "levelMechanic": "Powerup 1: Invulnerability",
       "description": "We'll introduce Powerup 1: Invulnerability. Some tickets are much simpler once you use the powerup!",
       "steps": [
@@ -67,7 +67,7 @@
       ]
     },
     {
-      "level": 7,
+      "levelNumber": 7,
       "levelMechanic": "Powerup 2",
       "description": "We'll introduce Powerup 2. This powerup is super helpful, and you'll need it!",
       "steps": [
