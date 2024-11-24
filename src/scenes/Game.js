@@ -376,22 +376,32 @@ export class Game extends Scene {
         //   this.physics.add.existing(killerShermie, true);
         //   filledGoals.add(killerShermie); // Add to filledGoals
         // }, 1);
-    this.physics.add.overlap(this.shermie, this.objectiveZone, (shermie, objective) => {
-      // Handle normal and bomb Shermie types
-      if (!this.physics.overlap(shermie, this.filledGoals) && (this.shermieType == "normal" || this.shermieType == "bomb")) {
-        this.goalCollision();
-      } 
-
-      // Handle colored Shermie types
-      else if (!this.physics.overlap(shermie,  this.filledGoals) && this.shermieType == "colored") {
-        if (objective.getData("color") == this.shermie.getData("color")) { // Bonus score for matching color
-          this.bonusFlag = true;
-        } else {
-          this.bonusFlag = false;
-        }
-        this.goalCollision();
-      }
-    }, null, this);
+        this.physics.add.overlap(this.shermie, this.objectiveZone, (shermie, objective) => {
+          // Access the blocker group via Timer
+          const blockers = this.timer.getBlockGroup();
+        
+          // Check if Shermie overlaps with a blocker
+          if (this.physics.overlap(shermie, blockers)) {
+            this.loseLife(); // Implement your lose life logic here
+            return; // Exit to prevent further processing
+          }
+        
+          // Handle normal and bomb Shermie types
+          if (!this.physics.overlap(shermie, this.filledGoals) && (this.shermieType == "normal" || this.shermieType == "bomb")) {
+            this.goalCollision();
+          } 
+        
+          // Handle colored Shermie types
+          else if (!this.physics.overlap(shermie, this.filledGoals) && this.shermieType == "colored") {
+            if (objective.getData("color") == this.shermie.getData("color")) {
+              this.bonusFlag = true;
+            } else {
+              this.bonusFlag = false;
+            }
+            this.goalCollision();
+          }
+        }, null, this);
+        
 
     this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
     this.physics.add.overlap(this.shermie, waterZone, () => {

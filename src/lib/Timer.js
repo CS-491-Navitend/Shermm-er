@@ -56,32 +56,32 @@ export class Timer {
 
     ///NEEDS WORK
 
-    if (this.timeRemaining % 2 === 0) { // Spawn a goal zone block every 2 seconds
-      this.block = this.game.physics.add.group();
-      const zones = this.game.objectiveZone.getChildren();
-      const currentBlocks = this.block.getChildren().length; // Count existing blocks
+    if (this.timeRemaining % 2 === 0) { 
+      if (!this.currentBlock) { 
+        this.block = this.game.physics.add.group();
+        const zones = this.game.objectiveZone.getChildren();
     
-      if (zones.length > 0 && currentBlocks < this.game.max_block) {
-        const eligibleZones = zones.filter(zone => !zone.getData("color"));
+        if (zones.length > 0) {
+          const eligibleZones = zones.filter(zone => !zone.getData("color"));
     
-        if (eligibleZones.length > 0) {
-          const randomZone = Phaser.Utils.Array.GetRandom(eligibleZones);
+          if (eligibleZones.length > 0) {
+            const randomZone = Phaser.Utils.Array.GetRandom(eligibleZones);
     
-          let block;
-          if (this.game.textures.exists('goalBlock')) {
-            block = this.block.create(randomZone.x, randomZone.y, 'goalBlock'); // Add to group
-          } else {
-            block = this.block.create(randomZone.x, randomZone.y, null).setFillStyle(0xff0000); // Add to group
-          }
-    
-          block.setDepth(10); // Ensure it appears above other objects
-    
-          // Remove the block after 5 seconds
-          this.game.time.delayedCall(5000, () => {
-            if (block) {
-              block.destroy(); // Remove from group
+            if (this.game.textures.exists('goalBlock')) {
+              this.currentBlock = this.block.create(randomZone.x, randomZone.y, 'goalBlock');
+            } else {
+              this.currentBlock = this.block.create(randomZone.x, randomZone.y, null).setFillStyle(0xff0000);
             }
-          });
+    
+            this.currentBlock.setDepth(10);
+
+            this.game.time.delayedCall(5000, () => {
+              if (this.currentBlock) {
+                this.currentBlock.destroy();
+                this.currentBlock = null;
+              }
+            });
+          }
         }
       }
     }
@@ -177,7 +177,10 @@ export class Timer {
         }
         this.bombTimerPaused = false;
     }
-   
+    
+    getBlockGroup() {
+      return this.block;
+    }
 }
 
 export default Timer;
