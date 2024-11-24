@@ -6,6 +6,7 @@ export class Timer {
     this.timerEvent = null;
     this.bombTimerEvent = null; // Bomb timer event
     this.bombTimerPaused = false; 
+    this.currentBlockCount = 0;
   }
 
   update() {
@@ -55,36 +56,30 @@ export class Timer {
     }
 
     ///NEEDS WORK
-
-    if (this.timeRemaining % 2 === 0) { 
-      if (!this.currentBlock) { 
+    if (this.timeRemaining % 2 === 0) {
+      if (this.currentBlockCount < this.game.max_block) {
         this.block = this.game.physics.add.group();
         const zones = this.game.objectiveZone.getChildren();
-    
         if (zones.length > 0) {
           const eligibleZones = zones.filter(zone => !zone.getData("color"));
-    
           if (eligibleZones.length > 0) {
             const randomZone = Phaser.Utils.Array.GetRandom(eligibleZones);
     
-            if (this.game.textures.exists('goalBlock')) {
-              this.currentBlock = this.block.create(randomZone.x, randomZone.y, 'goalBlock');
-            } else {
-              this.currentBlock = this.block.create(randomZone.x, randomZone.y, null).setFillStyle(0xff0000);
-            }
+            const newBlock = this.block.create(randomZone.x, randomZone.y, 'goalBlock');
+            newBlock.setDepth(10);
+            this.currentBlockCount++;
     
-            this.currentBlock.setDepth(10);
-
             this.game.time.delayedCall(5000, () => {
-              if (this.currentBlock) {
-                this.currentBlock.destroy();
-                this.currentBlock = null;
+              if (newBlock) {
+                newBlock.destroy();
+                this.currentBlockCount--;
               }
             });
           }
         }
       }
     }
+    
   }
 
   ///NEEDS WORK
