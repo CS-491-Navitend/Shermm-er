@@ -46,7 +46,7 @@ export class Credits extends Scene {
             
             "Frank Ableson",
             "Vin Nordfords",
-            "Julian",
+            "Julian Hame",
             "John Leanord",
             "And everyone else at Navitend!"
         ];

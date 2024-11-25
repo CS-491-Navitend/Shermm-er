@@ -193,7 +193,7 @@ export class MainMenu extends Scene {
         // console.log('selected Button', this.selectedButtonIndex);
         if (selectedButton === this.buttons[0]) {
             this.backgroundMusic.play();
-            this.scene.start("Game", { level: 1 });
+            this.scene.start("TutorialMenu", { level: 1 });
             //console.log("Starting level 1");
         } else if (selectedButton === this.buttons[1]) {
             this.scene.start("LevelMenu");
