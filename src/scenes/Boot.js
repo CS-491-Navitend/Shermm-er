@@ -27,9 +27,11 @@ import death1 from "/assets/death1.png";
 import death2 from "/assets/death2.png";
 import death3 from "/assets/death3.png";
 import death4 from "/assets/death4.png";
+
+//Import Powerup Assets
 import antidote from "/assets/PowerUps/Antidote.png";
 import invulnerability from "/assets/PowerUps/Invulnerability.png";
-import selfService from "/asserts/PowerUps/SelfService.png";
+import selfService from "/assets/PowerUps/SelfService.png";
 
 //Import Water assets
 import waterSafeZone from "/assets/WaterLevel/waterSafeZone.png";
