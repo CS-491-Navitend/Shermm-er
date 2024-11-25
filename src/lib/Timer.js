@@ -7,6 +7,7 @@ export class Timer {
     this.bombTimerEvent = null; // Bomb timer event
     this.bombTimerPaused = false; 
     this.currentBlockCount = 0;
+    this.block = null;
   }
 
   update() {
@@ -55,16 +56,20 @@ export class Timer {
 
     if (this.timeRemaining % 2 === 0) {
       if (this.currentBlockCount < this.game.max_block) {
-        this.block = this.game.physics.add.group();
+        if(!this.block)
+          this.block = this.game.physics.add.staticGroup();
         const zones = this.game.objectiveZone.getChildren();
         if (zones.length > 0) {
           const eligibleZones = zones.filter(zone => !zone.getData("color"));
           if (eligibleZones.length > 0) {
             const randomZone = Phaser.Utils.Array.GetRandom(eligibleZones);
     
-            const newBlock = this.block.create(randomZone.x, randomZone.y, 'goalBlock');
+            const newBlock = this.game.add.sprite(randomZone.x, randomZone.y, "goalBlock");
             newBlock.setDepth(10);
             this.currentBlockCount++;
+
+            this.game.physics.add.existing(newBlock, true);
+            this.block.add(newBlock);
     
             this.game.time.delayedCall(5000, () => {
               if (newBlock) {
