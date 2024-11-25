@@ -149,7 +149,6 @@ export class Game extends Scene {
         frameRate: 1,
         repeat: -1
     });
-
    
 
     // Capture user input for movement
@@ -441,7 +440,20 @@ export class Game extends Scene {
       repeat: 0, // no repeat
     });
 
-    //TODO: Create turtle sinking and raising animations
+    // Create the turtle animation sequence
+    this.anims.create({
+      key: "turtleSink",
+      frames: [{key: zoneType + "turtleSink1"}, {key: zoneType + "turtleSink2"}, {key: zoneType + "turtleSink3"}],
+      frameRate: 3,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "turtleRaise",
+      frames: [{key: zoneType + "turtleSink3"}, {key: zoneType + "turtleSink2"}, {key: zoneType + "turtleSink1"}],
+      frameRate: 3,
+      repeat: 0,
+    });
 
     const ratsPortal = this.add.rectangle(this.width, roadEnd - this.safeZoneSize / 2, imageWidth, this.safeZoneSize, 0xff0000);
     this.physics.add.existing(ratsPortal, true); 
@@ -669,8 +681,9 @@ export class Game extends Scene {
 
   sinkTurtles() {
     this.sinkingTurtles.getChildren().forEach((turtle) => {
+      turtle.anims.play("turtleSink");
       turtle.body.allowOverlap = false;
-      turtle.setVisible(false);
+      //turtle.setVisible(false);
       turtle.body.checkCollision.none = true;
     });
     this.turtlesAreSunk = true;
@@ -678,8 +691,9 @@ export class Game extends Scene {
 
   raiseTurtles() {
     this.sinkingTurtles.getChildren().forEach((turtle) => {
+      this.turtle.play("turtleRaise");
       turtle.body.allowOverlap = true;
-      turtle.setVisible(true);
+      //turtle.setVisible(true);
       turtle.body.checkCollision.none = false;
     });
     this.turtlesAreSunk = false;
