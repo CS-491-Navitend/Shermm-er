@@ -89,7 +89,7 @@ export class Game extends Scene {
     this.timerDuration = levels[data["level"]]["time"];
     this.timeRemaining = this.timerDuration;
     this.bombTimerUI = document.getElementById("bomb-timer");
-    this.bombTimerUI.style.display = "none";
+    this.bombTimerUI.style.visibility = "hidden";
 
     // Initialize various level-based properties
     this.lives = levels[data["level"]]["number_of_lives"];
@@ -591,10 +591,10 @@ export class Game extends Scene {
       
     // Only start the bomb timer if it's actually a bomb
       if (this.isBomb) {
-          this.bombTimerUI.style.display = "block";
+          this.bombTimerUI.style.visibility = "visible";
           this.timer.getBomb(this.shermie);  
       } else {
-          this.bombTimerUI.style.display = "none";
+          this.bombTimerUI.style.visibility = "hidden";
       }
   }
 

@@ -35,34 +35,66 @@ body {
 }
 
 #ui-bar {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 1000px;
-  height: 48px;
+  display: flex;                  
+  justify-content: space-between;  /* Distribute the elements evenly */
+  align-items: center;            
+  width: 100%;                  /* Fixed width of 1000px */
+  height: 48px;                   /* Fixed height of 48px */
   background-color: #000;
   color: #fff;
   font-family: Arial, sans-serif;
   font-size: 24px;
-  text-align: center;
+  padding: 0 10px;                /* Adjust padding to add space on the sides */
+  box-sizing: border-box;         /* Include padding and borders in the element's total width and height */
 }
+
+
+#score, #time, #bomb-timer-container, #lives-container {
+  flex: 0 1 auto; /* Keep the elements at their natural width */
+}
+
+#time {
+  flex: 1;                           /* Allow the time to take up the remaining space */
+  text-align: center;                /* Center the text within the time div */
+}
+
 .hidden {
   display: none;
 }
+
+
+#bomb-timer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 180px;  /* Width of the bomb timer container */
+  visibility: hidden;  /* Initially hidden */
+  margin-right: 10px;
+}
+
+#bomb-timer {
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  color: red;
+}
+
 #lives-container {
   display: flex;
-  gap: 5px;
-  width: 150px;
+  gap: 3px;
+  width: 150px;  /* You can adjust this width as needed */
   justify-content: flex-start;
   align-items: center;
 }
 
 .life-icon {
-  width: 50px;
-  height: 35px;
+  width: 45px;  /* Slightly smaller life icons */
+  height: 30px;  /* Slightly smaller life icons */
 }
 
 .hidden-life {
   visibility: hidden; 
 }
+
+
+
 

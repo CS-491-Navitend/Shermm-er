@@ -157,6 +157,7 @@ export class PauseMenu extends Scene {
         } else if (selectedButton.text === "Restart") {
             console.log("restarted");
             this.scene.scene.start("Game", { level: this.scene.level });
+            
         }
         setTimeout(() => {
             this.isDebounced = false;
