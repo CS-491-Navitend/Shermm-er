@@ -19,7 +19,7 @@ export class TutorialMenu extends Scene {
             return;
         }
 
-        // Extract the tutorial information 
+        
         const { levelNumber, levelMechanic, description, steps } = tutorial;
 
         this.yPosition = 50; // Reset position
