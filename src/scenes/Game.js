@@ -441,6 +441,8 @@ export class Game extends Scene {
       repeat: 0, // no repeat
     });
 
+    //TODO: Create turtle sinking and raising animations
+
     const ratsPortal = this.add.rectangle(this.width, roadEnd - this.safeZoneSize / 2, imageWidth, this.safeZoneSize, 0xff0000);
     this.physics.add.existing(ratsPortal, true); 
     this.physics.add.overlap(this.shermie, ratsPortal, () => {

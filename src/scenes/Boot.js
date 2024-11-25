@@ -220,10 +220,6 @@ export class Boot extends Scene {
     this.load.image("turtleLong", turtleLong);
     this.load.image("turtleShortForward", turtleShortForward);
     this.load.image("turtleLongForward", turtleLongForward);
-    this.load.image("turtleShortSink1", turtleShortSink1);
-    this.load.image("turtleLongSink1", turtleLongSink1);
-    this.load.image("turtleShortSink2", turtleShortSink2);
-    this.load.image("turtleLongSink2", turtleLongSink2);
     this.load.image("shermie", shermie);
     this.load.image("shermieRed", shermieRed);
     this.load.image("shermieBlue", shermieBlue);
@@ -251,6 +247,11 @@ export class Boot extends Scene {
     this.load.image("selfService", selfService);
 
     // turtleSink assets
+    this.load.image("turtleShortSink1", turtleShortSink1);
+    this.load.image("turtleLongSink1", turtleLongSink1);
+    this.load.image("turtleShortSink2", turtleShortSink2);
+    this.load.image("turtleLongSink2", turtleLongSink2);
+    
     this.load.image("iceTurtleSink1", iceTurtleSink1);
     this.load.image("iceTurtleSink2", iceTurtleSink2);
     this.load.image("iceTurtleSink3", iceTurtleSink3);
