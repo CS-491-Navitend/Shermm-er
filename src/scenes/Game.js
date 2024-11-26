@@ -133,7 +133,7 @@ export class Game extends Scene {
     this.anims.create({
         key: "burnFuse",
         frames: this.anims.generateFrameNumbers("shermieBomb", { start: 0, end: 3 }),
-        frameRate: 1,
+        frameRate: 10,
         repeat: -1
     });
 
