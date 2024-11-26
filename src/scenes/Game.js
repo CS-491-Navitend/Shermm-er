@@ -431,8 +431,26 @@ export class Game extends Scene {
             this.gameLogic.tryRemoveShermieSprite();
           } else if (powerUp_kind === 1) {
             // cleanse shermie
+            if (this.isBomb) {
+              console.log("Shermie is no longer a bomb.");
+              this.isBomb = false;
+            }
+
+            if (this.isToxic) {
+              console.log("Shermie is no longer toxic.");
+              this.isToxic = false;
+            }
+
+            this.shermieTexture = "shermie";
+            this.shermie.setTexture(this.shermieTexture);
+            this.shermie.setData("isToxic", false);
+            this.shermie.setData("isBomb", false);
+            
           } else if (powerUp_kind === 2) {
             // super shermie
+            // disable collisions with vehicles
+            console.log("Shermie is now invincible.");
+            this.isInvincible = true;
           }
 
           powerUp.destroy();
@@ -455,7 +473,7 @@ export class Game extends Scene {
       safeZone,
       () => {
         this.shermie.setVelocity(0, 0);
-        this.isInvincible = false;
+        // this.isInvincible = false; 
         this.isAnimating = false;
       },
       null,
