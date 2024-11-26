@@ -4,20 +4,19 @@ export class GameLogic {
   }
 
   goal() {
-    if (this.game.decrementFlag) {//Check to see if different color goal zone was hit
+    if (this.game.decrementFlag) {
+      //Check to see if different color goal zone was hit
       this.game.goalCount -= this.game.decrementScore;
-      if(this.game.goalCount < 0)
-        this.game.goalCount = 0;
+      if (this.game.goalCount < 0) this.game.goalCount = 0;
     } else {
       this.game.goalCount++;
     }
-    if(this.game.goalCount < this.game.getAdvanceNumber()) {
+    if (this.game.goalCount < this.game.getAdvanceNumber()) {
       this.resetPlayer();
-    }
-    else{
+    } else {
       this.win();
     }
-    
+
     this.tryRemoveShermieSprite();
   }
 
@@ -31,14 +30,14 @@ export class GameLogic {
     this.game.updateLives(); // Update UI after life decrement
 
     if (this.game.lives < 1) {
-        this.gameOver();
-        this.game.lives = 3;
+      this.gameOver();
+      this.game.lives = 3;
     }
     this.resetPlayer();
-}
+  }
 
   gameOver() {
-    this.game.goalCount=0;
+    this.game.goalCount = 0;
     this.game.playing = false;
     this.game.scene.start("GameOver", { game: this.game });
   }
@@ -55,10 +54,10 @@ export class GameLogic {
   tryAddShermieSprite() {
     // Check if there's room to add another sprite
     if (this.game.spritePlacementX < 0) {
-        this.gameOver();
-        return;
+      this.gameOver();
+      return;
     }
-    this.newShermie = this.game.add.sprite(this.game.spritePlacementX, this.game.boundarySpriteTexture.y, 'shermie');
+    this.newShermie = this.game.add.sprite(this.game.spritePlacementX, this.game.boundarySpriteTexture.y, "shermie");
     this.newShermie.setDisplaySize(this.game.shermie.width, this.game.shermie.height);
     this.game.spritePlacementX -= this.game.shermie.width; // Move position left for next sprite
   }
@@ -66,18 +65,18 @@ export class GameLogic {
   tryRemoveShermieSprite() {
     // Check if there are any sprites to remove
     if (this.shermieSprites != this.game.boundarySpriteTexture.x + this.game.boundarySpriteTexture.displayWidth / 2 - this.game.shermie.width) {
-        if (this.newShermie) {
-            this.newShermie.destroy(); 
-            if( this.game.spritePlacementX < this.game.boundarySpriteTexture.x + this.game.boundarySpriteTexture.displayWidth / 2 - this.game.shermie.width){
-              this.game.spritePlacementX += this.game.shermie.width;
-            }
-        } 
+      if (this.newShermie) {
+        this.newShermie.destroy();
+        if (this.game.spritePlacementX < this.game.boundarySpriteTexture.x + this.game.boundarySpriteTexture.displayWidth / 2 - this.game.shermie.width) {
+          this.game.spritePlacementX += this.game.shermie.width;
+        }
+      }
     } else {
-        return;
+      return;
     }
-}
+  }
 
-  nextLevel(){
+  nextLevel() {
     this.game.goalCount = 0;
     this.game.level += 1;
     if (this.game.level < this.game.getNumberOfLevels()) {
@@ -86,7 +85,58 @@ export class GameLogic {
       this.game.scene.start("Credits");
     }
   }
-}
 
+  spawnPowerUp(power) {
+    const roadWidth = this.game.moveDistance;
+    const roadStart = this.game.height - this.game.safeZoneSize;
+    const roadEnd = roadStart - this.game.numberOfRoads * roadWidth;
+
+    const powerUpSpots = [
+      // [x, y]
+      [100, roadEnd + roadWidth / 2 + roadWidth * 2],
+      [400, roadEnd + roadWidth / 2 + roadWidth * 3],
+      [700, roadEnd + roadWidth / 2 + roadWidth * 4],
+      [400, roadEnd + roadWidth / 2 + roadWidth * 1],
+      [100, roadEnd + roadWidth / 2 + roadWidth * 2],
+      [200, roadEnd + roadWidth / 2 + roadWidth * 0],
+      [600, roadEnd + roadWidth / 2 + roadWidth * 3],
+      [700, roadEnd + roadWidth / 2 + roadWidth * 1],
+      [500, roadEnd + roadWidth / 2 + roadWidth * 2],
+      [300, roadEnd + roadWidth / 2 + roadWidth * 0],
+      [800, roadEnd + roadWidth / 2 + roadWidth * 3],
+      [900, roadEnd + roadWidth / 2 + roadWidth * 1],
+      [700, roadEnd + roadWidth / 2 + roadWidth * 2],
+      [500, roadEnd + roadWidth / 2 + roadWidth * 0],
+      [100, roadEnd + roadWidth / 2 + roadWidth * 3],
+      [200, roadEnd + roadWidth / 2 + roadWidth * 0],
+      [300, roadEnd + roadWidth / 2 + roadWidth * 2],
+      [400, roadEnd + roadWidth / 2 + roadWidth * 4],
+    ];
+
+    let color;
+
+    // DETERMINE TEXTURES HERE
+    switch (power) {
+      case 0: // self service
+        color = 0xff0000; // red
+        break;
+      case 1: // cleanse
+        color = 0x00ff00; // green
+        break;
+      case 2: // super shermie
+        color = 0x0000ff; // blue
+        break;
+    }
+
+    // pick a random spot
+    let spot = powerUpSpots[Math.floor(Math.random() * powerUpSpots.length)];
+
+    // place a colored circle in the middle of the screen
+    let x = spot[0];
+    let y = spot[1];
+    let radius = 20;
+    return [x, y, radius, color, power];
+  }
+}
 
 export default GameLogic;

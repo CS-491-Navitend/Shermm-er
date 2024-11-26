@@ -34,7 +34,7 @@ export class Game extends Scene {
     this.goalCount = 0;
     this.numOfGoals = 4;
     this.savedVelocity = 0;
-    this.shermieIndex = 0;//Currently used shermie color
+    this.shermieIndex = 0; //Currently used shermie color
 
     // road values
     this.numberOfRoads = 5;
@@ -78,7 +78,6 @@ export class Game extends Scene {
 
     //advanced feature variables
     this.queueChance = 0;
-
   }
 
   create(data) {
@@ -109,7 +108,16 @@ export class Game extends Scene {
     this.turtleTextureForward = levels[data["level"]]["turtles_Forward_texture"];
     this.turtleSpacing = levels[data["level"]]["turtle_spacing"];
 
-    //advanced feature variables. 
+    // Power ups
+    this.selfService = levels[data["level"]]["powerups"][0] === 1 ? true : false;
+    this.cleanseShermie = levels[data["level"]]["powerups"][1] === 1 ? true : false;
+    this.superShermie = levels[data["level"]]["powerups"][2] === 1 ? true : false;
+
+    console.log("Self Service: ", this.selfService);
+    console.log("Cleanse Shermie: ", this.cleanseShermie);
+    console.log("Super Shermie: ", this.superShermie);
+
+    //advanced feature variables.
     this.queueChance = levels[data["level"]]["queue_chance"];
     this.advanceNumber = levels[data["level"]]["advance_number"];
     this.decrementScore = levels[data["level"]]["score_decrease"];
@@ -124,22 +132,21 @@ export class Game extends Scene {
 
     //calls the getColor method for random colors assginment
     this.colorArray = this.getColors();
-    this.shermieColor = this.colorArray[this.shermieIndex][0];//Shermie Comparison Code
-    this.shermieTexture = this.colorArray[this.shermieIndex][1];//Shermie sprite color
+    this.shermieColor = this.colorArray[this.shermieIndex][0]; //Shermie Comparison Code
+    this.shermieTexture = this.colorArray[this.shermieIndex][1]; //Shermie sprite color
 
     //Loop the animation frame for bomb shermie
     this.anims.create({
-        key: "burnFuse",
-        frames: this.anims.generateFrameNumbers("shermieBomb", { start: 0, end: 3 }),
-        frameRate: 1,
-        repeat: -1
+      key: "burnFuse",
+      frames: this.anims.generateFrameNumbers("shermieBomb", { start: 0, end: 3 }),
+      frameRate: 1,
+      repeat: -1,
     });
-
 
     /*Bomb shermie and Color coded shermie
     Applying texture for shermie */
-    this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, this.shermieTexture);//Set Shermie sprite color according to function
-    this.shermie.setData("color", this.shermieColor);//Set shermie color comparison code
+    this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, this.shermieTexture); //Set Shermie sprite color according to function
+    this.shermie.setData("color", this.shermieColor); //Set shermie color comparison code
     this.shermie.setData("isBomb", this.isBomb); //Set shermie as a bomb
     //END OF APPLYING
 
@@ -231,7 +238,7 @@ export class Game extends Scene {
           .image(x, laneWidth / 2, objectiveTexture)
           .setDisplaySize(imageWidth, imageHeight)
           .setDepth(0);
-        objective.setData("color", this.colorArray[goalIndex][0]);//Set color for later comparison with shermie
+        objective.setData("color", this.colorArray[goalIndex][0]); //Set color for later comparison with shermie
         objective.setTint(objective.tint * 0.2 + this.colorArray[goalIndex][2] * 0.8);
         this.physics.add.existing(objective, true);
         objectiveZone.add(objective);
@@ -240,7 +247,7 @@ export class Game extends Scene {
         goalIndex++;
       }
     } else {
-      // Use maroon rectangles if the texture does not exist      
+      // Use maroon rectangles if the texture does not exist
       // if(this.advanceNumber > 0){
       //   this.advanceNumber = 0;
       // }
@@ -289,16 +296,20 @@ export class Game extends Scene {
     // END SAFE ZONE LOGIC
 
     //SHERMIE QUEUE LOGIC
-    
+
     let boundarySpriteTexture;
-    if (this.textures.exists('pasture')) {
-      for (let j = 0; j < (this.width / 2 - this.safeZoneSize / 2); j += imageWidth) {
-        const isLast = j + imageWidth >= (this.width / 2 - this.safeZoneSize / 2); 
-        this.boundarySpriteTexture = this.add.sprite(j + (imageWidth / 20),this.height - this.safeZoneSize / 2,isLast ? 'pasture_end' : 'pasture').setDepth(0);
-    }
+    if (this.textures.exists("pasture")) {
+      for (let j = 0; j < this.width / 2 - this.safeZoneSize / 2; j += imageWidth) {
+        const isLast = j + imageWidth >= this.width / 2 - this.safeZoneSize / 2;
+        this.boundarySpriteTexture = this.add.sprite(j + imageWidth / 20, this.height - this.safeZoneSize / 2, isLast ? "pasture_end" : "pasture").setDepth(0);
+      }
     } else {
-        // pasture fallback
-        this.boundarySpriteTexture = this.add.rectangle(this.width / 4 - this.safeZoneSize / 2, this.height - this.safeZoneSize / 2, this.width / 2 - this.safeZoneSize / 2, this.safeZoneSize, 0x00ff00).setStrokeStyle(5, 0x00ff00).setFillStyle(0x00000,0).setDepth(1);
+      // pasture fallback
+      this.boundarySpriteTexture = this.add
+        .rectangle(this.width / 4 - this.safeZoneSize / 2, this.height - this.safeZoneSize / 2, this.width / 2 - this.safeZoneSize / 2, this.safeZoneSize, 0x00ff00)
+        .setStrokeStyle(5, 0x00ff00)
+        .setFillStyle(0x00000, 0)
+        .setDepth(1);
     }
     this.physics.add.existing(this.boundarySpriteTexture, true);
     this.spritePlacementX = this.boundarySpriteTexture.x + this.boundarySpriteTexture.displayWidth / 2 - this.shermie.width;
@@ -346,6 +357,69 @@ export class Game extends Scene {
     }
     // END ROAD ZONE LOGIC
 
+    // POWER UP LOGIC
+    let powerUpChance = 0;
+    let { powerUp_x, powerUp_y, powerUp_r, powerUp_c, powerUp_kind, powerUpInfo, powerUp } = {};
+    let powerUpTimer = setInterval(() => {
+      powerUpChance = Math.random().toFixed(2) * 100;
+
+      if (powerUpChance > 50 && this.selfService) {
+        powerUpInfo = this.gameLogic.spawnPowerUp(0);
+      } else if (powerUpChance > 35 && powerUpChance <= 50 && this.cleanseShermie) {
+        powerUpInfo = this.gameLogic.spawnPowerUp(1);
+      } else if (powerUpChance <= 35 && this.superShermie) {
+        powerUpInfo = this.gameLogic.spawnPowerUp(2);
+      } else {
+        console.log("Not spawning a power up.");
+      }
+
+      if (!powerUpInfo) {
+        return;
+      }
+
+      // destroy previous powerUp
+      if (powerUp) {
+        powerUp.destroy();
+      }
+
+      powerUp_x = powerUpInfo[0];
+      powerUp_y = powerUpInfo[1];
+      powerUp_r = powerUpInfo[2];
+      powerUp_c = powerUpInfo[3];
+      powerUp_kind = powerUpInfo[4];
+
+      powerUp = this.add.circle(powerUp_x, powerUp_y, powerUp_r, powerUp_c);
+
+      // add collision to the circle powerUp and shermie
+      this.physics.add.existing(powerUp, true);
+      this.physics.add.overlap(
+        this.shermie,
+        powerUp,
+        () => {
+          console.log("Collision detected between shermie and power up.");
+          if (powerUp_kind === 0) {
+            // self service
+            this.gameLogic.tryRemoveShermieSprite();
+          } else if (powerUp_kind === 1) {
+            // cleanse shermie
+          } else if (powerUp_kind === 2) {
+            // super shermie
+          }
+
+          powerUp.destroy();
+        },
+        null,
+        this
+      );
+
+      // for development
+      console.log("Stopping power up timer.");
+      clearInterval(powerUpTimer);
+
+    }, 0);
+
+    // END POWER UP LOGIC
+
     // Overlap detection for safe zone
     this.physics.add.overlap(
       this.shermie,
@@ -364,7 +438,6 @@ export class Game extends Scene {
     this.logs = this.physics.add.group();
     this.turtles = this.physics.add.group();
     this.sinkingTurtles = this.physics.add.group();
-    
 
     // Spawn environmental objects based on configuration
     createVehicles(this, roadStart, roadWidth, this.cars, this.carsForward, this.carSpacing);
@@ -400,12 +473,19 @@ export class Game extends Scene {
     }, null, this);
 
     this.physics.add.overlap(this.shermie, filledGoals, this.loseLife, null, this);
-    this.physics.add.overlap(this.shermie, endZone,() => {this.shermie.setVelocity(0,0);
+    this.physics.add.overlap(
+      this.shermie,
+      endZone,
+      () => {
+        this.shermie.setVelocity(0, 0);
 
-    if (!this.physics.overlap(this.shermie, objectiveZone)) {
-      this.loseLife();
-    }
-    }, null, this);
+        if (!this.physics.overlap(this.shermie, objectiveZone)) {
+          this.loseLife();
+        }
+      },
+      null,
+      this
+    );
 
     this.physics.add.overlap(this.shermie, this.logs, this.rideLog, null, this);
     this.physics.add.overlap(this.shermie, this.turtles, this.rideTurtle, null, this);
@@ -454,17 +534,17 @@ export class Game extends Scene {
       this.canMove = true;
     }
 
-    if(this.shermie.y >= this.height - this.moveDistance){
+    if (this.shermie.y >= this.height - this.moveDistance) {
       this.shermie.x = Phaser.Math.Clamp(this.shermie.x, this.width / 2 - this.moveDistance / 4, this.width - this.moveDistance / 2);
-    }else{
-      this.shermie.x = Phaser.Math.Clamp(this.shermie.x, this.moveDistance / 2 , this.width - this.moveDistance / 2);
+    } else {
+      this.shermie.x = Phaser.Math.Clamp(this.shermie.x, this.moveDistance / 2, this.width - this.moveDistance / 2);
     }
-    
-    //this logic still alows the user to press down when above, allowing them to basically teleport to the front of the pasture, but I think this is fine, because it's less limiting to the game space. 
+
+    //this logic still alows the user to press down when above, allowing them to basically teleport to the front of the pasture, but I think this is fine, because it's less limiting to the game space.
     if (this.shermie.x < this.width / 2 - this.moveDistance / 2) {
       this.shermie.y = Phaser.Math.Clamp(this.shermie.y, 0, this.height - this.safeZoneSize - this.shermie.height);
     } else {
-        this.shermie.y = Phaser.Math.Clamp(this.shermie.y, 0, this.height - this.moveDistance + this.moveDistance / 2);
+      this.shermie.y = Phaser.Math.Clamp(this.shermie.y, 0, this.height - this.moveDistance + this.moveDistance / 2);
     }
 
     this.vehicles.getChildren().forEach((vehicle) => {
@@ -491,23 +571,23 @@ export class Game extends Scene {
       const isOffScreenLeft = turtle.x < -turtle.width / 2;
       const isOffScreenRight = turtle.x > this.width + turtle.width / 2;
 
-      if(isOffScreenLeft){
+      if (isOffScreenLeft) {
         turtle.x = this.width + turtle.width / 2;
-      }else if(isOffScreenRight){
+      } else if (isOffScreenRight) {
         turtle.x = -turtle.width / 2;
       }
-    })
+    });
 
     this.sinkingTurtles.getChildren().forEach((turtle) => {
       const isOffScreenLeft = turtle.x < -turtle.width / 2;
       const isOffScreenRight = turtle.x > this.width + turtle.width / 2;
 
-      if(isOffScreenLeft){
+      if (isOffScreenLeft) {
         turtle.x = this.width + turtle.width / 2;
-      }else if(isOffScreenRight){ 
+      } else if (isOffScreenRight) {
         turtle.x = -turtle.width / 2;
       }
-    })
+    });
   }
 
   spawnVehicle(x, y, texture, speed) {
@@ -528,8 +608,8 @@ export class Game extends Scene {
     return log;
   }
 
-  spawnTurtle(x, y, texture, speed, canSink){
-    if(canSink){
+  spawnTurtle(x, y, texture, speed, canSink) {
+    if (canSink) {
       let turtle = this.turtles.create(x, y, texture);
       turtle.body.setVelocityX(speed);
       turtle.body.allowGravity = false;
@@ -537,11 +617,10 @@ export class Game extends Scene {
       turtle.body.setSize(turtle.width, 50);
       turtle.setDepth(-1);
       return turtle;
-    }
-    else{
+    } else {
       let turtle = this.sinkingTurtles.create(x, y, texture);
       turtle.body.setVelocityX(speed);
-      turtle.body.allowGravity = false; 
+      turtle.body.allowGravity = false;
       turtle.immovable = true;
       turtle.body.setSize(turtle.width, 50);
       turtle.setDepth(-1);
@@ -565,31 +644,30 @@ export class Game extends Scene {
 
   goalCollision() {
     this.gameLogic.goal();
-    if(this.shermieIndex == this.advanceNumber)
-      this.shermieIndex = 0;
-    else
-      this.shermieIndex++;
+    if (this.shermieIndex == this.advanceNumber) this.shermieIndex = 0;
+    else this.shermieIndex++;
 
     this.shermieTexture = this.colorArray[this.shermieIndex][1];
     this.shermie.setTexture(this.shermieTexture);
     this.shermie.setData("color", this.colorArray[this.shermieIndex][0]);
 
-   // Bomb logic
+    // Bomb logic
     const randomChance = Math.random();
 
     // Reset bomb flag
     this.isBomb = false;
 
     // Determine if the Shermie should be a bomb
-    if (randomChance < this.bombSpawnRate) { // Pulled the spawn rate from the JSON file
-        this.isBomb = true;
-        this.shermieTexture = "shermieBomb";  // Update the next Shermie to be a bomb
-        this.shermie.setTexture(this.shermieTexture);  // Update the texture for Shermie
-    } 
+    if (randomChance < this.bombSpawnRate) {
+      // Pulled the spawn rate from the JSON file
+      this.isBomb = true;
+      this.shermieTexture = "shermieBomb"; // Update the next Shermie to be a bomb
+      this.shermie.setTexture(this.shermieTexture); // Update the texture for Shermie
+    }
 
     // Only start the bomb timer if it's actually a bomb
     if (this.isBomb) {
-        this.getBomb(this.shermie);  
+      this.getBomb(this.shermie);
     }
   }
 
@@ -603,8 +681,8 @@ export class Game extends Scene {
     }
   }
 
-  rideTurtle(shermie, turtle){
-    if(!this.inWater){
+  rideTurtle(shermie, turtle) {
+    if (!this.inWater) {
       shermie.setVelocityX(turtle.body.velocity.x);
     }
   }
@@ -617,8 +695,8 @@ export class Game extends Scene {
     });
     this.turtlesAreSunk = true;
   }
-  
-  raiseTurtles(){
+
+  raiseTurtles() {
     this.sinkingTurtles.getChildren().forEach((turtle) => {
       turtle.body.allowOverlap = true;
       turtle.setVisible(true);
@@ -660,7 +738,7 @@ export class Game extends Scene {
     }
   }
 
-  getColors(){
+  getColors() {
     //FIXME - Return a datastructure that has an equal number of entries to the number of goals
     // The structure will contain color comparison codes, shermie colors, and goal zone tints.
     // Will be called once at game generation, guarantees that shermie textures correspond directly with goal zone colors.
@@ -676,65 +754,61 @@ export class Game extends Scene {
     const colors = [redColor, blueColor, greenColor, yellowColor, orangeColor, purpleColor];
     const shermies = [redShermie, blueShermie, greenShermie, yellowShermie, orangeShermie, purpleShermie];
     const tints = [redTint, blueTint, greenTint, yellowTint, orangeTint, purpleTint];
-    
+
     let colorProperties = Array(this.numOfGoals);
 
-    for(let i = 0; i < this.numOfGoals; i++){
-       const index = Math.floor(Math.random() * colors.length);
-       colorProperties[i] = [colors[index], shermies[index], tints[index]];
+    for (let i = 0; i < this.numOfGoals; i++) {
+      const index = Math.floor(Math.random() * colors.length);
+      colorProperties[i] = [colors[index], shermies[index], tints[index]];
     }
 
     return colorProperties;
   }
   //Timer for bomb shermie
-    getBomb(shermie) {
-       
-        // If it's a bomb, reset the timer and event
-        if (this.isBomb) {
+  getBomb(shermie) {
+    // If it's a bomb, reset the timer and event
+    if (this.isBomb) {
+      // Ensure that the timer value is reset to the initial value for each new bomb
+      shermie.setData("timer", this.bombTimer);
 
-            // Ensure that the timer value is reset to the initial value for each new bomb
-            shermie.setData("timer", this.bombTimer);
+      // remove any old timer event if it exists
+      if (this.bombTimerEvent) {
+        this.bombTimerEvent.remove(); // Remove the previous event
+        this.bombTimerEvent = null; // Clear the reference to the event
+      }
 
-            // remove any old timer event if it exists
-            if (this.bombTimerEvent) {
-                this.bombTimerEvent.remove();  // Remove the previous event
-                this.bombTimerEvent = null;    // Clear the reference to the event
-            }
+      //clear the old bomb timer text
+      if (this.bombTimerText) {
+        this.bombTimerText.setText(""); // Clear the text
+      }
 
-            //clear the old bomb timer text
-            if (this.bombTimerText) {
-                this.bombTimerText.setText(""); // Clear the text
-            }
+      // Create the bomb timer text again
 
-            // Create the bomb timer text again
+      if (!this.bombTimerText) {
+        this.bombTimerText = this.add.text(10, 10, `Bomb Timer: ${this.bombTimer / 1000}`, {
+          fontSize: "32px",
+          fill: "#fff",
+          backgroundColor: 0x000000,
+        });
+      }
 
-          
-            if (!this.bombTimerText) {
-                this.bombTimerText = this.add.text(10, 10, `Bomb Timer: ${this.bombTimer / 1000}`, {
-                    fontSize: '32px',
-                    fill: '#fff',
-                    backgroundColor: 0x000000
-                });
-            }
+      // Create the new bomb timer event
+      this.bombTimerEvent = this.time.addEvent({
+        delay: 1000, // Update every 1 second
+        callback: () => {
+          const remainingTime = Math.max(0, shermie.getData("timer") - 1000); // Decrease by 1 second
+          shermie.setData("timer", remainingTime);
 
-            // Create the new bomb timer event
-            this.bombTimerEvent = this.time.addEvent({
-                delay: 1000, // Update every 1 second
-                callback: () => {
-                    const remainingTime = Math.max(0, shermie.getData("timer") - 1000); // Decrease by 1 second
-                    shermie.setData("timer", remainingTime);
+          // Update the text to show the remaining time
+          this.bombTimerText.setText(`Bomb Timer: ${remainingTime / 1000}`);
 
-                    // Update the text to show the remaining time
-                    this.bombTimerText.setText(`Bomb Timer: ${remainingTime / 1000}`);
-
-                    // Check if the bomb has exploded
-                    if (remainingTime <= 0) {
-                        this.gameLogic.gameOver();
-                        
-                    }
-                },
-                loop: true // Repeat this event every second
-            });
-        }
+          // Check if the bomb has exploded
+          if (remainingTime <= 0) {
+            this.gameLogic.gameOver();
+          }
+        },
+        loop: true, // Repeat this event every second
+      });
     }
+  }
 }
