@@ -4,19 +4,25 @@ export class GameLogic {
   }
 
   goal() {
-    if (this.game.decrementFlag) {
-      //Check to see if different color goal zone was hit
-      this.game.goalCount -= this.game.decrementScore;
-      if (this.game.goalCount < 0) this.game.goalCount = 0;
-    } else {
-      this.game.goalCount++;
+
+    if(!this.game.isToxic){
+      if (this.game.bonusFlag && !this.game.isToxic) {//Check to see if different color goal zone was hit
+        this.game.goalCount += 1 + this.game.bonusScore;
+      } else {
+        this.game.goalCount++;
+      }
+    }else{
+      if(this.game.goalCount > 0){
+        this.game.goalCount--;
+      }else{
+        this.game.goalCount = 0;
+      }
     }
-    if (this.game.goalCount < this.game.getAdvanceNumber()) {
+    if(this.game.goalCount < this.game.advanceNumber) {
       this.resetPlayer();
     } else {
       this.win();
     }
-
     this.tryRemoveShermieSprite();
   }
 
@@ -29,6 +35,7 @@ export class GameLogic {
     this.game.lives--;
     this.game.updateLives(); // Update UI after life decrement
 
+    this.game.resetCount++;
     if (this.game.lives < 1) {
       this.gameOver();
       this.game.lives = 3;
@@ -40,13 +47,13 @@ export class GameLogic {
     this.game.goalCount = 0;
     this.game.playing = false;
     this.game.scene.start("GameOver", { game: this.game });
+    
   }
 
   resetPlayer() {
     this.isInvincible = false;
     this.isAnimating = false;
     this.game.shermie.setVelocity(0, 0);
-    this.game.resetCount++;
     this.game.shermie.x = this.game.width / 2;
     this.game.shermie.y = this.game.height - this.game.safeZoneSize + this.game.moveDistance / 2;
   }
@@ -80,7 +87,8 @@ export class GameLogic {
     this.game.goalCount = 0;
     this.game.level += 1;
     if (this.game.level < this.game.getNumberOfLevels()) {
-      this.game.scene.start("Game", { level: this.game.level });
+      this.game.scene.start("TutorialMenu", {level: this.game.level})
+      //this.game.scene.start("Game", { level: this.game.level });
     } else {
       this.game.scene.start("Credits");
     }
@@ -137,6 +145,15 @@ export class GameLogic {
     let radius = 20;
     return [x, y, radius, color, power];
   }
+  tryRemoveRat() {
+    const ratsContainer = document.getElementById('rats-container');
+    if (ratsContainer && ratsContainer.children.length > 0) {
+      ratsContainer.removeChild(ratsContainer.children[0]);
+      this.tryAddShermieSprite();
+    } else {
+    }
+  }
+  
 }
 
 export default GameLogic;

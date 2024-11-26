@@ -1,5 +1,7 @@
-export class Stats{
+import { Scene } from "phaser";
+export class Stats extends Scene{
     constructor() {
+        super("Stats");
         this.isBackButtonHighlighted = false;
     }
 

@@ -1,7 +1,4 @@
-
 import { Scene } from "phaser";
-
-
 
 // Import car assets (backward and forward)
 import car1 from "/assets/vehiclesBackward/car1.png";
@@ -23,12 +20,18 @@ import shermieYellow from "/assets/shermieYellow.png";
 import shermieOrange from "/assets/shermieOrange.png";
 import shermiePurple from "/assets/shermiePurple.png";
 import shermieBomb from "/assets/shermieBombSheet.png";
+import shermieToxic from "/assets/shermieToxic.png";
 
 import life from "/assets/heart.png";
 import death1 from "/assets/death1.png";
 import death2 from "/assets/death2.png";
 import death3 from "/assets/death3.png";
 import death4 from "/assets/death4.png";
+
+//Import Powerup Assets
+import antidote from "/assets/PowerUps/Antidote.png";
+import invulnerability from "/assets/PowerUps/Invulnerability.png";
+import selfService from "/assets/PowerUps/SelfService.png";
 
 //Import Water assets
 import waterSafeZone from "/assets/WaterLevel/waterSafeZone.png";
@@ -59,6 +62,9 @@ import iceberg from "/assets/IceLevel/iceberg.png";
 import iceCar1 from "/assets/IceLevel/iceCar1.png";
 import iceTractor from "/assets/IceLevel/iceTruck.png";
 import iceTurtle from "/assets/IceLevel/iceTurtle.png";
+import iceTurtleSink1 from "/assets/IceLevel/turtleSink1.png";
+import iceTurtleSink2 from "/assets/IceLevel/turtleSink2.png";
+import iceTurtleSink3 from "/assets/IceLevel/turtleSink3.png";
 
 // Import Lava assets
 import lavaSafeZone from "/assets/LavaLevel/LavaSafeZone.png";
@@ -72,6 +78,9 @@ import LavaTractor from "/assets/LavaLevel/LavaTruck.png";
 import LavaCar1 from "/assets/LavaLevel/LavaCar.png";
 import LavaCar2 from "/assets/LavaLevel/LavaCar2.png";
 import lavaTurtle from "/assets/LavaLevel/lavaTurtle.png";
+import lavaTurtleSink1 from "/assets/LavaLevel/turtleSink1.png";
+import lavaTurtleSink2 from "/assets/LavaLevel/turtleSink2.png";
+import lavaTurtleSink3 from "/assets/LavaLevel/turtleSink3.png";
 
 // Import Sky Assets4
 import skySafeZone from "/assets/SkyLevel/skySafeZone.png";
@@ -87,12 +96,13 @@ import blimp from "/assets/SkyLevel/blimp.png";
 import blimpForward from "/assets/SkyLevel/blimpForward.png";
 import cloudsLong from "/assets/SkyLevel/cloudsLong.png";
 import cloudsShort from "/assets/SkyLevel/cloudsShort.png";
-
+import skyTurtleSink1 from "/assets/SkyLevel/turtleSink1.png";
+import skyTurtleSink2 from "/assets/SkyLevel/turtleSink2.png";
+import skyTurtleSink3 from "/assets/SkyLevel/turtleSink3.png";
 
 //Import UI and Background
 import backgroundMain from "/assets/UI/ShermMainMenu.png";
 import buttonImage from "/assets/UI/Button.png";
-
 
 //import batman assets
 import batman from "/assets/BatmanLevel/batman.png";
@@ -106,6 +116,9 @@ import batmobileForward from "/assets/BatmanLevel/batmobileForward.png";
 import bap from "/assets/BatmanLevel/bap.png";
 import fwip from "/assets/BatmanLevel/fwip.png";
 import joker from "/assets/BatmanLevel/joker.png";
+import batmanTurtleSink1 from "/assets/BatmanLevel/turtleSink1.png";
+import batmanTurtleSink2 from "/assets/BatmanLevel/turtleSink2.png";
+import batmanTurtleSink3 from "/assets/BatmanLevel/turtleSink3.png";
 
 //import desert assets
 import desert from "/assets/desertLevel/desert.png";
@@ -119,7 +132,9 @@ import desertObjective from "/assets/desertLevel/desertObjective.png";
 import desertTurtle from "/assets/desertLevel/desertTurtle.png";
 import desertLog from "/assets/desertLevel/desertLog.png";
 import desertLog2 from "/assets/desertLevel/desertLog2.png";
-
+import desertTurtleSink1 from "/assets/desertLevel/turtleSink1.png";
+import desertTurtleSink2 from "/assets/desertLevel/turtleSink2.png";
+import desertTurtleSink3 from "/assets/desertLevel/turtleSink3.png";
 
 //swamp assets
 import swamp from "/assets/SwampLevel/swamp.png";
@@ -128,11 +143,14 @@ import swampGoal from "/assets/SwampLevel/swampGoal.png";
 import swampObjective from "/assets/SwampLevel/swampObjective.png";
 import swampRoad from "/assets/SwampLevel/swampRoad.png";
 import swampLog from "/assets/SwampLevel/swampLog.png";
-import swampTurtle from "/assets/SwampLevel/swampTurtle.png";
 import swampBuggy2 from "/assets/SwampLevel/swampBuggy2.png";
 import swampATV from "/assets/SwampLevel/swampATV.png";
 import swampBuggy2Forward from "/assets/SwampLevel/swampBuggy2Forward.png";
 import swampATVForward from "/assets/SwampLevel/swampATVForward.png";
+import swampTurtle from "/assets/SwampLevel/swampTurtle.png";
+import swampTurtleSink1 from "/assets/SwampLevel/turtleSink1.png";
+import swampTurtleSink2 from "/assets/SwampLevel/turtleSink2.png";
+import swampTurtleSink3 from "/assets/SwampLevel/turtleSink3.png";
 
 //import outerspace assets
 import outerSpace from "/assets/OuterSpaceLevel/outerSpace.png";
@@ -146,7 +164,9 @@ import outerSpaceCar1b from "/assets/OuterSpaceLevel/outerSpaceCar1b.png";
 import outerSpaceCar2 from "/assets/OuterSpaceLevel/outerSpaceCar2.png";
 import outerSpaceCar2b from "/assets/OuterSpaceLevel/outerSpaceCar2b.png";
 import comet from "/assets/OuterSpaceLevel/comet.png";
-
+import outerSpaceTurtleSink1 from "/assets/OuterSpaceLevel/turtleSink1.png";
+import outerSpaceTurtleSink2 from "/assets/OuterSpaceLevel/turtleSink2.png";
+import outerSpaceTurtleSink3 from "/assets/OuterSpaceLevel/turtleSink3.png";
 
 //cake assets
 import cake from "/assets/CakeLevel/Cake.png";
@@ -154,16 +174,22 @@ import cakeSafeZone from "/assets/CakeLevel/ShortcakeSafeZone.png";
 import cakeRoad from "/assets/CakeLevel/CakeRoad.png";
 import cakeGoal from "/assets/CakeLevel/CakeGoal.png";
 import cakeObjective from "/assets/CakeLevel/CakeObjective.png";
-import cakeCherry from "/assets/CakeLevel/cherry.png"
 import cakeCar1 from "/assets/CakeLevel/cakeCar1.png";
 import cakeCar2 from "/assets/CakeLevel/cakeCar2.png";
 import banana from "/assets/CakeLevel/banana.png";
+import cakeCherry from "/assets/CakeLevel/cherry.png"
+import cakeTurtleSink1 from "/assets/CakeLevel/turtleSink1.png";
+import cakeTurtleSink2 from "/assets/CakeLevel/turtleSink2.png";
+import cakeTurtleSink3 from "/assets/CakeLevel/turtleSink3.png";
 
 //sound assets
 import hop from "/assets/audio/hop.wav"
 import squash from "/assets/audio/squash.wav"
 import plunk from "/assets/audio/plunk.wav"
 import backgroundMusic from "/assets/audio/backgroundMusic.mp3"
+
+//goal zone block
+import goalBlock from "/assets/GoalZoneBlock.png";
 
 //advanced assets
 import pasture from "/assets/pasture.png"
@@ -205,6 +231,7 @@ export class Boot extends Scene {
     this.load.image("shermieGreen", shermieGreen);
     this.load.image("shermieOrange", shermieOrange);
     this.load.image("shermiePurple", shermiePurple);
+    this.load.image("shermieToxic", shermieToxic);
     this.load.image("life", life);
 
     this.load.spritesheet("shermieBomb", shermieBomb, {
@@ -218,13 +245,49 @@ export class Boot extends Scene {
     this.load.image("death3", death3);
     this.load.image("death4", death4);
 
+    // PowerUps
+    this.load.image("antidote", antidote);
+    this.load.image("invulnerability", invulnerability);
+    this.load.image("selfService", selfService);
+
+    // turtleSink assets
+    this.load.image("iceTurtleSink1", iceTurtleSink1);
+    this.load.image("iceTurtleSink2", iceTurtleSink2);
+    this.load.image("iceTurtleSink3", iceTurtleSink3);
+
+    this.load.image("lavaTurtleSink1", lavaTurtleSink1);
+    this.load.image("lavaTurtleSink2", lavaTurtleSink2);
+    this.load.image("lavaTurtleSink3", lavaTurtleSink3);
+
+    this.load.image("skyTurtleSink1", skyTurtleSink1);
+    this.load.image("skyTurtleSink2", skyTurtleSink2);
+    this.load.image("skyTurtleSink3", skyTurtleSink3);
+
+    this.load.image("batmanTurtleSink1", batmanTurtleSink1);
+    this.load.image("batmanTurtleSink2", batmanTurtleSink2);
+    this.load.image("batmanTurtleSink3", batmanTurtleSink3);
+
+    this.load.image("desertTurtleSink1", desertTurtleSink1);
+    this.load.image("desertTurtleSink2", desertTurtleSink2);
+    this.load.image("desertTurtleSink3", desertTurtleSink3);
+
+    this.load.image("swampTurtleSink1", swampTurtleSink1);
+    this.load.image("swampTurtleSink2", swampTurtleSink2);
+    this.load.image("swampTurtleSink3", swampTurtleSink3);
+
+    this.load.image("outerSpaceTurtleSink1", outerSpaceTurtleSink1);
+    this.load.image("outerSpaceTurtleSink2", outerSpaceTurtleSink2);
+    this.load.image("outerSpaceTurtleSink3", outerSpaceTurtleSink3);
+
+    this.load.image("cakeTurtleSink1", cakeTurtleSink1);
+    this.load.image("cakeTurtleSink2", cakeTurtleSink2);
+    this.load.image("cakeTurtleSink3", cakeTurtleSink3);
     
     // Audio Assets
     this.load.audio("hop", hop);
     this.load.audio("squash", squash);
     this.load.audio("plunk", plunk);
     this.load.audio("backgroundMusic", backgroundMusic);
-
 
     //water Assets (default level)
     this.load.image("waterSafeZone", waterSafeZone);
@@ -282,7 +345,6 @@ export class Boot extends Scene {
     this.load.image("outerSpaceCar2b", outerSpaceCar2b);
     this.load.image("comet", comet);
     
-    
     //Sky Assets
     this.load.image("skySafeZone", skySafeZone);
     this.load.image("sky", sky);
@@ -297,7 +359,6 @@ export class Boot extends Scene {
     this.load.image("blimpForward", blimpForward);
     this.load.image("cloudsShort", cloudsShort);
     this.load.image("cloudsLong", cloudsLong);
-
 
     //desert Assets
     this.load.image("desert", desert);
@@ -344,6 +405,9 @@ export class Boot extends Scene {
     //UI and Background
     this.load.image("background", backgroundMain);
     this.load.image("buttonImage", buttonImage);
+
+    //goal block
+    this.load.image("goalBlock", goalBlock);
 
     //Font Family
     const font = new FontFaceObserver('Pixel');

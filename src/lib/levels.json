@@ -25,16 +25,25 @@
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 10,
 
+      "goal_zone_block": "goalBlock",
+      "max_blocks": 1,
+
       "number_of_lives": 5,
 
       "powerups": [ 1, 1, 1 ],
 
+      "block_percentage": 0.2,
+      
       "advance_number": 3,
-      "queue_chance": 1,
-      "score_decrease": 0,
+      "queue_chance": 0.5,
+      "score_bonus": 1,
 
-      "bomb_spawn_rate": 0.1,
-      "bomb_timer": 20 
+      "bomb_spawn_rate": 0,
+      "bomb_timer": 50000, 
+
+      "toxic_spawn_rate": 0,
+      "try_remove_rat": 0.5
+      
     },
 
     {
@@ -66,16 +75,25 @@
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 3,
 
-      "number_of_lives": 4,
+      "goal_zone_block": "goalBlock",
+      "max_blocks": 2,
+
+      "number_of_lives": 5,
+      "goal_count": 5,
+
+      "block_percentage": 1,
 
       "powerups": [ 0, 0, 0 ],
 
-      "advance_number": 3,
+      "advance_number": 10,
       "queue_chance": 0.5,
-      "score_decrease": 0,
+      "score_bonus": 10,
 
-      "bomb_spawn_rate": 0.8,
-      "bomb_timer": 100000
+      "bomb_spawn_rate": 1,
+      "bomb_timer": 50000, 
+
+      "toxic_spawn_rate": 1,
+      "try_remove_rat": 0.5
     },
 
     {
@@ -107,17 +125,26 @@
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 2.5,
 
-      "number_of_lives": 4,
+      "goal_zone_block": "goalBlock",
+      "max_blocks": 1,
 
-
+      "number_of_lives": 5,
+      "goal_count": 5,
+      
       "powerups": [ 0, 0, 0 ],
+
+      "block_percentage": 0.2,
 
       "advance_number": 3,
       "queue_chance": 0.5,
-      "score_decrease": 0,
+      "score_bonus": 1,
 
-      "bomb_spawn_rate": 0.9,
-      "bomb_timer": 20000
+      "bomb_spawn_rate": 1,
+      "bomb_timer": 50000, 
+
+      "toxic_spawn_rate": 1,
+      "try_remove_rat": 0.5
+
     },
 
     {
@@ -147,16 +174,23 @@
       "number_of_turtles": 2,
 
 
+      "goal_zone_block": "goalBlock",
+      "max_blocks": 1,
+
       "number_of_lives": 5,
       "advance_number": 5,
 
       "powerups": [ 0, 0, 0 ],
 
+      "block_percentage": 0.3,
       "queue_chance": 0.5,
-      "score_decrease": 0,
+      "score_bonus": 1,
 
-      "bomb_spawn_rate": 0.1,
-      "bomb_timer": 20
+      "bomb_spawn_rate": 1,
+      "bomb_timer": 50000, 
+
+      "toxic_spawn_rate": 1,
+      "try_remove_rat": 0.5
     },
 
     {
@@ -177,24 +211,33 @@
       "log_speed_multiplier": 0.75,
       "number_of_logs": 3,
 
-
       "turtle_texture": [ "cloudsLong", "cloudsShort" ],
       "turtles_Forward_texture": [ "cloudsLong", "cloudsShort" ],
       "turtle_spacing": [ 250, 350, 400 ],
+      
       "turtle_speed_multiplier": 0.75,
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 3,
 
-      "number_of_lives": 4,
+      "goal_zone_block": "goalBlock",
+      "max_blocks": 1,
+
+      "number_of_lives": 5,
+      "goal_count": 5,
+
+      "block_percentage": 0.4,
 
       "powerups": [ 0, 0, 0 ],
 
       "advance_number": 5,
       "queue_chance": 0.5,
-      "score_decrease": 0,
+      "score_bonus": 2,
 
-      "bomb_spawn_rate": 0.1,
-      "bomb_timer": 20
+      "bomb_spawn_rate": 1,
+      "bomb_timer": 50000, 
+
+      "toxic_spawn_rate": 1,
+      "try_remove_rat": 0.5
 
     },
 
@@ -205,15 +248,15 @@
       "car_texture": [ "outerSpaceCar1", "outerSpaceCar2" ],
       "cars_Forward_texture": [ "outerSpaceCar1b", "outerSpaceCar2b" ],
 
+
       "car_spacing": [ 150, 200, 250 ],
       "car_speed_multiplier": 1.1,
       "number_of_cars": 2,
 
       "water_zone_type": "outerSpace",
+      
       "log_texture": [ "outerSpaceRock" ],
-
       "log_spacing": [ 150, 200, 250 ],
-
       "log_speed_multiplier": 1.5,
 
       "number_of_logs": 3,
@@ -225,16 +268,25 @@
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 3,
 
-      "number_of_lives": 4,
+      "goal_zone_block": "goalBlock",
+      "max_blocks": 1,
+
+      "number_of_lives": 5,
+      "goal_count": 3,
 
       "powerups": [ 0, 0, 0 ],
 
+      "block_percentage": 0.5,
+
       "advance_number": 3,
       "queue_chance": 0.5,
-      "score_decrease": 2,
+      "score_bonus": 2,
 
-      "bomb_spawn_rate": 0.1,
-      "bomb_timer": 20
+      "bomb_spawn_rate": 1,
+      "bomb_timer": 50000, 
+
+      "toxic_spawn_rate": 1,
+      "try_remove_rat": 0.5
     },
 
 
@@ -264,16 +316,26 @@
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 3,
 
-      "number_of_lives": 4,
+      "goal_zone_block": "goalBlock",
+      "max_blocks": 1,
+
+      "number_of_lives": 5,
+      "goal_count": 3,
 
       "powerups": [ 0, 0, 0 ],
 
+      "block_percentage": 0.6,
+
       "advance_number": 3,
       "queue_chance": 0.5,
-      "score_decrease": 2,
+      "score_bonus": 2,
 
-      "bomb_spawn_rate": 0.1,
-      "bomb_timer": 20
+      "bomb_spawn_rate": 1,
+      "bomb_timer": 50000, 
+
+      "toxic_spawn_rate": 1,
+      "try_remove_rat": 0.5
+      
     },
 
     {
@@ -303,16 +365,23 @@
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 3,
 
-      "number_of_lives": 3,
+      "goa_zone_block": "goalBlock",
+      "max_blocks": 1,
 
-      "powerups": [ 0, 0, 0 ],
+      "number_of_lives": 3,
+      "powerups": [0, 0, 0],
+      "block_percentage": 0.7,
 
       "advance_number": 4,
       "queue_chance": 0.5,
-      "score_decrease": 2,
+      "score_bonus": 2,
 
-      "bomb_spawn_rate": 0.1,
-      "bomb_timer": 20
+      "bomb_spawn_rate": 1,
+      "bomb_timer": 50000, 
+
+      "toxic_spawn_rate": 1,
+      "try_remove_rat": 0.5
+      
     },
 
     {
@@ -339,16 +408,22 @@
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 3,
 
+      "goal_zone_block": "goalBlock",
+      "max_blocks": 1,
+
       "number_of_lives": 3,
 
       "powerups": [ 0, 0, 0 ],
-
+      "block_percentage": 0.8,
       "advance_number": 5,
       "queue_chance": 0.5,
-      "score_decrease": 2,
+      "score_bonus": 2,
 
-      "bomb_spawn_rate": 0.1,
-      "bomb_timer": 20
+      "bomb_spawn_rate": 1,
+      "bomb_timer": 50000, 
+
+      "toxic_spawn_rate": 1,
+      "try_remove_rat": 0.5
     },
 
     {
@@ -377,18 +452,24 @@
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 3,
 
+      "goal_zone_block": "goalBlock",
+      "max_blocks": 1,
+
       "number_of_lives": 3,
 
       "powerups": [ 0, 0, 0 ],
 
+      "block_percentage": 0.9, 
+
       "advance_number": 3,
       "queue_chance": 0.5,
-      "score_decrease": 2,
+      "score_bonus": 2,
 
-      "bomb_spawn_rate": 0.5,
-      "bomb_timer": 20000
+      "bomb_spawn_rate": 1,
+      "bomb_timer": 50000, 
+
+      "toxic_spawn_rate": 1,
+      "try_remove_rat": 0.5
     }
-    
-
   ]
 }
