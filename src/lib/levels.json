@@ -70,7 +70,7 @@
 
       "powerups": [ 0, 0, 0, 0 ],
 
-      "advance_number": 3,
+      "advance_number": 1,
       "queue_chance": 0.5,
       "score_decrease": 0,
 
@@ -112,7 +112,7 @@
 
       "powerups": [ 0, 0, 0, 0 ],
 
-      "advance_number": 3,
+      "advance_number": 1,
       "queue_chance": 0.5,
       "score_decrease": 0,
 
