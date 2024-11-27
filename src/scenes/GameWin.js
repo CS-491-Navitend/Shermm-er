@@ -29,6 +29,9 @@ export class GameWin extends Scene {
         // Option to go back to the main menu or restart
         this.createButtons();
 
+        // Fade in effect
+        this.cameras.main.fadeIn(1000, 0, 0, 0); // Fade in over 1 second (1000ms)
+
         this.input.keyboard.on("keydown-UP", () => this.changeSelection(-1));
         this.input.keyboard.on("keydown-DOWN", () => this.changeSelection(1));
         this.input.keyboard.on("keydown-ENTER", () => this.confirmSelection());

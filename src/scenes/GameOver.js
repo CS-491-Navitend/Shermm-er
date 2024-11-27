@@ -13,7 +13,10 @@ export class GameOver extends Scene {
 
         this.level = game.level;
         // Display game over message
-        this.gameOverText = this.add.text(this.cameras.main.centerX, 250, "Game Over!", {
+
+        this.gameRose = this.add.image(this.cameras.main.centerX, 250, "rose").setOrigin(0.5);
+
+        this.gameOverText = this.add.text(this.cameras.main.centerX, 550, "Game Over!", {
             fontSize: "32px",
             fill: "#fff",
             fontFamily: "Pixel"
@@ -23,6 +26,9 @@ export class GameOver extends Scene {
 
         // Option to go back to the main menu or restart
         this.createButtons();  // Create the buttons
+
+        // Fade in effect
+        this.cameras.main.fadeIn(1000, 0, 0, 0); // Fade in over 1 second (1000ms)
 
         this.input.keyboard.on("keydown-UP", () => this.changeSelection(-1));
         this.input.keyboard.on("keydown-DOWN", () => this.changeSelection(1));
@@ -41,7 +47,7 @@ export class GameOver extends Scene {
     }
 
     createRestartButton() {
-        this.restartButton = this.add.text(this.cameras.main.centerX, 320, 'Restart', {
+        this.restartButton = this.add.text(this.cameras.main.centerX, 620, 'Restart', {
             fontFamily: 'Pixel',
             fontSize: '20px',
             fill: '#ffffff'
@@ -52,7 +58,7 @@ export class GameOver extends Scene {
     }
 
     createMainMenuButton() {
-        this.mainMenuButton = this.add.text(this.cameras.main.centerX, 370, 'Back To Main Menu', {
+        this.mainMenuButton = this.add.text(this.cameras.main.centerX, 670, 'Back To Main Menu', {
             fontFamily: 'Pixel',
             fontSize: '20px',
             fill: '#ffffff'

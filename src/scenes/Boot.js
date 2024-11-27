@@ -92,6 +92,7 @@ import cloudsShort from "/assets/SkyLevel/cloudsShort.png";
 //Import UI and Background
 import backgroundMain from "/assets/UI/ShermMainMenu.png";
 import buttonImage from "/assets/UI/Button.png";
+import gameRose from "/assets/UI/Rose.png";
 
 
 //import batman assets
@@ -344,6 +345,7 @@ export class Boot extends Scene {
     //UI and Background
     this.load.image("background", backgroundMain);
     this.load.image("buttonImage", buttonImage);
+    this.load.image("rose", gameRose);
 
     //Font Family
     const font = new FontFaceObserver('Pixel');
