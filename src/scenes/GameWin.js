@@ -141,12 +141,12 @@ export class GameWin extends Scene {
     }
 
     createRandomAssets(gameData) {
-        const assetCount = 20;
+        const assetCount = 50;
         for (let i = 0; i < assetCount; i++) {
             const x = Phaser.Math.Between(0, gameData.width);
             const y = Phaser.Math.Between(0, gameData.height);
 
-            const assetChoice = ["shermie", "shermieBlue", "shermieGreen", "shermieOrange", "shermiePurple", "shermieRed", "shermieYellow"][Phaser.Math.Between(0, 6)];
+            const assetChoice = ["shermie", "shermieBlueFlip", "shermieGreen", "shermieOrangeFlip", "shermiePurple", "shermieRed", "shermieYellowFlip"][Phaser.Math.Between(0, 6)];
             this.add.image(x, y, assetChoice);
         }
     }

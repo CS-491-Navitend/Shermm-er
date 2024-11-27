@@ -27,7 +27,7 @@ import shermieBomb from "/assets/shermieBombSheet.png";
 //Import shermie colored flipped assets
 import shermieRedFlip from "/assets/ShermieFlip/shermieRedFlip.png";
 import shermieBlueFlip from "/assets/ShermieFlip/shermieBlueFlip.png";
-import shermieGreenFlip from "/assets/ShermieFlip/shermieGreeenFlip.png";
+import shermieGreenFlip from "/assets/ShermieFlip/shermieGreenFlip.png";
 import shermieOrangeFlip from "/assets/ShermieFlip/shermieOrangeFlip.png";
 import shermieYellowFlip from "/assets/ShermieFlip/shermieYellowFlip.png";
 
