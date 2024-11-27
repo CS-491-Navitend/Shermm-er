@@ -24,6 +24,13 @@ import shermieOrange from "/assets/shermieOrange.png";
 import shermiePurple from "/assets/shermiePurple.png";
 import shermieBomb from "/assets/shermieBombSheet.png";
 
+//Import shermie colored flipped assets
+import shermieRedFlip from "/assets/ShermieFlip/shermieRedFlip.png";
+import shermieBlueFlip from "/assets/ShermieFlip/shermieBlueFlip.png";
+import shermieGreenFlip from "/assets/ShermieFlip/shermieGreeenFlip.png";
+import shermieOrangeFlip from "/assets/ShermieFlip/shermieOrangeFlip.png";
+import shermieYellowFlip from "/assets/ShermieFlip/shermieYellowFlip.png";
+
 import life from "/assets/heart.png";
 import death1 from "/assets/death1.png";
 import death2 from "/assets/death2.png";
@@ -212,6 +219,13 @@ export class Boot extends Scene {
           frameWidth: 57,
           frameHeight: 42
     });
+
+    //shermie colored flipped assets
+    this.load.image("shermieRedFlip", shermieRedFlip);
+    this.load.image("shermieBlueFlip", shermieBlueFlip);
+    this.load.image("shermieGreenFlip", shermieGreenFlip);
+    this.load.image("shermieOrangeFlip", shermieOrangeFlip);
+    this.load.image("shermieYellowFlip", shermieYellowFlip);
 
     this.load.image("lavaLog", lavaLog);
     this.load.image("death1", death1);
