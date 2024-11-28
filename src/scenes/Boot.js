@@ -100,6 +100,8 @@ import cloudsShort from "/assets/SkyLevel/cloudsShort.png";
 import backgroundMain from "/assets/UI/ShermMainMenu.png";
 import buttonImage from "/assets/UI/Button.png";
 import gameRose from "/assets/UI/Rose.png";
+import volume from "/assets/UI/volumeButton.png";
+import mute from "/assets/UI/muteButton.png";
 
 
 //import batman assets
@@ -360,6 +362,8 @@ export class Boot extends Scene {
     this.load.image("background", backgroundMain);
     this.load.image("buttonImage", buttonImage);
     this.load.image("rose", gameRose);
+    this.load.image("muteButton", mute);
+    this.load.image("volumeButton", volume);
 
     //Font Family
     const font = new FontFaceObserver('Pixel');
