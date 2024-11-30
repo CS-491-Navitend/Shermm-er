@@ -1,3 +1,4 @@
+/* Base styles for the body */
 body {
   margin: 0;
   padding: 0;
@@ -5,6 +6,7 @@ body {
   background-color: #000000;
 }
 
+/* Ensure the #app container takes up the full screen */
 #app {
   width: 100%;
   height: 100%;
@@ -14,87 +16,139 @@ body {
   align-items: center;
 }
 
+/* Custom font (Pixel font) */
 @font-face {
-    font-family: 'Pixel';
-    src: url('assets/fonts/PrStart.ttf') format('truetype'), url('assets/fonts/prstartkttf') format('truetype'); /* Adjust the path and filename */
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'Pixel';
+  src: url('assets/fonts/PrStart.ttf') format('truetype'), 
+       url('assets/fonts/prstartkttf') format('truetype'); /* Adjust the path and filename */
+  font-weight: normal;
+  font-style: normal;
 }
+
+/* Main game container */
 #game-container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+/* Phaser game container, make it responsive */
 #phaser-game {
-  height: calc(100vh - 48px);
+  width: 100%;  /* Stretch to full width */
+  height: calc(100vh - 48px);  /* Subtract UI bar height from the viewport height */
   border: 2px solid #000;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+/* UI bar container, flexible for responsiveness */
 #ui-bar {
-  display: flex;                  
-  justify-content: space-between;  /* Distribute the elements evenly */
-  align-items: center;            
-  width: 100%;                  /* Fixed width of 1000px */
-  height: 48px;                   /* Fixed height of 48px */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 48px;
   background-color: #000;
   color: #fff;
   font-family: Arial, sans-serif;
-  font-size: 24px;
-  padding: 0 10px;                /* Adjust padding to add space on the sides */
-  box-sizing: border-box;         /* Include padding and borders in the element's total width and height */
+  font-size: calc(1vw + 16px);  /* Dynamically adjust font size */
+  padding: 0 10px;
+  box-sizing: border-box;
 }
 
-
+/* Flex behavior for the elements inside the UI bar */
 #score, #time, #bomb-timer-container, #lives-container {
-  flex: 0 1 auto; /* Keep the elements at their natural width */
+  flex: 0 1 auto;  /* Keep the elements at their natural width */
 }
 
 #time {
-  flex: 1;                           /* Allow the time to take up the remaining space */
-  text-align: center;                /* Center the text within the time div */
+  flex: 1;  /* Allow the time to take up remaining space */
+  text-align: center;  /* Center the time text */
 }
 
+/* Hide certain elements when needed */
 .hidden {
   display: none;
 }
 
-
+/* Bomb timer container */
 #bomb-timer-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 180px;  /* Width of the bomb timer container */
+  width: 180px;  /* Fixed width for the bomb timer */
   visibility: hidden;  /* Initially hidden */
   margin-right: 10px;
 }
 
+/* Bomb timer styling (adjusted for better size scaling) */
 #bomb-timer {
   font-family: Arial, sans-serif;
-  font-size: 24%;
+  font-size: calc(1vw + 10px);  /* Smaller, more controlled responsive size */
   color: red;
 }
 
+/* Lives container */
 #lives-container {
   display: flex;
   gap: 3px;
-  width: 150px;  /* You can adjust this width as needed */
   justify-content: flex-start;
   align-items: center;
+  width: 150px;  /* Width adjusted for available space */
 }
 
+/* Life icon size */
 .life-icon {
-  width: 45px;  /* Slightly smaller life icons */
-  height: 30px;  /* Slightly smaller life icons */
+  width: 3vw;  /* Responsive size based on viewport width */
+  height: 3vw;  /* Maintain aspect ratio */
 }
 
+/* Hidden life icon when not available */
 .hidden-life {
-  visibility: hidden; 
+  visibility: hidden;
 }
 
+/* Responsive design adjustments for smaller screens */
+@media (max-width: 600px) {
+  #ui-bar {
+    flex-direction: column;  /* Stack elements vertically on small screens */
+    height: auto;  /* Allow the UI bar to adjust its height automatically */
+    font-size: calc(1vw + 10px);  /* Smaller font size for mobile */
+  }
 
+  #lives-container {
+    flex-direction: row;
+    width: auto;  /* Allow width to adjust dynamically */
+  }
 
+  #bomb-timer-container {
+    width: auto;
+  }
 
+  .life-icon {
+    width: 12vw;  /* Adjust size for smaller screens */
+    height: 8vw;
+  }
+
+  /* Add padding to #score and #time when window is small */
+  #score, #time, #bomb-timer-container, #lives-container {
+    padding: 0 10px;  /* Add padding to prevent elements from being too close */
+  }
+
+  /* Increase space between the timer and score on smaller screens */
+  #time {
+    margin-right: 20px;  /* Add some margin to separate the timer from the score */
+  }
+}
+
+/* Larger screens (above 600px) */
+@media (min-width: 600px) {
+  #score, #time, #bomb-timer-container, #lives-container {
+    padding: 0 15px;  /* Add a bit more space for medium-sized screens */
+  }
+
+  #time {
+    margin-right: 30px;  /* Add more margin to improve spacing */
+  }
+}
