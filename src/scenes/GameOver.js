@@ -33,6 +33,11 @@ export class GameOver extends Scene {
         this.input.keyboard.on("keydown-UP", () => this.changeSelection(-1));
         this.input.keyboard.on("keydown-DOWN", () => this.changeSelection(1));
         this.input.keyboard.on("keydown-ENTER", () => this.confirmSelection());
+
+        this.input.keyboard.on("keydown-R", () => {
+            this.selectedButtonIndex = 0;  // Make sure Restart is selected by default
+            this.confirmSelection();       // Trigger the restart logic
+        });
     }
 
     createButtons() {
@@ -47,7 +52,7 @@ export class GameOver extends Scene {
     }
 
     createRestartButton() {
-        this.restartButton = this.add.text(this.cameras.main.centerX, 620, 'Restart', {
+        this.restartButton = this.add.text(this.cameras.main.centerX, 620, 'Press R to Restart', {
             fontFamily: 'Pixel',
             fontSize: '20px',
             fill: '#ffffff'
@@ -120,7 +125,7 @@ export class GameOver extends Scene {
         if (this.isDebounced) return;
         this.isDebounced = true;
         const selectedButton = this.buttons[this.selectedButtonIndex];
-        if (selectedButton.text === 'Restart') {
+        if (selectedButton.text === 'Press R to Restart') {
             this.scene.stop("GameOver");
             this.game.turtlesAreSunk = false;
             this.game.inWater = false
