@@ -610,11 +610,10 @@ export class Game extends Scene {
 
     // console.log("createShermie has been called")
 
-    console.log("in create before bomb logic: ", this.shermieType);
 
-    this.shermieType = this.shermieArray[Math.floor(Math.random() * this.shermieArray.length)];//Randomly select shermie type
+    // this.shermieType = this.shermieArray[Math.floor(Math.random() * this.shermieArray.length)];//Randomly select shermie type
     // this.shermieType = "toxic"
-    // this.shermieType = "colored"
+    this.shermieType = "colored"
     //this.shermieType = "bomb"
 
     if (!this.isBomb) {
@@ -629,15 +628,16 @@ export class Game extends Scene {
       this.shermieTexture = "shermie";
     }
     
-    else if(this.shermieType == "colored"){//Colored
+    else if(this.shermieType == "colored"){
       this.colorArray = this.getColors();
-      this.shermieColor = this.colorArray[0];//Shermie Comparison Code
-      this.shermieTexture = this.colorArray[1];//Shermie sprite color
+      this.shermieColor = this.colorArray[0];
+      this.shermieTexture = this.colorArray[1];
       const rectangleColor = this.colorArray[2];
       this.shermie.setData("color", this.shermieColor);
 
       let randomGoal = Phaser.Utils.Array.GetRandom(this.objectiveZone.getChildren());
-      randomGoal.setData("color", this.shermieColor);
+      
+      console.log("random goal is: ", randomGoal)
       let goalRect = this.add.rectangle(randomGoal.x + randomGoal.width / 4, randomGoal.y + randomGoal.height / 4, randomGoal.width / 4, randomGoal.height / 4, rectangleColor);
       goalRect.setDepth(2);
       this.physics.add.existing(goalRect, true);
@@ -661,7 +661,6 @@ export class Game extends Scene {
     this.shermie.setTexture(this.shermieTexture);//Set texture 
   }
   
-  console.log("In create after bomb logic: ", this.shermieType);
 
   }
   loseLife() {
