@@ -660,7 +660,7 @@ export class Game extends Scene {
     this.shermie.setTexture(this.shermieTexture);//Set texture 
   }
 
-
+  }
   loseLife() {
     if (this.isInvincible || this.isAnimating) {
       return;
