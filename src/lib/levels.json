@@ -42,8 +42,9 @@
       "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 0,
+
       "try_remove_rat": 0.5
-      
+
     },
 
     {
@@ -93,7 +94,9 @@
       "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
+
       "try_remove_rat": 0.5
+     
     },
 
     {
@@ -143,7 +146,9 @@
       "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
+
       "try_remove_rat": 0.5
+     
 
     },
 
@@ -190,7 +195,9 @@
       "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
+
       "try_remove_rat": 0.5
+     
     },
 
     {
@@ -237,7 +244,9 @@
       "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
+      
       "try_remove_rat": 0.5
+     
 
     },
 
@@ -286,7 +295,9 @@
       "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
+      
       "try_remove_rat": 0.5
+     
     },
 
 
@@ -334,7 +345,9 @@
       "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
+      
       "try_remove_rat": 0.5
+     
       
     },
 
@@ -380,7 +393,9 @@
       "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
+      
       "try_remove_rat": 0.5
+     
       
     },
 
@@ -423,7 +438,9 @@
       "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
+      
       "try_remove_rat": 0.5
+     
     },
 
     {
@@ -469,7 +486,9 @@
       "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
+      
       "try_remove_rat": 0.5
+     
     }
   ]
 }
