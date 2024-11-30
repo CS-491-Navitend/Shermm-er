@@ -4,7 +4,6 @@ export class GameLogic {
   }
 
   goal() {
-
     if(!this.game.isToxic){
       if (this.game.bonusFlag && !this.game.isToxic) {//Check to see if different color goal zone was hit
         this.game.goalCount += 1 + this.game.bonusScore;
@@ -19,6 +18,7 @@ export class GameLogic {
       }
     }
     if(this.game.goalCount < this.game.advanceNumber) {
+      this.game.createShermie();
       this.resetPlayer();
     }
     else{
@@ -58,7 +58,7 @@ export class GameLogic {
     this.game.shermie.x = this.game.width / 2;
     this.game.shermie.y = this.game.height - this.game.safeZoneSize + this.game.moveDistance / 2;
 
-    if (this.shermieType = "bomb") {
+    if (this.game.shermieType == "bomb") {
       this.game.shermie.play("burnFuse"); 
     }
   }

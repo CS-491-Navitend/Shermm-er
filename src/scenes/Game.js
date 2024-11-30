@@ -165,10 +165,6 @@ export class Game extends Scene {
       frameRate: 4,
       repeat: -1
     });
-    if(this.shermie.type="bomb"){
-      console.log("bomb")
-    }
-
 
     //death animation
     this.anims.create({
@@ -448,8 +444,8 @@ export class Game extends Scene {
       
         ratsContainer.appendChild(toxicShermieSprite); 
       
-        this.gameLogic.resetPlayer();
         this.createShermie();
+        this.gameLogic.resetPlayer();
       } 
     }, null, this);
 
@@ -612,6 +608,9 @@ export class Game extends Scene {
     this.shermie.setData("isToxic", false); 
     this.isToxic = false;
 
+    // console.log("createShermie has been called")
+
+    console.log("in create before bomb logic: ", this.shermieType);
 
     this.shermieType = this.shermieArray[Math.floor(Math.random() * this.shermieArray.length)];//Randomly select shermie type
     // this.shermieType = "toxic"
@@ -620,16 +619,16 @@ export class Game extends Scene {
 
     if (!this.isBomb) {
         this.bombTimerUI.style.display = "none";
+        this.shermie.anims.stop();
 
-
-    this.shermieType = "colored";
-      if (!this.isBomb) {
-          this.bombTimerUI.style.display = "none";
+    if (!this.isBomb) {
+        this.bombTimerUI.style.display = "none";
     }
+    
     if(this.shermieType == "normal"){//Default
       this.shermieTexture = "shermie";
     }
-
+    
     else if(this.shermieType == "colored"){//Colored
       this.colorArray = this.getColors();
       this.shermieColor = this.colorArray[0];//Shermie Comparison Code
@@ -651,7 +650,9 @@ export class Game extends Scene {
       this.timer.getBomb(this.shermie);
       this.bombTimerUI.style.display = "block";
       this.shermie.play("burnFuse");
-    }else if (this.shermieType == "toxic"){
+    }
+    
+    else if (this.shermieType == "toxic"){
       this.shermieTexture = "shermieToxic";
       this.showToxicPopup();
       this.shermie.setData("isToxic", true); 
@@ -659,6 +660,8 @@ export class Game extends Scene {
     }
     this.shermie.setTexture(this.shermieTexture);//Set texture 
   }
+  
+  console.log("In create after bomb logic: ", this.shermieType);
 
   }
   loseLife() {
@@ -692,8 +695,7 @@ export class Game extends Scene {
     this.timer.getBomb(this.shermie);
     this.goalColor.getChildren().forEach(child => {
       child.destroy();
-    })
-    this.createShermie(); // Spawn the next Shermie
+    }) // Spawn the next Shermie
   }
 
   updateTimer() {
