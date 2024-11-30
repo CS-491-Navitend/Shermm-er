@@ -8,7 +8,7 @@ import { TutorialMenu } from "./scenes/Menus/TutorialMenu";
 //submenus
 import { Credits } from "./scenes/Menus/Submenus/Credits";
 import { Controls } from "./scenes/Menus/Submenus/Controls"
-import { Stats } from "./scenes/Menus/Submenus/Stats"
+
 // game
 import { Game as MainGame } from "./scenes/Game";
 import { AUTO, Scale, Game } from "phaser";
@@ -34,7 +34,7 @@ const config = {
     mode: Scale.FIT,
   },
 
-  scene: [Boot, MainMenu, LevelMenu, MainGame, PauseMenu, GameOver, GameWin, Credits, Controls, Stats, TutorialMenu],
+  scene: [Boot, MainMenu, LevelMenu, MainGame, PauseMenu, GameOver, GameWin, Credits, Controls,TutorialMenu],
   parent: 'phaser-game',
 
 };
