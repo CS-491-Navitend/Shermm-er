@@ -4,7 +4,6 @@ export class GameLogic {
   }
 
   goal() {
-
     if(!this.game.isToxic){
       if (this.game.bonusFlag && !this.game.isToxic) {//Check to see if different color goal zone was hit
         this.game.goalCount += 1 + this.game.bonusScore;
@@ -19,6 +18,7 @@ export class GameLogic {
       }
     }
     if(this.game.goalCount < this.game.advanceNumber) {
+      this.game.createShermie();
       this.resetPlayer();
     }
     else{
@@ -57,6 +57,10 @@ export class GameLogic {
     this.game.shermie.setVelocity(0, 0);
     this.game.shermie.x = this.game.width / 2;
     this.game.shermie.y = this.game.height - this.game.safeZoneSize + this.game.moveDistance / 2;
+
+    if (this.game.shermieType == "bomb") {
+      this.game.shermie.play("burnFuse"); 
+    }
   }
 
   tryAddShermieSprite() {
@@ -101,6 +105,35 @@ export class GameLogic {
       ratsContainer.removeChild(ratsContainer.children[0]);
       this.tryAddShermieSprite();
     } else {
+      return
+    }
+  }
+
+  generateBlockers(game) {
+    if (!game.block) {
+      game.block = game.physics.add.staticGroup(); 
+      console.log("Block group initialized in GameLogic.js");
+    }
+  
+    if (game.block.getLength() < game.max_block) {
+      const zones = game.objectiveZone.getChildren(); 
+  
+      if (zones.length > 0) {
+        const eligibleZones = zones.filter(zone => !zone.getData("color")); 
+        if (eligibleZones.length > 0) {
+          const randomZone = Phaser.Utils.Array.GetRandom(eligibleZones); 
+          const newBlock = game.add.sprite(randomZone.x, randomZone.y, "goalBlock");
+          newBlock.setDepth(10); 
+          game.physics.add.existing(newBlock, true);
+          game.block.add(newBlock); 
+  
+          game.time.delayedCall(5000, () => {
+            if (newBlock) {
+              newBlock.destroy();
+            }
+          });
+        }
+      }
     }
   }
   
