@@ -553,10 +553,9 @@ export class Game extends Scene {
         turtle.x = -turtle.width / 2;
       }
     })
-    
-    if (time % 2000 < 50 && this.block.getLength() < this.max_block) { 
-      this.gameLogic.generateBlockers(this);
-      console.log("test")
+
+    if (this.timer.timeRemaining % 2 === 0) { 
+      this.gameLogic.generateBlockers(this)
     }
   
   }
