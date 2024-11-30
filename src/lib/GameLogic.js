@@ -101,6 +101,7 @@ export class GameLogic {
       ratsContainer.removeChild(ratsContainer.children[0]);
       this.tryAddShermieSprite();
     } else {
+      return
     }
   }
 
@@ -131,7 +132,6 @@ export class GameLogic {
       }
     }
   }
-  
   
 }
 

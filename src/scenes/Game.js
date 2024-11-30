@@ -87,6 +87,10 @@ export class Game extends Scene {
     this.max_block = 0;
     this.removeRatChance = 0;
     this.block = 0;
+    this.blockerCooldown = false;
+    this.shermieCooldown = false;
+    this.ratCooldown = false;
+
   }
 
   create(data) {
@@ -136,6 +140,7 @@ export class Game extends Scene {
     //Instantiate Shermie for later use
     this.shermie = this.physics.add.sprite(this.width / 2, this.height - this.safeZoneSize + this.moveDistance / 2, "shermie");
 
+    document.getElementById('rats-container').innerHTML = '';
 
     this.populateShermieArray();
 
@@ -375,29 +380,21 @@ export class Game extends Scene {
     createLogs(this, laneStart, laneWidth, this.logTexture, this.logSpacing);
     createTurtles(this, laneStart, laneWidth, this.turtleTexture, this.turtleTextureForward, this.turtleSpacing);
 
-    //killer shermie logic
-     // Proceed with the goal logic
-        // setTimeout(() => {
-        //   const killerShermie = this.add.image(objective.x, objective.y, "shermie");
-        //   this.physics.add.existing(killerShermie, true);
-        //   filledGoals.add(killerShermie); // Add to filledGoals
-        // }, 1);
-        this.physics.add.overlap(this.shermie, this.objectiveZone, (shermie, objective) => {
-          const blockers = this.timer.getBlockGroup();
-          if (this.physics.overlap(shermie, blockers)) {
-            this.loseLife();
-            return; 
-          }if ((this.shermieType == "normal" || this.shermieType == "bomb" || this.shermieType == "toxic")) {
-            this.goalCollision();
-          } else if ( this.shermieType == "colored") {
-            if (objective.getData("color") == this.shermie.getData("color")) {
-              this.bonusFlag = true;
-            } else {
-              this.bonusFlag = false;
-            }
-            this.goalCollision();
-          }
-        }, null, this);
+    this.physics.add.overlap(this.shermie, this.objectiveZone, (shermie, objective) => {
+      if (this.physics.overlap(shermie, this.block)) {
+        this.loseLife();
+        return; 
+      }if ((this.shermieType == "normal" || this.shermieType == "bomb" || this.shermieType == "toxic")) {
+        this.goalCollision();
+      } else if ( this.shermieType == "colored") {
+        if (objective.getData("color") == this.shermie.getData("color")) {
+          this.bonusFlag = true;
+        } else {
+          this.bonusFlag = false;
+        }
+        this.goalCollision();
+      }
+    }, null, this);
         
 
     this.physics.add.overlap(this.shermie, this.vehicles, this.loseLife, null, this);
@@ -452,27 +449,13 @@ export class Game extends Scene {
         toxicShermieSprite.src = this.textures.getBase64('shermieToxic'); 
         toxicShermieSprite.classList.add('shermie'); 
       
-        ratsContainer.appendChild(toxicShermieSprite); // Add to HTML rats-container
+        ratsContainer.appendChild(toxicShermieSprite); 
       
-        // Reset Shermie and create a new one
         this.gameLogic.resetPlayer();
         this.createShermie();
       } 
     }, null, this);
 
-    // console.log("=== Physics Groups Status ===");
-    // console.log("Objective Zone length:", this.objectiveZone?.getLength() || 0);
-    // console.log("Safe Zone length:", this.safeZone?.getLength() || 0);
-    // console.log("End Zone length:", this.endZone?.getLength() || 0);
-    // console.log("Vehicles group length:", this.vehicles?.getLength() || 0);
-    // console.log("Logs group length:", this.logs?.getLength() || 0);
-    // console.log("Turtles group length:", this.turtles?.getLength() || 0);
-    // console.log("Sinking Turtles group length:", this.sinkingTurtles?.getLength() || 0);
-    // console.log("Filled Goals group length:", this.filledGoals?.getLength() || 0);
-    // console.log("Block group length (if applicable):", this.timer?.block?.getLength() || 0);
-    // console.log("=== End of Physics Groups Status ===");
-
-    
   };
 
   update() {
@@ -554,10 +537,42 @@ export class Game extends Scene {
       }
     })
 
-    if (this.timer.timeRemaining % 2 === 0) { 
-      this.gameLogic.generateBlockers(this)
+    if (this.timer.timeRemaining % 2 === 0 && !this.blockerCooldown) {
+      this.blockerCooldown = true; 
+      this.gameLogic.generateBlockers(this); 
+    
+      this.time.delayedCall(1000, () => {
+        this.blockerCooldown = false;
+      });
     }
-  
+
+    if (this.timer.timeRemaining % 5 === 0 && !this.shermieCooldown) {
+      this.shermieCooldown = true; 
+      const chance = Math.random();
+      if (chance < this.queueChance) {
+        this.gameLogic.tryAddShermieSprite(); 
+      }
+    
+      this.time.delayedCall(1000, () => {
+        this.shermieCooldown = false;
+      });
+    }
+
+    if (this.timer.timeRemaining % 5 === 0 && !this.ratCooldown) {
+      this.ratCooldown = true;
+      const ratsContainer = document.getElementById('rats-container');
+      if (ratsContainer.firstChild) {
+        ratsContainer.removeChild(ratsContainer.firstChild); 
+        console.log("Removed one rat.");
+      } else {
+        console.log("No rats to remove.");
+      }
+      this.time.delayedCall(1000, () => {
+        this.ratCooldown = false;
+      });
+    }
+    
+
   }
 
   spawnVehicle(x, y, texture, speed) {
@@ -604,6 +619,10 @@ export class Game extends Scene {
     this.isToxic = false;
 
     this.shermieType = this.shermieArray[Math.floor(Math.random() * this.shermieArray.length)];//Randomly select shermie type
+    // this.shermieType = "toxic"
+    // this.shermieType = "colored"
+    // this.shermieType = "bomb"
+
       if (!this.isBomb) {
           this.bombTimerUI.style.display = "none";
     }

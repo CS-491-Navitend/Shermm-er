@@ -37,57 +37,7 @@ export class Timer {
         this.game.raiseTurtles();
       }
     }
-
-    //this chance needs to be a variable obtained from the json
-    if (this.timeRemaining % 5 === 0) {
-      const chance = Math.random();
-      if (chance > this.game.queueChance) { 
-          this.game.gameLogic.tryAddShermieSprite();
-      }
-    }
-
-    if(this.timeRemaining % 5 ===0){
-      const chance = Math.random();
-      if(chance > this.game.removeRatChance){
-        this.game.gameLogic.tryRemoveRat();
-      }
-    }
-  //Blocker generation code
-  // Ensure the block group is initialized
-  // if (!this.block) {
-  //   this.block = this.game.physics.add.staticGroup();
-  //   console.log("Block group initialized in Timer.js");
-  // }
-
-  // // Proceed with blocker generation
-  // if (this.timeRemaining % 2 === 0) {
-  //   if (this.currentBlockCount < this.game.max_block) {
-  //     const zones = this.game.objectiveZone.getChildren(); // Get goal zone coordinates
-  //     if (zones.length > 0) {
-  //       const eligibleZones = zones.filter(zone => !zone.getData("color")); // Check if zone is colored
-  //       if (eligibleZones.length > 0) {
-  //         const randomZone = Phaser.Utils.Array.GetRandom(eligibleZones); // Randomly pick a valid zone
-
-  //         const newBlock = this.game.add.sprite(randomZone.x, randomZone.y, "goalBlock"); // Generate new blocker object
-  //         newBlock.setDepth(10); // Set render depth above all else
-  //         this.currentBlockCount++; // Increment blocker count
-
-  //         this.game.physics.add.existing(newBlock, true);
-  //         this.block.add(newBlock); // Add to blocker group
-
-  //         this.game.time.delayedCall(5000, () => {
-  //           if (newBlock) {
-  //             newBlock.destroy();
-  //             this.currentBlockCount--; // Destroy blocker every 5 seconds and update blocker count
-  //           }
-  //         });
-  //       }
-  //     }
-  //   }
-  // }
   }
-
-
   start() {
     this.stop();
     this.timeRemaining = this.game.timeRemaining;
@@ -176,10 +126,7 @@ export class Timer {
         }
         this.bombTimerPaused = false;
     }
-    
-    getBlockGroup() {
-      return this.block;
-    }
+  
 }
 
 export default Timer;
