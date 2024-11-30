@@ -635,9 +635,9 @@ export class Game extends Scene {
     // console.log("createShermie has been called")
 
 
-    // this.shermieType = this.shermieArray[Math.floor(Math.random() * this.shermieArray.length)];//Randomly select shermie type
+    this.shermieType = this.shermieArray[Math.floor(Math.random() * this.shermieArray.length)];//Randomly select shermie type
     // this.shermieType = "toxic"
-    this.shermieType = "colored"
+    // this.shermieType = "colored"
     //this.shermieType = "bomb"
 
     if (!this.isBomb) {
