@@ -123,6 +123,8 @@ export class GameOver extends Scene {
         if (selectedButton.text === 'Restart') {
             this.scene.stop("GameOver");
             this.scene.start("Game", { level: this.level });
+            this.game.turtlesAreSunk = false;
+            this.game.inWater = false
         } else if (selectedButton.text === 'Back To Main Menu') {
             this.scene.start("MainMenu");
         }

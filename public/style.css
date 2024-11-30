@@ -11,7 +11,7 @@ body {
   overflow: hidden;
   display: flex;
   justify-content: center;
-  align-items: center;s
+  align-items: center;
 }
 
 @font-face {
@@ -39,12 +39,12 @@ body {
   justify-content: space-between;  /* Distribute the elements evenly */
   align-items: center;            
   width: 100%;                  /* Fixed width of 1000px */
-  height: 48%;                   /* Fixed height of 48px */
+  height: 48px;                   /* Fixed height of 48px */
   background-color: #000;
   color: #fff;
   font-family: Arial, sans-serif;
-  font-size: 24%;
-  padding: 0 10%;                /* Adjust padding to add space on the sides */
+  font-size: 24px;
+  padding: 0 10px;                /* Adjust padding to add space on the sides */
   box-sizing: border-box;         /* Include padding and borders in the element's total width and height */
 }
 
@@ -67,28 +67,28 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 180%;  /* Width of the bomb timer container */
+  width: 180px;  /* Width of the bomb timer container */
   visibility: hidden;  /* Initially hidden */
   margin-right: 10px;
 }
 
 #bomb-timer {
   font-family: Arial, sans-serif;
-  font-size: 24px;
+  font-size: 24%;
   color: red;
 }
 
 #lives-container {
   display: flex;
-  gap: 3%;
-  width: 150%;  /* You can adjust this width as needed */
+  gap: 3px;
+  width: 150px;  /* You can adjust this width as needed */
   justify-content: flex-start;
   align-items: center;
 }
 
 .life-icon {
-  width: 45%;  /* Slightly smaller life icons */
-  height: 30%;  /* Slightly smaller life icons */
+  width: 45px;  /* Slightly smaller life icons */
+  height: 30px;  /* Slightly smaller life icons */
 }
 
 .hidden-life {
