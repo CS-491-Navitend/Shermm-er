@@ -200,4 +200,3 @@ export class MainMenu extends Scene {
     }
 }
 
-np
