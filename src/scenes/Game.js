@@ -441,19 +441,28 @@ export class Game extends Scene {
     });
 
     // Create the turtle animation sequence
+
+    if (this.anims.exists("turtleSink")) {
+      this.anims.remove("turtleSink");
+    }
+    
+    if (this.anims.exists("turtleRaise")) {
+      this.anims.remove("turtleRaise");
+    }
     this.anims.create({
       key: "turtleSink",
-      frames: [{key: zoneType + "turtleSink1"}, {key: zoneType + "turtleSink2"}, {key: zoneType + "turtleSink3"}],
+      frames: [{key: zoneType + "TurtleSink1"}, {key: zoneType + "TurtleSink2"}, {key: zoneType + "TurtleSink3"}],
       frameRate: 3,
       repeat: 0,
     });
 
     this.anims.create({
       key: "turtleRaise",
-      frames: [{key: zoneType + "turtleSink3"}, {key: zoneType + "turtleSink2"}, {key: zoneType + "turtleSink1"}],
+      frames: [{key: zoneType + "TurtleSink3"}, {key: zoneType + "TurtleSink2"}, {key: zoneType + "TurtleSink1"}, {key: this.turtleTexture}],
       frameRate: 3,
       repeat: 0,
     });
+    console.log(zoneType + "Turtle")
 
     const ratsPortal = this.add.rectangle(this.width, roadEnd - this.safeZoneSize / 2, imageWidth, this.safeZoneSize, 0xff0000);
     this.physics.add.existing(ratsPortal, true); 
@@ -691,7 +700,7 @@ export class Game extends Scene {
 
   raiseTurtles() {
     this.sinkingTurtles.getChildren().forEach((turtle) => {
-      this.turtle.play("turtleRaise");
+      turtle.anims.play("turtleRaise");
       turtle.body.allowOverlap = true;
       //turtle.setVisible(true);
       turtle.body.checkCollision.none = false;
