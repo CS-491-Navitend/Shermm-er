@@ -7,7 +7,6 @@ export class Timer {
     this.bombTimerEvent = null; // Bomb timer event
     this.bombTimerPaused = false; 
     this.currentBlockCount = 0;
-    this.block = null;
   }
 
   update() {
@@ -55,10 +54,10 @@ export class Timer {
     }
   //Blocker generation code
   // Ensure the block group is initialized
-  if (!this.block) {
-    this.block = this.game.physics.add.staticGroup();
-    console.log("Block group initialized in Timer.js");
-  }
+  // if (!this.block) {
+  //   this.block = this.game.physics.add.staticGroup();
+  //   console.log("Block group initialized in Timer.js");
+  // }
 
   // // Proceed with blocker generation
   // if (this.timeRemaining % 2 === 0) {

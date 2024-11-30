@@ -86,6 +86,7 @@ export class Game extends Scene {
     this.objectiveTint = null;
     this.max_block = 0;
     this.removeRatChance = 0;
+    this.block = 0;
   }
 
   create(data) {
@@ -184,6 +185,7 @@ export class Game extends Scene {
     const safeZone = this.physics.add.staticGroup();
     const endZone = this.physics.add.staticGroup();
     const waterZone = this.physics.add.staticGroup();
+    this.block = this.physics.add.staticGroup();
 
     //removed for the sake of changing the nature of the way winning works, left in in the event we decide to change it back
     // const filledGoals = this.physics.add.staticGroup();
@@ -551,9 +553,10 @@ export class Game extends Scene {
         turtle.x = -turtle.width / 2;
       }
     })
-
-    if (this.time.now % 2000 < 50) {
+    
+    if (time % 2000 < 50 && this.block.getLength() < this.max_block) { 
       this.gameLogic.generateBlockers(this);
+      console.log("test")
     }
   
   }
