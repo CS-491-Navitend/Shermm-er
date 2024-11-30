@@ -77,5 +77,28 @@
         }
       ]
     }
+    {
+      "levelNumber": 8,
+      "levelMechanic": "Powerup 3",
+      "description": "We'll introduce Powerup 3. This powerup is super helpful, and you'll need it!",
+      "steps": [
+        {
+          "title": "Powerup 3",
+          "text": "Powerup 3 is going to make your life easier. Use it wisely and keep the queue under control."
+        }
+      ]
+    }
+    {
+      "levelNumber": 9,
+      "levelMechanic": "Ulmiate Test",
+      "description": "",
+      "steps": [
+        {
+          "title": "Last Test",
+          "text": "Powerup 2 is going to make your life easier. Use it wisely and keep the queue under control."
+        }
+      ]
+    }
   ]
+  
 }
