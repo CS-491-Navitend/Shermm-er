@@ -19,8 +19,12 @@ import shermieGreen from "/assets/shermieGreen.png";
 import shermieYellow from "/assets/shermieYellow.png";
 import shermieOrange from "/assets/shermieOrange.png";
 import shermiePurple from "/assets/shermiePurple.png";
-import shermieBomb from "/assets/shermieBombSheet.png";
+// import shermieBomb from "/assets/shermieBombSheet.png";
 import shermieToxic from "/assets/shermieToxic.png";
+import bomb1 from "/assets/shermieBomb/bomb1.png";
+import bomb2 from "/assets/shermieBomb/bomb2.png";
+import bomb3 from "/assets/shermieBomb/bomb3.png";
+import bomb4 from "/assets/shermieBomb/bomb4.png";
 
 import life from "/assets/heart.png";
 import death1 from "/assets/death1.png";
@@ -234,10 +238,15 @@ export class Boot extends Scene {
     this.load.image("shermieToxic", shermieToxic);
     this.load.image("life", life);
 
-    this.load.spritesheet("shermieBomb", shermieBomb, {
-          frameWidth: 57,
-          frameHeight: 42
-    });
+    // this.load.spritesheet("shermieBomb", shermieBomb, {
+    //       frameWidth: 57,
+    //       frameHeight: 42
+    // });
+
+    this.load.image("bomb1", bomb1);
+    this.load.image("bomb2", bomb2);
+    this.load.image("bomb3", bomb3);
+    this.load.image("bomb4", bomb4);
 
     this.load.image("lavaLog", lavaLog);
     this.load.image("death1", death1);
@@ -411,15 +420,6 @@ export class Boot extends Scene {
 
     //Font Family
     const font = new FontFaceObserver('Pixel');
-        // font.load().then(() => {
-        //     // console.log('Font loaded successfully!');
-        //    
-        // }).catch(() => {
-        //     console.error('Font failed to load.');
-        // });
-
-
-
   }
 
   create() {

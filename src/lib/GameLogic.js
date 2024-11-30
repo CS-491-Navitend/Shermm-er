@@ -57,6 +57,10 @@ export class GameLogic {
     this.game.shermie.setVelocity(0, 0);
     this.game.shermie.x = this.game.width / 2;
     this.game.shermie.y = this.game.height - this.game.safeZoneSize + this.game.moveDistance / 2;
+
+    if (this.shermieType = "bomb") {
+      this.game.shermie.play("burnFuse"); 
+    }
   }
 
   tryAddShermieSprite() {
