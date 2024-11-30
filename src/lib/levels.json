@@ -67,8 +67,8 @@
       "number_of_logs": 3,
 
 
-      "turtle_texture": [ "turtleShort", "turtleLong" ],
-      "turtles_Forward_texture": [ "turtleShortForward", "turtleLongForward" ],
+      "turtle_texture": ["turtleLong" ],
+      "turtles_Forward_texture": [ "turtleLong"],
       "turtle_spacing": [ 250, 350, 400 ],
 
       "turtle_speed_multiplier": 0.75,

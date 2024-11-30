@@ -44,15 +44,10 @@ import waterGoal from "/assets/WaterLevel/waterGoal.png";
 import ShortLog from "/assets/WaterLevel/ShortLog.png";
 import LongLog from "/assets/WaterLevel/LongLog.png";
 import turtle from "/assets/WaterLevel/turtle.png";
-import turtleforward from "/assets/WaterLevel/turtleforward.png";
-import turtleShort from "/assets/WaterLevel/turtlesShort.png";
 import turtleLong from "/assets/WaterLevel/turtlesLong.png";
-import turtleShortForward from "/assets/WaterLevel/turtlesShortForward.png";
-import turtleLongForward from "/assets/WaterLevel/turtlesLongForward.png";
-import turtleShortSink1 from "/assets/WaterLevel/turtlesShortSink1.png";
-import turtleLongSink1 from "/assets/WaterLevel/turtlesLongSink1.png";
-import turtleShortSink2 from "/assets/WaterLevel/turtlesShortSink2.png";
-import turtleLongSink2 from "/assets/WaterLevel/turtlesLongSink2.png";
+import waterTurtleSink1 from "/assets/WaterLevel/waterTurtleSink1.png";
+import waterTurtleSink2 from "/assets/WaterLevel/waterTurtleSink2.png";
+import waterTurtleSink3 from "/assets/WaterLevel/waterTurtleSink3.png"; 
 import waterObjective from "/assets/WaterLevel/waterObjective.png";
 
 //Import Ice assets
@@ -219,15 +214,7 @@ export class Boot extends Scene {
     this.load.image("ShortLog", ShortLog);
     this.load.image("LongLog", LongLog);
     this.load.image("turtle", turtle);
-    this.load.image("turtleforward", turtleforward);
-    this.load.image("turtleShort", turtleShort);
     this.load.image("turtleLong", turtleLong);
-    this.load.image("turtleShortForward", turtleShortForward);
-    this.load.image("turtleLongForward", turtleLongForward);
-    this.load.image("turtleShortSink1", turtleShortSink1);
-    this.load.image("turtleLongSink1", turtleLongSink1);
-    this.load.image("turtleShortSink2", turtleShortSink2);
-    this.load.image("turtleLongSink2", turtleLongSink2);
     this.load.image("shermie", shermie);
     this.load.image("shermieRed", shermieRed);
     this.load.image("shermieBlue", shermieBlue);
@@ -260,6 +247,10 @@ export class Boot extends Scene {
     this.load.image("selfService", selfService);
 
     // turtleSink assets
+    this.load.image("waterTurtleSink1", waterTurtleSink1);
+    this.load.image("waterTurtleSink2", waterTurtleSink2);
+    this.load.image("waterTurtleSink3", waterTurtleSink3);
+    
     this.load.image("iceTurtleSink1", iceTurtleSink1);
     this.load.image("iceTurtleSink2", iceTurtleSink2);
     this.load.image("iceTurtleSink3", iceTurtleSink3);
