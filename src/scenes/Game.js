@@ -198,6 +198,7 @@ export class Game extends Scene {
     const endZone = this.physics.add.staticGroup();
     const waterZone = this.physics.add.staticGroup();
     this.block = this.physics.add.staticGroup();
+    this.goalColor = this.physics.add.staticGroup();
 
     //removed for the sake of changing the nature of the way winning works, left in in the event we decide to change it back
     // const filledGoals = this.physics.add.staticGroup();
@@ -611,13 +612,19 @@ export class Game extends Scene {
     this.shermie.setData("isToxic", false); 
     this.isToxic = false;
 
-    // this.shermieType = this.shermieArray[Math.floor(Math.random() * this.shermieArray.length)];//Randomly select shermie type
+
+    this.shermieType = this.shermieArray[Math.floor(Math.random() * this.shermieArray.length)];//Randomly select shermie type
     // this.shermieType = "toxic"
     // this.shermieType = "colored"
-    this.shermieType = "bomb"
+    //this.shermieType = "bomb"
 
     if (!this.isBomb) {
         this.bombTimerUI.style.display = "none";
+
+
+    this.shermieType = "colored";
+      if (!this.isBomb) {
+          this.bombTimerUI.style.display = "none";
     }
     if(this.shermieType == "normal"){//Default
       this.shermieTexture = "shermie";
@@ -627,12 +634,15 @@ export class Game extends Scene {
       this.colorArray = this.getColors();
       this.shermieColor = this.colorArray[0];//Shermie Comparison Code
       this.shermieTexture = this.colorArray[1];//Shermie sprite color
-      this.objectiveTint = this.colorArray[2];//Objective zone tint - TODO - Change this to different textures. Functionality handled in goal zone generation logic.
+      const rectangleColor = this.colorArray[2];
       this.shermie.setData("color", this.shermieColor);
 
       let randomGoal = Phaser.Utils.Array.GetRandom(this.objectiveZone.getChildren());
       randomGoal.setData("color", this.shermieColor);
-      randomGoal.setTint(this.objectiveTint);
+      let goalRect = this.add.rectangle(randomGoal.x + randomGoal.width / 4, randomGoal.y + randomGoal.height / 4, randomGoal.width / 4, randomGoal.height / 4, rectangleColor);
+      goalRect.setDepth(2);
+      this.physics.add.existing(goalRect, true);
+      this.goalColor.add(goalRect);
     }
 
     else if (this.shermieType == "bomb") {
@@ -649,6 +659,7 @@ export class Game extends Scene {
     }
     this.shermie.setTexture(this.shermieTexture);//Set texture 
   }
+
 
   loseLife() {
     if (this.isInvincible || this.isAnimating) {
@@ -679,6 +690,9 @@ export class Game extends Scene {
     this.shermie.setData("color", null); // Reset Shermie color
     this.isBomb = false; // Reset bomb flag
     this.timer.getBomb(this.shermie);
+    this.goalColor.getChildren().forEach(child => {
+      child.destroy();
+    })
     this.createShermie(); // Spawn the next Shermie
   }
 
