@@ -86,6 +86,7 @@ export class Game extends Scene {
     this.objectiveTint = null;
     this.max_block = 0;
     this.removeRatChance = 0;
+    this.block = 0;
   }
 
   create(data) {
@@ -184,9 +185,10 @@ export class Game extends Scene {
     const safeZone = this.physics.add.staticGroup();
     const endZone = this.physics.add.staticGroup();
     const waterZone = this.physics.add.staticGroup();
+    this.block = this.physics.add.staticGroup();
 
     //removed for the sake of changing the nature of the way winning works, left in in the event we decide to change it back
-    const filledGoals = this.physics.add.staticGroup();
+    // const filledGoals = this.physics.add.staticGroup();
 
     // Define lane boundaries for water lanes
     const laneWidth = this.moveDistance;
@@ -385,9 +387,9 @@ export class Game extends Scene {
           if (this.physics.overlap(shermie, blockers)) {
             this.loseLife();
             return; 
-          }if (!this.physics.overlap(shermie, this.filledGoals) && (this.shermieType == "normal" || this.shermieType == "bomb" || this.shermieType == "toxic")) {
+          }if ((this.shermieType == "normal" || this.shermieType == "bomb" || this.shermieType == "toxic")) {
             this.goalCollision();
-          } else if (!this.physics.overlap(shermie, this.filledGoals) && this.shermieType == "colored") {
+          } else if ( this.shermieType == "colored") {
             if (objective.getData("color") == this.shermie.getData("color")) {
               this.bonusFlag = true;
             } else {
@@ -410,7 +412,7 @@ export class Game extends Scene {
       }
     }, null, this);
 
-    this.physics.add.overlap(this.shermie, filledGoals, this.loseLife, null, this);
+    // this.physics.add.overlap(this.shermie, filledGoals, this.loseLife, null, this);
     this.physics.add.overlap(this.shermie, endZone, () => {
       this.shermie.setVelocity(0, 0);
 
@@ -457,6 +459,19 @@ export class Game extends Scene {
         this.createShermie();
       } 
     }, null, this);
+
+    // console.log("=== Physics Groups Status ===");
+    // console.log("Objective Zone length:", this.objectiveZone?.getLength() || 0);
+    // console.log("Safe Zone length:", this.safeZone?.getLength() || 0);
+    // console.log("End Zone length:", this.endZone?.getLength() || 0);
+    // console.log("Vehicles group length:", this.vehicles?.getLength() || 0);
+    // console.log("Logs group length:", this.logs?.getLength() || 0);
+    // console.log("Turtles group length:", this.turtles?.getLength() || 0);
+    // console.log("Sinking Turtles group length:", this.sinkingTurtles?.getLength() || 0);
+    // console.log("Filled Goals group length:", this.filledGoals?.getLength() || 0);
+    // console.log("Block group length (if applicable):", this.timer?.block?.getLength() || 0);
+    // console.log("=== End of Physics Groups Status ===");
+
     
   };
 
@@ -538,6 +553,10 @@ export class Game extends Scene {
         turtle.x = -turtle.width / 2;
       }
     })
+
+    if (this.timer.timeRemaining % 2 === 0) { 
+      this.gameLogic.generateBlockers(this)
+    }
   
   }
 
