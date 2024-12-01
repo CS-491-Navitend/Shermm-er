@@ -1,53 +1,7 @@
 {
   "levels": [
     {
-
-      "time": 10000,
-
-      "water_zone_type": " ",
-
-      "car_texture": [ "car1", "car2", "car3", "tractor" ],
-      "cars_Forward_texture": [ "car1forward", "car2forward", "car3forward" ],
-      "car_spacing": [ 150, 200, 250 ],
-      "car_speed_multiplier": 1,
-      "number_of_cars": 0,
-
-
-      "log_texture": [ "LongLog", "ShortLog" ],
-      "log_spacing": [ 150, 200, 250 ],
-      "log_speed_multiplier": 1,
-      "number_of_logs": 10,
-
-      "turtle_texture": [ "turtleShort", "turtleLong" ],
-      "turtles_Forward_texture": [ "turtleShortForward", "turtleLongForward" ],
-      "turtle_spacing": [ 250, 350, 400 ],
-      "turtle_speed_multiplier": 1,
-      "turtle_sink_multiplier": 1,
-      "number_of_turtles": 10,
-
-      "goal_zone_block": "goalBlock",
-      "max_blocks": 1,
-
-      "number_of_lives": 5,
-
-      "powerups": [ 0, 0, 0, 0 ],
-
-      "block_percentage": 0.2,
-      
-      "advance_number": 3,
-      "queue_chance": 0.5,
-      "score_bonus": 1,
-
-      "bomb_spawn_rate": 0,
-      "bomb_timer": 50000, 
-
-      "toxic_spawn_rate": 0,
-      "try_remove_rat": 0.5
-      
-    },
-
-    {
-      "time": 130,
+      "time": 13000,
 
       "water_zone_type": "water",
 
@@ -83,7 +37,8 @@
 
       "block_percentage": 1,
 
-      "powerups": [ 0, 0, 0, 0 ],
+      "powerups": [ 1, 1, 1 ],
+      "power_up_spawn_rate": 3000,
 
       "advance_number": 10,
       "queue_chance": 0.5,
@@ -131,7 +86,7 @@
       "number_of_lives": 5,
       "goal_count": 5,
       
-      "powerups": [ 0, 0, 0, 0 ],
+      "powerups": [ 0, 0, 0 ],
 
       "block_percentage": 0.2,
 
@@ -180,7 +135,7 @@
       "number_of_lives": 5,
       "advance_number": 5,
 
-      "powerups": [ 0, 0, 0, 0 ],
+      "powerups": [ 0, 0, 0 ],
 
       "block_percentage": 0.3,
       "queue_chance": 0.5,
@@ -227,7 +182,7 @@
 
       "block_percentage": 0.4,
 
-      "powerups": [ 0, 0, 0, 0 ],
+      "powerups": [ 0, 0, 0 ],
 
       "advance_number": 5,
       "queue_chance": 0.5,
@@ -274,7 +229,7 @@
       "number_of_lives": 5,
       "goal_count": 3,
 
-      "powerups": [ 0, 0, 0, 0 ],
+      "powerups": [ 0, 0, 0 ],
 
       "block_percentage": 0.5,
 
@@ -322,7 +277,7 @@
       "number_of_lives": 5,
       "goal_count": 3,
 
-      "powerups": [ 0, 0, 0, 0 ],
+      "powerups": [ 0, 0, 0 ],
 
       "block_percentage": 0.6,
 
@@ -413,7 +368,7 @@
 
       "number_of_lives": 3,
 
-      "powerups": [ 0, 0, 0, 0 ],
+      "powerups": [ 0, 0, 0 ],
       "block_percentage": 0.8,
       "advance_number": 5,
       "queue_chance": 0.5,
@@ -457,7 +412,7 @@
 
       "number_of_lives": 3,
 
-      "powerups": [ 0, 0, 0, 0 ],
+      "powerups": [ 0, 0, 0 ],
 
       "block_percentage": 0.9, 
 
