@@ -10,7 +10,7 @@
       "cars_Forward_texture": [ "car1forward", "car2forward", "car3forward" ],
       "car_spacing": [ 150, 200, 250 ],
       "car_speed_multiplier": 1,
-      "number_of_cars": 0,
+      "number_of_cars": 1.5,
 
 
       "log_texture": [ "LongLog", "ShortLog" ],
@@ -57,7 +57,7 @@
       "car_spacing": [ 150, 200, 250 ],
 
       "car_speed_multiplier": 0.85,
-      "number_of_cars": 0,
+      "number_of_cars": 1.5,
 
 
       "log_texture": [ "LongLog", "ShortLog" ],
@@ -110,7 +110,7 @@
 
       "car_speed_multiplier": 0.95,
 
-      "number_of_cars": 0,
+      "number_of_cars": 1.5,
 
       "log_texture": [ "iceLog", "iceberg" ],
 
