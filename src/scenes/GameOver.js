@@ -126,9 +126,10 @@ export class GameOver extends Scene {
         this.isDebounced = true;
         const selectedButton = this.buttons[this.selectedButtonIndex];
         if (selectedButton.text === 'Press R to Restart') {
+            console.log("starting same level");
             this.scene.stop("GameOver");
             this.game.turtlesAreSunk = false;
-            this.game.inWater = false
+            this.game.inWater = false;
             this.scene.start("Game", { level: this.level });
         } else if (selectedButton.text === 'Back To Main Menu') {
             this.scene.start("MainMenu");
