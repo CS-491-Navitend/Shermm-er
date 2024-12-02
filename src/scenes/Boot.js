@@ -19,8 +19,12 @@ import shermieGreen from "/assets/shermieGreen.png";
 import shermieYellow from "/assets/shermieYellow.png";
 import shermieOrange from "/assets/shermieOrange.png";
 import shermiePurple from "/assets/shermiePurple.png";
-import shermieBomb from "/assets/shermieBombSheet.png";
+// import shermieBomb from "/assets/shermieBombSheet.png";
 import shermieToxic from "/assets/shermieToxic.png";
+import bomb1 from "/assets/shermieBomb/bomb1.png";
+import bomb2 from "/assets/shermieBomb/bomb2.png";
+import bomb3 from "/assets/shermieBomb/bomb3.png";
+import bomb4 from "/assets/shermieBomb/bomb4.png";
 
 import life from "/assets/heart.png";
 import death1 from "/assets/death1.png";
@@ -40,15 +44,10 @@ import waterGoal from "/assets/WaterLevel/waterGoal.png";
 import ShortLog from "/assets/WaterLevel/ShortLog.png";
 import LongLog from "/assets/WaterLevel/LongLog.png";
 import turtle from "/assets/WaterLevel/turtle.png";
-import turtleforward from "/assets/WaterLevel/turtleforward.png";
-import turtleShort from "/assets/WaterLevel/turtlesShort.png";
 import turtleLong from "/assets/WaterLevel/turtlesLong.png";
-import turtleShortForward from "/assets/WaterLevel/turtlesShortForward.png";
-import turtleLongForward from "/assets/WaterLevel/turtlesLongForward.png";
-import turtleShortSink1 from "/assets/WaterLevel/turtlesShortSink1.png";
-import turtleLongSink1 from "/assets/WaterLevel/turtlesLongSink1.png";
-import turtleShortSink2 from "/assets/WaterLevel/turtlesShortSink2.png";
-import turtleLongSink2 from "/assets/WaterLevel/turtlesLongSink2.png";
+import waterTurtleSink1 from "/assets/WaterLevel/waterTurtleSink1.png";
+import waterTurtleSink2 from "/assets/WaterLevel/waterTurtleSink2.png";
+import waterTurtleSink3 from "/assets/WaterLevel/waterTurtleSink3.png"; 
 import waterObjective from "/assets/WaterLevel/waterObjective.png";
 
 //Import Ice assets
@@ -215,15 +214,7 @@ export class Boot extends Scene {
     this.load.image("ShortLog", ShortLog);
     this.load.image("LongLog", LongLog);
     this.load.image("turtle", turtle);
-    this.load.image("turtleforward", turtleforward);
-    this.load.image("turtleShort", turtleShort);
     this.load.image("turtleLong", turtleLong);
-    this.load.image("turtleShortForward", turtleShortForward);
-    this.load.image("turtleLongForward", turtleLongForward);
-    this.load.image("turtleShortSink1", turtleShortSink1);
-    this.load.image("turtleLongSink1", turtleLongSink1);
-    this.load.image("turtleShortSink2", turtleShortSink2);
-    this.load.image("turtleLongSink2", turtleLongSink2);
     this.load.image("shermie", shermie);
     this.load.image("shermieRed", shermieRed);
     this.load.image("shermieBlue", shermieBlue);
@@ -234,10 +225,15 @@ export class Boot extends Scene {
     this.load.image("shermieToxic", shermieToxic);
     this.load.image("life", life);
 
-    this.load.spritesheet("shermieBomb", shermieBomb, {
-          frameWidth: 57,
-          frameHeight: 42
-    });
+    // this.load.spritesheet("shermieBomb", shermieBomb, {
+    //       frameWidth: 57,
+    //       frameHeight: 42
+    // });
+
+    this.load.image("bomb1", bomb1);
+    this.load.image("bomb2", bomb2);
+    this.load.image("bomb3", bomb3);
+    this.load.image("bomb4", bomb4);
 
     this.load.image("lavaLog", lavaLog);
     this.load.image("death1", death1);
@@ -251,6 +247,10 @@ export class Boot extends Scene {
     this.load.image("selfService", selfService);
 
     // turtleSink assets
+    this.load.image("waterTurtleSink1", waterTurtleSink1);
+    this.load.image("waterTurtleSink2", waterTurtleSink2);
+    this.load.image("waterTurtleSink3", waterTurtleSink3);
+    
     this.load.image("iceTurtleSink1", iceTurtleSink1);
     this.load.image("iceTurtleSink2", iceTurtleSink2);
     this.load.image("iceTurtleSink3", iceTurtleSink3);
@@ -411,15 +411,6 @@ export class Boot extends Scene {
 
     //Font Family
     const font = new FontFaceObserver('Pixel');
-        // font.load().then(() => {
-        //     // console.log('Font loaded successfully!');
-        //    
-        // }).catch(() => {
-        //     console.error('Font failed to load.');
-        // });
-
-
-
   }
 
   create() {

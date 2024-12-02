@@ -1,7 +1,54 @@
 {
   "levels": [
     {
-      "time": 13000,
+      "time": 10000,
+
+      "water_zone_type": " ",
+
+      "car_texture": [ "car1", "car2", "car3", "tractor" ],
+      "cars_Forward_texture": [ "car1forward", "car2forward", "car3forward" ],
+      "car_spacing": [ 150, 200, 250 ],
+      "car_speed_multiplier": 1,
+      "number_of_cars": 1.5,
+
+
+      "log_texture": [ "LongLog", "ShortLog" ],
+      "log_spacing": [ 150, 200, 250 ],
+      "log_speed_multiplier": 1,
+      "number_of_logs": 10,
+
+      "turtle_texture": [ "turtleShort", "turtleLong" ],
+      "turtles_Forward_texture": [ "turtleShortForward", "turtleLongForward" ],
+      "turtle_spacing": [ 250, 350, 400 ],
+      "turtle_speed_multiplier": 1,
+      "turtle_sink_multiplier": 1,
+      "number_of_turtles": 10,
+
+      "goal_zone_block": "goalBlock",
+      "max_blocks": 1,
+
+      "number_of_lives": 5,
+
+      "powerups": [ 0, 0, 0, 0 ],
+
+      "block_percentage": 0.2,
+      
+      "advance_number": 10,
+      "queue_chance": 0.5,
+      "score_bonus": 1,
+
+      "bomb_spawn_rate": 0,
+      "bomb_timer": 50000, 
+
+      "toxic_spawn_rate": 0,
+
+      "try_remove_rat": 0.5
+
+    },
+
+    {
+      "time": 130,
+
 
       "water_zone_type": "water",
 
@@ -20,8 +67,8 @@
       "number_of_logs": 3,
 
 
-      "turtle_texture": [ "turtleShort", "turtleLong" ],
-      "turtles_Forward_texture": [ "turtleShortForward", "turtleLongForward" ],
+      "turtle_texture": ["turtleLong" ],
+      "turtles_Forward_texture": [ "turtleLong"],
       "turtle_spacing": [ 250, 350, 400 ],
 
       "turtle_speed_multiplier": 0.75,
@@ -42,13 +89,15 @@
 
       "advance_number": 10,
       "queue_chance": 0.5,
-      "score_bonus": 10,
+      "score_bonus": 1,
 
       "bomb_spawn_rate": 1,
       "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
+
       "try_remove_rat": 0.5
+     
     },
 
     {
@@ -62,7 +111,7 @@
 
       "car_speed_multiplier": 0.95,
 
-      "number_of_cars": 0,
+      "number_of_cars": 1.5,
 
       "log_texture": [ "iceLog", "iceberg" ],
 
@@ -88,9 +137,9 @@
       
       "powerups": [ 0, 0, 0 ],
 
-      "block_percentage": 0.2,
+      "block_percentage": 1,
 
-      "advance_number": 3,
+      "advance_number": 10,
       "queue_chance": 0.5,
       "score_bonus": 1,
 
@@ -98,7 +147,9 @@
       "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
+
       "try_remove_rat": 0.5
+     
 
     },
 
@@ -133,7 +184,7 @@
       "max_blocks": 1,
 
       "number_of_lives": 5,
-      "advance_number": 5,
+      "advance_number": 10,
 
       "powerups": [ 0, 0, 0 ],
 
@@ -145,7 +196,9 @@
       "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
+
       "try_remove_rat": 0.5
+     
     },
 
     {
@@ -184,7 +237,7 @@
 
       "powerups": [ 0, 0, 0 ],
 
-      "advance_number": 5,
+      "advance_number": 10,
       "queue_chance": 0.5,
       "score_bonus": 2,
 
@@ -192,7 +245,9 @@
       "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
+      
       "try_remove_rat": 0.5
+     
 
     },
 
@@ -233,7 +288,7 @@
 
       "block_percentage": 0.5,
 
-      "advance_number": 3,
+      "advance_number": 10,
       "queue_chance": 0.5,
       "score_bonus": 2,
 
@@ -241,7 +296,9 @@
       "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
+      
       "try_remove_rat": 0.5
+     
     },
 
 
@@ -281,7 +338,7 @@
 
       "block_percentage": 0.6,
 
-      "advance_number": 3,
+      "advance_number": 10,
       "queue_chance": 0.5,
       "score_bonus": 2,
 
@@ -289,7 +346,9 @@
       "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
+      
       "try_remove_rat": 0.5
+     
       
     },
 
@@ -327,7 +386,7 @@
       "powerups": [0, 0, 0, 0],
       "block_percentage": 0.7,
 
-      "advance_number": 4,
+      "advance_number": 10,
       "queue_chance": 0.5,
       "score_bonus": 2,
 
@@ -335,7 +394,9 @@
       "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
+      
       "try_remove_rat": 0.5
+     
       
     },
 
@@ -370,7 +431,7 @@
 
       "powerups": [ 0, 0, 0 ],
       "block_percentage": 0.8,
-      "advance_number": 5,
+      "advance_number": 10,
       "queue_chance": 0.5,
       "score_bonus": 2,
 
@@ -378,7 +439,9 @@
       "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
+      
       "try_remove_rat": 0.5
+     
     },
 
     {
@@ -416,7 +479,7 @@
 
       "block_percentage": 0.9, 
 
-      "advance_number": 3,
+      "advance_number": 10,
       "queue_chance": 0.5,
       "score_bonus": 2,
 
@@ -424,7 +487,9 @@
       "bomb_timer": 50000, 
 
       "toxic_spawn_rate": 1,
+      
       "try_remove_rat": 0.5
+     
     }
   ]
 }

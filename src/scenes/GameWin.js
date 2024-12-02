@@ -9,6 +9,7 @@ export class GameWin extends Scene {
 
   create(data) {
     document.getElementById('ui-bar').style.display = 'none';
+    document.getElementById('rats-container').style.display = 'none';
     
     const gameLogic = new GameLogic(data["game"]);
     // Display win message
