@@ -399,6 +399,10 @@ export class Game extends Scene {
     
           powerUp = this.add.circle(powerUp_x, powerUp_y, powerUp_r, powerUp_c);
     
+          if (!powerUp) {
+            return;
+          }
+
           // add collision to the circle powerUp and shermie
           this.physics.add.existing(powerUp, true);
           this.physics.add.overlap(
@@ -732,7 +736,7 @@ export class Game extends Scene {
   createShermie(){
     this.shermie.setData("isToxic", false); 
     this.isToxic = false;
-
+    this.isInvincible = false;
     // console.log("createShermie has been called")
 
 
