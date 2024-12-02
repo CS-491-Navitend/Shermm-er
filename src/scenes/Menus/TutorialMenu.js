@@ -44,17 +44,78 @@ export class TutorialMenu extends Scene {
                 font: '28px Arial',
                 fill: '#ffcc00'
             });
-            this.yPosition += 30;
+            this.yPosition += 60;
             this.add.text(100, this.yPosition, step.text, {
                 font: '20px Arial',
                 fill: '#ffffff'
             });
-            this.yPosition += 60; // Add space between steps
+            this.yPosition += 100; // Add space between steps
         });
 
 
+        switch (this.level) {
+            case 1:
+                this.add.image(600,500, "pasture_end");
+                this.add.image(500, 500, 'pasture');
+                this.add.image(400, 500, 'pasture');
+                this.add.image(300, 500, 'pasture');
+                this.add.image(490, 500,"shermie");
+                this.add.image(390, 500,"shermie");
+                this.add.image(290, 500,"shermie");
+                this.add.image(590, 500,"shermie");
+                break;
+            case 2:
+                this.add.image(500, 500, 'shermieBlue');
+                this.add.image(400, 500, 'shermieRed'); 
+                this.add.image(600, 500, 'shermieGreenFlip');  
+                break;
+            case 3:
+                this.add.image(390, 500, 'goalBlock');
+                this.add.image(690, 500,"shermie");
+                break;
+            case 4:
+                this.add.image(490, 500,"bomb1");
+                this.add.image(390, 500,"bomb2");
+                this.add.image(290, 500,"bomb3");
+                this.add.image(590, 500,"bomb4");
+                break;
+            case 5:
+                this.add.image(500, 500, 'shermieToxic'); 
+                break;
+            case 6:
+                this.add.image(500, 500, 'invulnerability'); 
+                break;
+            case 7:
+                this.add.image(500, 500, 'antidote'); 
+                break;
+            case 8:
+                this.add.image(500, 500, 'selfService'); 
+                break;
+            case 9:
+                this.add.image(490, 450,"shermie");
+                this.add.image(390, 650,"shermieToxic");
+                this.add.image(290, 400,"bomb3");
+                this.add.image(590, 900,"shermieRedFlip")
+                this.add.image(900, 500, 'selfService'); 
+                this.add.image(200, 500, 'antidote');
+                this.add.image(390, 500, 'goalBlock');
+                this.add.image(200, 800, 'pasture');
+                this.add.image(300, 800, 'pasture');
+                this.add.image(400, 800, 'pasture');
+                this.add.image(370, 800,"shermie");
+                this.add.image(270, 800,"shermie");
+                this.add.image(170, 800,"shermie");
+                this.add.image(470, 800,"shermie");
+                this.add.image(700, 500, 'invulnerability'); 
+                break;
+            default:
+                console.log("No image for this level");
+                break;
+        }
+
+
         // Add "Continue" button
-        this.continueButton = this.add.text(400, this.yPosition + 100, 'Continue', {
+        this.continueButton = this.add.text(500, 700, 'Continue', {
             font: '24px Pixel',
             fill: '#ffffff'
         }).setOrigin(0.5);
