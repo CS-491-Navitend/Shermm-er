@@ -385,92 +385,92 @@ export class Game extends Scene {
     }
     // END ROAD ZONE LOGIC
 
-        // POWER UP LOGIC
-        let powerUpChance = 0;
-        let { powerUp_x, powerUp_y, powerUp_r, powerUp_c, powerUp_kind, powerUpInfo, powerUp } = {};
-        let powerUpTimer = setInterval(() => {
-          powerUpChance = Math.random().toFixed(2) * 100;
-    
-          if (powerUpChance > 50 && this.selfService) {
-            powerUpInfo = this.gameLogic.spawnPowerUp(0);
-          } else if (powerUpChance > 35 && powerUpChance <= 50 && this.cleanseShermie) {
-            powerUpInfo = this.gameLogic.spawnPowerUp(1);
-          } else if (powerUpChance <= 35 && this.superShermie) {
-            powerUpInfo = this.gameLogic.spawnPowerUp(2);
-          } else {
-            console.log("Not spawning a power up.");
-          }
-    
-          if (!powerUpInfo) {
-            return;
-          }
-    
-          // destroy previous powerUp
-          if (powerUp) {
-            powerUp.destroy();
-          }
-    
-          powerUp_x = powerUpInfo[0];
-          powerUp_y = powerUpInfo[1];
-          powerUp_r = powerUpInfo[2];
-          powerUp_c = powerUpInfo[3];
-          powerUp_kind = powerUpInfo[4];
-    
-          powerUp = this.add.circle(powerUp_x, powerUp_y, powerUp_r, powerUp_c);
+    // POWER UP LOGIC
+    let powerUpChance = 0;
+    let { powerUp_x, powerUp_y, powerUp_r, powerUp_c, powerUp_kind, powerUpInfo, powerUp } = {};
+    let powerUpTimer = setInterval(() => {
+      powerUpChance = Math.random().toFixed(2) * 100;
+
+      if (powerUpChance > 50 && this.selfService) {
+        powerUpInfo = this.gameLogic.spawnPowerUp(0);
+      } else if (powerUpChance > 35 && powerUpChance <= 50 && this.cleanseShermie) {
+        powerUpInfo = this.gameLogic.spawnPowerUp(1);
+      } else if (powerUpChance <= 35 && this.superShermie) {
+        powerUpInfo = this.gameLogic.spawnPowerUp(2);
+      } else {
+        console.log("Not spawning a power up.");
+      }
+
+      if (!powerUpInfo) {
+        return;
+      }
+
+      // destroy previous powerUp
+      if (powerUp) {
+        powerUp.destroy();
+      }
+
+      powerUp_x = powerUpInfo[0];
+      powerUp_y = powerUpInfo[1];
+      powerUp_r = powerUpInfo[2];
+      powerUp_c = powerUpInfo[3];
+      powerUp_kind = powerUpInfo[4];
+
+      powerUp = this.add.circle(powerUp_x, powerUp_y, powerUp_r, powerUp_c);
+
+      // add collision to the circle powerUp and shermie
+      this.physics.add.existing(powerUp, true);
+      this.physics.add.overlap(
+        this.shermie,
+        powerUp,
+        () => {
+          if (powerUp_kind === 0) {
+            this.gameLogic.tryRemoveShermieSprite();
+          } else if (powerUp_kind === 1) {
+            // cleanse shermie
+            if (this.isBomb) {
+              this.isBomb = false;
+              this.shermieTexture = "shermie";
+              this.shermie.setTexture(this.shermieTexture);
+            }
+
+            if (this.isToxic) {
+              this.isToxic = false;
+              this.shermieTexture = "shermie";
+              this.shermie.setTexture(this.shermieTexture);
+            }
       
-          // add collision to the circle powerUp and shermie
-          this.physics.add.existing(powerUp, true);
-          this.physics.add.overlap(
-            this.shermie,
-            powerUp,
-            () => {
-              if (powerUp_kind === 0) {
-                this.gameLogic.tryRemoveShermieSprite();
-              } else if (powerUp_kind === 1) {
-                // cleanse shermie
-                if (this.isBomb) {
-                  this.isBomb = false;
-                  this.shermieTexture = "shermie";
-                  this.shermie.setTexture(this.shermieTexture);
-                }
-    
-                if (this.isToxic) {
-                  this.isToxic = false;
-                  this.shermieTexture = "shermie";
-                  this.shermie.setTexture(this.shermieTexture);
-                }
-          
 
-                if(this.shermieType == "colored"){//Colored
-                  this.colorArray = this.getColors();
-                  this.shermieColor = this.colorArray[0];//Shermie Comparison Code
-                  this.shermieTexture = this.colorArray[1];//Shermie sprite color
-                  this.objectiveTint = this.colorArray[2];//Objective zone tint - TODO - Change this to different textures. Functionality handled in goal zone generation logic.
-                  this.shermie.setData("color", this.shermieColor);
-                }
+            if(this.shermieType == "colored"){//Colored
+              this.colorArray = this.getColors();
+              this.shermieColor = this.colorArray[0];//Shermie Comparison Code
+              this.shermieTexture = this.colorArray[1];//Shermie sprite color
+              this.objectiveTint = this.colorArray[2];//Objective zone tint - TODO - Change this to different textures. Functionality handled in goal zone generation logic.
+              this.shermie.setData("color", this.shermieColor);
+            }
 
-                
-                this.shermie.setData("isToxic", false);
-                this.shermie.setData("isBomb", false);
-                
-              } else if (powerUp_kind === 2) {
-                // super shermie
-                // disable collisions with vehicles
-                this.isInvincible = true;
-              }
-    
-              powerUp.destroy();
-            },
-            null,
-            this
-          );
-    
-          // for development
-          // clearInterval(powerUpTimer);
-    
-        }, levels[data["level"]]["power_up_spawn_rate"] ? levels[data["level"]]["power_up_spawn_rate"] : 5000);
-    
-        // END POWER UP LOGIC
+            
+            this.shermie.setData("isToxic", false);
+            this.shermie.setData("isBomb", false);
+            
+          } else if (powerUp_kind === 2) {
+            // super shermie
+            // disable collisions with vehicles
+            this.isInvincible = true;
+          }
+
+          powerUp.destroy();
+        },
+        null,
+        this
+      );
+
+      // for development
+      // clearInterval(powerUpTimer);
+
+    }, levels[data["level"]]["power_up_spawn_rate"] ? levels[data["level"]]["power_up_spawn_rate"] : 5000);
+
+    // END POWER UP LOGIC
 
     // Overlap detection for safe zone
     this.physics.add.overlap(
