@@ -77,12 +77,12 @@
       "number_of_turtles": 3,
 
       "goal_zone_block": "goalBlock",
-      "max_blocks": 2,
+      "max_blocks": 1,
 
       "number_of_lives": 5,
       "goal_count": 5,
 
-      "block_percentage": 1,
+      "block_percentage": 0.5,
 
       "powerups": [ 1, 1, 1 ],
       "power_up_spawn_rate": 3000,

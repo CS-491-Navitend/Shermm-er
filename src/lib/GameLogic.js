@@ -4,24 +4,24 @@ export class GameLogic {
   }
 
   goal() {
-    if(!this.game.isToxic){
+    if (!this.game.isToxic) {
       if (this.game.bonusFlag && !this.game.isToxic) {//Check to see if different color goal zone was hit
         this.game.goalCount += 1 + this.game.bonusScore;
       } else {
         this.game.goalCount++;
       }
-    }else{
-      if(this.game.goalCount > 0){
+    } else {
+      if (this.game.goalCount > 0) {
         this.game.goalCount--;
-      }else{
+      } else {
         this.game.goalCount = 0;
       }
     }
-    if(this.game.goalCount < this.game.advanceNumber) {
+    if (this.game.goalCount < this.game.advanceNumber) {
       this.game.createShermie();
       this.resetPlayer();
     }
-    else{
+    else {
       this.win();
     }
     this.tryRemoveShermieSprite();
@@ -38,17 +38,17 @@ export class GameLogic {
 
     this.game.resetCount++;
     if (this.game.lives < 1) {
-        this.gameOver();
-        this.game.lives = 3;
+      this.gameOver();
+      this.game.lives = 3;
     }
     this.resetPlayer();
-}
+  }
 
   gameOver() {
-    this.game.goalCount=0;
+    this.game.goalCount = 0;
     this.game.playing = false;
     this.game.scene.start("GameOver", { game: this.game });
-    
+
   }
 
   resetPlayer() {
@@ -59,15 +59,15 @@ export class GameLogic {
     this.game.shermie.y = this.game.height - this.game.safeZoneSize + this.game.moveDistance / 2;
 
     if (this.game.shermieType == "bomb") {
-      this.game.shermie.play("burnFuse"); 
+      this.game.shermie.play("burnFuse");
     }
   }
 
   tryAddShermieSprite() {
     // Check if there's room to add another sprite
     if (this.game.spritePlacementX < 0) {
-        this.gameOver();
-        return;
+      this.gameOver();
+      return;
     }
     this.newShermie = this.game.add.sprite(this.game.spritePlacementX, this.game.boundarySpriteTexture.y, 'shermie');
     this.newShermie.setDisplaySize(this.game.shermie.width, this.game.shermie.height);
@@ -77,22 +77,22 @@ export class GameLogic {
   tryRemoveShermieSprite() {
     // Check if there are any sprites to remove
     if (this.shermieSprites != this.game.boundarySpriteTexture.x + this.game.boundarySpriteTexture.displayWidth / 2 - this.game.shermie.width) {
-        if (this.newShermie) {
-            this.newShermie.destroy(); 
-            if( this.game.spritePlacementX < this.game.boundarySpriteTexture.x + this.game.boundarySpriteTexture.displayWidth / 2 - this.game.shermie.width){
-              this.game.spritePlacementX += this.game.shermie.width;
-            }
-        } 
+      if (this.newShermie) {
+        this.newShermie.destroy();
+        if (this.game.spritePlacementX < this.game.boundarySpriteTexture.x + this.game.boundarySpriteTexture.displayWidth / 2 - this.game.shermie.width) {
+          this.game.spritePlacementX += this.game.shermie.width;
+        }
+      }
     } else {
-        return;
+      return;
     }
   }
 
-  nextLevel(){
+  nextLevel() {
     this.game.goalCount = 0;
     this.game.level += 1;
     if (this.game.level < this.game.getNumberOfLevels()) {
-      this.game.scene.start("TutorialMenu", {level: this.game.level})
+      this.game.scene.start("TutorialMenu", { level: this.game.level })
       //this.game.scene.start("Game", { level: this.game.level });
     } else {
       this.game.scene.start("Credits");
@@ -111,30 +111,30 @@ export class GameLogic {
 
   generateBlockers(game) {
     if (!game.block) {
-      game.block = game.physics.add.staticGroup(); 
+      game.block = game.physics.add.staticGroup();
       console.log("Block group initialized in GameLogic.js");
     }
-  
-    if (game.block.getLength() < game.max_block) {
-      const zones = game.objectiveZone.getChildren(); 
-  
-      if (zones.length > 0) {
-        const eligibleZones = zones.filter(zone => !zone.getData("color")); 
-        if (eligibleZones.length > 0) {
-          const randomZone = Phaser.Utils.Array.GetRandom(eligibleZones); 
-          const newBlock = game.add.sprite(randomZone.x, randomZone.y, "goalBlock");
-          newBlock.setDepth(10); 
-          game.physics.add.existing(newBlock, true);
-          game.block.add(newBlock); 
-  
-          game.time.delayedCall(5000, () => {
-            if (newBlock) {
-              newBlock.destroy();
-            }
-          });
+    // if (this.timeRemaining % 5 === 0) {
+      if (game.block.getLength() < game.max_block) {
+        const zones = game.objectiveZone.getChildren();
+        if (zones.length > 0) {
+          const eligibleZones = zones.filter(zone => !zone.getData("color"));
+          if (eligibleZones.length > 0) {
+            const randomZone = Phaser.Utils.Array.GetRandom(eligibleZones);
+            const newBlock = game.add.sprite(randomZone.x, randomZone.y, "goalBlock");
+            newBlock.setDepth(10);
+            game.physics.add.existing(newBlock, true);
+            game.block.add(newBlock);
+
+            game.time.delayedCall(5000, () => {
+              if (newBlock) {
+                newBlock.destroy();
+              }
+            });
+          }
         }
       }
-    }
+    //}
   }
 
 
@@ -190,7 +190,7 @@ export class GameLogic {
     return [x, y, radius, color, power];
   }
 
-  
+
 }
 
 
