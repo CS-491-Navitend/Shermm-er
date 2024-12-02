@@ -7,7 +7,7 @@
       "steps": [
         {
           "title": "Introducing the Queue",
-          "text": "As tickets come in, the dispatcher must get them to technicians. If you get too behind, it'll spell trouble!"
+          "text": "As tickets come in, the dispatcher must assign them to technicians. If the queue fills up and you fall behind, it will cause a game over!"
         }
       ]
     },
@@ -18,87 +18,86 @@
       "steps": [
         {
           "title": "Color-Coding Tickets",
-          "text": "Make sure the color shermie reach the color goal, to score points"
+          "text": "When Shermie is assigned a specific color. Make sure that it reach the corresponding color to score bonus points."
         }
       ]
     },
     {
       "levelNumber": 3,
       "levelMechanic": "Gates",
-      "description": "We'll introduce Gates. Sometimes a tech is out of office and you can't get a ticket to them.",
+      "description": "We'll introduce Gates. Sometimes a tech is out of office, and you can't send a ticket to them.",
       "steps": [
         {
-          "title": "Gates barriers",
-          "text": "Some goal zones would be closed at certain times, becareful and make sure to not reach one where the gate is closed"
+          "title": "Gate Barriers",
+          "text": "Some goal zones will be blocked at certain times. Be careful and plan your moves to avoid sending shermie to closed gates."
         }
       ]
     },
     {
       "levelNumber": 4,
       "levelMechanic": "Bomb Shermie",
-      "description": "We'll introduce Bomb Shermie. Some tickets are time-critical – take care of them fast!",
+      "description": "We'll introduce Bomb Shermie. Some tickets are time-critical,take care of them quickly!",
       "steps": [
         {
           "title": "Bomb Shermie",
-          "text": "Some Shermies will be bombs, which needs to reach the goal as soon as possible"
+          "text": "Some tickets are 'bombs'—they need to reach their goal as soon as possible. Be quick, or the bomb will explode!"
         }
       ]
     },
     {
       "levelNumber": 5,
       "levelMechanic": "Toxic Shermie",
-      "description": "We'll introduce Toxic Shermie. Some tickets need to be waited on and put back into the queue.",
+      "description": "We'll introduce Toxic Shermie. Some tickets need to be delayed and put back into the queue.",
       "steps": [
         {
           "title": "Toxic Shermie",
-          "text": "Toxic Shermie are light color green, they will have enter the hopsital to clear away their toxicity"
+          "text": "Toxic Shermies are light green in color. They need to be sent to a hospital area to clear their toxicity before they can be processed again."
         }
       ]
     },
     {
       "levelNumber": 6,
       "levelMechanic": "Powerup 1: Invulnerability",
-      "description": "We'll introduce Powerup 1: Invulnerability. Some tickets are much simpler once you use the powerup!",
+      "description": "We'll introduce Powerup 1: Invulnerability. Some tickets are much easier to handle once you use this powerup!",
       "steps": [
         {
           "title": "Invulnerability Powerup",
-          "text": "Shermie will recivice a # second invulnerability, which allows shermie to reach the goal unharmed"
+          "text": "When you use this powerup, Shermie will receive a short period of invulnerability. During this time, the Shermie can pass through obstacles without being harmed."
         }
       ]
     },
     {
       "levelNumber": 7,
-      "levelMechanic": "Powerup 2: Clense",
-      "description": "We'll introduce Powerup 2: Clense. This powerup is super helpful, and you'll need it!",
+      "levelMechanic": "Powerup 2: Cleanse",
+      "description": "We'll introduce Powerup 2: Cleanse. Some tickets are cause by events that is outside",
       "steps": [
         {
-          "title": "Powerup 2",
-          "text": "This powerup will clear any amornelity of shermie that is currently being applied, instead it will turn in into a regular shermie"
+          "title": "Cleanse Powerup",
+          "text": "This powerup clears any negative status (like toxic or bomb effects) currently affecting Shermie. After using Cleanse, the Shermie becomes a regular, healthy Shermie again."
         }
       ]
     },
     {
       "levelNumber": 8,
-      "levelMechanic": "Powerup 3",
-      "description": "We'll introduce Powerup 3. This powerup is super helpful, and you'll need it!",
+      "levelMechanic": "Powerup 3: Self Service",
+      "description": "We'll introduce Powerup 3: Self Service. Tickets can be solved by on their own sometimes.",
       "steps": [
         {
           "title": "Powerup 3",
-          "text": "Powerup 3 is going to make your life easier. Use it wisely and keep the queue under control."
+          "text": "Powerup 3 makes managing your queue easier, by removing one sheep from the queue."
         }
       ]
     },
     {
       "levelNumber": 9,
-      "levelMechanic": "Ulmiate Test",
-      "description": "",
+      "levelMechanic": " ",
+      "description": "This is the final challenge, where everything you’ve learned will be put to the test!",
       "steps": [
         {
           "title": "Last Test",
-          "text": "Since you had learned all of the mechanics, this would the final test to see you got what it takes."
+          "text": "Now that you've mastered all the mechanics, it’s time for the ultimate test. Can you handle the pressure and keep the queue under control? Good luck!"
         }
       ]
     }
   ]
-  
 }
