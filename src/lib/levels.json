@@ -1,7 +1,6 @@
 {
   "levels": [
     {
-
       "time": 10000,
 
       "water_zone_type": " ",
@@ -30,7 +29,7 @@
 
       "number_of_lives": 5,
 
-      "powerups": [ 0, 0, 0, 0 ],
+      "powerups": [ 1, 1, 1],
 
       "block_percentage": 0.2,
       
@@ -49,6 +48,7 @@
 
     {
       "time": 130,
+
 
       "water_zone_type": "water",
 
@@ -84,7 +84,8 @@
 
       "block_percentage": 1,
 
-      "powerups": [ 0, 0, 0, 0 ],
+      "powerups": [ 1, 1, 1 ],
+      "power_up_spawn_rate": 3000,
 
       "advance_number": 10,
       "queue_chance": 0.5,
@@ -134,7 +135,7 @@
       "number_of_lives": 5,
       "goal_count": 5,
       
-      "powerups": [ 0, 0, 0, 0 ],
+      "powerups": [ 1, 1, 1 ],
 
       "block_percentage": 1,
 
@@ -185,7 +186,7 @@
       "number_of_lives": 5,
       "advance_number": 10,
 
-      "powerups": [ 0, 0, 0, 0 ],
+      "powerups": [ 1, 1, 1 ],
 
       "block_percentage": 0.3,
       "queue_chance": 0.5,
@@ -234,7 +235,7 @@
 
       "block_percentage": 0.4,
 
-      "powerups": [ 0, 0, 0, 0 ],
+      "powerups": [ 1, 1, 1 ],
 
       "advance_number": 10,
       "queue_chance": 0.5,
@@ -283,7 +284,7 @@
       "number_of_lives": 5,
       "goal_count": 3,
 
-      "powerups": [ 0, 0, 0, 0 ],
+      "powerups": [ 1, 1, 1 ],
 
       "block_percentage": 0.5,
 
@@ -333,7 +334,7 @@
       "number_of_lives": 5,
       "goal_count": 3,
 
-      "powerups": [ 0, 0, 0, 0 ],
+      "powerups": [ 1, 1, 1 ],
 
       "block_percentage": 0.6,
 
@@ -382,7 +383,7 @@
       "max_blocks": 1,
 
       "number_of_lives": 3,
-      "powerups": [0, 0, 0, 0],
+      "powerups": [1, 1, 1],
       "block_percentage": 0.7,
 
       "advance_number": 10,
@@ -428,7 +429,7 @@
 
       "number_of_lives": 3,
 
-      "powerups": [ 0, 0, 0, 0 ],
+      "powerups": [ 1, 1, 1 ],
       "block_percentage": 0.8,
       "advance_number": 10,
       "queue_chance": 0.5,
@@ -474,7 +475,7 @@
 
       "number_of_lives": 3,
 
-      "powerups": [ 0, 0, 0, 0 ],
+      "powerups": [ 1, 1, 1 ],
 
       "block_percentage": 0.9, 
 

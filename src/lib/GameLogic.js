@@ -52,8 +52,8 @@ export class GameLogic {
   }
 
   resetPlayer() {
-    this.isInvincible = false;
-    this.isAnimating = false;
+    this.game.isInvincible = false;
+    this.game.isAnimating = false;
     this.game.shermie.setVelocity(0, 0);
     this.game.shermie.x = this.game.width / 2;
     this.game.shermie.y = this.game.height - this.game.safeZoneSize + this.game.moveDistance / 2;
@@ -136,6 +136,60 @@ export class GameLogic {
       }
     }
   }
+
+
+  spawnPowerUp(power) {
+    const roadWidth = this.game.moveDistance;
+    const roadStart = this.game.height - this.game.safeZoneSize;
+    const roadEnd = roadStart - this.game.numberOfRoads * roadWidth;
+
+    const powerUpSpots = [
+      // [x, y]
+      [100, roadEnd + roadWidth / 2 + roadWidth * 2],
+      [400, roadEnd + roadWidth / 2 + roadWidth * 3],
+      [700, roadEnd + roadWidth / 2 + roadWidth * 4],
+      [400, roadEnd + roadWidth / 2 + roadWidth * 1],
+      [100, roadEnd + roadWidth / 2 + roadWidth * 2],
+      [200, roadEnd + roadWidth / 2 + roadWidth * 0],
+      [600, roadEnd + roadWidth / 2 + roadWidth * 3],
+      [700, roadEnd + roadWidth / 2 + roadWidth * 1],
+      [500, roadEnd + roadWidth / 2 + roadWidth * 2],
+      [300, roadEnd + roadWidth / 2 + roadWidth * 0],
+      [800, roadEnd + roadWidth / 2 + roadWidth * 3],
+      [900, roadEnd + roadWidth / 2 + roadWidth * 1],
+      [700, roadEnd + roadWidth / 2 + roadWidth * 2],
+      [500, roadEnd + roadWidth / 2 + roadWidth * 0],
+      [100, roadEnd + roadWidth / 2 + roadWidth * 3],
+      [200, roadEnd + roadWidth / 2 + roadWidth * 0],
+      [300, roadEnd + roadWidth / 2 + roadWidth * 2],
+      [400, roadEnd + roadWidth / 2 + roadWidth * 4],
+    ];
+
+    let color;
+
+    // DETERMINE TEXTURES HERE
+    switch (power) {
+      case 0: // self service
+        color = 0xff0000; // red
+        break;
+      case 1: // cleanse
+        color = 0x00ff00; // green
+        break;
+      case 2: // super shermie
+        color = 0x0000ff; // blue
+        break;
+    }
+
+    // pick a random spot
+    let spot = powerUpSpots[Math.floor(Math.random() * powerUpSpots.length)];
+
+    // place a colored circle in the middle of the screen
+    let x = spot[0];
+    let y = spot[1];
+    let radius = 20;
+    return [x, y, radius, color, power];
+  }
+
   
 }
 
