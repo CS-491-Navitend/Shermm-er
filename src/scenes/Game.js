@@ -557,9 +557,8 @@ export class Game extends Scene {
       repeat: 0,
     });
     console.log(zoneType + "Turtle")
-
-    const ratsPortal = this.add.rectangle(this.width, roadEnd - this.safeZoneSize / 2, imageWidth, this.safeZoneSize, 0xff0000);
-    this.physics.add.existing(ratsPortal, true); 
+    
+    const ratsPortal = this.add.image(this.width - 40, roadEnd - this.safeZoneSize / 2, "ratsHospital");
     this.physics.add.overlap(this.shermie, ratsPortal, () => {
       if (this.shermie.getData("isToxic")) { 
         const ratsContainer = document.getElementById('rats-container');
