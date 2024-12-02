@@ -401,13 +401,14 @@ export class Game extends Scene {
         console.log("Not spawning a power up.");
       }
 
-      if (!powerUpInfo) {
-        return;
-      }
 
       // destroy previous powerUp
       if (powerUp) {
         powerUp.destroy();
+      }
+
+      if (!powerUpInfo) {
+        return;
       }
 
       powerUp_x = powerUpInfo[0];
