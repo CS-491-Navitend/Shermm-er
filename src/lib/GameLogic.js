@@ -1,3 +1,5 @@
+import Timer from "./Timer";
+
 export class GameLogic {
   constructor(game) {
     this.game = game; // Get the game object from the scene
@@ -109,33 +111,46 @@ export class GameLogic {
     }
   }
 
+  shouldSpawnBlock() {
+    const randomChance = Math.random();
+    console.log(randomChance);
+    return randomChance < this.game.block_percentage;
+  }
+
   generateBlockers(game) {
     if (!game.block) {
       game.block = game.physics.add.staticGroup();
       console.log("Block group initialized in GameLogic.js");
     }
-    // if (this.timeRemaining % 5 === 0) {
-      if (game.block.getLength() < game.max_block) {
-        const zones = game.objectiveZone.getChildren();
-        if (zones.length > 0) {
-          const eligibleZones = zones.filter(zone => !zone.getData("color"));
-          if (eligibleZones.length > 0) {
-            const randomZone = Phaser.Utils.Array.GetRandom(eligibleZones);
-            const newBlock = game.add.sprite(randomZone.x, randomZone.y, "goalBlock");
-            newBlock.setDepth(10);
-            game.physics.add.existing(newBlock, true);
-            game.block.add(newBlock);
+    if (game.block.getLength() < game.max_block) {
+      const zones = game.objectiveZone.getChildren();
+      if (this.shouldSpawnBlock(game.block_percentage)) {
+        console.log("Blocker spawned");
+        if (game.block.getLength() < game.max_block) {
+          const zones = game.objectiveZone.getChildren();
+          if (zones.length > 0) {
+            const eligibleZones = zones.filter(zone => !zone.getData("color"));
+            if (eligibleZones.length > 0) {
+              const randomZone = Phaser.Utils.Array.GetRandom(eligibleZones);
+              const newBlock = game.add.sprite(randomZone.x, randomZone.y, "goalBlock");
+              newBlock.setDepth(10);
+              game.physics.add.existing(newBlock, true);
+              game.block.add(newBlock);
 
-            game.time.delayedCall(5000, () => {
-              if (newBlock) {
-                newBlock.destroy();
-              }
-            });
+              game.time.delayedCall(5000, () => {
+                if (newBlock) {
+                  newBlock.destroy();
+                }
+              });
+            }
           }
         }
+      } else {
+        console.log("Blocker not spawned");
       }
-    //}
+    }
   }
+
 
 
   spawnPowerUp(power) {
