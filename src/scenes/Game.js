@@ -157,23 +157,7 @@ export class Game extends Scene {
     this.input.keyboard.on("keydown-ENTER", () => {
       this.togglePause();
     });
-        
-    //Loop the animation frame for bomb shermie
-    this.anims.create({
-      key: "burnFuse",
-      frames: [{ key: "bomb1" }, { key: "bomb2" }, { key: "bomb3" }, { key: "bomb4" }],
-      frameRate: 4,
-      repeat: -1
-    });
-
-    //death animation
-    this.anims.create({
-      key: "shermieDeath", // Name of the animation
-      frames: [{ key: "death1" }, { key: "death2" }, { key: "death3" }, { key: "death4" }],
-      frameRate: 6, //speed of animation
-      repeat: 0, // no repeat
-    });
-  
+      
     // Create road lines for the lanes
     const roadLines = this.add.graphics({ lineStyle: { width: 5, color: 0xffffff } });
     const roadWidth = this.moveDistance;
@@ -198,6 +182,45 @@ export class Game extends Scene {
 
     //removed for the sake of changing the nature of the way winning works, left in in the event we decide to change it back
     // const filledGoals = this.physics.add.staticGroup();
+
+    //Loop the animation frame for bomb shermie
+    if(!this.anims.exists("burnFuse")){
+      this.anims.create({
+        key: "burnFuse",
+        frames: [{ key: "bomb1" }, { key: "bomb2" }, { key: "bomb3" }, { key: "bomb4" }],
+        frameRate: 4,
+        repeat: -1
+      });
+    }
+    //death animation
+    if(!this.anims.exists("shermieDeath")){
+      this.anims.create({
+        key: "shermieDeath", // Name of the animation
+        frames: [{ key: "death1" }, { key: "death2" }, { key: "death3" }, { key: "death4" }],
+        frameRate: 6, //speed of animation
+        repeat: 0, // no repeat
+      });
+    }
+
+    
+    if (!this.anims.exists("turtleSink")) {
+      this.anims.create({
+        key: "turtleSink",
+        frames: [{key: zoneType + "TurtleSink1"}, {key: zoneType + "TurtleSink2"}, {key: zoneType + "TurtleSink3"}],
+        frameRate: 3,
+        repeat: 0,
+      });
+    }
+    
+    if (!this.anims.exists("turtleRaise")) {
+      this.anims.create({
+        key: "turtleRaise",
+        frames: [{key: zoneType + "TurtleSink3"}, {key: zoneType + "TurtleSink2"}, {key: zoneType + "TurtleSink1"}, {key: this.turtleTexture}],
+        frameRate: 3,
+        repeat: 0,
+      });
+    }
+      
 
     // Define lane boundaries for water lanes
     const laneWidth = this.moveDistance;
@@ -433,30 +456,6 @@ export class Game extends Scene {
 
     this.timer.start();
 
-
-
-    if (this.anims.exists("turtleSink")) {
-      this.anims.remove("turtleSink");
-    }
-    
-    if (this.anims.exists("turtleRaise")) {
-      this.anims.remove("turtleRaise");
-    }
-    this.anims.create({
-      key: "turtleSink",
-      frames: [{key: zoneType + "TurtleSink1"}, {key: zoneType + "TurtleSink2"}, {key: zoneType + "TurtleSink3"}],
-      frameRate: 3,
-      repeat: 0,
-    });
-
-    this.anims.create({
-      key: "turtleRaise",
-      frames: [{key: zoneType + "TurtleSink3"}, {key: zoneType + "TurtleSink2"}, {key: zoneType + "TurtleSink1"}, {key: this.turtleTexture}],
-      frameRate: 3,
-      repeat: 0,
-    });
-    console.log(zoneType + "Turtle")
-
     const ratsPortal = this.add.rectangle(this.width, roadEnd - this.safeZoneSize / 2, imageWidth, this.safeZoneSize, 0xff0000);
     this.physics.add.existing(ratsPortal, true); 
     this.physics.add.overlap(this.shermie, ratsPortal, () => {
@@ -637,7 +636,7 @@ export class Game extends Scene {
 
     this.shermieType = this.shermieArray[Math.floor(Math.random() * this.shermieArray.length)];//Randomly select shermie type
     // this.shermieType = "toxic"
-    // this.shermieType = "colored"
+    this.shermieType = "colored"
     //this.shermieType = "bomb"
 
     if (!this.isBomb) {

@@ -87,7 +87,7 @@
       "powerups": [ 0, 0, 0, 0 ],
 
       "advance_number": 10,
-      "queue_chance": 0.5,
+      "queue_chance": 1,
       "score_bonus": 1,
 
       "bomb_spawn_rate": 1,
