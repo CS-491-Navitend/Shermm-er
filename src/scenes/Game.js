@@ -721,6 +721,7 @@ export class Game extends Scene {
   createShermie(){
     this.shermie.setData("isToxic", false); 
     this.isToxic = false;
+    this.isInvincible = false;
 
     this.shermieType = this.shermieArray[Math.floor(Math.random() * this.shermieArray.length)];//Randomly select shermie type
     // this.shermieType = "toxic"
