@@ -113,7 +113,6 @@ export class GameLogic {
 
   shouldSpawnBlock() {
     const randomChance = Math.random();
-    console.log(randomChance);
     return randomChance < this.game.block_percentage;
   }
 

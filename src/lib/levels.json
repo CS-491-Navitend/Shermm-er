@@ -81,7 +81,7 @@
       "number_of_lives": 5,
       "goal_count": 5,
 
-      "block_percentage": 0.9,
+      "block_percentage": 0.2,
 
       "powerups": [ 0, 0, 0, 0 ],
 
