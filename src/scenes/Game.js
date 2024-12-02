@@ -145,10 +145,6 @@ export class Game extends Scene {
     this.cleanseShermie = levels[data["level"]]["powerups"][1] === 1 ? true : false;
     this.superShermie = levels[data["level"]]["powerups"][2] === 1 ? true : false;
 
-    console.log("Self Service: ", this.selfService);
-    console.log("Cleanse Shermie: ", this.cleanseShermie);
-    console.log("Super Shermie: ", this.superShermie);
-
     this.populateShermieArray();
     this.updateLives(); //display lives in the html bar
 
@@ -421,28 +417,24 @@ export class Game extends Scene {
           powerUp_kind = powerUpInfo[4];
     
           powerUp = this.add.circle(powerUp_x, powerUp_y, powerUp_r, powerUp_c);
-    
+      
           // add collision to the circle powerUp and shermie
           this.physics.add.existing(powerUp, true);
           this.physics.add.overlap(
             this.shermie,
             powerUp,
             () => {
-              console.log("Collision detected between shermie and power up.");
               if (powerUp_kind === 0) {
-                // self service
                 this.gameLogic.tryRemoveShermieSprite();
               } else if (powerUp_kind === 1) {
                 // cleanse shermie
                 if (this.isBomb) {
-                  console.log("Shermie is no longer a bomb.");
                   this.isBomb = false;
                   this.shermieTexture = "shermie";
                   this.shermie.setTexture(this.shermieTexture);
                 }
     
                 if (this.isToxic) {
-                  console.log("Shermie is no longer toxic.");
                   this.isToxic = false;
                   this.shermieTexture = "shermie";
                   this.shermie.setTexture(this.shermieTexture);
@@ -464,7 +456,6 @@ export class Game extends Scene {
               } else if (powerUp_kind === 2) {
                 // super shermie
                 // disable collisions with vehicles
-                console.log("Shermie is now invincible.");
                 this.isInvincible = true;
               }
     
@@ -475,7 +466,6 @@ export class Game extends Scene {
           );
     
           // for development
-          // console.log("Stopping power up timer.");
           // clearInterval(powerUpTimer);
     
         }, levels[data["level"]]["power_up_spawn_rate"] ? levels[data["level"]]["power_up_spawn_rate"] : 5000);
@@ -732,9 +722,6 @@ export class Game extends Scene {
     this.shermie.setData("isToxic", false); 
     this.isToxic = false;
 
-    // console.log("createShermie has been called")
-
-
     this.shermieType = this.shermieArray[Math.floor(Math.random() * this.shermieArray.length)];//Randomly select shermie type
     // this.shermieType = "toxic"
     this.shermieType = "colored"
@@ -761,7 +748,6 @@ export class Game extends Scene {
 
       let randomGoal = Phaser.Utils.Array.GetRandom(this.objectiveZone.getChildren());
       
-      console.log("random goal is: ", randomGoal)
       let goalRect = this.add.rectangle(randomGoal.x + randomGoal.width / 4, randomGoal.y + randomGoal.height / 4, randomGoal.width / 4, randomGoal.height / 4, rectangleColor);
       goalRect.setDepth(2);
       this.physics.add.existing(goalRect, true);

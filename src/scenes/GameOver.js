@@ -10,6 +10,7 @@ export class GameOver extends Scene {
 
     create({ game }, buttons) {
         document.getElementById('ui-bar').style.display = 'none';
+        document.getElementById('rats-container').style.display = 'none';
 
         this.level = game.level;
         // Display game over message
