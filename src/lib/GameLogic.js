@@ -189,9 +189,11 @@ export class GameLogic {
     let x = spot[0];
     let y = spot[1];
 
-    let powerUp = this.game.add.sprite(x, y, color);
+    let sprite = this.game.add.sprite(x, y, color);
     let radius = 20;
-    return [x, y, radius, powerUp, power];
+    sprite.setData("type", power);
+    //return [x, y, radius, powerUp, power];
+    return sprite;
   }
 
 
