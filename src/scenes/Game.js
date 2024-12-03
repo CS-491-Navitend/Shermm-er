@@ -581,6 +581,7 @@ export class Game extends Scene {
       }
 
       // destroy previous powerUp
+      console.log(powerUp)
       if (powerUp) {
         this.physics.world.disable(powerUp);
         powerUp.destroy();
@@ -610,6 +611,7 @@ export class Game extends Scene {
               this.bombTimerUI.style.visibility = "hidden";
               this.bombTimer = levels[data["level"]]["bomb_timer"];
               this.isBomb = false;
+              this.anims.remove("burnfuse")
               this.shermieTexture = "shermie";
               this.shermie.setTexture(this.shermieTexture);
               this.shermie.setData("isBomb", false);
