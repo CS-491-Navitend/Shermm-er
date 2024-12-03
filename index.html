@@ -9,7 +9,7 @@
 </head>
   <body>
     <div id="app">
-      <div id="game-container">
+      <div id="game-container" style="position: relative;">
         <div id="ui-bar" style="display: none;">
           <div id="score">Score: 00000</div>
           <div id="time">Time: 99</div>
@@ -21,8 +21,8 @@
           <div id="lives-container"></div>
         </div>  
         <div id="phaser-game"></div>
+        <div id="rats-container" style="display: none;"></div> <!-- Moved inside game-container -->
       </div>
-      <div id="rats-container" style="display: none;"></div> 
     </div>
     <script type="module" src="src/main.js"></script>
   </body>

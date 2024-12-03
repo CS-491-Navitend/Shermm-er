@@ -76,12 +76,10 @@ export class GameLogic {
 
 tryRemoveShermieSprite() {
   if (this.shermieSprites.length === 0) {
-      console.warn("No sprites");
-      return;
+      return false;
   }
   const spriteToRemove = this.shermieSprites.pop(); 
   spriteToRemove.destroy(); 
-
   this.game.spritePlacementX += this.game.shermie.width; 
 }
 

@@ -484,7 +484,6 @@ export class Game extends Scene {
         console.log("Not spawning a power up.");
       }
 
-
       // destroy previous powerUp
       if (powerUp) {
         powerUp.destroy();
