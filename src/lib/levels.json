@@ -57,7 +57,7 @@
       "car_spacing": [ 150, 200, 250 ],
 
       "car_speed_multiplier": 0.85,
-      "number_of_cars": 1.5,
+      "number_of_cars": 1,
 
 
       "log_texture": [ "LongLog", "ShortLog" ],
@@ -85,7 +85,7 @@
       "block_percentage": 1,
 
       "powerups": [ 1, 0, 1 ],
-      "power_up_spawn_rate": 15000,
+      "power_up_spawn_rate": 2000,
 
       "advance_number": 5,
       "queue_chance": 0.5,
