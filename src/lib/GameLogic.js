@@ -196,7 +196,6 @@ export class GameLogic {
     return sprite;
   }
 
-
 }
 
 

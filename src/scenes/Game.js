@@ -56,7 +56,6 @@ export class Game extends Scene {
     this.logSpeedMultiplier = 1;
     this.frogSinkMultiplier = 1;
     this.scoreDecrement = 0;
-    this.bonusFlag = false;
 
     this.gameLogic = new GameLogic(this);
     this.drawing = new Drawing(this);
@@ -614,7 +613,6 @@ export class Game extends Scene {
             }
 
             if(this.shermieType == "colored"){//Colored
-              this.colorArray = this.getColors();
               this.shermieColor = this.colorArray[0];//Shermie Comparison Code
               this.shermieTexture = this.colorArray[1];//Shermie sprite color
               this.objectiveTint = this.colorArray[2];//Objective zone tint - TODO - Change this to different textures. Functionality handled in goal zone generation logic.
@@ -897,7 +895,7 @@ export class Game extends Scene {
     this.isInvincible = false;
 
     this.shermieType = this.shermieArray[Math.floor(Math.random() * this.shermieArray.length)];//Randomly select shermie type
-    // this.shermieType = "toxic"
+    //this.shermieType = "toxic"
     this.shermieType = "colored"
     //this.shermieType = "bomb"
 
@@ -908,6 +906,7 @@ export class Game extends Scene {
       if (!this.isBomb) {
         this.bombTimerUI.style.visibility = "hidden";
       }
+
 
       if(this.shermieType == "normal"){//Default
         this.shermieTexture = "shermie";
@@ -966,14 +965,14 @@ export class Game extends Scene {
       this.showToxicPopup();
     }
 
+
     this.gameLogic.goal();
     this.turtlesAreSunk = false;
     this.objectiveZone.getChildren().forEach(child => {
-      child.clearTint();
-      child.setData("color", null);
+      child.setData({});
     }); // Clear goal zone tints
-    this.bonus = false; // Reset decrement flag
-    this.shermie.setData("color", null); // Reset Shermie color
+    this.bonusFlag = false; // Reset decrement flag
+    this.shermie.setData({}); // Reset Shermie color
     this.isBomb = false; // Reset bomb flag
     this.timer.getBomb(this.shermie);
     this.goalColor.getChildren().forEach(child => {
@@ -986,13 +985,13 @@ export class Game extends Scene {
   }
 
   rideLog(shermie, log) {
-    if (!this.inWater) {
+    if (!this.inWater && !this.isInvincible) {
       shermie.setVelocityX(log.body.velocity.x);
     }
   }
 
   rideTurtle(shermie, turtle) {
-    if (!this.inWater) {
+    if (!this.inWater&& !this.isInvincible) {
       shermie.setVelocityX(turtle.body.velocity.x);
     }
   }
