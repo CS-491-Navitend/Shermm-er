@@ -129,7 +129,7 @@ export class GameLogic {
             const eligibleZones = zones.filter(zone => !zone.getData("color"));
             if (eligibleZones.length > 0) {
               const randomZone = Phaser.Utils.Array.GetRandom(eligibleZones);
-              const newBlock = game.add.sprite(randomZone.x, randomZone.y, this.game.endZoneTexture);
+              const newBlock = game.add.sprite(randomZone.x, randomZone.y, "goalBlock");
               newBlock.setDepth(10);
               game.physics.add.existing(newBlock, true);
               game.block.add(newBlock);
