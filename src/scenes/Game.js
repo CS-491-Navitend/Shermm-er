@@ -56,7 +56,6 @@ export class Game extends Scene {
     this.logSpeedMultiplier = 1;
     this.frogSinkMultiplier = 1;
     this.scoreDecrement = 0;
-    this.bonusFlag = false;
 
     this.gameLogic = new GameLogic(this);
     this.drawing = new Drawing(this);
@@ -837,6 +836,7 @@ export class Game extends Scene {
       this.shermie.setData("color", this.shermieColor);
 
       let randomGoal = Phaser.Utils.Array.GetRandom(this.objectiveZone.getChildren());
+      randomGoal.setData("color", this.shermieColor);
       
       let goalRect = this.add.rectangle(randomGoal.x + randomGoal.width / 4, randomGoal.y + randomGoal.height / 4, randomGoal.width / 4, randomGoal.height / 4, rectangleColor);
       goalRect.setDepth(2);
@@ -881,15 +881,13 @@ export class Game extends Scene {
     if (this.shermie.getData("isToxic")) {
       this.showToxicPopup(); 
     } 
-
     this.gameLogic.goal();
     this.turtlesAreSunk = false; 
     this.objectiveZone.getChildren().forEach(child => {
-      child.clearTint();
-      child.setData("color", null);
+      child.setData({});
     }); // Clear goal zone tints
-    this.bonus = false; // Reset decrement flag
-    this.shermie.setData("color", null); // Reset Shermie color
+    this.bonusFlag = false; // Reset decrement flag
+    this.shermie.setData({}); // Reset Shermie color
     this.isBomb = false; // Reset bomb flag
     this.timer.getBomb(this.shermie);
     this.goalColor.getChildren().forEach(child => {
