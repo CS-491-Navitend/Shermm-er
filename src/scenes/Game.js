@@ -477,6 +477,11 @@ export class Game extends Scene {
     let powerUpChance = 0;
     let { powerUp_x, powerUp_y, powerUp_r, powerUp_c, powerUp_kind, powerUpInfo, powerUp } = {};
     let powerUpTimer = setInterval(() => {
+
+      if (this.paused) {
+        return;
+      }
+
       powerUpChance = Math.random().toFixed(2) * 100;
 
       if (powerUpChance > 50 && this.selfService) {
@@ -518,15 +523,19 @@ export class Game extends Scene {
           } else if (powerUp_kind === 1) {
             // cleanse shermie
             if (this.isBomb) {
+              this.bombTimerUI.style.visibility = "hidden";
+              this.bombTimer = levels[data["level"]]["bomb_timer"];
               this.isBomb = false;
               this.shermieTexture = "shermie";
               this.shermie.setTexture(this.shermieTexture);
+              this.shermie.setData("isBomb", false);
             }
 
             if (this.isToxic) {
               this.isToxic = false;
               this.shermieTexture = "shermie";
               this.shermie.setTexture(this.shermieTexture);
+              this.shermie.setData("isToxic", false);
             }
 
             if(this.shermieType == "colored"){//Colored
@@ -536,9 +545,6 @@ export class Game extends Scene {
               this.shermie.setData("color", this.shermieColor);
             }
 
-            
-            this.shermie.setData("isToxic", false);
-            this.shermie.setData("isBomb", false);
             
           } else if (powerUp_kind === 2) {
             // super shermie
@@ -813,8 +819,8 @@ export class Game extends Scene {
 
     this.shermieType = this.shermieArray[Math.floor(Math.random() * this.shermieArray.length)];//Randomly select shermie type
     //this.shermieType = "toxic"
-    this.shermieType = "colored"
-    //this.shermieType = "bomb"
+    // this.shermieType = "colored"
+    this.shermieType = "bomb"
 
     if (!this.isBomb) {
         this.bombTimerUI.style.visibility = "hidden";
