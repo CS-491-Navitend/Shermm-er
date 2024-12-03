@@ -84,8 +84,8 @@
 
       "block_percentage": 1,
 
-      "powerups": [ 1, 0, 1 ],
-      "power_up_spawn_rate": 15000,
+      "powerups": [ 0, 1, 0 ],
+      "power_up_spawn_rate": 3000,
 
       "advance_number": 5,
       "queue_chance": 0.5,
