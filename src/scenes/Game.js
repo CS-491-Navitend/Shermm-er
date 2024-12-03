@@ -225,7 +225,7 @@ export class Game extends Scene {
     this.selfService = levels[data["level"]]["powerups"][0] === 1 ? true : false;
     this.cleanseShermie = levels[data["level"]]["powerups"][1] === 1 ? true : false;
     this.superShermie = levels[data["level"]]["powerups"][2] === 1 ? true : false;
-    
+
     this.power_up_spawn_rate =levels[data["level"]]["power_up_spawn_rate"];
 
     this.populateShermieArray();
@@ -501,7 +501,7 @@ export class Game extends Scene {
       powerUp_kind = powerUpInfo[4];
 
       powerUp = this.add.circle(powerUp_x, powerUp_y, powerUp_r, powerUp_c);
-
+  
       // add collision to the circle powerUp and shermie
       this.physics.add.existing(powerUp, true);
       this.physics.add.overlap(
@@ -524,62 +524,39 @@ export class Game extends Scene {
               this.shermie.setTexture(this.shermieTexture);
             }
       
-          // add collision to the circle powerUp and shermie
-          this.physics.add.existing(powerUp, true);
-          this.physics.add.overlap(
-            this.shermie,
-            powerUp,
-            () => {
-              if (powerUp_kind === 0) {
-                console.log("trying self service")
-                this.gameLogic.tryRemoveShermieSprite();
-              } else if (powerUp_kind === 1) {
-                // cleanse shermie
-                if (this.isBomb) {
-                  this.isBomb = false;
-                  this.shermieTexture = "shermie";
-                  this.shermie.setTexture(this.shermieTexture);
-                }
-    
-                if (this.isToxic) {
-                  this.isToxic = false;
-                  this.shermieTexture = "shermie";
-                  this.shermie.setTexture(this.shermieTexture);
-                }
-          
 
-                if(this.shermieType == "colored"){//Colored
-                  this.colorArray = this.getColors();
-                  this.shermieColor = this.colorArray[0];//Shermie Comparison Code
-                  this.shermieTexture = this.colorArray[1];//Shermie sprite color
-                  this.objectiveTint = this.colorArray[2];//Objective zone tint - TODO - Change this to different textures. Functionality handled in goal zone generation logic.
-                  this.shermie.setData("color", this.shermieColor);
-                }
+            if(this.shermieType == "colored"){//Colored
+              this.colorArray = this.getColors();
+              this.shermieColor = this.colorArray[0];//Shermie Comparison Code
+              this.shermieTexture = this.colorArray[1];//Shermie sprite color
+              this.objectiveTint = this.colorArray[2];//Objective zone tint - TODO - Change this to different textures. Functionality handled in goal zone generation logic.
+              this.shermie.setData("color", this.shermieColor);
+            }
 
-                
-                this.shermie.setData("isToxic", false);
-                this.shermie.setData("isBomb", false);
-                
-              } else if (powerUp_kind === 2) {
-                // super shermie
-                // disable collisions with vehicles
-                this.isInvincible = true;
-              }
-    
-              powerUp.destroy();
-            },
-            null,
-            this
-          );
-    
-          // for development
-          // clearInterval(powerUpTimer);
-    
-        },  this.power_up_spawn_rate);
-    
-        // END POWER UP LOGIC
+            
+            this.shermie.setData("isToxic", false);
+            this.shermie.setData("isBomb", false);
+            
+          } else if (powerUp_kind === 2) {
+            // super shermie
+            // disable collisions with vehicles
+            this.isInvincible = true;
+          }
 
+          powerUp.destroy();
+        },
+        null,
+        this
+      );
 
+      // for development
+      // clearInterval(powerUpTimer);
+
+    },  this.power_up_spawn_rate);
+
+    // END POWER UP LOGIC
+
+    
     // Overlap detection for safe zone
     this.physics.add.overlap(
       this.shermie,
