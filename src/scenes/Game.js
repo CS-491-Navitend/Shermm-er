@@ -906,7 +906,7 @@ export class Game extends Scene {
     this.shermieType = this.shermieArray[Math.floor(Math.random() * this.shermieArray.length)];//Randomly select shermie type
     //this.shermieType = "toxic"
     //this.shermieType = "colored"
-    this.shermieType = "bomb"
+    //this.shermieType = "bomb"
 
     if (!this.isBomb) {
       this.bombTimerUI.style.visibility = "hidden";
