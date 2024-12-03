@@ -90,6 +90,87 @@ export class Game extends Scene {
     this.blockerCooldown = false;
     this.shermieCooldown = false;
     this.ratCooldown = false;
+    this.power_up_spawn_rate = 0;
+
+  }
+  init(data){
+    this.width = 1000;
+    this.height = 1000;
+
+    //Check to see if the game is paused
+    this.paused = false;
+
+    //Physics objects and other game information
+    this.playing = true;
+    this.canMove = true;
+    this.shermie = null;
+    this.shermieSprite = null;
+    this.vehicles = null;
+    this.logs = null;
+    this.turtles = null;
+    this.sinkingTurtles = null;
+    this.winCount = 0;
+    this.lives = 0;
+    this.resetCount = 0;
+    this.goalCount = 0;
+    this.numOfGoals = 4;
+    this.savedVelocity = 0;
+    this.objectiveZone = null;
+
+    // road values
+    this.numberOfRoads = 5;
+    this.moveDistance = this.height / (this.numberOfRoads * 2 + 3); //the height / number of roads + number of goals + number of safe
+    this.safeZoneSize = 80;
+
+    //water values
+    //this.moveDistance = 80;
+    this.numberOfLanes = 5;
+
+    // dynamic values (from levels.json)
+    this.timerDuration = 0;
+    this.timeRemaining = this.timerDuration;
+    this.numberOfCars = 0;
+    this.numberOfLogs = 0;
+    this.numberOfTurtles = 0;
+    this.carSpeedMultiplier = 1;
+    this.logSpeedMultiplier = 1;
+    this.frogSinkMultiplier = 1;
+    this.scoreDecrement = 0;
+    this.bonusFlag = false;
+
+    this.gameLogic = new GameLogic(this);
+    this.drawing = new Drawing(this);
+    this.timer = new Timer(this);
+    this.pauseMenu = new PauseMenu(this);
+
+    //to prevent multiple lives lost at once
+    this.isInvincible = false;
+    this.invincibilityDuration = 500;
+    this.isAnimating = false;
+
+    //For level transitions
+    this.advanceNumber = 0;
+    
+
+    //Turtle sinking flag
+    this.turtlesAreSunk = false;
+
+    //Color loading array
+    this.colorArray = null;
+
+    //advanced feature variables
+    this.queueChance = 0;
+    this.shermieType = null;
+    this.shermieArray = null;
+    this.colorArray = null;
+    this.objectiveTint = null;
+    this.max_block = 0;
+    this.removeRatChance = 0;
+    this.block = 0;
+    this.blockerCooldown = false;
+    this.shermieCooldown = false;
+    this.ratCooldown = false;
+    this.power_up_spawn_rate = 5000;
 
   }
   create(data) {
@@ -144,6 +225,8 @@ export class Game extends Scene {
     this.selfService = levels[data["level"]]["powerups"][0] === 1 ? true : false;
     this.cleanseShermie = levels[data["level"]]["powerups"][1] === 1 ? true : false;
     this.superShermie = levels[data["level"]]["powerups"][2] === 1 ? true : false;
+    
+    this.power_up_spawn_rate =levels[data["level"]]["power_up_spawn_rate"];
 
     this.populateShermieArray();
     this.updateLives(); //display lives in the html bar
@@ -425,6 +508,7 @@ export class Game extends Scene {
             powerUp,
             () => {
               if (powerUp_kind === 0) {
+                console.log("trying self service")
                 this.gameLogic.tryRemoveShermieSprite();
               } else if (powerUp_kind === 1) {
                 // cleanse shermie
@@ -468,7 +552,7 @@ export class Game extends Scene {
           // for development
           // clearInterval(powerUpTimer);
     
-        }, levels[data["level"]]["power_up_spawn_rate"] ? levels[data["level"]]["power_up_spawn_rate"] : 5000);
+        },  this.power_up_spawn_rate);
     
         // END POWER UP LOGIC
 
@@ -653,7 +737,7 @@ export class Game extends Scene {
       });
     }
 
-    if (this.timer.timeRemaining % 5 === 0 && !this.shermieCooldown) {
+    if (this.timer.timeRemaining % 3 === 0 && !this.shermieCooldown) {
       this.shermieCooldown = true; 
       const chance = Math.random();
       if (chance < this.queueChance) {
@@ -721,6 +805,7 @@ export class Game extends Scene {
   createShermie(){
     this.shermie.setData("isToxic", false); 
     this.isToxic = false;
+    this.isInvincible = false;
 
     this.shermieType = this.shermieArray[Math.floor(Math.random() * this.shermieArray.length)];//Randomly select shermie type
     // this.shermieType = "toxic"

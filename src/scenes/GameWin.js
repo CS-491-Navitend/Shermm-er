@@ -11,6 +11,7 @@ export class GameWin extends Scene {
 
     create(data, buttons) {
         document.getElementById('ui-bar').style.display = 'none';
+        document.getElementById('rats-container').style.display = 'none';
 
         this.gameLogic = new GameLogic(data["game"]);
 
