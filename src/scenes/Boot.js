@@ -202,6 +202,9 @@ import goalBlock from "/assets/GoalZoneBlock.png";
 import pasture from "/assets/pasture.png"
 import pasture_end from "/assets/pasture_end.png"
 
+// rats assets
+import ratsHospital from "/assets/RatsCleanse.png";
+
 
 export class Boot extends Scene {
   constructor() {
@@ -425,6 +428,9 @@ export class Boot extends Scene {
 
     //goal block
     this.load.image("goalBlock", goalBlock);
+
+    //rats assets
+    this.load.image("ratsHospital", ratsHospital);
 
     //Font Family
     const font = new FontFaceObserver('Pixel');

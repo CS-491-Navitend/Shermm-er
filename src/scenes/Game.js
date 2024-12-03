@@ -643,22 +643,38 @@ export class Game extends Scene {
 
     this.timer.start();
 
-    const ratsPortal = this.add.rectangle(this.width, roadEnd - this.safeZoneSize / 2, imageWidth, this.safeZoneSize, 0xff0000);
-    this.physics.add.existing(ratsPortal, true);
-    this.physics.add.overlap(this.shermie, ratsPortal, () => {
-      if (this.shermie.getData("isToxic")) {
-        const ratsContainer = document.getElementById('rats-container');
-        const toxicShermieSprite = document.createElement('img');
-        toxicShermieSprite.src = this.textures.getBase64('shermieToxic');
-        toxicShermieSprite.classList.add('shermie');
+    if (this.textures.exists("ratsHospital")) {
+      const ratsPortal = this.add.image(this.width - 40, roadEnd - this.safeZoneSize / 2, "ratsHospital");
+      this.physics.add.overlap(this.shermie, ratsPortal, () => {
+        if (this.shermie.getData("isToxic")) {
+          const ratsContainer = document.getElementById('rats-container');
+          const toxicShermieSprite = document.createElement('img');
+          toxicShermieSprite.src = this.textures.getBase64('shermieToxic');
+          toxicShermieSprite.classList.add('shermie');
 
-        ratsContainer.appendChild(toxicShermieSprite);
+          ratsContainer.appendChild(toxicShermieSprite);
 
-        this.createShermie();
-        this.gameLogic.resetPlayer();
-      }
-    }, null, this);
+          this.createShermie();
+          this.gameLogic.resetPlayer();
+        }
+      }, null, this);
+    } else {
+      const ratsPortal = this.add.rectangle(this.width, roadEnd - this.safeZoneSize / 2 - 20, 40, 40, 0x000000);
+      this.physics.add.existing(ratsPortal);
+      this.physics.add.overlap(this.shermie, ratsPortal, () => {
+        if (this.shermie.getData("isToxic")) {
+          const ratsContainer = document.getElementById('rats-container');
+          const toxicShermieSprite = document.createElement('img');
+          toxicShermieSprite.src = this.textures.getBase64('shermieToxic');
+          toxicShermieSprite.classList.add('shermie');
 
+          ratsContainer.appendChild(toxicShermieSprite);
+
+          this.createShermie();
+          this.gameLogic.resetPlayer();
+        }
+      }, null, this);
+    }
   };
 
   update() {
