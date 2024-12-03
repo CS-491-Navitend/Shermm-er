@@ -80,7 +80,10 @@ tryRemoveShermieSprite() {
   }
   const spriteToRemove = this.shermieSprites.pop(); 
   spriteToRemove.destroy(); 
-  this.game.spritePlacementX += this.game.shermie.width; 
+
+  this.game.spritePlacementX += this.game.shermie.width;
+  
+  return true;
 }
 
 
