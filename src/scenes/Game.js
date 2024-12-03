@@ -577,6 +577,7 @@ export class Game extends Scene {
 
       // destroy previous powerUp
       if (powerUp) {
+        this.physics.world.disable(powerUp);
         powerUp.destroy();
       }
 
