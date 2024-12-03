@@ -48,8 +48,8 @@ export class GameLogic {
   gameOver() {
     this.game.goalCount=0;
     this.game.playing = false;
+    this.game.inWater = false;
     this.game.scene.start("GameOver", { game: this.game });
-    
   }
 
   resetPlayer() {
@@ -69,7 +69,7 @@ export class GameLogic {
         return;
     }
     const newShermie = this.game.add.sprite( this.game.spritePlacementX, this.game.boundarySpriteTexture.y,'shermie' );
-    newShermie.setDisplaySize(this.game.shermie.width, this.game.shermie.height);
+    // newShermie.setDisplaySize(this.game.shermie.width, this.game.shermie.height);
     this.shermieSprites.push(newShermie);
     this.game.spritePlacementX -= this.game.shermie.width; 
 }
