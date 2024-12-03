@@ -85,7 +85,7 @@
       "block_percentage": 1,
 
       "powerups": [ 1, 0, 1 ],
-      "power_up_spawn_rate": 3000,
+      "power_up_spawn_rate": 15000,
 
       "advance_number": 5,
       "queue_chance": 0.5,
@@ -136,6 +136,7 @@
       "goal_count": 5,
       
       "powerups": [ 1, 1, 1 ],
+      "power_up_spawn_rate": 15000,
 
       "block_percentage": 1,
 
@@ -187,6 +188,8 @@
       "advance_number": 10,
 
       "powerups": [ 1, 1, 1 ],
+      "power_up_spawn_rate": 15000,
+
 
       "block_percentage": 0.3,
       "queue_chance": 0.5,
@@ -236,6 +239,7 @@
       "block_percentage": 0.4,
 
       "powerups": [ 1, 1, 1 ],
+      "power_up_spawn_rate": 15000,
 
       "advance_number": 10,
       "queue_chance": 0.5,
@@ -285,6 +289,7 @@
       "goal_count": 3,
 
       "powerups": [ 1, 1, 1 ],
+      "power_up_spawn_rate": 15000,
 
       "block_percentage": 0.5,
 
@@ -335,6 +340,8 @@
       "goal_count": 3,
 
       "powerups": [ 1, 1, 1 ],
+      "power_up_spawn_rate": 15000,
+
 
       "block_percentage": 0.6,
 
@@ -384,6 +391,8 @@
 
       "number_of_lives": 3,
       "powerups": [1, 1, 1],
+      "power_up_spawn_rate": 15000,
+
       "block_percentage": 0.7,
 
       "advance_number": 10,
@@ -430,6 +439,8 @@
       "number_of_lives": 3,
 
       "powerups": [ 1, 1, 1 ],
+      "power_up_spawn_rate": 15000,
+
       "block_percentage": 0.8,
       "advance_number": 10,
       "queue_chance": 0.5,
@@ -476,6 +487,8 @@
       "number_of_lives": 3,
 
       "powerups": [ 1, 1, 1 ],
+      "power_up_spawn_rate": 15000,
+
 
       "block_percentage": 0.9, 
 
