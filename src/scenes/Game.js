@@ -509,7 +509,8 @@ export class Game extends Scene {
         powerUp,
         () => {
           if (powerUp_kind === 0) {
-            this.gameLogic.tryRemoveShermieSprite();
+            if(this.gameLogic.tryRemoveShermieSprite())
+              this.goalCount++;
           } else if (powerUp_kind === 1) {
             // cleanse shermie
             if (this.isBomb) {
@@ -523,7 +524,6 @@ export class Game extends Scene {
               this.shermieTexture = "shermie";
               this.shermie.setTexture(this.shermieTexture);
             }
-      
 
             if(this.shermieType == "colored"){//Colored
               this.colorArray = this.getColors();
@@ -961,9 +961,6 @@ export class Game extends Scene {
   }
     
   getColors(){
-    //FIXME - Return a datastructure that has an equal number of entries to the number of goals
-    // The structure will contain color comparison codes, shermie colors, and goal zone tints.
-    // Will be called once at game generation, guarantees that shermie textures correspond directly with goal zone colors.
 
     //Load comparison codes, shermie textures, and tint hexcodes for goal zones
     const redColor = "red"; const redShermie = "shermieRed"; const redTint = 0xff0000;;
