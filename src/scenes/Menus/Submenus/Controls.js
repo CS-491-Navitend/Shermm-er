@@ -33,6 +33,60 @@ export class Controls extends Scene {
             }).setOrigin(0.5);
         });
 
+        this.add.image(300,500, "car1").setOrigin(0.5, 0.5);
+        this.add.image(200,500, "car2").setOrigin(0.5, 0.5);
+        this.add.image(300,600, "desertBuggy1").setOrigin(0.5, 0.5);
+        this.add.image(200,600, "desertBuggy2").setOrigin(0.5, 0.5);
+
+        this.add.image(500,500, "waterObjective").setOrigin(0.5, 0.5);
+        this.add.image(520,500, "shermie").setOrigin(0.5, 0.5);
+        
+        this.add.image(750,490, "lavaLog").setOrigin(0.5, 0.5);
+        this.add.image(750,540, "iceLog").setOrigin(0.5, 0.5);
+        this.add.image(750,570, "LongLog").setOrigin(0.5, 0.5);
+        this.add.image(750,610, "cherry").setOrigin(0.5, 0.5);
+
+
+        this.add.text(
+            250, 700, "Avoid", {
+            fontFamily: "Pixel",
+            fontSize: "30px",
+            color: "#ffffff",
+           // padding: { x: 20, y: 10 },
+           // backgroundColor: "#3388FF",
+        }).setOrigin(0.5)
+
+        this.add.text(
+            500, 600, "Goal", {
+            fontFamily: "Pixel",
+            fontSize: "30px",
+            color: "#ffffff",
+           // padding: { x: 20, y: 10 },
+           // backgroundColor: "#3388FF",
+        }).setOrigin(0.5)
+
+        this.add.text(
+            750, 700, "Safe", {
+            fontFamily: "Pixel",
+            fontSize: "30px",
+            color: "#ffffff",
+           // padding: { x: 20, y: 10 },
+           // backgroundColor: "#3388FF",
+        }).setOrigin(0.5)
+
+
+        const graphicsAvoid = this.add.graphics();
+        graphicsAvoid.lineStyle(4, 0xFF0000, 1);
+        graphicsAvoid.strokeRect(130, 465, 240, 175);
+
+        const graphicsGoal = this.add.graphics();
+        graphicsGoal.lineStyle(4, 0xFFD700, 1);  // Gold color (hex: 0xFFD700), 4px thickness
+        graphicsGoal.strokeRect(450, 450, 110, 100);
+
+        const graphicsSafe = this.add.graphics();
+        graphicsSafe.lineStyle(4, 0x00FF00, 1);  // Green color (hex: 0x00FF00), 4px thickness
+        graphicsSafe.strokeRect(640, 465, 220, 170); 
+
         // Return instruction
         this.createBackButton();
 
@@ -50,14 +104,14 @@ export class Controls extends Scene {
     // creating back button
     createBackButton() {
         const backButtonImage = this.add
-            .image(512, 400, "buttonImage")  // Position it at (512, 400)
+            .image(512, 900, "buttonImage")  // Position it at (512, 400)
             .setOrigin(0.5)
             .setInteractive({ useHandCursor: true });
         
         backButtonImage.setDisplaySize(250, 80);
 
         const backText = this.add.text(
-            512, 400, "Back", {
+            512, 900, "Back", {
             fontFamily: "Pixel",
             fontSize: "30px",
             color: "#ffffff",

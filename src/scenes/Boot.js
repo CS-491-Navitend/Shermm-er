@@ -267,34 +267,42 @@ export class Boot extends Scene {
     this.load.image("waterTurtleSink2", waterTurtleSink2);
     this.load.image("waterTurtleSink3", waterTurtleSink3);
     
+    //iceTurtleSink
     this.load.image("iceTurtleSink1", iceTurtleSink1);
     this.load.image("iceTurtleSink2", iceTurtleSink2);
     this.load.image("iceTurtleSink3", iceTurtleSink3);
 
+    //lavaTurtleSink
     this.load.image("lavaTurtleSink1", lavaTurtleSink1);
     this.load.image("lavaTurtleSink2", lavaTurtleSink2);
     this.load.image("lavaTurtleSink3", lavaTurtleSink3);
 
+    //skyTurtleSink
     this.load.image("skyTurtleSink1", skyTurtleSink1);
     this.load.image("skyTurtleSink2", skyTurtleSink2);
     this.load.image("skyTurtleSink3", skyTurtleSink3);
 
+    //batmanTurtleSink
     this.load.image("batmanTurtleSink1", batmanTurtleSink1);
     this.load.image("batmanTurtleSink2", batmanTurtleSink2);
     this.load.image("batmanTurtleSink3", batmanTurtleSink3);
 
+    //desertTurtleSink
     this.load.image("desertTurtleSink1", desertTurtleSink1);
     this.load.image("desertTurtleSink2", desertTurtleSink2);
     this.load.image("desertTurtleSink3", desertTurtleSink3);
 
+    //sawmpTurtleSink
     this.load.image("swampTurtleSink1", swampTurtleSink1);
     this.load.image("swampTurtleSink2", swampTurtleSink2);
     this.load.image("swampTurtleSink3", swampTurtleSink3);
 
+    //outSpaceTurtleSink
     this.load.image("outerSpaceTurtleSink1", outerSpaceTurtleSink1);
     this.load.image("outerSpaceTurtleSink2", outerSpaceTurtleSink2);
     this.load.image("outerSpaceTurtleSink3", outerSpaceTurtleSink3);
 
+    //cakeTurtleSink
     this.load.image("cakeTurtleSink1", cakeTurtleSink1);
     this.load.image("cakeTurtleSink2", cakeTurtleSink2);
     this.load.image("cakeTurtleSink3", cakeTurtleSink3);
