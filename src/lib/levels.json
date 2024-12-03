@@ -88,7 +88,7 @@
 
       "advance_number": 10,
       "queue_chance": 0.5,
-      "score_bonus": 10,
+      "score_bonus": 1,
 
       "bomb_spawn_rate": 0.25,
       "bomb_timer": 50000, 
