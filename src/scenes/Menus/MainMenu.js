@@ -1,6 +1,4 @@
 import { Scene } from "phaser";
-
-
 export class MainMenu extends Scene {
     constructor() {
         super("MainMenu");
@@ -9,6 +7,7 @@ export class MainMenu extends Scene {
         this.buttons = [];
         this.selectedButtonIndex = 0; // Tracks the selected button
         this.isActive = false;
+        this.isMuted = false;
     }
 
 
@@ -42,12 +41,13 @@ export class MainMenu extends Scene {
 
 
         // Create buttons
-        const playButton = this.createButton(512, 370, 'Play', 0);
-        const levelSelectButton = this.createButton(512, 480, "Level Select", 1);
-        const controlsButton = this.createButton(512, 590, "Controls", 2);
-        const creditsButton = this.createButton(512, 700, "Credits", 3);
+        const playButton = this.createButton(512, 330, 'Play', 0);
+        const levelSelectButton = this.createButton(512, 440, "Level Select", 1);
+        const controlsButton = this.createButton(512, 550, "Controls", 2);
+        const creditsButton = this.createButton(512, 660, "Credits", 3); 
+       // const statsButton = this.createButton(512, 770, "Stats", 4);
 
-
+        this.createMuteButton(950, 50);
 
         this.buttons.push(playButton, levelSelectButton, controlsButton, creditsButton);
         //console.log("Current buttons array after creation: ", this.buttons);
@@ -60,6 +60,32 @@ export class MainMenu extends Scene {
 
         //console.log(this.buttons);
         this.highlightButton(this.selectedButtonIndex);
+    }
+    createMuteButton(x, y) {
+        // Create the mute button image (either volume or mute button)
+        const muteButtonImage = this.add.image(x, y, this.isMuted ? 'muteButton' : 'volumeButton').setOrigin(0.5).setScale(0.5);
+
+        muteButtonImage.setInteractive({ useHandCursor: true });
+
+        // Event to toggle mute when the button is clicked
+        muteButtonImage.on("pointerdown", () => this.toggleMute());
+
+        // Store reference to the button image
+        this.muteButtonImage = muteButtonImage;
+    }
+
+    toggleMute() {
+        // Toggle the mute state
+        this.isMuted = !this.isMuted;
+
+        // Update the game registry
+        this.sys.game.registry.set("isMuted", this.isMuted);
+
+        // Mute or unmute the sound system
+        this.sound.mute = this.isMuted;
+
+        // Update the mute button image
+        this.muteButtonImage.setTexture(this.isMuted ? 'muteButton' : 'volumeButton');
     }
 
     createButton(x, y, text, mainButtonIndex) {
@@ -143,7 +169,7 @@ export class MainMenu extends Scene {
         // console.log('selected Button', this.selectedButtonIndex);
         if (selectedButton === this.buttons[0]) {
             this.backgroundMusic.play();
-            this.scene.start("Game", { level: 1 });
+            this.scene.start("TutorialMenu", { level: 1 });
             //console.log("Starting level 1");
         } else if (selectedButton === this.buttons[1]) {
             this.scene.start("LevelMenu");
@@ -151,8 +177,9 @@ export class MainMenu extends Scene {
         } else if (selectedButton == this.buttons[3]) {
             this.scene.start("Credits");
         } else if (selectedButton == this.buttons[2]) {
-            this.scene.start("Controls")
+            this.scene.start("Controls");
         }
+
     }
     destroyButtons() {
         if (this.buttons.length > 0) {

@@ -50,7 +50,10 @@ export class PauseMenu extends Scene {
         
         //create main menu button
         this.createMainMenuButton();
-        
+
+        //create restart button
+        this.createRestartButton();
+
         //Hide menu
         this.pauseMenu.setVisible(false);
 
@@ -71,7 +74,7 @@ export class PauseMenu extends Scene {
     }
 
     createMainMenuButton() {
-        const mainMenuButton = this.scene.add.text(0, -20, 'Main Menu', {
+        const mainMenuButton = this.scene.add.text(0, -30, 'Main Menu', {
             fontFamily: 'Pixel',
             fontSize: '20px',
             fill: '#ffffff'
@@ -80,6 +83,17 @@ export class PauseMenu extends Scene {
         this.addMouseEvents(mainMenuButton, 1); // Using a new method for mouse events
         this.pauseMenu.add(mainMenuButton);
         this.buttons.push(mainMenuButton);
+    }
+
+    createRestartButton() {
+        const restartButton = this.scene.add.text(0, 20, 'Restart', {
+            fontFamily: 'Pixel',
+            fontSize: '20px',
+            fill: '#ffffff'
+        }).setOrigin(0.5).setInteractive({ useHandCursor: true });
+        this.addMouseEvents(restartButton, 2); // This will be button index 2
+        this.pauseMenu.add(restartButton);
+        this.buttons.push(restartButton);
     }
 
     addMouseEvents(button, index) {
@@ -134,12 +148,15 @@ export class PauseMenu extends Scene {
         } else if (selectedButton.text === 'Main Menu') {
             // console.log("Going to Main Menu....")
             this.scene.scene.stop("PauseMenu");
-            this.scene.timer.stop();
+            this.scene.timer.stop()
             this.scene.scene.stop("Game");
             this.scene.scene.start("MainMenu");
             document.getElementById('ui-bar').style.display = "none";
+            document.getElementById('rats-container').style.display = "none";
             this.isActive = false;
-           // console.log('starting MainMenu');
+            // console.log('starting MainMenu');
+        } else if (selectedButton.text === "Restart") {
+            this.scene.scene.start("Game", { level: this.scene.level });
         }
         setTimeout(() => {
             this.isDebounced = false;
@@ -178,7 +195,7 @@ export class PauseMenu extends Scene {
         this.isActive = false;
         this.pauseMenu.setVisible(false);
         this.scene.physics.resume(); // Resume the physics
-       // this.scene.timer.resume();
+        this.scene.timer.resume();
        // this.scene.paused = false;
         this.scene.input.enabled = true;
         // console.log("PauseMenu is now inactive.");
