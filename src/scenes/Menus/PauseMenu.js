@@ -148,7 +148,7 @@ export class PauseMenu extends Scene {
         } else if (selectedButton.text === 'Main Menu') {
             // console.log("Going to Main Menu....")
             this.scene.scene.stop("PauseMenu");
-            this.scene.timer.stop();
+            this.scene.timer.stop()
             this.scene.scene.stop("Game");
             this.scene.scene.start("MainMenu");
             document.getElementById('ui-bar').style.display = "none";
@@ -156,7 +156,6 @@ export class PauseMenu extends Scene {
             this.isActive = false;
             // console.log('starting MainMenu');
         } else if (selectedButton.text === "Restart") {
-            console.log("restarted");
             this.scene.scene.start("Game", { level: this.scene.level });
         }
         setTimeout(() => {

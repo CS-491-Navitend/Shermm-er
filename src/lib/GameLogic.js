@@ -1,6 +1,7 @@
 export class GameLogic {
   constructor(game) {
     this.game = game; // Get the game object from the scene
+    this.shermieSprites = [];
   }
 
   goal() {
@@ -47,8 +48,8 @@ export class GameLogic {
   gameOver() {
     this.game.goalCount=0;
     this.game.playing = false;
+    this.game.inWater = false;
     this.game.scene.start("GameOver", { game: this.game });
-    
   }
 
   resetPlayer() {
@@ -62,31 +63,29 @@ export class GameLogic {
       this.game.shermie.play("burnFuse"); 
     }
   }
-
   tryAddShermieSprite() {
-    // Check if there's room to add another sprite
     if (this.game.spritePlacementX < 0) {
         this.gameOver();
         return;
     }
-    this.newShermie = this.game.add.sprite(this.game.spritePlacementX, this.game.boundarySpriteTexture.y, 'shermie');
-    this.newShermie.setDisplaySize(this.game.shermie.width, this.game.shermie.height);
-    this.game.spritePlacementX -= this.game.shermie.width; // Move position left for next sprite
-  }
+    const newShermie = this.game.add.sprite( this.game.spritePlacementX, this.game.boundarySpriteTexture.y,'shermie' );
+    // newShermie.setDisplaySize(this.game.shermie.width, this.game.shermie.height);
+    this.shermieSprites.push(newShermie);
+    this.game.spritePlacementX -= this.game.shermie.width; 
+}
 
-  tryRemoveShermieSprite() {
-    // Check if there are any sprites to remove
-    if (this.shermieSprites != this.game.boundarySpriteTexture.x + this.game.boundarySpriteTexture.displayWidth / 2 - this.game.shermie.width) {
-        if (this.newShermie) {
-            this.newShermie.destroy(); 
-            if( this.game.spritePlacementX < this.game.boundarySpriteTexture.x + this.game.boundarySpriteTexture.displayWidth / 2 - this.game.shermie.width){
-              this.game.spritePlacementX += this.game.shermie.width;
-            }
-        } 
-    } else {
-        return;
-    }
+tryRemoveShermieSprite() {
+  if (this.shermieSprites.length === 0) {
+      return false;
   }
+  const spriteToRemove = this.shermieSprites.pop(); 
+  spriteToRemove.destroy(); 
+
+  this.game.spritePlacementX += this.game.shermie.width;
+  
+  return true;
+}
+
 
   nextLevel(){
     this.game.goalCount = 0;
@@ -189,8 +188,6 @@ export class GameLogic {
     let radius = 20;
     return [x, y, radius, color, power];
   }
-
-  
 }
 
 

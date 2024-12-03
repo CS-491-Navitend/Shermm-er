@@ -19,6 +19,11 @@ import shermieGreen from "/assets/shermieGreen.png";
 import shermieYellow from "/assets/shermieYellow.png";
 import shermieOrange from "/assets/shermieOrange.png";
 import shermiePurple from "/assets/shermiePurple.png";
+import shermieRedFlip from "/assets/ShermieFlip/shermieRedFlip.png";
+import shermieBlueFlip from "/assets/ShermieFlip/shermieBlueFlip.png";
+import shermieGreenFlip from "/assets/ShermieFlip/shermieGreenFlip.png";
+import shermieOrangeFlip from "/assets/ShermieFlip/shermieOrangeFlip.png";
+import shermieYellowFlip from "/assets/ShermieFlip/shermieYellowFlip.png";
 // import shermieBomb from "/assets/shermieBombSheet.png";
 import shermieToxic from "/assets/shermieToxic.png";
 import bomb1 from "/assets/shermieBomb/bomb1.png";
@@ -102,6 +107,9 @@ import skyTurtleSink3 from "/assets/SkyLevel/turtleSink3.png";
 //Import UI and Background
 import backgroundMain from "/assets/UI/ShermMainMenu.png";
 import buttonImage from "/assets/UI/Button.png";
+import gameRose from "/assets/UI/Rose.png";
+import volume from "/assets/UI/volumeButton.png";
+import mute from "/assets/UI/muteButton.png";
 
 //import batman assets
 import batman from "/assets/BatmanLevel/batman.png";
@@ -224,6 +232,11 @@ export class Boot extends Scene {
     this.load.image("shermiePurple", shermiePurple);
     this.load.image("shermieToxic", shermieToxic);
     this.load.image("life", life);
+    this.load.image("shermieRedFlip", shermieRedFlip);
+    this.load.image("shermieBlueFlip", shermieBlueFlip);
+    this.load.image("shermieGreenFlip", shermieGreenFlip);
+    this.load.image("shermieOrangeFlip", shermieOrangeFlip);
+    this.load.image("shermieYellowFlip", shermieYellowFlip);
 
     // this.load.spritesheet("shermieBomb", shermieBomb, {
     //       frameWidth: 57,
@@ -405,6 +418,10 @@ export class Boot extends Scene {
     //UI and Background
     this.load.image("background", backgroundMain);
     this.load.image("buttonImage", buttonImage);
+    this.load.image("rose", gameRose);
+    this.load.image("muteButton", mute);
+    this.load.image("volumeButton", volume);
+    
 
     //goal block
     this.load.image("goalBlock", goalBlock);
