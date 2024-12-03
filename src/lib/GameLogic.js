@@ -59,7 +59,7 @@ export class GameLogic {
     this.game.shermie.x = this.game.width / 2;
     this.game.shermie.y = this.game.height - this.game.safeZoneSize + this.game.moveDistance / 2;
 
-    if (this.game.shermieType == "bomb") {
+    if (this.game.shermie.getData("isBomb")) {
       this.game.shermie.play("burnFuse");
     }
   }
