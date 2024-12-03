@@ -188,8 +188,6 @@ tryRemoveShermieSprite() {
     let radius = 20;
     return [x, y, radius, color, power];
   }
-
-  
 }
 
 

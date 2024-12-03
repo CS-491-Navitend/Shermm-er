@@ -531,7 +531,6 @@ export class Game extends Scene {
             }
 
             if(this.shermieType == "colored"){//Colored
-              this.colorArray = this.getColors();
               this.shermieColor = this.colorArray[0];//Shermie Comparison Code
               this.shermieTexture = this.colorArray[1];//Shermie sprite color
               this.objectiveTint = this.colorArray[2];//Objective zone tint - TODO - Change this to different textures. Functionality handled in goal zone generation logic.
@@ -814,7 +813,7 @@ export class Game extends Scene {
     this.isInvincible = false;
 
     this.shermieType = this.shermieArray[Math.floor(Math.random() * this.shermieArray.length)];//Randomly select shermie type
-    // this.shermieType = "toxic"
+    //this.shermieType = "toxic"
     this.shermieType = "colored"
     //this.shermieType = "bomb"
 
@@ -903,13 +902,13 @@ export class Game extends Scene {
   }
 
   rideLog(shermie, log) {
-    if (!this.inWater) {
+    if (!this.inWater && !this.isInvincible) {
       shermie.setVelocityX(log.body.velocity.x);
     }
   }
 
   rideTurtle(shermie, turtle) {
-    if (!this.inWater) {
+    if (!this.inWater&& !this.isInvincible) {
       shermie.setVelocityX(turtle.body.velocity.x);
     }
   }
