@@ -289,24 +289,30 @@ export class Game extends Scene {
       });
     }
 
-    
-    if (!this.anims.exists("turtleSink")) {
-      this.anims.create({
-        key: "turtleSink",
-        frames: [{key: zoneType + "TurtleSink1"}, {key: zoneType + "TurtleSink2"}, {key: zoneType + "TurtleSink3"}],
-        frameRate: 3,
-        repeat: 0,
-      });
+    // Check and remove existing animations if they exist
+    if (this.anims.exists("turtleSink")) {
+      this.anims.remove("turtleSink");
     }
-    
-    if (!this.anims.exists("turtleRaise")) {
-      this.anims.create({
-        key: "turtleRaise",
-        frames: [{key: zoneType + "TurtleSink3"}, {key: zoneType + "TurtleSink2"}, {key: zoneType + "TurtleSink1"}, {key: this.turtleTexture}],
-        frameRate: 3,
-        repeat: 0,
-      });
+
+    if (this.anims.exists("turtleRaise")) {
+      this.anims.remove("turtleRaise");
     }
+
+    // Create animations if they do not already exist
+    this.anims.create({
+      key: "turtleSink",
+      frames: [ { key: zoneType + "TurtleSink1" }, { key: zoneType + "TurtleSink2" }, { key: zoneType + "TurtleSink3" }, ],
+      frameRate: 3,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "turtleRaise",
+      frames: [{ key: zoneType + "TurtleSink3" },{ key: zoneType + "TurtleSink2" },{ key: zoneType + "TurtleSink1" }, { key: this.turtleTexture },],
+      frameRate: 3,
+      repeat: 0,
+    });
+
       
 
     // Define lane boundaries for water lanes
