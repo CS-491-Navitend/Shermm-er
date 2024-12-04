@@ -116,7 +116,6 @@ export class GameLogic {
   generateBlockers(game) {
     if (!game.block) {
       game.block = game.physics.add.staticGroup();
-      console.log("Block group initialized in GameLogic.js");
     }
     const imageWidth = this.game.width / 10; 
     const imageHeight = this.game.height / (this.game.numberOfLanes * 2 + 3);
@@ -124,7 +123,6 @@ export class GameLogic {
     if (game.block.getLength() < game.max_block) {
       const zones = game.objectiveZone.getChildren();
       if (this.shouldSpawnBlock(game.block_percentage)) {
-        console.log("Blocker spawned");
         if (game.block.getLength() < game.max_block) {
           const zones = game.objectiveZone.getChildren();
           if (zones.length > 0) {
@@ -144,8 +142,6 @@ export class GameLogic {
             }
           }
         }
-      } else {
-        console.log("Blocker not spawned");
       }
     }
   }

@@ -297,7 +297,6 @@ export class Game extends Scene {
       this.anims.remove("turtleRaise");
     }
 
-    console.log(this.turtleTexture)
     // Create animations if they do not already exist
     this.anims.create({
       key: "turtleSink",
@@ -312,10 +311,6 @@ export class Game extends Scene {
       frameRate: 3,
       repeat: 0,
     });
-
-    console.log(this.turtleTexture)
-
-
 
     // Define lane boundaries for water lanes
     const laneWidth = this.moveDistance;
@@ -647,7 +642,8 @@ export class Game extends Scene {
     this.timer.start();
 
     if (this.textures.exists("ratsHospital")) {
-      const ratsPortal = this.add.image(this.width - 40, roadEnd - this.safeZoneSize / 2, "ratsHospital");
+      const ratsPortal = this.add.sprite(this.width - 40, roadEnd - this.safeZoneSize / 2, "ratsHospital");
+      this.physics.add.existing(ratsPortal);
       this.physics.add.overlap(this.shermie, ratsPortal, () => {
         if (this.shermie.getData("isToxic")) {
           const ratsContainer = document.getElementById('rats-container');
@@ -780,11 +776,11 @@ export class Game extends Scene {
       });
     }
 
-    if (this.timer.timeRemaining % 5 === 0 && !this.ratCooldown) {
+    if (this.timer.timeRemaining % this.removeRatChance === 0 && !this.ratCooldown) {
       this.ratCooldown = true;
       const ratsContainer = document.getElementById('rats-container');
       if (ratsContainer.firstChild) {
-        ratsContainer.removeChild(ratsContainer.firstChild);
+        this.gameLogic.tryRemoveRat()
       }
       this.time.delayedCall(1000, () => {
         this.ratCooldown = false;
@@ -839,7 +835,7 @@ export class Game extends Scene {
     this.isInvincible = false;
 
     this.shermieType = this.shermieArray[Math.floor(Math.random() * this.shermieArray.length)];//Randomly select shermie type
-    //this.shermieType = "toxic"
+    this.shermieType = "toxic"
     //this.shermieType = "colored"
     //this.shermieType = "bomb"
 

@@ -54,8 +54,6 @@ export class TutorialMenu extends Scene {
             this.yPosition += 100; // Add space between steps
         });
 
-        console.log(zoneType)
-
         switch (this.level) {
             case 1:
                 this.add.image(600,500, "pasture_end");
