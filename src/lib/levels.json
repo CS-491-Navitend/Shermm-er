@@ -30,7 +30,7 @@
 
       "number_of_lives": 5,
 
-      "powerups": [ 0, 0, 0, 0 ],
+      "powerups": [ 1, 1, 1 ],
 
       "block_percentage": 0.2,
       
@@ -83,7 +83,7 @@
 
       "block_percentage": 0.2,
 
-      "powerups": [ 0, 1, 0 ],
+      "powerups": [ 0, 0, 1 ],
       "power_up_spawn_rate": 3000,
 
       "advance_number": 10,
