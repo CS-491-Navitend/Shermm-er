@@ -118,6 +118,8 @@ export class GameLogic {
       game.block = game.physics.add.staticGroup();
       console.log("Block group initialized in GameLogic.js");
     }
+    const imageWidth = this.game.width / 10; 
+    const imageHeight = this.game.height / (this.game.numberOfLanes * 2 + 3);
 
     if (game.block.getLength() < game.max_block) {
       const zones = game.objectiveZone.getChildren();
@@ -129,7 +131,7 @@ export class GameLogic {
             const eligibleZones = zones.filter(zone => !zone.getData("color"));
             if (eligibleZones.length > 0) {
               const randomZone = Phaser.Utils.Array.GetRandom(eligibleZones);
-              const newBlock = game.add.sprite(randomZone.x, randomZone.y, this.game.goalZoneBlock);
+              const newBlock = game.add.sprite(randomZone.x, randomZone.y, this.game.goalZoneBlock).setDisplaySize(imageWidth, imageHeight);
               newBlock.setDepth(10);
               game.physics.add.existing(newBlock, true);
               game.block.add(newBlock);
@@ -147,6 +149,8 @@ export class GameLogic {
       }
     }
   }
+
+  /* */
 
 
   spawnPowerUp(power) {
