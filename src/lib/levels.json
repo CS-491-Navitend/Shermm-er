@@ -75,7 +75,7 @@
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 3,
 
-      "goal_zone_block": "goalBlock",
+      "goal_zone_block": "waterGoal",
       "max_blocks": 1,
 
       "number_of_lives": 5,
@@ -128,7 +128,7 @@
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 2.5,
 
-      "goal_zone_block": "goalBlock",
+      "goal_zone_block": "iceGoal",
       "max_blocks": 1,
 
       "number_of_lives": 5,
@@ -180,7 +180,7 @@
       "number_of_turtles": 2,
 
 
-      "goal_zone_block": "goalBlock",
+      "goal_zone_block": "lavaGoal",
       "max_blocks": 1,
 
       "number_of_lives": 5,
@@ -229,7 +229,7 @@
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 3,
 
-      "goal_zone_block": "goalBlock",
+      "goal_zone_block": "skyGoal",
       "max_blocks": 1,
 
       "number_of_lives": 5,
@@ -281,7 +281,7 @@
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 3,
 
-      "goal_zone_block": "goalBlock",
+      "goal_zone_block": "outerSpaceGoal",
       "max_blocks": 1,
 
       "number_of_lives": 5,
@@ -332,7 +332,7 @@
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 3,
 
-      "goal_zone_block": "goalBlock",
+      "goal_zone_block": "desertGoal",
       "max_blocks": 1,
 
       "number_of_lives": 5,
@@ -384,7 +384,7 @@
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 3,
 
-      "goa_zone_block": "goalBlock",
+      "goa_zone_block": "swampGoal",
       "max_blocks": 1,
 
       "number_of_lives": 3,
@@ -431,7 +431,7 @@
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 3,
 
-      "goal_zone_block": "goalBlock",
+      "goal_zone_block": "cakeGoal",
       "max_blocks": 1,
 
       "number_of_lives": 3,
@@ -479,7 +479,7 @@
       "turtle_sink_multiplier": 1,
       "number_of_turtles": 3,
 
-      "goal_zone_block": "goalBlock",
+      "goal_zone_block": "batmanGoal",
       "max_blocks": 1,
 
       "number_of_lives": 3,
