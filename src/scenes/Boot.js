@@ -122,7 +122,7 @@ import batmobile from "/assets/BatmanLevel/batmobile.png";
 import batmobileForward from "/assets/BatmanLevel/batmobileForward.png";
 import bap from "/assets/BatmanLevel/bap.png";
 import fwip from "/assets/BatmanLevel/fwip.png";
-import joker from "/assets/BatmanLevel/joker.png";
+import batmanTurtle from "/assets/BatmanLevel/joker.png";
 import batmanTurtleSink1 from "/assets/BatmanLevel/turtleSink1.png";
 import batmanTurtleSink2 from "/assets/BatmanLevel/turtleSink2.png";
 import batmanTurtleSink3 from "/assets/BatmanLevel/turtleSink3.png";
@@ -350,7 +350,7 @@ export class Boot extends Scene {
     this.load.image("batmobileForward", batmobileForward);
     this.load.image("bap", bap);
     this.load.image("fwip", fwip);
-    this.load.image("joker", joker);
+    this.load.image("batmanTurtle", batmanTurtle);
     
     // Outer Space Assets
     this.load.image("outerSpace", outerSpace);

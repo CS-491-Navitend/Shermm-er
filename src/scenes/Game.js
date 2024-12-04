@@ -297,6 +297,7 @@ export class Game extends Scene {
       this.anims.remove("turtleRaise");
     }
 
+    console.log(this.turtleTexture)
     // Create animations if they do not already exist
     this.anims.create({
       key: "turtleSink",
@@ -311,6 +312,8 @@ export class Game extends Scene {
       frameRate: 3,
       repeat: 0,
     });
+
+    console.log(this.turtleTexture)
 
 
 

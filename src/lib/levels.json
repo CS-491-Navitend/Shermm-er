@@ -83,7 +83,7 @@
 
       "block_percentage": 0.2,
 
-      "powerups": [ 0, 0, 1 ],
+      "powerups": [ 1, 1, 1 ],
       "power_up_spawn_rate": 3000,
 
       "advance_number": 10,
@@ -419,13 +419,13 @@
 
 
       "water_zone_type": "cake",
-      "log_texture": [ "cherry", "banana" ],
+      "log_texture": [  "banana" ],
       "log_spacing": [ 150, 200, 250 ],
       "log_speed_multiplier": 1.25,
       "number_of_logs": 3,
 
-      "turtle_texture": [ "cherry", "cherry" ],
-      "turtles_Forward_texture": [ "cherry", "cherry" ],
+      "turtle_texture": [ "cherry" ],
+      "turtles_Forward_texture": [ "cherry" ],
       "turtle_spacing": [ 250, 350, 400 ],
       "turtle_speed_multiplier": 1.15,
       "turtle_sink_multiplier": 1,
@@ -472,8 +472,8 @@
       "number_of_logs": 4,
 
 
-      "turtle_texture": [ "joker", "joker" ],
-      "turtles_Forward_texture": [ "joker", "joker" ],
+      "turtle_texture": [ "batmanTurtle" ],
+      "turtles_Forward_texture": [ "batmanTurtle" ],
       "turtle_spacing": [ 250, 350, 400 ],
       "turtle_speed_multiplier": 1.25,
       "turtle_sink_multiplier": 1,
