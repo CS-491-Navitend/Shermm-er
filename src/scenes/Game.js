@@ -212,6 +212,8 @@ export class Game extends Scene {
     this.bonusScore = levels[data["level"]]["score_bonus"];
     this.max_block = levels[data["level"]]["max_blocks"];
 
+    this.colorSpawnRate = levels[data["level"]]["color_spawn_rate"];
+
     //shermie bomb variables
     this.bombSpawnRate = levels[data["level"]]["bomb_spawn_rate"];
     this.bombTimer = levels[data["level"]]["bomb_timer"];
@@ -484,12 +486,12 @@ export class Game extends Scene {
       
       if (powerUpChance > 50 && this.selfService) {
         powerUpInfo = this.gameLogic.spawnPowerUp(0);
-      } else if (powerUpChance > 0 && powerUpChance <= 100 && this.cleanseShermie) {
+      } else if (powerUpChance > 60 && powerUpChance <= 100 && this.cleanseShermie) {
         powerUpInfo = this.gameLogic.spawnPowerUp(1);
       } else if (powerUpChance <= 35 && this.superShermie) {
         powerUpInfo = this.gameLogic.spawnPowerUp(2);
-      } else {
-        console.log("Not spawning a power up.");
+      }else{
+        console.log("not spawning powerup")
       }
 
       // destroy previous powerUp
@@ -835,9 +837,10 @@ export class Game extends Scene {
     this.isInvincible = false;
 
     this.shermieType = this.shermieArray[Math.floor(Math.random() * this.shermieArray.length)];//Randomly select shermie type
-    this.shermieType = "toxic"
+    //this.shermieType = "toxic"
     //this.shermieType = "colored"
     //this.shermieType = "bomb"
+    console.log(this.shermieArray)
 
     if (!this.isBomb) {
       this.bombTimerUI.style.visibility = "hidden";
@@ -1016,7 +1019,15 @@ export class Game extends Scene {
   }
 
   populateShermieArray(){
-    this.shermieArray = ["normal", "colored"];
+    this.shermieArray = ["normal"];
+
+    console.log(this.colorSpawnRate)
+    console.log(this.bombSpawnRate)
+    console.log(this.toxicSpawnRate)
+
+    if(this.colorSpawnRate === 1){
+      this.shermieArray.push("colored")
+    }
     if (this.bombSpawnRate === 1) {
       this.shermieArray.push("bomb");
     }
