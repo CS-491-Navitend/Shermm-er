@@ -1,5 +1,6 @@
 import { Scene } from "phaser";
 import { tutorials } from "/src/lib/tutorials";
+import { levels } from "/src/lib/levels";
 
 export class TutorialMenu extends Scene {
     constructor() {
@@ -12,6 +13,7 @@ export class TutorialMenu extends Scene {
     create(data) {
         // Get the tutorial data based on the level
         this.level = data["level"];
+        const zoneType = levels[data["level"]]["water_zone_type"];
         const tutorial = tutorials[this.level -1];
 
         if (!tutorial) {
@@ -52,6 +54,7 @@ export class TutorialMenu extends Scene {
             this.yPosition += 100; // Add space between steps
         });
 
+        console.log(zoneType)
 
         switch (this.level) {
             case 1:
@@ -70,7 +73,7 @@ export class TutorialMenu extends Scene {
                 this.add.image(600, 500, 'shermieGreenFlip');  
                 break;
             case 3:
-                this.add.image(390, 500, 'goalBlock');
+                this.add.image(390, 500, zoneType + 'Goal');
                 this.add.image(690, 500,"shermie");
                 break;
             case 4:
@@ -98,7 +101,7 @@ export class TutorialMenu extends Scene {
                 this.add.image(590, 900,"shermieRedFlip")
                 this.add.image(900, 500, 'selfService'); 
                 this.add.image(200, 500, 'antidote');
-                this.add.image(390, 500, 'goalBlock');
+                this.add.image(390, 500, zoneType + 'Goal');
                 this.add.image(200, 800, 'pasture');
                 this.add.image(300, 800, 'pasture');
                 this.add.image(400, 800, 'pasture');
