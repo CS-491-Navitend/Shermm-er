@@ -60,8 +60,8 @@ export class LevelMenu extends Scene {
     //console.log("Current buttons array after creation: ", this.buttons);
     this.highlightButton(this.selectedButtonIndex);
   }
-
-  createDevButton() {
+  //commented out DevButton()
+ /* createDevButton() {
     const developerButton = this.add
       .text(512, 100, "Dev", {
         fontFamily: "Pixel",
@@ -80,7 +80,7 @@ export class LevelMenu extends Scene {
       this.scene.start("Game", { level: 0 });
     });
   }
-  
+  */
   createLevelButtons() {
     for (let col = 0; col < this.maxCols; col++) {
       for (let row = 0; row < this.maxRows; row++) {
