@@ -39,8 +39,6 @@ export class LevelMenu extends Scene {
       })
       .setOrigin(1 / 2);
 
-    //Developer Button
-    this.createDevButton();
 
     //Create level Buttons
     this.createLevelButtons();
@@ -60,27 +58,7 @@ export class LevelMenu extends Scene {
     //console.log("Current buttons array after creation: ", this.buttons);
     this.highlightButton(this.selectedButtonIndex);
   }
-  //commented out DevButton()
- /* createDevButton() {
-    const developerButton = this.add
-      .text(512, 100, "Dev", {
-        fontFamily: "Pixel",
-        fontStyle: "bold",
-        fontSize: this.rem * 2 + "px",
-        padding: { x: 100, y: 20 },
-        color: "#FFFFFF", // White text
-        stroke: "#000000", // Black outline
-        strokeThickness: 6,
-      })
-      .setOrigin(0.5)
-      .setInteractive({ useHandCursor: true });
 
-    developerButton.on("pointerdown", () => {
-      // pass the level to the game scene constructor
-      this.scene.start("Game", { level: 0 });
-    });
-  }
-  */
   createLevelButtons() {
     for (let col = 0; col < this.maxCols; col++) {
       for (let row = 0; row < this.maxRows; row++) {
